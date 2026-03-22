@@ -1,0 +1,10 @@
+node_modules
+*.pdf
+*.docx
+*.py
+extracted.txt
+the_hale_dynasty_text.txt
+screenshot.js
+pdf2txt.py
+read_pdf.py
+package-lock.json

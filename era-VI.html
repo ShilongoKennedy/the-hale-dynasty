@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. VI — The Hale Entail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#F5F0E4; color:#2A1A10; font-family:'Lora', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#3A1020; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#E8C8D0; text-decoration:none; } .era-nav a:hover { color:#FFE0E8; }
+    .era-nav .vol-marker { color:#A07080; }
+
+    .era-header {
+      background:#FAF4E4; border-bottom:4px solid #5C1828; border-top:1px solid #A06878;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#5C1828; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'Playfair Display','Cinzel',Georgia,serif; font-size:clamp(1.7em,4.5vw,3em); color:#2A1A10; letter-spacing:0.04em; font-weight:700; margin-bottom:8px; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#5C1828; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
+
+    .editorial-note {
+      border-left:3px solid #5C1828; padding:16px 20px; background:#EDE0D0;
+      font-style:italic; font-size:0.85em; color:#5C2830; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#5C1828; text-transform:uppercase; margin-bottom:6px; }
+    .nota-bene { background:#EDE0D0; border-left:4px solid #A06878; padding:12px 18px; font-style:italic; font-size:0.82em; color:#5C2830; margin-bottom:8px; }
+
+    /* REGENCY LETTER — ivory with claret left bar */
+    .regency-letter {
+      background:#FAF4E4;
+      border-left:5px solid #5C1828;
+      border:1px solid #C0A898;
+      border-left-width:5px;
+      padding:36px 44px 70px;
+      position: relative;
+    }
+    /* Augusta's wax seal — dusty rose/claret */
+    .regency-seal {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 32%, #8A2840 0%, #5A1020 55%, #3A0815 100%);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.32), inset 0 1px 2px rgba(255,160,160,0.15);
+      position: absolute; bottom: 22px; right: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .regency-seal::before {
+      content: '';
+      position: absolute; inset: 3px; border-radius: 50%;
+      border: 1px solid rgba(255,190,190,0.18);
+    }
+    .regency-seal::after {
+      content: 'A·H';
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.74em; font-weight: 600;
+      color: rgba(255,200,200,0.68);
+      letter-spacing: 0.05em;
+    }
+    .regency-letter-head {
+      font-variant:small-caps; letter-spacing:0.1em; color:#5C1828;
+      font-size:0.8em; border-bottom:1px solid #C0A898; padding-bottom:10px; margin-bottom:18px; line-height:1.5;
+    }
+    .regency-letter p { font-size:0.92em; line-height:1.9; margin-bottom:0.9em; }
+    .regency-letter p:last-child { margin-bottom:0; }
+    .regency-sig { text-align:right; margin-top:16px; font-style:italic; color:#5C2830; font-size:0.88em; }
+
+    /* ESTATE LEDGER */
+    .ledger {
+      background:#F4EED8;
+      border:1px solid #8A6A40;
+    }
+    .ledger-header {
+      background:#1C3820; color:#C8D8C0; padding:14px 24px;
+      font-family:'Courier New',monospace; font-size:0.78em; letter-spacing:0.12em; text-transform:uppercase;
+    }
+    .ledger-body { padding:20px 24px; }
+    .ledger-row {
+      display:flex; justify-content:space-between; align-items:baseline;
+      border-bottom:1px solid rgba(138,106,64,0.25); padding:8px 0;
+      font-size:0.85em; line-height:1.6;
+    }
+    .ledger-row:last-child { border-bottom:none; }
+    .ledger-desc { flex:1; padding-right:16px; }
+    .ledger-amount { font-family:'Courier New',monospace; color:#1C3820; white-space:nowrap; }
+    .ledger-note { font-style:italic; font-size:0.8em; color:#6A5030; display:block; }
+    .ledger-total {
+      display:flex; justify-content:space-between;
+      border-top:2px solid #8A6A40; padding:12px 0 0; margin-top:8px;
+      font-weight:bold; font-size:0.88em;
+    }
+    .ledger-total .ledger-amount { color:#1C3820; font-size:1.05em; }
+
+    /* DIARY */
+    .diary {
+      background:#FAF4E4;
+      border-left:4px solid #8A6818;
+      border:1px solid #C0A878;
+      border-left-width:4px;
+      padding:34px 44px;
+    }
+    .diary-date { color:#8A6818; font-style:italic; font-size:0.85em; margin-bottom:16px; }
+    .diary p { font-style:italic; font-size:0.9em; line-height:1.95; margin-bottom:0.9em; color:#2A1A10; }
+    .diary p:last-child { margin-bottom:0; }
+
+    /* NEWSPAPER — pasted in, slightly tilted */
+    .newspaper {
+      background:#EEE8DC;
+      border:1px solid #8A7A60;
+      padding:30px 36px;
+      font-family:'Courier New',monospace;
+      transform: rotate(0.35deg);
+      box-shadow: 2px 3px 12px rgba(0,0,0,0.15), -1px -1px 0 rgba(0,0,0,0.05);
+      position: relative;
+    }
+    .newspaper::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 65% 25%, rgba(255,248,190,0.09) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .newspaper-header { text-align:center; border-bottom:2px solid #3A3020; padding-bottom:10px; margin-bottom:16px; }
+    .newspaper-title { font-size:0.85em; font-weight:bold; letter-spacing:0.12em; text-transform:uppercase; color:#1A1A0A; }
+    .newspaper-sub { font-size:0.72em; color:#5A5040; margin-top:4px; }
+    .newspaper-column { font-size:0.8em; line-height:1.8; color:#2A2010; }
+    .newspaper-column p { margin-bottom:0.7em; }
+    .newspaper-byline { font-size:0.72em; color:#5A5040; border-top:1px solid #8A7A60; padding-top:8px; margin-top:12px; }
+
+    /* LEGAL ENTAIL */
+    .entail {
+      background:#F4EED8;
+      border:2px solid #5C1828;
+      padding:34px 40px;
+    }
+    .entail-header { text-align:center; font-variant:small-caps; letter-spacing:0.12em; color:#5C1828; font-size:0.85em; border-bottom:1px solid #C0A898; padding-bottom:12px; margin-bottom:18px; }
+    .entail p { font-size:0.88em; line-height:1.85; margin-bottom:0.9em; }
+
+    /* ERA BANNER */
+    
+
+    @media (max-width:600px) {
+      .regency-letter,.diary,.entail,.ledger-body { padding:20px 16px; }
+      .era-content { padding:30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── PORTRAIT ───────────────────────────────────────── */
+    .portrait-frame {
+      float: right;
+      margin: 0 0 32px 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .portrait-svg { display: block; }
+    .portrait-img-vi {
+      display: block;
+      width: 220px;
+      height: auto;
+      border: 6px solid #B8861A;
+      outline: 3px solid #E8C050;
+      outline-offset: -10px;
+      box-shadow: 0 0 0 1px #7A5808, 6px 6px 24px rgba(0,0,0,0.75);
+    }
+    .portrait-caption {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      color: #4A3A20;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .portrait-frame { float: none; margin: 0 auto 28px; display: block; }
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 65%;
+      filter: contrast(1.08) brightness(0.85) saturate(1.1);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,12,20,0.50);
+    }
+
+    
+    .era-sound-bar {
+      background: #100C04; border-bottom: 1px solid #2A2010;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #7A6A40; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(150,120,60,0.4); color: #9A8A60;
+      padding: 4px 14px; cursor: pointer; font-family: inherit; font-size: inherit;
+      letter-spacing: inherit; border-radius: 2px; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+    .era-voice-player-vi { display:flex; align-items:center; gap:12px; margin-left:10px; }
+    .evp-vi-play { background:none; border:1px solid rgba(200,168,40,0.3); color:#9A8060; padding:5px 12px; font-family:'Courier New',monospace; font-size:0.88em; letter-spacing:0.12em; cursor:pointer; transition:all 0.2s; text-transform:uppercase; }
+    .evp-vi-play:hover { border-color:#C8A828; color:#C8A840; }
+    .evp-vi-progress { background:rgba(200,168,40,0.1); height:4px; width:80px; border-radius:1px; overflow:hidden; position:relative; }
+    .evp-vi-bar { background:#9A8060; height:100%; width:0%; transition:width 0.1s linear; }
+    .evp-vi-time { font-family:'Courier New',monospace; font-size:0.7em; color:#9A8060; min-width:28px; }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="vi" data-vol="VI">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-VI.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">Harton Hall · Drawing room · 1815</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <div class="era-voice-player-vi" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/augusta.mp3" preload="none"></audio>
+        <button class="evp-vi-play" id="evpPlay">⚜ Hear Augusta</button>
+        <div class="evp-vi-progress">
+          <div class="evp-vi-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-vi-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-V.html">← Vol. V</a>
+    <span class="vol-marker">VOL. VI OF X &nbsp;·&nbsp; 1795–1835</span>
+    <a href="era-VII.html">Vol. VII →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraVI.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume VI</div>
+    <h1 class="era-main-title">The Hale Entail</h1>
+    <p class="hd-quill" style="font-style:italic; color:#5C2830; font-size:0.88em; margin:10px 0; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being the Letters, Diary Entries, Estate Accounts, and Legal Papers of Augusta Hale of Harton Hall, Worcestershire — A Woman of Extraordinary Intelligence and No Legal Standing Whatsoever.
+    </p>
+    <div class="era-dates">1795 — 1835</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/augusta.png" class="portrait-img-vi" alt="Augusta Hale — Regency portrait, c.1815">
+      <div class="portrait-caption">Augusta Hale · 1771–1832<br><em>Imagined from the record</em></div>
+    </div>
+
+    <div class="editorial-note">
+      Augusta Hale (1775–1858) managed the Harton Hall estate — the considerably enlarged Hale property — for thirty-seven years without pay, without legal authority, and without, it must be said, any great deal of complaint. She complained precisely and specifically about precise and specific things. What she did not do was stop. She was, by the account of everyone who knew her, the most capable person in the family by a considerable margin. She married at fifty-seven. She died at eighty-three. She left ledgers in perfect order.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
+    </div>
+
+    <!-- Letter to Solicitor 1803 -->
+    <div class="document">
+      <div class="doc-label">Document I · Augusta Hale to Mr. Westbrook, Solicitor · March 1803</div>
+      <div class="regency-letter">
+        <div class="regency-letter-head">From Miss Augusta Hale · Harton Hall, Worcestershire · 14 March 1803 · To Mr. J. Westbrook, Solicitor, Worcester</div>
+        <p>Mr. Westbrook — I have read your letter with the attention it merits, which is rather more than it received from whoever drafted it. You write that I am not &lsquo;entitled&rsquo; to the accounts of the Harton estate, as these are &lsquo;in the legal management of the trustees.&rsquo; I am the sister of the last Hale. I have lived in this house for twenty-eight years. I have managed every account in it for the better part of fourteen of those years, while my brother attended to matters he found more congenial, which is to say, matters that did not involve accounts.</p>
+        <p>The fact that the law does not provide me a name for what I have done does not alter what I have done. I have the ledgers. I have kept them in the manner I was taught by my father, which was his father's manner, which answered in its day and answers in mine. I have kept them correctly, which I say not in a spirit of self-congratulation but because it is verifiable and because I expect to be believed when I say something verifiable.</p>
+        <p>I should like to know, at your earliest convenience, what figure the trustees have arrived at for the outstanding timber contract with Messrs. Hartley, because the figure in my ledger and the figure in their last statement differ by fourteen shillings and four pence, and I suspect I know whose arithmetic is at fault, and it is not mine.</p>
+        <div class="regency-sig">Your obedient servant,<br><strong>Augusta Hale.</strong> Harton Hall, Worcestershire, 14 March 1803.</div>
+        <div class="regency-seal" title="Wax seal: A·H"></div>
+      </div>
+    </div>
+
+    <!-- Estate Accounts Ledger -->
+    <div class="document">
+      <div class="doc-label">Document II · Harton Hall Estate Accounts · Michaelmas 1822 · In Augusta Hale's Hand</div>
+      <div class="ledger">
+        <div class="ledger-header">Harton Hall Estate — Accounts for the Michaelmas Quarter, 1822 · Augusta Hale, Acting Agent</div>
+        <div class="ledger-body">
+          <div class="ledger-row">
+            <div class="ledger-desc">Timber sales — upper wood, 40 loads oak<span class="ledger-note">Sold to Messrs. Fletcher &amp; Sons. Delivery completed September.</span></div>
+            <div class="ledger-amount">£ 28 . 0 . 0</div>
+          </div>
+          <div class="ledger-row">
+            <div class="ledger-desc">Farm rents — home farm and three tenancies<span class="ledger-note">All paid by quarter-day. Note: Collins cottage still awaiting repair to eastern wall.</span></div>
+            <div class="ledger-amount">£ 42 . 10 . 0</div>
+          </div>
+          <div class="ledger-row">
+            <div class="ledger-desc">Harvest sales — wheat, barley, and cider apples<span class="ledger-note">Good harvest. 12 hogsheads cider pressed. Wheat price below June estimate — see note.</span></div>
+            <div class="ledger-amount">£ 31 . 7 . 6</div>
+          </div>
+          <div class="ledger-row">
+            <div class="ledger-desc"><em>Less:</em> Repairs to mill leat and sluice gate<span class="ledger-note">Overdue since 1820. Executed by Thomas Watkins, mason. Work satisfactory.</span></div>
+            <div class="ledger-amount">— £ 8 . 14 . 0</div>
+          </div>
+          <div class="ledger-row">
+            <div class="ledger-desc"><em>Less:</em> Annual tithe, St. Wulfstan's<span class="ledger-note">Paid at the usual time. No dispute this quarter.</span></div>
+            <div class="ledger-amount">— £ 6 . 0 . 0</div>
+          </div>
+          <div class="ledger-total">
+            <div>NET QUARTER BALANCE</div>
+            <div class="ledger-amount">£ 87 . 3 . 6</div>
+          </div>
+          <p style="margin-top:14px; font-style:italic; font-size:0.78em; color:#5A4030; border-top:1px solid rgba(138,106,64,0.3); padding-top:10px;">
+            Note: The trustees' figure for this quarter shows £ 87 . 3 . 0. The discrepancy of sixpence arises from their failure to credit the half-interest on the retained balance from the June quarter, which I have calculated correctly and entered accordingly. I have written to Mr. Westbrook. — A.H.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newspaper Column -->
+    <div class="document">
+      <div class="doc-label">Document III · Worcester Herald · Column · October 1815</div>
+      <div class="newspaper">
+        <div class="newspaper-header">
+          <div class="newspaper-title">The Worcester Herald</div>
+          <div class="newspaper-sub">Saturday, 14 October 1815 &nbsp;·&nbsp; Price Threepence</div>
+        </div>
+        <div class="newspaper-column">
+          <p><strong>ON THE SUBJECT OF FEMALE MANAGEMENT OF ESTATES</strong></p>
+          <p>A CORRESPONDENT writes to observe that it is now commonly known in this county that the Harton Hall estate, which has been administered since the death of Mr. George Hale in the year 1800 by his sister Miss Augusta Hale, has returned to a state of considerable productivity after several years of decline under the late Mr. George Hale's rather optimistic management. Our correspondent suggests that this circumstance reflects well upon the capabilities of ladies of education and application.</p>
+          <p>We are inclined to agree, with the caveat that we suspect Miss Hale herself would find the framing of the observation somewhat irritating, as she has never to our knowledge suggested that the capacity to maintain accurate accounts is a sex-specific accomplishment. It is, in her view, simply an accomplishment, available to anyone who does the arithmetic correctly. We report this in a spirit of fairness.</p>
+        </div>
+        <div class="newspaper-byline">Worcester Herald. Printed at Worcester. Our correspondent wishes to remain anonymous, and does so.</div>
+      </div>
+    </div>
+
+    <!-- Augusta's Diary -->
+    <div class="document">
+      <div class="doc-label">Document IV · Augusta Hale's Diary · Three Entries · 1822–1835</div>
+      <div class="diary">
+        <div class="diary-date">14 March 1822.</div>
+        <p>My forty-seventh birthday. Henry Alderton sent flowers and a somewhat alarming note suggesting that the time might be appropriate for me to consider the question of marriage, which he raises every three years with the same optimism and the same result. I am fond of Henry. I am not in any meaningful sense attracted to the prospect he represents, which is not a personal criticism of Henry but a factual description of my situation. I manage thirty-seven hundred acres without legal authority, without salary, and without any of the credit that attaches to men who manage considerably less. The legal description for what I am is &lsquo;dependant.&rsquo; The factual description is rather different. I know which one I believe. <span class="hd-pig" data-era="VI" title="🐷">🐷</span></p>
+        <div class="diary-date" style="margin-top:20px;">4 November 1828.</div>
+        <div class="hd-marginal-wrap"><p>George Edward has come of age. He is twelve years old and already possessed of the family's habit of asking the question before anyone has told him to. He asked me today whether the estate would come to him when I died. I told him: yes, and when I told him, he said, what happens to it between now and then? I told him: I look after it. He thought about this for some time and then said: and who looks after you? I told him no one in particular, that I was quite capable. He said: that is not the same thing. He is twelve. He is right.</p>
+        <div class="hd-marginal">George Edward asked the question no one else thought to ask. — E.V. 2024</div></div>
+        <div class="diary-date" style="margin-top:20px;">22 September 1832.</div>
+        <p>I married Henry Alderton this morning at St. Wulfstan's. I am fifty-seven years old. Henry is fifty-nine. We have been fond of each other for approximately thirty years, which is a foundation rather more solid than most people begin with. The vicar, who has known us both these twenty years, conducted the service with what I can only describe as barely suppressed satisfaction. I noticed that George Edward, who stood up for Henry, was looking at the ceiling for much of the service in the manner of a young man who has decided that the correct response to an event is to not quite see it happening. He is twenty-four and there is a good deal of his grandfather Nathaniel in him, which I mean as a compliment and suspect he would also.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #1A0810;">
+    <a href="era-V.html">← Vol. V: Memoirs of Nathaniel</a>
+    <span class="vol-marker">END OF VOLUME VI</span>
+    <a href="era-VII.html">Vol. VII: Mr Edmund Hale →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. VI INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">❧ &nbsp; ❧ &nbsp; ❧</div>
+
+<!-- RECOVERED DOCUMENT 1: Augusta's unsent letter to Charles, March 1806 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VI, item 27a · Draft Letter — Unsent · March 1806</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Augusta Hale, Harton Hall, to her Brother Charles Hale, London</p>
+    <p class="parchment-subtitle">March 1806 · Found among Augusta's papers at her death, 1858 · In a folder labelled in her hand: <em>Not sent</em></p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The version sent is reproduced in Vol. VI. This draft is shorter, and the editors consider it the more honest document. Augusta kept both versions, which suggests she knew exactly what she had done in the revision and chose to remember it.</div>
+    <p><span class="hd-dropcap">C</span>harles. I am going to be direct because the situation requires it and because you are my brother and the only person in this family I can be direct with without consequences.</p>
+    <p>The entail will give you Harton Hall if George dies without a son. George is thirty-six and unmarried and his health this spring has been poor. You know this.</p>
+    <p>You will not be able to manage this estate. I say this not to be cruel but because it is true and you know it and I know it and the only question is whether we say it plainly before we spend six months negotiating around it or whether we say it plainly after. I am choosing before.</p>
+    <p>I have managed this estate for eleven years. Without pay, without legal authority, without acknowledgment from anyone except Eleanor Caldwell, who has the sense to notice things. I have caught every material error in the accounts since 1795. I have saved the estate approximately four hundred pounds in that time through corrections alone.</p>
+    <p>I am not writing to ask for recognition. I am writing because the only way this estate survives is if it is managed correctly, and the only person who currently knows how to manage it correctly is me, and if you inherit it under the entail that person is removed from its management. That is the arithmetic.</p>
+    <p>I am proposing that we dock the entail. I will tell you the number I think is fair. It will be more than you expect and less than what the reversionary interest is theoretically worth, and you will know as well as I do that the theoretical worth is not what you would realise in practice. Take the certain thing.</p>
+    <p>I will write you the proper letter tomorrow. It will be kinder than this one. But this one is what I actually mean.</p>
+    <p><em>Augusta.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Henry Alderton to his father, December 1829 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VI, item 39 · Private Letter · December 1829</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Henry Alderton, Solicitor, Shrewsbury, to his Father Mr George Alderton, Ludlow</p>
+    <p class="parchment-subtitle">December 1829 · Retained in the Alderton family papers · Identified by Eleanor Voss, 2024</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: Henry Alderton was the solicitor managing the Harton Hall estate account after Augusta's long management. He is writing to explain why he keeps thinking about her. He does not quite manage to explain it.</div>
+    <p><span class="hd-dropcap">F</span>ather, you ask how the Harton Hall account progresses and I shall tell you, though the account is not quite what I want to write about.</p>
+    <p>The estate is in reasonable order — better order, in fact, than the documentation suggested when I took on the file. The reason for this is a woman named Augusta Hale, Sir George's sister, who has been managing the accounts since 1795 without formal authority or compensation and who has done so with a thoroughness I have encountered in perhaps three other people in my professional life, none of them unpaid.</p>
+    <p>She is fifty-four years old. She is not, I should say immediately, the kind of woman one describes by first noting her age and then noting everything else as a qualification of it. She is simply someone of unusual intelligence who happens to be fifty-four, which I note only because you will ask.</p>
+    <p>I have been corresponding with her on estate matters since the autumn, and what began as professional correspondence has become — I am trying to find the accurate word — substantive. She has opinions on the Settled Estates Acts which are rather more sophisticated than most of what is published. When I say this to her she says: yes, which is not false modesty and not arrogance. It is simply accurate.</p>
+    <p>I find myself, in these letters, writing rather better than I usually do. This is, I am aware, an unusual thing to say about a professional correspondence. I am not certain what it means except that I think about what I am writing before I write it, which I do not always do, and that I am trying to be precise rather than merely adequate, which is a different effort.</p>
+    <p>I am going to Harton Hall again in January on a question of timber rights. I find I am looking forward to it rather more than timber rights warrant.</p>
+    <p><em>Your respectful and somewhat confused son, Henry Alderton. Shrewsbury, December 1829.</em></p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Harton Hall Estate Account — Augusta's Margin -->
+<div class="obj-header">Archive Object · Vol. VI · Michaelmas 1795</div>
+<div class="interactive-obj document" id="obj-VI">
+  <div class="obj-lid" id="obj-lid-VI" onclick="toggleObj('VI')">
+    <div class="obj-lid-icon">
+      <svg width="26" height="28" viewBox="0 0 26 28" fill="none">
+        <rect x="1" y="1" width="20" height="26" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <line x1="4" y1="7" x2="18" y2="7" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="4" y1="11" x2="18" y2="11" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="4" y1="15" x2="18" y2="15" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="4" y1="19" x2="18" y2="19" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="21" y1="4" x2="25" y2="4" stroke="#8B1A1A" stroke-width="0.8"/>
+        <line x1="21" y1="8" x2="25" y2="8" stroke="#8B1A1A" stroke-width="0.8"/>
+        <line x1="21" y1="12" x2="25" y2="12" stroke="#8B1A1A" stroke-width="0.8"/>
+        <line x1="21" y1="16" x2="25" y2="16" stroke="#8B1A1A" stroke-width="0.8"/>
+        <line x1="21" y1="22" x2="25" y2="22" stroke="#8B1A1A" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Harton Hall Estate Account — Augusta's Margin
+      <span>Regency estate account · clerk's hand · her corrections alongside · Read the margin</span>
+    </div>
+    <svg id="obj-chevron-VI" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-VI">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A Regency era estate account document — columns of income and expenditure in the neat hand of a professional clerk. The main text is correct in form. In the right margin, running down the full length of the page in a different hand — finer, more controlled, unmistakably Augusta's from comparison with her letters — a sequence of small corrections, additions, and annotations.</p>
+        <p>Each one is brief. Each one is specific. Each one is evidence-based. She caught these errors in December 1795. She was twenty years old. She had no legal standing in the affairs she was correcting. She corrected them anyway, in the margin of the document she was not authorised to amend, and gave it back to the solicitor.</p>
+      </div>
+      <div class="obj-note">
+        At the bottom of the margin, one sentence that is not a correction: <em>this account, as presented, is sufficient to mislead.</em> She wrote this in the margin of the fair copy and gave it back to Fellowes. He retained it. He kept it for forty years.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>The deficit understated: sixty pounds. Two items not included — Charles's allowance history, run informally and unrecorded; the outstanding mill dues, carried forward from 1792 without acknowledgment. Augusta identified both within a week of taking on the accounts. She was not asked to take on the accounts.</p>
+          <p>Fellowes kept this document because, he wrote later, it was the most precise thing he had seen in thirty years of estate practice, and it had been written in the margin of someone else's document by someone with no standing to write it.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">Behind the estate account · A second document</span>
+          Augusta's unsent draft letter to Charles, March 1806. One page. The final line:
+          <br><br>
+          <em>I will write you the proper letter tomorrow. It will be kinder than this one. But this one is what I actually mean.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-II.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume II · The Pestilence</div>
+        <div class="hd-xref-card-name">Matilda of Halecroft</div>
+        <div class="hd-xref-card-reason">Augusta manages an estate she cannot inherit — the same constraint Matilda faced five centuries earlier, and met with the same clarity.</div>
+      </a>
+      <a href="era-V.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume V · The Georgian</div>
+        <div class="hd-xref-card-name">Sir Nathaniel Hale</div>
+        <div class="hd-xref-card-reason">Augusta is Nathaniel's granddaughter. She inherited both his sardonic intelligence and the estate his London career rebuilt.</div>
+      </a>
+      <a href="era-VII.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VII · The Victorian</div>
+        <div class="hd-xref-card-name">Edmund Hale II</div>
+        <div class="hd-xref-card-reason">Edmund II is Augusta's nephew. He inherited her careful stewardship — and transformed it into something more enclosed, and more guarded.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Augusta Hale married Henry Alderton at St. Wulfstan's in September 1832, at the age of fifty-seven. She managed the estate until her death in 1840. Her nephew George Edward — who had asked, at twelve, <em>who looks after you?</em> — inherited under the entail. He was a conscientious but undistinguished steward, and died without direct heirs in 1871, leaving the estate to his cousin Edmund. Edmund was brilliant, guarded, and ultimately the last of the main Hale line. The archive thickens considerably in his era, as he was a meticulous keeper of his own unhappiness. Continue with <a href="era-VII.html">Vol. VII: The Victorian Gentleman →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-V.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. V · Georgian</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-VII.html" class="esn-next">
+      <span class="esn-label">Vol. VII · Victorian</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script>
+  // Era VI — ambient sound
+  (function() {
+    var eraAudio = null, eraOn = false;
+    window.toggleEraSound = function() {
+      var btn = document.getElementById('eraSoundBtn');
+      if (!eraOn) {
+        if (!eraAudio) { eraAudio = new Audio('sounds/era-VI-ambient.mp3'); eraAudio.loop = true; eraAudio.volume = 0.35; }
+        eraAudio.play(); eraOn = true;
+        btn.textContent = '■ Stop'; btn.classList.add('on');
+      } else {
+        if (eraAudio) eraAudio.pause(); eraOn = false;
+        btn.textContent = '♪ Hear the parlour'; btn.classList.remove('on');
+      }
+    };
+  })();
+  </script>
+
+
+  <script>
+  (function() {
+    var audio  = document.getElementById('voiceAudio');
+    var btn    = document.getElementById('evpPlay');
+    var bar    = document.getElementById('evpBar');
+    var timeEl = document.getElementById('evpTime');
+    if (!audio || !btn) return;
+    btn.onclick = function(e) {
+      e.preventDefault();
+      if (audio.paused) { audio.play(); btn.textContent = '❚❚ Playing...'; }
+      else { audio.pause(); btn.textContent = '⚜ Hear Augusta'; }
+    };
+    audio.addEventListener('timeupdate', function() {
+      if (audio.duration) {
+        bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        var m = Math.floor(audio.currentTime / 60);
+        var s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      }
+    });
+    audio.addEventListener('ended', function() { btn.textContent = '⚜ Again'; bar.style.width = '100%'; });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:72px;left:28px" title=""><span class="hd-cipher">E</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>

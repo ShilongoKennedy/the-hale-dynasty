@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Letter Found — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0F0C08; color: #D4C8A8; font-family: Georgia, serif; min-height: 100vh; padding: 80px 20px 120px; }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    .page-note { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,168,60,0.4); margin-bottom: 60px; text-align: center; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+    .doc-block { }
+    .doc-ref { font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,168,60,0.5); margin-bottom: 10px; }
+    .doc-title { font-family: 'Cinzel', Georgia, serif; font-size: 1em; color: #D4C8A8; margin-bottom: 18px; letter-spacing: 0.06em; }
+    .doc-body { font-size: 0.9em; line-height: 1.9; color: #C8BCA0; }
+    .doc-body p { margin-bottom: 1em; }
+    .doc-body em { color: #B0A480; }
+    .doc-archival { font-style: italic; font-size: 0.85em; color: rgba(200,180,120,0.45); border-left: 2px solid rgba(200,168,60,0.2); padding-left: 12px; margin-bottom: 16px; line-height: 1.7; }
+    .rule { border: none; border-top: 1px solid rgba(200,168,60,0.12); margin: 50px 0; }
+    .col-rule { border: none; border-right: 1px solid rgba(200,168,60,0.1); }
+    .finding-aid-entry { font-family: 'Courier New', monospace; font-size: 0.82em; line-height: 1.9; color: #B0A888; }
+    .annotation-1 { color: rgba(200,180,120,0.5); font-style: italic; border-left: 2px solid rgba(200,168,60,0.2); padding-left: 10px; margin: 10px 0; }
+    .final-sentences { font-family: Georgia, serif; font-size: 1em; font-style: italic; color: #C8A050; border-left: 3px solid rgba(200,168,60,0.4); padding-left: 14px; margin-top: 20px; line-height: 1.9; }
+    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(10,6,2,0.95); border: 1px solid rgba(200,168,60,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .page-footer-note { text-align: center; margin-top: 80px; font-family: 'Courier New', monospace; font-size: 0.68em; letter-spacing: 0.16em; color: rgba(200,168,60,0.2); text-transform: uppercase; }
+    .page-footer-note a { color: rgba(200,168,60,0.3); text-decoration: none; }
+    .page-footer-note a:hover { color: rgba(200,168,60,0.6); }
+    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    @media (max-width: 660px) { .two-col { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-vol="">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="wrap">
+
+  <div class="page-note">Two documents · written in the same decade · neither writer knew about the other</div>
+
+  <div class="two-col">
+
+    <!-- LEFT: Eleanor's email to her father -->
+    <div class="doc-block">
+      <div class="doc-ref">MSS. Hale-Marsh X, item 7 · June 2019</div>
+      <div class="doc-title">Eleanor Voss<br>to her father</div>
+      <div class="doc-archival">Written six weeks after David Voss's death, while Eleanor was clearing his house. Sent to his address, which no longer received messages.</div>
+      <div class="doc-body">
+        <p>Dad,</p>
+        <p>I found the shoebox. I've been going through the house for three weeks and I found it this afternoon on the second shelf of the spare room bookcase, behind the Ordnance Survey maps. Nike box, size 10. I don't know whose shoes those were.</p>
+        <p>I looked through everything. The medals. The photographs. The diary with the Latin I can't read and the drawings I can. And the conveyance — I know you knew what it was because you wrote <em>Property: keep</em> on the Post-it note on the back.</p>
+        <p>At the bottom of the conveyance, there's a note in a different hand from the 1640s. You knew it was there. Did you know what it said? Did you know about Halecroft?</p>
+        <p>I've been sitting with the shoebox for two hours. I decided to wait. I don't quite want to know yet in the middle of your house when you're not here to hear it.</p>
+        <p>The job at the Bodleian is still open. I've been not-applying for it for three months because Oxford seems like a statement and I'm not sure I'm ready to make it. But I think I'm going to apply.</p>
+        <p>I think you would have liked me to apply.</p>
+        <p>I think the shoebox wants me to apply.</p>
+        <p>I miss you. The house smells like your books and your tea and I keep expecting to hear you coming downstairs.</p>
+        <p><em>Eleanor</em></p>
+      </div>
+    </div>
+
+    <!-- RIGHT: James's finding aid with final sentences -->
+    <div class="doc-block">
+      <div class="doc-ref">MSS. Hale-Marsh Finding Aid, item 3 · 2001, annotated through 2024</div>
+      <div class="doc-title">James Marsh-Hale<br>his finding aid entry</div>
+      <div class="doc-archival">James's personal annotated copy, found among his papers donated to the Bodleian in 2023. The final two sentences were added in February 2024. Written slowly. In recent ink.</div>
+      <div class="doc-body">
+        <div class="finding-aid-entry">
+          <p>MSS. Marsh-Hale 3, item 7. Matilda's letter. Single document, mounted between glass plates. Physical condition: fragile.</p>
+          <p>The text is in late Middle English, consistent with a date of c.1390. Central section damaged by water and not currently legible.</p>
+          <p>Significance: considerable. The document is the only surviving text in Matilda of Halecroft's hand. It appears to have been placed deliberately in the deed-box and found and replaced on at least two subsequent occasions without its contents being fully known.</p>
+          <p>Recommendation: multispectral imaging of the central section is strongly advised when resources permit.</p>
+          <p><em>— James Marsh-Hale, March 2001.</em></p>
+        </div>
+        <div class="annotation-1">Annotation in different ink, added later: <em>I waited twenty-three years. I should have pressed harder. E.V. found it in 2024.</em></div>
+        <div class="final-sentences">She was writing to Eleanor. She always was.</div>
+        <p style="font-family:'Courier New',monospace;font-size:0.68em;color:rgba(200,168,60,0.3);margin-top:14px;">Final two sentences · February 2024 · three weeks after the imaging results</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="rule">
+
+  <div class="page-footer-note">
+    <a href="matilda.html">✦ &nbsp; Matilda's letter — read in full &nbsp; ✦</a>
+    <br><br>
+    <a href="index.html">← Return to the archive</a>
+  </div>
+
+</div><!-- wrap -->
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="features.js"></script>
+<script src="transitions.js"></script>
+</body>
+</html>

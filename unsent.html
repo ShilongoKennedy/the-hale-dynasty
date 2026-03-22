@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Letter That Never Arrived — MSS. Hale-Marsh Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; }
+    body {
+      background: #E8E4DC;
+      color: #1A1A1A;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.8;
+    }
+
+    .era-nav {
+      background: #1A1A1A;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .era-nav a { color: #C8C0B0; text-decoration: none; }
+    .era-nav a:hover { color: #E8E0D0; }
+    .era-nav .vol-marker { color: #6A6050; }
+
+    .unsent-header {
+      background: #EDE8DC;
+      border-bottom: 4px solid #1A1A1A;
+      border-top: 4px solid #1A1A1A;
+      padding: 60px 40px 50px;
+      text-align: center;
+    }
+    .unsent-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #3A3A3A;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .unsent-title {
+      font-family: 'Playfair Display SC', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.6em, 4vw, 2.9em);
+      color: #1A1A1A;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .unsent-subtitle {
+      font-style: italic;
+      color: #5A4020;
+      font-size: 0.9em;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .unsent-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 30px 100px;
+    }
+
+    .editorial-note {
+      border-left: 3px solid #3A3A3A;
+      padding: 16px 20px;
+      background: #E0DCD0;
+      font-style: italic;
+      font-size: 0.85em;
+      color: #3A3020;
+      margin-bottom: 60px;
+      line-height: 1.7;
+    }
+    .editorial-note .attribution {
+      text-align: right;
+      margin-top: 10px;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      font-size: 0.85em;
+    }
+
+    /* DUAL PAGE SPREAD */
+    .dual-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 3px solid #1A1A1A;
+      background: #1A1A1A;
+      margin-bottom: 50px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+    }
+    @media (max-width: 700px) {
+      .dual-spread { grid-template-columns: 1fr; }
+    }
+
+    .letter-page {
+      background: #F2EBD8;
+      padding: 50px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .letter-page:first-child {
+      border-right: 1px solid #5A4020;
+    }
+    /* Burn effect on second letter */
+    .letter-page.burned {
+      background: #EDE4CF;
+    }
+    .letter-page.burned::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(ellipse at bottom right,
+        rgba(80,30,10,0.55) 0%,
+        rgba(140,60,10,0.25) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+    .letter-page.burned::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom,
+        rgba(60,20,5,0.18),
+        transparent);
+      pointer-events: none;
+    }
+
+    .page-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #6A5030;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #C8A870;
+      padding-bottom: 10px;
+    }
+
+    .letter-date {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.82em;
+      color: #3A2A10;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+
+    .letter-body {
+      font-size: 0.92em;
+      line-height: 1.9;
+      color: #1A1008;
+    }
+    .letter-body p { margin-bottom: 1.1em; }
+    .letter-body p:last-child { margin-bottom: 0; }
+
+    .letter-signature {
+      margin-top: 28px;
+      text-align: right;
+      font-style: italic;
+      font-size: 0.88em;
+      color: #3A2A10;
+      border-top: 1px solid #C8A870;
+      padding-top: 14px;
+    }
+
+    /* Burn char marks — inline text fragments */
+    .char { color: transparent; background: #3A1A05; border-radius: 1px; display: inline; font-size: 0.9em; user-select: none; }
+    .singed { color: #7A5520; }
+    .lost { color: transparent; background: #2A1005; border-radius: 1px; user-select: none; padding: 0 2px; }
+
+    /* Eleanor's reconstruction note alongside */
+    .eleanor-note {
+      margin-top: 40px;
+      padding: 22px 28px;
+      background: #1A1008;
+      border-left: 4px solid #8B6820;
+      color: #C8B890;
+      font-size: 0.82em;
+      line-height: 1.8;
+    }
+    .eleanor-note-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8B6820;
+      margin-bottom: 10px;
+    }
+    .eleanor-note p { margin-bottom: 0.8em; }
+    .eleanor-note p:last-child { margin-bottom: 0; }
+
+    .archival-footer {
+      margin-top: 50px;
+      font-size: 0.78em;
+      font-style: italic;
+      color: #5A4A30;
+      border-top: 1px solid #8A8070;
+      padding-top: 20px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 700px) {
+      .letter-page { padding: 36px 24px; }
+      .letter-page:first-child { border-right: none; border-bottom: 1px solid #5A4020; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="era-nav">
+    <a href="era-VII.html">← Vol. VII</a>
+    <span class="vol-marker">MSS. Hale-Marsh · Supplementary · The Letter That Never Arrived</span>
+    <a href="documents.html">All Documents →</a>
+  </nav>
+
+  <header class="unsent-header">
+    <div class="unsent-label">The Hale Dynasty · Supplementary Volume · MSS. Hale-Marsh</div>
+    <h1 class="unsent-title">The Letter That Never Arrived</h1>
+    <p class="unsent-subtitle">Two letters written by Edmund Hale of Harton Hall and never sent — the first undated, the second partially destroyed — reconstructed from legible fragments by Eleanor Voss, 2024</p>
+  </header>
+
+  <div class="unsent-content">
+
+    <div class="editorial-note">
+      The two letters reproduced below were found together in the deed-box, folded inside a sheet of blank paper that had been sealed with a wafer of red wax, unimprinted. The first letter is complete; the second has been burned along one edge, apparently deliberately, removing the top two and the final three inches of text. Eleanor Voss's reconstruction of the damaged passages is given in brackets, italicised, with the caveat that these represent her best reading of what can be partially made out, and are not to be taken as transcription. Both letters are addressed to a recipient who is nowhere named. The editors believe the intended recipient was the same in both cases. Neither letter was sent. Neither has an envelope. They were in the deed-box when Edmund Hale died in August 1882.
+      <div class="attribution">— A.F. &amp; E.V., <em>Oxford, January 2024</em></div>
+    </div>
+
+    <div class="dual-spread">
+
+      <!-- LETTER ONE — complete -->
+      <div class="letter-page">
+        <div class="page-label">Letter I · Undated · Complete · MSS. Hale-Marsh VII, item 38</div>
+        <div class="letter-date">Harton Hall, Worcestershire — undated</div>
+        <div class="letter-body">
+          <p>I have begun this letter four times and destroyed four beginnings. I do not know how to say what I need to say in a way that would not sound like either excuse or accusation, and I intend it to be neither. I simply want you to know certain things, because I think you have a right to know them and because I find, at this particular juncture, that the thought of continuing to not say them has become more uncomfortable than the thought of saying them.</p>
+          <p>The first thing is that I have known about Thomas since the month of his birth. I was told, and I did not come, and I have known for nine years that I did not come, and I know that this is not something that can be corrected or explained. I am not going to attempt to explain it. I am only going to say that I have thought about it every day since, which is not a mitigation but which is, I think, the truth.</p>
+          <p>The second thing is that the financial arrangement — which I know you consider insufficient and which you are right to consider insufficient, as it was made by my solicitor and reflects what my solicitor thought was practicable rather than what I thought was right — is not, and was not, the thing that I wanted to do. What I wanted to do is not something I am able to do. What I wanted to do was something I did not have the courage to do. Those are not the same statement, but they are both true.</p>
+          <p>The third thing is more difficult to say. I am going to say it anyway, which is perhaps the only honest thing I have done in the writing of this letter. The third thing is that Thomas — his name, the fact of him, the nine years of his existence that I have not been part of — is not something I have been able to set aside, and I do not believe I will be able to set it aside. I do not expect this to matter to you. I think you have arranged your life very sensibly around the assumption that it does not matter to you, and I think you are right to have done so. I am telling you because it is true. I cannot think of another reason to say anything.</p>
+        </div>
+        <div class="letter-signature">
+          E. Hale<br>
+          <span style="font-style:normal; font-size:0.9em; color:#5A4020;">unsigned — unsent</span>
+        </div>
+      </div>
+
+      <!-- LETTER TWO — burned -->
+      <div class="letter-page burned">
+        <div class="page-label">Letter II · Undated · Partially Destroyed · MSS. Hale-Marsh VII, item 39</div>
+        <div class="letter-date">Harton Hall — <span class="singed">undated</span></div>
+        <div class="letter-body">
+          <p><em style="color:#7A6040; font-size:0.88em;">[Reconstruction, E.V.: The first portion of the letter — approximately eight lines — is consumed. The legible text begins mid-sentence, the subject of which is unclear but appears to concern a decision recently made or communicated.]</em></p>
+          <p style="margin-top:12px;">— and I have decided that it is better not to come, which is a decision I have made for reasons I believe are sound and which I will not, in this letter, attempt to enumerate, because I have tried to enumerate them already in my own mind and found that they do not enumerate satisfactorily. The short version is that I think my appearing would cause you and Thomas considerably more difficulty than my not appearing, and that my own difficulty in the matter is not a factor that ought to be weighed in the calculation. I have weighed it anyway. I mention this only in case it is useful.</p>
+          <p>I want to say something about Thomas that I do not know how to say. He is nine years old. I know very little about what he is like — only what I have been able to learn from <span class="char">—————</span><span class="singed">your</span> letters, which were not written for that purpose and which I have therefore read very carefully for anything that might <span class="char">———</span> incidentally <span class="char">————</span> describe him. He likes <span class="char">———————</span>. He is <span class="char">——————</span>. I think, from what you wrote in the <span class="char">——</span> letter, that he is <span class="singed">kind</span>. I hope he is kind. Kindness seems to me the one quality that makes everything else <span class="char">——————</span>.</p>
+          <p>I am writing this because I want there to be something. Some record, however inadequate, of the fact that I knew about him and that I <span class="char">———</span><span class="singed">thought</span> about him and that I <span class="char">———————</span>. I do not expect this letter to be kept. I do not expect <span class="char">——————————</span>.</p>
+          <p><em style="color:#7A6040; font-size:0.88em;">[Reconstruction, E.V.: Three lines are legible in fragments at the lower edge before the fire takes the remainder. The fragments read, in sequence: <strong>"the land will still be"</strong> — possibly a reference to the family motto — followed by something which may be <strong>"Thomas"</strong> or may be a word of similar length — and finally, in the last legible line, what appears to be <strong>"I am sorry"</strong>. The final line is the most clearly written. It was written last.]</em></p>
+        </div>
+        <div class="letter-signature">
+          <span class="char">——————</span><br>
+          <span style="font-style:normal; font-size:0.9em; color:#5A4020;">signature consumed — unsent</span>
+        </div>
+      </div>
+
+    </div><!-- end dual-spread -->
+
+    <div class="eleanor-note">
+      <div class="eleanor-note-label">Archivist's Note · Eleanor Voss · Oxford, January 2024</div>
+      <p>I spent three sessions with Letter II under the multispectral imager before I was satisfied that I had recovered everything recoverable. The burn is deliberate — the char pattern shows the paper was held by one corner and the flame applied to the opposite corner, which is not how accidental fire damage looks. Someone burned it, partially, and then stopped. Or someone began to burn it and changed their mind. I don't know which. The fact that it was kept, in the condition it was in, alongside the complete letter, inside a sealed sheet, inside a deed-box that Edmund Hale apparently left no instructions about — I find I keep returning to the word <em>kept</em>. He kept it.</p>
+      <p>I have rendered the burned passages as lacunae rather than leaving them blank, because I thought the shape of the gaps was part of the document. I have been careful to distinguish between what I can read under the imager and what I am inferring. The three final fragments — <em>the land will still be</em>, what may be Thomas's name, <em>I am sorry</em> — are the imager's reading, not mine. I am recording this distinction because I think it matters which of us is responsible for what.</p>
+      <p>Neither letter has an addressee. The editors believe they were written to Clara Marsh. This is an inference based on the content. It is possible we are wrong. I note that it is also possible that they were not written to be sent to anyone, and that Edmund Hale wrote them to himself. I have thought about this often. I think, on balance, that he meant to send them. I think he could not. I think <em>kept</em> was what was left when sending became impossible.</p>
+    </div>
+
+    <div class="archival-footer">
+      MSS. Hale-Marsh Collection, Vol. VII supplementary items 38–39. Deed-box, inner compartment. Acquired by the Bodleian Libraries, Oxford, with the Hale-Marsh papers, 1924. Multispectral imaging conducted January 2024 by Eleanor Voss, Bodleian Library Research Fellow. The sealed outer sheet (item 37) bears no inscription. The red wax wafer is unimprinted. Neither letter has been previously catalogued or published.
+    </div>
+
+  </div>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

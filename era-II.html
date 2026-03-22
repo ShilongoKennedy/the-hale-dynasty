@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. II — The House of Hale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #EEE6CC;
+      color: #3B2A1A;
+      font-family: 'IM Fell English', Georgia, serif;
+    
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background: #3B2A1A;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .era-nav a { color: #C8A050; text-decoration: none; transition: color 0.2s; }
+    .era-nav a:hover { color: #E8C060; }
+    .era-nav .vol-marker { color: #7A5A28; }
+
+    .era-header {
+      background: #F5EDD6;
+      border-bottom: 3px solid #5C3A1E;
+      padding: 50px 40px 40px;
+      text-align: center;
+    }
+    .era-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .era-main-title {
+      font-family: 'Uncial Antiqua', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.6em, 4vw, 2.8em);
+      color: #3B2A1A;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .era-dates { font-family: 'Cinzel', Georgia, serif; font-size: 1.1em; color: #8B1A1A; letter-spacing: 0.2em; }
+
+    .era-content { max-width: 860px; margin: 0 auto; padding: 50px 30px 80px; }
+
+    .editorial-note {
+      border-left: 3px solid #8B1A1A;
+      padding: 16px 20px;
+      background: #F0E8D0;
+      font-style: italic;
+      font-size: 0.95em;
+      color: #5C3A1E;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    .document { margin-bottom: 60px; }
+    .doc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.25em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* PARCHMENT */
+    .parchment {
+      background: #F5EDD6;
+      border: 1px solid #B8A070;
+      padding: 38px 44px;
+      position: relative;
+      line-height: 1.85;
+      font-size: 1.05em;
+    }
+    .parchment::before {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px solid rgba(139,100,40,0.15); pointer-events: none;
+    }
+    .parchment p { margin-bottom: 1em; }
+    .parchment p:last-child { margin-bottom: 0; }
+    .parchment-title { text-align:center; font-size:0.9em; color:#8B1A1A; font-variant:small-caps; letter-spacing:0.12em; margin-bottom:4px; }
+    .parchment-subtitle { text-align:center; font-style:italic; color:#7A5C1E; font-size:0.85em; margin-bottom:18px; }
+    .parchment-rule { border:none; border-top:1px solid #B8A070; margin:18px 0; }
+    .rubricated { color: #8B1A1A; }
+
+    /* ── ERA BANNER ──────────────────────────────────────── */
+    
+
+    /* MANORIAL ROLLS */
+    .manorial-rolls {
+      background: #F5EDD6;
+      border: 1px solid #8B1A1A;
+      padding: 28px 34px;
+    }
+    .rolls-header {
+      font-size: 0.78em; font-variant: small-caps; letter-spacing: 0.1em;
+      color: #8B1A1A; border-bottom: 1px solid #B8A070;
+      padding-bottom: 10px; margin-bottom: 18px; line-height: 1.4;
+    }
+    .rolls-entry {
+      background: #EDE0B8;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      font-size: 0.88em;
+      line-height: 1.75;
+      border-left: 2px solid #8B1A1A;
+    }
+    .rolls-year { color: #8B1A1A; font-weight: bold; }
+
+    /* ── THE PLAGUE REGISTER ─────────────────────────────── */
+    @keyframes candleFlicker {
+      0%,100% { box-shadow: inset 0 0 55px rgba(90,28,0,0.38); }
+      18%     { box-shadow: inset 0 0 30px rgba(65,18,0,0.22); }
+      35%     { box-shadow: inset 0 0 75px rgba(100,32,0,0.50); }
+      55%     { box-shadow: inset 0 0 40px rgba(70,22,0,0.28); }
+      72%     { box-shadow: inset 0 0 90px rgba(95,30,0,0.42); }
+    }
+    .plague-register {
+      background: #1A0A0A;
+      color: #C8B890;
+      padding: 44px;
+      position: relative;
+      font-family: Georgia, serif;
+      line-height: 1.9;
+      animation: candleFlicker 7s ease-in-out infinite;
+    }
+    .plague-e-init { opacity: 0; transition: opacity 1.5s ease; }
+    .plague-e-in   { opacity: 1; }
+    .plague-header {
+      text-align: center;
+      font-size: 0.95em;
+      font-variant: small-caps;
+      letter-spacing: 0.15em;
+      color: #C8B890;
+      border-bottom: 1px solid #3A2820;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .plague-intro {
+      font-style: italic;
+      font-size: 0.82em;
+      color: #9A8870;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .plague-entry {
+      border-bottom: 1px solid #2A1A12;
+      padding: 16px 0;
+      font-size: 0.88em;
+      line-height: 1.9;
+      color: #C8B890;
+    }
+    .plague-entry:last-child { border-bottom: none; }
+
+    .plague-note {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #5A4A38;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #2A1A12;
+    }
+
+    /* INQUEST TESTIMONY */
+    .inquest {
+      background: #F5EDD6;
+      border: 2px solid #5C3A1E;
+      padding: 34px 40px;
+    }
+    .inquest-header {
+      font-size: 0.8em;
+      font-variant: small-caps;
+      letter-spacing: 0.12em;
+      color: #8B1A1A;
+      border-bottom: 1px solid #B8A070;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .inquest p { font-size: 0.9em; line-height: 1.85; margin-bottom: 0.9em; }
+
+    /* LATIN WRIT / INQUISITIO */
+    .latin-writ {
+      background: #EDE0B8;
+      border: 2px solid #7A5C1E;
+      border-top: 6px solid #8B1A1A;
+      padding: 36px 42px 32px;
+      position: relative;
+      box-shadow: inset 0 0 60px rgba(100,60,0,0.08), 2px 3px 12px rgba(0,0,0,0.18);
+    }
+    .latin-writ::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(139,90,30,0.18);
+      pointer-events: none;
+    }
+    .lw-rubric {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.82em;
+      letter-spacing: 0.28em;
+      color: #8B1A1A;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .lw-subtitle {
+      text-align: center;
+      font-style: italic;
+      font-size: 0.82em;
+      color: #5C3A1E;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+    .lw-subtitle span { font-style: normal; font-size: 0.9em; display: block; margin-top: 3px; letter-spacing: 0.04em; }
+    .lw-rule { border: none; border-top: 1px solid #B8A070; margin: 18px 0; }
+    .lw-latin {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 0.87em;
+      line-height: 1.92;
+      color: #2A1A0E;
+    }
+    .lw-latin p { margin-bottom: 1em; }
+    .lw-initial {
+      font-family: 'Uncial Antiqua', 'Cinzel', Georgia, serif;
+      font-size: 2.1em;
+      float: left;
+      line-height: 0.85;
+      margin: 4px 6px 0 0;
+      color: #8B1A1A;
+    }
+    .lw-witness {
+      text-align: right;
+      margin-top: 14px;
+    }
+    .lw-witness-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.12em;
+      color: #7A5C1E;
+      font-style: italic;
+    }
+    .lw-translation {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-style: italic;
+      font-size: 0.84em;
+      line-height: 1.82;
+      color: #4A3020;
+    }
+    .lw-translation p { margin-bottom: 0.9em; }
+    .lw-trans-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.2em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-style: normal;
+    }
+    .lw-archival {
+      margin-top: 24px;
+      border-top: 1px dashed rgba(90,60,20,0.3);
+      padding-top: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #7A5C1E;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* THOMAS'S REMEMBRANCE */
+    .remembrance {
+      background: #F8F2E0;
+      border: 1px solid #9A8060;
+      padding: 40px 46px;
+      position: relative;
+    }
+    .remembrance::after {
+      content: '';
+      position: absolute;
+      bottom: 8px; right: 8px;
+      width: 40px; height: 40px;
+      border-bottom: 1px solid #B8A070;
+      border-right: 1px solid #B8A070;
+    }
+    .remembrance p { font-size: 0.92em; line-height: 1.9; margin-bottom: 1em; }
+    .remembrance p:last-child { margin-bottom: 0; }
+
+    .nota-bene {
+      background: #EDE0B8;
+      border-left: 4px solid #C8A050;
+      padding: 12px 18px;
+      font-style: italic;
+      font-size: 0.82em;
+      color: #5C4020;
+      margin-bottom: 8px;
+    }
+    .nota-bene strong { font-style: normal; }
+
+    /* ── DEATH TOLL TICKER ──────────────────────────────────── */
+    .death-toll {
+      text-align: center;
+      padding: 36px 20px 28px;
+      border-top: 1px solid #1A0808;
+      border-bottom: 1px solid #1A0808;
+      margin: 0 0 48px 0;
+    }
+    .death-toll-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.22em;
+      color: #4A2010;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .death-toll-number {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(3em, 8vw, 6em);
+      font-weight: 700;
+      color: #8B1A1A;
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 40px rgba(139,26,26,0.3);
+      display: block;
+      font-variant-numeric: tabular-nums;
+    }
+    .death-toll-sub {
+      font-style: italic;
+      font-size: 0.78em;
+      color: #3A1A1A;
+      margin-top: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 600px) {
+      .plague-register, .parchment, .inquest, .remembrance { padding: 24px 18px; }
+      .era-content { padding: 30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── PORTRAIT ───────────────────────────────────────── */
+    .portrait-frame {
+      float: right;
+      margin: 0 0 32px 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .portrait-svg { display: block; }
+    .portrait-img-ii {
+      display: block;
+      width: 220px;
+      height: auto;
+      border: 5px solid #2A1A0A;
+      outline: 2px solid #6A4A18;
+      outline-offset: -8px;
+      box-shadow: 4px 4px 0 #1A0A02, 8px 8px 20px rgba(0,0,0,0.85), inset 0 0 12px rgba(0,0,0,0.4);
+    }
+    .portrait-caption {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      color: #4A3A20;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .portrait-frame { float: none; margin: 0 auto 28px; display: block; }
+    }
+
+    /* ── SOUND BAR ──────────────────────────────────────── */
+    .era-sound-bar {
+      background: #1A1008; border-bottom: 1px solid #2A1808;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #3A2408; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 16px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.95em; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+
+    .voice-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 14px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.88em; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.2s; margin-left: 10px;
+      display: none;
+    }
+    .voice-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .voice-btn.speaking { color: #C8A840; border-color: rgba(200,168,40,0.6); animation: voicePulse 1.2s ease infinite; }
+    @keyframes voicePulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    /* ── ERA II VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-ii {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 10px;
+    }
+    .evp-ii-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.12em;
+      color: #7A5820;
+      text-transform: uppercase;
+    }
+    .evp-ii-play {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.3);
+      color: #7A5820;
+      padding: 5px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88em;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .evp-ii-play:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+    .evp-ii-progress {
+      background: rgba(200,168,40,0.1);
+      height: 4px;
+      width: 80px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    .evp-ii-bar {
+      background: #7A5820;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .evp-ii-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #7A5820;
+      min-width: 28px;
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── DUST MOTES ────────────────────────────────── */
+    #dustCanvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 50;
+      opacity: 0; transition: opacity 2s ease;
+    }
+    #dustCanvas.active { opacity: 1; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: sepia(0.6) contrast(1.1) brightness(0.85);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,5,5,0.60);
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="ii" data-vol="II">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-II.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">Death spreads through the village · Ambient</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <button class="esb-btn" id="eraSoundBtn" onclick="toggleEraSound()">♪ Hear the bells</button>
+      <button class="voice-btn" id="voiceBtn2" onclick="speakMatilda()">♪ Hear Matilda</button>
+      <div class="era-voice-player-ii" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/matilda.mp3" preload="none"></audio>
+        <button class="evp-ii-play" id="evpPlay">❧ Play</button>
+        <div class="evp-ii-progress">
+          <div class="evp-ii-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-ii-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-I.html">← Vol. I</a>
+    <span class="vol-marker">VOL. II OF X &nbsp;·&nbsp; 1121–1400</span>
+    <a href="era-III.html">Vol. III →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraII.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume II</div>
+    <h1 class="era-main-title">The House of Hale</h1>
+    <p class="hd-quill" style="font-style:italic; color:#5C3A1E; font-size:0.88em; margin:10px 0 16px; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being a Compilation of Parish Records, Inquest Testimonies, Manorial Rolls, and Sundry Documents<br>
+      pertaining to the Family of Hale of Halecroft, in the County of Worcestershire
+    </p>
+    <div class="era-dates">1121 — 1400</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/matilda.png" class="portrait-img-ii" alt="Matilda Hale — candlelit medieval portrait, c.1348">
+      <div class="portrait-caption">Matilda of Halecroft · c.1312–1381<br><em>Imagined from the record</em></div>
+    </div>
+
+    <div class="editorial-note">
+      What follows is drawn from three principal sources: the manorial rolls of Halecroft, preserved in part at the Worcester Record Office; the parish register of St. Wulfstan's, Halecroft, which survives from 1214 in a fragmentary state; and a collection of testimonies gathered during the inquest of 1351, which concerned itself with the disposition of the Hale lands following the deaths — in the space of fourteen months — of every male member of the family save one. That one was a boy of eleven named Thomas Hale. This is, among other things, his story.
+      <div style="text-align:right; margin-top:10px; font-style:normal; letter-spacing:0.1em; font-size:0.85em;">— A.F., <em>London, November 1884</em></div>
+    </div>
+
+    <!-- Document 1: Parish Register -->
+    <div class="document">
+      <div class="doc-label">Document I · Parish Register of St. Wulfstan's, Halecroft · c. 1189</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> Here the parish register of St. Wulfstan's Halecroft takes up the account, in the hand of Father Osbert, who held the living from 1178 to 1214. Father Osbert was not a subtle man, but he was thorough.
+      </div>
+      <div class="parchment">
+        <p class="parchment-title rubricated">From the Parish Register of St. Wulfstan's, Halecroft — c. 1189</p>
+        <hr class="parchment-rule">
+        <div class="manorial-rolls" style="background:transparent; border:none; padding:0;">
+          <div class="rolls-entry">
+            <span class="rolls-year">Anno Domini 1189.</span> Item. Baptised this Michaelmas the son of Robert Hale of the Hale and his wife Edith, formerly Edith atte Pond of Pershore. The child is called William. Father Osbert did perform the sacrament.
+          </div>
+          <div class="rolls-entry">
+            Item. Buried this same season one Godwin the elder, villein of the manor, aged by estimation fourscore years, who had been a boy at the Conquest and who remembered Ranulf de la Hale coming to the gate. He is the last such. God have mercy upon his soul.
+          </div>
+          <div class="rolls-entry">
+            <span class="rolls-year">Anno Domini 1214.</span> Item. William Hale of the Hale hath this year purchased from the lord of the manor the freehold of such lands as his father Robert held in villeinage, together with two further strips of the east field, paying therefore the sum of four shillings and a promise of military service in the event of necessity, which necessity hath not yet arisen. He is henceforward a freeholder of this parish and oweth no further suit of court.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document 2: Famine Manorial Rolls -->
+    <div class="document">
+      <div class="doc-label">Document II · Manorial Rolls of Halecroft · Michaelmas 1317 · The Famine Years</div>
+      <div class="manorial-rolls">
+        <div class="rolls-header">
+          From the Manorial Rolls of Halecroft — Michaelmas 1317<br>
+          <span style="font-weight:normal; color:#5C3A1E;">The manorial rolls of Halecroft for 1315 to 1322 are written in a hand that grows progressively more strained. The entries that proliferate across these seven years, filling margins and adding themselves to the foot of columns never designed for such annotation, are the records of death and default.</span>
+        </div>
+        <div class="rolls-entry">
+          Item. Roger atte Brook, villein, holdeth one half-virgate in the west field. Hath paid no rent since Easter last. The reeve reporteth that Roger atte Brook hath sold his plough-beast in the spring to buy grain and hath nothing more to sell. The court ordereth that his rent be forgiven for this term and that the lord's barn shall provide one bushel of rye for the sustenance of his household, this to be counted as a loan against future rents.
+        </div>
+        <div class="rolls-entry">
+          Item. The widow Marjorie Carpenter, free tenant, surrendereth her holding of three acres in the south field, she being unable to maintain the same. The said holding doth revert to the manor and will be re-let when a suitable tenant can be found. The widow Marjorie is permitted to remain in her cottage without charge of rent until the following Michaelmas, at which time her situation shall be reviewed.
+        </div>
+        <div class="rolls-entry">
+          Item. Thomas Smith, villein, is reported dead this Lammas. His son Richard, being of age and sound in body, doth claim his father's virgate. Granted, on payment of heriot, being the best beast of the said Thomas, which is one very thin ox.
+        </div>
+        <div style="margin-top:16px; font-style:italic; font-size:0.85em; color:#5C3A1E; padding-top:12px; border-top:1px solid #B8A070;">
+          William Hale, who held the Hale in these years, fares rather better in the record than many of his neighbours. His wife Margaret is mentioned once in the famine years: in the court record of Easter 1318, where she is noted as having provided bread from the Hale's oven to the household of Roger atte Brook. There is no ceremony in the recording of this fact. The clerk writes it as he would write any other transaction: <em>Margaret wife of William Hale doth give bread.</em> It is done. The names are written down.
+        </div>
+      </div>
+    </div>
+
+    <!-- Death Toll Ticker -->
+    <div class="death-toll">
+      <div class="death-toll-label">Recorded dead — Parish of Halecroft — Anno Domini 1349</div>
+      <span class="death-toll-number" id="death-count">0</span>
+      <div class="death-toll-sub">of an estimated 247 souls in the village</div>
+    </div>
+
+    <!-- Document 3: THE PLAGUE DEATH REGISTER -->
+    <div class="document">
+      <div class="doc-label">Document III · Death Register · St. Wulfstan's, Halecroft · Autumn 1348</div>
+      <div class="plague-register">
+        <div class="plague-header">
+          THE DEATH REGISTER OF ST. WULFSTAN'S HALECROFT<br>
+          AUTUMN 1348
+        </div>
+        <div class="plague-intro">
+          Being a record kept by Father Edmund Croft, priest of this parish, of those departed in the pestilence, God have mercy on their souls.
+        </div>
+
+        <div class="plague-entry">
+          November, the feast of All Saints — Agnes atte Well, widow. John Miller and his wife Isabel and their three children, whose names were Hugh, Margaret, and the infant called Blessing who had no other name yet given. Simon the tanner.
+        </div>
+
+        <div class="plague-entry">
+          November, the feast of St. Martin — Richard Hale of the Hale, freeholder, aged four-and-forty. His wife Maud. Their son Edmund, aged eighteen.
+        </div>
+
+        <div class="plague-entry">
+          November, the week following — William Hale of the Hale, freeholder, aged six-and-twenty, son of the said Richard and Maud. His wife Alice. Their daughter Joan, aged three years. John Hale, brother of the said William, aged two-and-twenty. All of this family dead within the span of fourteen days, save one boy named Thomas, aged eleven, who had been sent before the plague's arrival to his mother's kin in Pershore, and who returned to find the house empty. May God in his mercy receive the souls of the departed.
+        </div>
+
+        <div class="plague-entry">
+          November, continuing — Father William atte Cross, who was assistant curate and who anointed many of the dying. Robert the reeve. Agnes the dairymaid, whose last name I do not know. Seven souls in the villein cottages whose names I have recorded separately in the margin, though the ink has run.
+        </div>
+
+        <div class="plague-entry">
+          December — I write this in December and I am, I think, the last man in this parish able to write. I do not know what I am. I am keeping the record because someone must. God have mercy on all of us. Father Edmund Croft, priest of this parish, writing in the knowledge that this may be the last entry I make. The boy Thomas came home last week with a cooking pot. I do not know where he got it. He asked me if there was anything to put in it. I told him to see to the pig. He said he would.
+        </div>
+
+        <div class="plague-note">
+          † HALECROFT, WORCESTERSHIRE · YEAR OF OUR LORD 1348 †<br>
+          <em>Of the Hale family: five adults dead. One child living. Thomas, aged eleven. The land will hold, if the boy does.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document 4: Inquest Testimony 1351 -->
+    <div class="document">
+      <div class="doc-label">Document IV · Inquest Testimony · Worcester, 1351</div>
+      <div class="inquest">
+        <div class="inquest-header">
+          From the Proceedings of the Inquest into the Hale Lands at Halecroft<br>
+          <span style="font-weight:normal; color:#5C3A1E; font-style:italic;">Worcester, Michaelmas Term, 1351 · Before the Justices of Assize</span>
+        </div>
+        <p>Testimony of Thomas Hale, son of Richard Hale, freeholder, aged thirteen at the time of this proceeding, touching the question of his inheritance of the freehold at Halecroft, Worcestershire.</p>
+        <p>Thomas Hale saith upon his oath that he is the son of Richard Hale, deceased, who held the said lands in freehold, and that his father was the son of William Hale, also deceased, and that he can recite his descent from William Hale the elder who purchased the said freehold in 1214, which reckoning he hath confirmed by reference to the manorial rolls which he hath examined in the custody of the present lord of the manor, and which confirm the same.</p>
+        <p>The court hath examined the said Thomas Hale and findeth him to be of the age he claimeth, to have a clear understanding of his father's estate, and to be able to read such Latin as is required to verify the relevant records. This last is attributed to the instruction of Father Edmund Croft, late of St. Wulfstan's, who taught the boy his letters before the pestilence took him.</p>
+        <p>The court findeth that Thomas Hale is the legitimate heir to the freehold at Halecroft and doth confirm him in his inheritance, the same to be held from the lord of the manor by the terms of the original grant of 1214. The court doth further note that the said Thomas Hale, being a boy of thirteen and now sole survivor of his family, is to be placed under the wardship of his uncle John atte Pond of Pershore until he reaches his majority.</p>
+        <p style="color:#8B1A1A; font-style:italic;">Thomas Hale. His mark. Anno Domini 1351.</p>
+      </div>
+    </div>
+
+    <!-- Document IV-a: Latin Inquest Writ 1351 -->
+    <div class="document">
+      <div class="doc-label">Document IV-a · Inquisitio · Royal Chancery Copy · Worcester, 1351 · Original Latin · With Editors' Translation</div>
+      <div class="latin-writ">
+        <div class="lw-rubric">INQVISITIO · ANNO REGNI EDWARDI TERTII · VICESIMO QVINTO</div>
+        <div class="lw-subtitle">Concerning the Lands at Halecroft in the County of Worcester<br>
+        <span>Held before the Justices of Assize at Worcester · Michaelmas Term · 1351</span></div>
+        <hr class="lw-rule">
+        <div class="lw-latin">
+          <p><span class="lw-initial">E</span>dwardus dei gracia Rex Anglie et Francie et Dominus Hibernie omnibus ad quos presentes litere pervenerint salutem. Sciatis quod nos ad plenam informacionem habere volentes de terris et tenementis que fuerunt Ricardi Hale de Halecroft in comitatu Wigorn', nuper defuncti, &amp; de iure heredum eiusdem Ricardi in terris predictis, mandavimus dilectis &amp; fidelibus nostris Iustitiariis itinerantibus apud Wigorniam quod inquisicionem inde fieri facerent per sacramentum proborum &amp; legalium hominum de comitatu predicto.</p>
+          <p>Qui quidem Iusticiarii inquisicionem inde fecerunt &amp; per eam compertum est quod predictus Ricardus Hale tenuit predictum manerium de Halecroft in comitatu Wigorn' in feodo simplici tempore mortis sue, &amp; quod Thomas Hale filius &amp; heres predicti Ricardi est etatis tredecim annorum &amp; ultra, &amp; quod predictum manerium valet per annum ultra reprisas quinque solidos &amp; quatuor denarios.</p>
+          <p>Et quia invenimus &amp; per inquisicionem predictam compertum est quod dictus Thomas Hale est verus heres predicti Ricardi patris sui secundum legem &amp; consuetudinem Anglie, ipse idem Thomas legitime successit in hereditatem predictam. Concessimus igitur &amp; confirmavimus eidem Thome &amp; heredibus suis terras predictas in Halecroft tenendas de nobis &amp; heredibus nostris per servicium debitum &amp; consuetum.</p>
+          <p>In cuius rei testimonium has literas nostras patentes fieri fecimus. Teste Rege apud Westmonasterium, vicesimo die Novembris, anno regni nostri vicesimo quinto.</p>
+          <div class="lw-witness">
+            <span class="lw-witness-label">Per ipsum Regem &amp; de data predicta · Rotulus Cancellarie</span>
+          </div>
+        </div>
+        <hr class="lw-rule" style="margin-top:28px;">
+        <div class="lw-translation">
+          <div class="lw-trans-label">Editors' Translation · A.F., London, 1884</div>
+          <p>Edward, by the grace of God King of England and France and Lord of Ireland, to all to whom these present letters shall come, greeting. Know that we, wishing to have full information concerning the lands and tenements which were of Richard Hale of Halecroft in the county of Worcester, lately deceased, and concerning the right of the heirs of the said Richard in the said lands, we have commanded our beloved and faithful Justices itinerant at Worcester that they cause an inquisition to be made thereof by the oath of honest and lawful men of the aforesaid county.</p>
+          <p>Which Justices have duly made an inquisition thereof, and by it it is found that the aforesaid Richard Hale held the aforesaid manor of Halecroft in the county of Worcester in fee simple at the time of his death, and that Thomas Hale, son and heir of the aforesaid Richard, is of the age of thirteen years and upward, and that the aforesaid manor is worth annually beyond outgoings five shillings and four pence.</p>
+          <p>And because we find, and it is found by the aforesaid inquisition, that the said Thomas Hale is the true heir of the aforesaid Richard his father according to the law and custom of England, the same Thomas has lawfully succeeded to the aforesaid inheritance. We have therefore granted and confirmed to the same Thomas and his heirs the aforesaid lands in Halecroft, to be held of us and our heirs by due and accustomed service.</p>
+          <p>In testimony whereof we have caused these our letters patent to be made. Witness the King at Westminster, the twentieth day of November, in the twenty-fifth year of our reign.</p>
+        </div>
+        <div class="lw-archival">
+          Archival note: This Chancery copy was found with the estate papers of a subsequent lord of the Worcester manor, and acquired by the Bodleian in 1934 as part of the Harington-Woolfe deeds. It is the sole surviving official record of the 1351 inquisition; the original Chancery roll entry for this period was lost in the 1666 fire. Thomas Hale would have presented the writ to the manorial court to establish his tenure. That he kept it until 1382, and that it passed into the deed-box with his other papers, suggests he understood what the document meant. He was thirteen. He could read it. He had been taught by Father Croft, who died that same autumn.
+        </div>
+      </div>
+    </div>
+
+    <!-- Document IV-b: Witness Statements 1351 -->
+    <div class="document">
+      <div class="doc-label">Document IV-b · Further Testimony · Three Witnesses · Worcester Assizes · 1351</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> The following sworn depositions were taken at Worcester in the same sessions as the inquisition above. They do not appear in the Chancery copy but survive in a separate folio found folded inside the deed-box, apparently retained by Thomas Hale himself. The editors surmise he was given them by one of the Justices or by a clerk who took pity on the boy. The hand is a professional one. The spelling is the clerk's.
+      </div>
+      <div class="inquest">
+        <div class="inquest-header">
+          Further Testimony · Sworn Before the Justices of Assize · Worcester, Michaelmas 1351<br>
+          <span style="font-weight:normal; color:#5C3A1E; font-style:italic;">Being the Depositions of Three Witnesses as to the Character and Tenancy of Richard Hale of Halecroft, deceased</span>
+        </div>
+
+        <hr style="border:none; border-top:1px solid #C8A870; margin:18px 0 22px;">
+
+        <p style="font-variant:small-caps; color:#8B1A1A; font-size:0.88em; letter-spacing:0.08em; margin-bottom:16px;">The Testimony of Hugh the Miller, of Halecroft · Being of Sound Mind · Sworn on the Gospels</p>
+        <p>I am Hugh son of Walter, miller, of the vill of Halecroft in the county of Worcester, and I have known the Hale family this thirty years. Richard Hale that is dead was my near neighbour and I would say he was a good man and a fair one. He paid his dues at the appointed times and I never heard it said otherwise. He kept his hedges and his ditches in good repair, which is more than some do. When my wife was ill in the winter of the year six before the pestilence came, he sent meal to the house and would take nothing for it.</p>
+        <p>His son Thomas I know also. I was in the village when the pestilence came and I saw the boy come back from Pershore in the spring with nothing but a pot and his own two feet. He went straight to the house and then to the field and he worked it. He was eleven years old. I do not know what else to say. If the justices want to know whether Thomas Hale should hold the land after his father, I say yes. He has been holding it already.</p>
+        <p style="text-align:right; font-style:italic; color:#5C3A1E; font-size:0.88em; margin-top:4px;">His mark · <strong>✕</strong> · Hugh son of Walter, Miller · witnessed by Robert the clerk</p>
+
+        <hr style="border:none; border-top:1px solid #C8A870; margin:22px 0;">
+
+        <p style="font-variant:small-caps; color:#8B1A1A; font-size:0.88em; letter-spacing:0.08em; margin-bottom:16px;">The Testimony of Agnes, Widow of Edmund Farre, of Halecroft · Sworn on the Gospels</p>
+        <p>I am Agnes that was wife to Edmund Farre that died in the pestilence in October of the year forty-eight. I knew Richard Hale and Maud his wife from the year of my marriage. Maud Hale was a good woman and a skilful one, and she kept her household well and taught her children how to work. I was with her at the end. She died on a Thursday. She asked me to make sure Thomas was not alone when she went, and I promised her I would, but I was not able to keep that promise because I was ill myself by that time. I am sorry for it still.</p>
+        <p>Thomas Hale is the son of his parents and he has shown himself to be so. He should hold the land. His mother would have wished it and I believe his father would have too. I do not know what more I can say to the justices. I am a widow now and I have my own land to manage, but I will say what I know and what I saw.</p>
+        <p style="text-align:right; font-style:italic; color:#5C3A1E; font-size:0.88em; margin-top:4px;">Her mark · <strong>✕</strong> · Agnes widow of Edmund Farre · witnessed by Robert the clerk</p>
+
+        <hr style="border:none; border-top:1px solid #C8A870; margin:22px 0;">
+
+        <p style="font-variant:small-caps; color:#8B1A1A; font-size:0.88em; letter-spacing:0.08em; margin-bottom:16px;">The Testimony of Brother Anselm, Formerly of Worcester Priory · Residing at Halecroft · Sworn on the Gospels</p>
+        <p>I am Anselm, a brother of the order of Saint Benedict, formerly of the priory at Worcester, now resident at the church of Saint Wulfstan's at Halecroft at the invitation of the vicar there who is himself reduced in health by the pestilence and requires assistance. I came to Halecroft in the spring of the year forty-nine when most of the dying was done.</p>
+        <p>I found one man holding the farm. He was a boy of eleven years. He had ploughed two of the four fields himself, or tried to, the ploughing being imperfect but the intention clear. He had arranged the burials himself or caused them to be arranged when he could not do so alone. He had made a record of the names in a small book which I believe he had taken from his father's desk. The record is imperfect — the boy could not spell all the names and some entries are only a letter or a mark — but every person in that village who died is in that book. I have seen it. I helped him correct some of the spellings.</p>
+        <p>I do not know the law of England. I know what I saw. Thomas Hale held the land of Halecroft through the winter of forty-nine and the year fifty and the year fifty-one, and he is holding it now. If the justices have a question as to whether he is competent and willing to hold it, I would suggest that question is already answered.</p>
+        <p style="text-align:right; font-style:italic; color:#5C3A1E; font-size:0.88em; margin-top:4px;"><em>Anselm, O.S.B.</em> · witnessed by Robert the clerk · Worcester, Michaelmas 1351</p>
+
+        <div class="lw-archival" style="margin-top:24px;">
+          Archival note: These depositions are not listed in the Chancery roll. It is not known how Thomas Hale came to possess them. The folio shows signs of long folding and was found in the deed-box under the writ above. Brother Anselm does not appear in the Worcester Priory records after 1354; it is assumed he died in a second outbreak. The small book he mentions — the boy's death register — is Document III of this volume.
+        </div>
+      </div>
+    </div>
+
+    <!-- Document 5: Thomas's Remembrance 1382 -->
+    <div class="document">
+      <div class="doc-label">Document V · The Remembrance of Thomas Hale · 1382</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> What follows is a document written in Thomas Hale's own hand in the year 1382, when he was forty-four years old and in good health, addressed to his son John who was then seventeen. The manuscript survives in the deed-box. The spelling is Thomas's own.
+      </div>
+      <div class="remembrance">
+        <p style="font-variant:small-caps; letter-spacing:0.1em; color:#8B1A1A; font-size:0.85em; margin-bottom:16px;">A Remembrance, Written by Thomas Hale of Halecroft to His Son John — Anno Domini 1382</p>
+        <hr style="border:none; border-top:1px solid #B8A070; margin-bottom:20px;">
+        <p>To my son John who shall hold this land after me —</p>
+        <p>I sette down this remembrance in the yere of our Lorde thirteen hundred foure score and twayne, being the yere in which Thomas Hale of the Hale in the countie of Worcester, freeholder, doth write to his son that which he hathe learned from living and from watching others die.</p>
+        <p>I was eleven yeres in the yere the pestilence came to this village. My father Richard Hale was four-and-fourtie yeres, and he died in November of that yere, together with my mother Maud and my brother Edmund that was eighteen. My father's brother William that was sixe-and-twentie died in that same weeke with his wife Alice and their daughter Joan. I know not whether Joan had a name day before she died. I think not.</p>
+        <p>I came home from Pershore where I had gone to my mother's kin before the pestilence came thither also. I came home in the spring and the house was emptie and there were graves in the churchyard and no one to tell me how many. I was eleven yeres old and I had a cooking pot that my uncle had given me and I did not know what else to do, so I went to see to the pig.</p>
+        <p>This is what I have to tell my son. When thou dost not know what else to do: see to the pig. The world will be confusing and the people thou hast loved will be gone and thou wilt not know what is required of thee. See to the pig. The pig doth not require thee to understand anything. It requireth thee to do the next thing. Do the next thing and then the thing after that, and in this manner the days will pass, and thou wilt still be here when they are done passing, and the land will still be here, and that is enough.</p>
+        <div class="hd-marginal-wrap"><p>We are a familie that holds what it is given. Keep asking whether thou hast done enough. A familie that keeps asking will keep the land. A familie that stoppeth asking will lose it, sooner or later, one way or another.</p>
+        <p>Keep asking. Keep the land. See to the pig. <span class="hd-pig" data-era="II" title="🐷">🐷</span></p>
+        <div class="hd-marginal">The question Thomas asks here recurs in every volume. He did not know that. We do. — E.V. 2024</div></div>
+        <div style="text-align:right; margin-top:20px; font-style:italic; color:#8B1A1A;">
+          Thomas Hale, his marke.<br>
+          <span style="color:#5C3A1E; font-style:normal;">Halecroft, in the county of Worcester. Anno Domini 1382.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top: 1px solid #2A1A0A;">
+    <a href="era-I.html">← Vol. I: The Chronicle</a>
+    <span class="vol-marker">END OF VOLUME II</span>
+    <a href="era-III.html">Vol. III: The Hale Inheritance →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+  /* ── DEATH TOLL TICKER ─────────────────────────────────────── */
+  (function() {
+    var el = document.getElementById('death-count');
+    var sub = el ? el.parentElement.querySelector('.death-toll-sub') : null;
+    if (!el) return;
+    var target = 183;
+    var current = 0;
+    var started = false;
+    function tick() {
+      if (current >= target) {
+        setTimeout(function() {
+          if (sub) sub.textContent = 'The village fell silent.';
+        }, 1200);
+        return;
+      }
+      current++;
+      el.textContent = current;
+      var delay = 60 + Math.random() * 340;
+      // accelerate through middle, slow at end
+      if (current > 160) delay = 300 + Math.random() * 600;
+      setTimeout(tick, delay);
+    }
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !started) {
+        started = true;
+        setTimeout(tick, 800);
+      }
+    }, { threshold: 0.5 });
+    obs.observe(el.parentElement);
+  })();
+  </script>
+
+  <script>
+  /* ── PLAGUE REGISTER: names emerge one by one from darkness ── */
+  (function(){
+    var reg = document.querySelector('.plague-register');
+    if (!reg) return;
+    var items = reg.querySelectorAll('.plague-entry, .plague-note');
+    items.forEach(function(el){ el.classList.add('plague-e-init'); });
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        items.forEach(function(el, i){
+          setTimeout(function(){ el.classList.add('plague-e-in'); }, 700 + i * 1400);
+        });
+      });
+    }, { threshold: 0.15 });
+    io.observe(reg);
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents (skip .plague-register as it has its own animation)
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. II INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">✶ &nbsp; ✶ &nbsp; ✶</div>
+
+<!-- RECOVERED DOCUMENT 1: Thomas to aunt Elspeth, summer 1350 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh II, item 19a · Letter · Summer 1350</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Thomas Hale of the Hale, to his Aunt Elspeth of Pershore</p>
+    <p class="parchment-subtitle">Middle English · Written in the summer of 1350 · Thomas being approximately twelve years of age · The earliest surviving document in his hand</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The letter was found folded inside a Pershore household account book acquired by the Worcester Record Office in 1961. It had been kept, apparently, by Elspeth or her descendants. The editors consider this the most significant document in the Vol. II supplementary collection. The spelling is Thomas's own.</div>
+    <p><span class="hd-dropcap">D</span>ere Auntie Elspeth, I do wryte to thanke you for kepinge me these monthes and for the bred you dide give me the morning I dide goe and also for not creyinge until I was past the gate, which I dide notise and which I think was kinde.</p>
+    <p>I am home now. The howse is stondinge and the beestes are well and Brother Anselm from the priorie was here and he tolde me what happenede and then he wente back and it is just me now and the beestes and old Matilda who keepes the bees and who dide bringe me a pot of honney yesterday without sayinge anythinge which is her manner.</p>
+    <p>I do have a question which is: mother dide have two cookinge pottes. I haue the one I brough from you. I cannot finde the other one, which was the smaller one with the cracke in the handele that she used for the porridge in the morning. I do not need it for cookinge as I have the one. I just want to knowe where it is.</p>
+    <p>Also I want to knowe if you kept any of her other thinges when she sente me to you. She sente me with my clothes and the potte and nothing else but I thought perhaps she sente some thinges separatelie which you have still.</p>
+    <p>I am well. Brother Anselm taught me to make a pasty before he wente which I have made twice and it is tolerablie good the seconde time.</p>
+    <p><em>Your lovinge nevew Thomas Hale. God save you. Written at Halecroft this summer.</em></p>
+    <div class="recovered-archival" style="margin-top:18px;">No reply from Elspeth survives. The smaller cooking pot with the cracked handle is not mentioned in any subsequent document. The cooking pot Thomas carried from Pershore appears in his 1395 probate inventory as: <em>one iron pot with leather-wrapped handle, value four pence.</em> He kept it for forty-six years. · <a href="bees.html" style="color:inherit; border-bottom:1px solid rgba(139,100,40,0.3); text-decoration:none;">Explore Matilda's morning before the inquest →</a></div>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: The 1381 Psalter Page -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh II, item 23 · Single Manuscript Page · c.1381</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Single Page Found Inside a Worcester Priory Psalter</p>
+    <p class="parchment-subtitle">Bodleian MS. Lat. liturg. d.42 · Identified by Eleanor Voss, January 2024 · Unsigned</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The page is not in the hand of the psalter's main scribe. It appears to have been tucked inside the binding deliberately. The text is a single paragraph. The editors believe it was written by someone in the parish of Halecroft who was present at or aware of the events it describes, and that it was placed in the psalter for safekeeping.</div>
+    <p><span class="hd-dropcap">T</span>homas Hale of the Hale was at the march on the castle on the fourteenth of June in this year of Our Lord 1381. He rode from Halecroft before dawn and was in Worcester by the hour of prime and he marched with the men from the parishes and he carried a billhook which was what he had, being a farming man.</p>
+    <p>He did not use the billhook. He stood in the street with the other men for two hours and watched the castle gates and listened to the shouting from inside and then he put the billhook on the ground and walked back toward the south gate and went home. He was back at the Hale before vespers. He told no one and no one has named him to the sheriff.</p>
+    <p>He is a man of forty-three years who survived the pestilence when he was eleven and who has held the Hale by the labour of his hands without assistance from any lord or court since he was confirmed in his inheritance. He did not burn anything. He did not break anything. He stood in a street with a billhook for two hours.</p>
+    <p><em>He should not be named to the sheriff. He will not be named to the sheriff. This is set down so that the truth is somewhere, which is what the truth requires.</em></p>
+    <p style="font-size:0.88em; color:#5C3A1E;">— Unsigned. Worcester, the month following the march, 1381.</p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Deed-Box -->
+<div class="obj-header">Archive Object · Vol. II · The Hale, Halecroft</div>
+<div class="interactive-obj document" id="obj-II">
+  <div class="obj-lid" id="obj-lid-II" onclick="toggleObj('II')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
+        <rect x="1" y="7" width="26" height="14" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M1 7 Q14 1 27 7" stroke="#C8A83C" stroke-width="1.2" fill="rgba(200,168,60,0.06)"/>
+        <rect x="11" y="12" width="6" height="5" rx="1" stroke="#8B6914" stroke-width="1" fill="none"/>
+        <circle cx="14" cy="14" r="1" fill="#8B6914"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Deed-Box
+      <span>Oak, iron lock, crack along the lid repaired in leather · Open the box</span>
+    </div>
+    <svg id="obj-chevron-II" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-II">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>An oak box, approximately 30cm × 20cm × 15cm, with a wrought-iron lock and hasp. The wood is very dark with age, almost black in the grain. The lid has a visible crack along the front edge, repaired with a strip of leather binding that is itself old. The lock plate is worn bright at the keyhole from centuries of use.</p>
+        <p>Inside, visible through the open lid: a layer of documents tied with faded ribbon. The 1214 freehold purchase. The 1067 writ. The court rolls. Four centuries of paper proving what the family held and how they held it. A small brass key still on its ring, placed deliberately on top of the stack.</p>
+      </div>
+      <div class="obj-note">
+        Brother Anselm found this box on the shelf at the Hale in April 1349 when he came to find the eleven-year-old Thomas. Every person in the household had died. The box was on the shelf. Whoever had been tending the animals had known enough not to touch what was not theirs.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>When George Edward Hale catalogued the box in 1858 after Augusta's death, he reached into it and felt something under the lining on the left side — a slight stiffness, as if something had been folded there. He cut the lining with a small knife.</p>
+          <p>What he found was a small folded piece of parchment, fragile, brown, the ink faded to the edge of legibility. He spent two hours reading it letter by letter with a magnifying glass. He copied it out in full and placed the original back under the lining and repaired the tear.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">Under the lining · Left side · A folded document</span>
+          The opening line: <em>To whoever shall read this after I am gone, which will be soon enough.</em>
+          The closing line: <em>Keep asking. Keep the land. See to the pig. — Matilda. Her mark.</em>
+          The damaged middle section: recovered by multispectral imaging, January 2024. It had been there the whole time. Six hundred and thirty-four years.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-I.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume I · The Norman</div>
+        <div class="hd-xref-card-name">Ranulf de la Hale</div>
+        <div class="hd-xref-card-reason">The Hale that Thomas inherits in 1349 was the same land Ranulf held by royal writ in 1066.</div>
+      </a>
+      <a href="era-III.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume III · The Tudor</div>
+        <div class="hd-xref-card-name">William Hale</div>
+        <div class="hd-xref-card-reason">Thomas's survival in 1349 made William's Tudor prosperity possible two centuries later. The Hale held.</div>
+      </a>
+      <a href="era-X.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume X · The Contemporary</div>
+        <div class="hd-xref-card-name">Matilda's letter, recovered 2024</div>
+        <div class="hd-xref-card-reason">Eleanor Voss recovers the letter Matilda left in the deed-box c.1390 — addressed, across six centuries, to her.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Thomas Hale died at Halecroft in 1395, having held the land alone from his eleventh year. The estate passed to his son William, and then to William's son Thomas the Younger, who sold timber rights to the dissolved priory in 1502. By the Tudor period, the Hales were minor gentry — not wealthy, not famous, but continuous. The pestilence had taken nearly half of England. The Hale had not gone under. The letter Thomas wrote to his son was kept in the deed-box, as Matilda's note had specified. Continue with <a href="era-III.html">Vol. III: The Tudor Settlement →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-I.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. I · Norman</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-III.html" class="esn-next">
+      <span class="esn-label">Vol. III · Tudor</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+var eraAudio = null, eraOn = false;
+function initEraSound() {
+  if (!eraAudio) {
+    eraAudio = new Audio('sounds/era-II-ambient.mp3');
+    eraAudio.loop = true; eraAudio.volume = 0.35;
+  }
+}
+function toggleEraSound() {
+  var btn = document.getElementById('eraSoundBtn');
+  if (!eraOn) {
+    initEraSound(); eraAudio.play(); eraOn = true;
+    btn.textContent = '♪ Silence the bells'; btn.classList.add('on');
+  } else {
+    if (eraAudio) eraAudio.pause(); eraOn = false;
+    btn.textContent = '♪ Hear the bells'; btn.classList.remove('on');
+  }
+}
+  </script>
+
+  <script>
+// Era II voice player
+(function() {
+  var audio = document.getElementById('voiceAudio');
+  var btn = document.getElementById('evpPlay');
+  var bar = document.getElementById('evpBar');
+  var timeEl = document.getElementById('evpTime');
+
+  btn.onclick = function(e) {
+    e.preventDefault();
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚ Playing...';
+    } else {
+      audio.pause();
+      btn.textContent = '❧ Play';
+    }
+  };
+
+  audio.addEventListener('timeupdate', function() {
+    if (audio.duration) {
+      var pct = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = pct + '%';
+      var m = Math.floor(audio.currentTime / 60);
+      var s = Math.floor(audio.currentTime % 60);
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    btn.textContent = '❧ Again';
+    bar.style.width = '100%';
+  });
+})();
+
+function speakMatilda() {} // deprecated - now using HTML5 audio
+if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = function(){};
+  </script>
+
+  <canvas id="dustCanvas"></canvas>
+  <script>
+  (function(){
+    var canvas = document.getElementById('dustCanvas');
+    var ctx = canvas.getContext('2d');
+    var motes = [];
+    var running = false;
+    var raf;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createMote() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: Math.random() * 0.18 + 0.04,
+        opacity: Math.random() * 0.35 + 0.08,
+        drift: Math.random() * Math.PI * 2,
+        driftSpeed: Math.random() * 0.005 + 0.002
+      };
+    }
+
+    for (var i = 0; i < 55; i++) motes.push(createMote());
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < motes.length; i++) {
+        var m = motes[i];
+        m.drift += m.driftSpeed;
+        m.x += m.vx + Math.sin(m.drift) * 0.08;
+        m.y += m.vy;
+        if (m.y > canvas.height + 5) {
+          m.y = -5;
+          m.x = Math.random() * canvas.width;
+        }
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(180,150,100,' + m.opacity + ')';
+        ctx.fill();
+      }
+      if (running) raf = requestAnimationFrame(draw);
+    }
+
+    // Start after 2 seconds automatically (subtle, always on)
+    setTimeout(function() {
+      running = true;
+      canvas.classList.add('active');
+      draw();
+    }, 2000);
+  })();
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="top:80px;left:28px" title=""><span class="hd-cipher">E</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>

@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. IV — The Divided House</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+French+Canon:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#E8EAF0; color:#1A1A2A; font-family:'Libre Baskerville', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#1C2E4A; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#C8D8F0; text-decoration:none; } .era-nav a:hover { color:#E8F0FF; }
+    .era-nav .vol-marker { color:#8090A8; }
+
+    .era-header {
+      background:#E4E8F2; border-bottom:4px solid #1C2E4A; border-top:2px solid #6E1418;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#1C2E4A; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'IM Fell French Canon','Cinzel',Georgia,serif; font-size:clamp(1.6em,4vw,2.9em); color:#1A1A2A; letter-spacing:0.04em; margin-bottom:8px; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#6E1418; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:820px; margin:0 auto; padding:50px 30px 80px; }
+
+    .portrait-frame { float:right; margin:0 0 32px 40px; text-align:center; position:relative; z-index:2; }
+    .portrait-img-iv {
+      display:block; width:200px; height:auto;
+      border:5px solid #1C2E4A;
+      outline:2px solid #8090B0; outline-offset:-9px;
+      box-shadow:0 0 0 1px #0E1A2E, 5px 5px 20px rgba(0,0,0,0.6);
+    }
+    .portrait-caption { font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.1em; color:#2A3A5A; margin-top:8px; line-height:1.5; }
+    @media (max-width:600px) { .portrait-frame { float:none; margin:0 auto 28px; display:block; } }
+
+    .editorial-note {
+      border-left:3px solid #1C2E4A; padding:16px 20px; background:#D8DCE8;
+      font-style:italic; font-size:0.85em; color:#2A3A5A; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#1C2E4A; text-transform:uppercase; margin-bottom:6px; }
+    .nota-bene { background:#D8DCE8; border-left:4px solid #8A9AB8; padding:12px 18px; font-style:italic; font-size:0.82em; color:#2A3A5A; margin-bottom:8px; }
+
+    /* PARLIAMENTARY LETTER — blue */
+    .parliament-letter {
+      background:#E8EDF5;
+      border-left:5px solid #1C2E4A;
+      border:1px solid #8090B8;
+      border-left-width:5px;
+      padding:36px 44px 70px;
+      position: relative;
+    }
+    /* Parliamentary seal — deep navy J·H */
+    .parliament-seal {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: radial-gradient(circle at 38% 30%, #2E4878 0%, #1A2E58 50%, #0E1C38 100%);
+      box-shadow: 0 3px 9px rgba(0,0,0,0.35), inset 0 1px 2px rgba(160,190,255,0.16);
+      position: absolute; bottom: 24px; right: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .parliament-seal::before {
+      content: '';
+      position: absolute; inset: 3px; border-radius: 50%;
+      border: 1px solid rgba(180,210,255,0.18);
+    }
+    .parliament-seal::after {
+      content: 'J·H';
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.76em; font-weight: 600;
+      color: rgba(180,210,255,0.68);
+      letter-spacing: 0.06em;
+    }
+    .parliament-letter-head {
+      font-variant:small-caps; letter-spacing:0.1em; color:#1C2E4A;
+      font-size:0.8em; border-bottom:1px solid #8090B8; padding-bottom:10px; margin-bottom:18px;
+      line-height:1.5;
+    }
+    .parliament-letter p { font-size:0.92em; line-height:1.9; margin-bottom:0.9em; color:#1A1A2A; }
+    .parliament-letter p:last-child { margin-bottom:0; }
+    .parliament-sig { text-align:right; margin-top:16px; font-style:italic; color:#2A3A5A; font-size:0.88em; }
+
+    /* ROYALIST LETTER — crimson */
+    .royalist-letter {
+      background:#F5ECEC;
+      border-left:5px solid #6E1418;
+      border:1px solid #B08080;
+      border-left-width:5px;
+      padding:36px 44px 70px;
+      position: relative;
+    }
+    /* Royalist seal — blood red T·H */
+    .royalist-seal {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: radial-gradient(circle at 38% 30%, #A82020 0%, #6E1418 50%, #480A0C 100%);
+      box-shadow: 0 3px 9px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,160,160,0.16);
+      position: absolute; bottom: 24px; right: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .royalist-seal::before {
+      content: '';
+      position: absolute; inset: 3px; border-radius: 50%;
+      border: 1px solid rgba(255,190,190,0.18);
+    }
+    .royalist-seal::after {
+      content: 'T·H';
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.76em; font-weight: 600;
+      color: rgba(255,200,180,0.68);
+      letter-spacing: 0.06em;
+    }
+    /* Puritan pamphlet — slightly printed */
+    .puritan {
+      transform: rotate(-0.2deg);
+      box-shadow: 1px 2px 10px rgba(0,0,0,0.16);
+    }
+    .royalist-letter-head {
+      font-variant:small-caps; letter-spacing:0.1em; color:#6E1418;
+      font-size:0.8em; border-bottom:1px solid #B08080; padding-bottom:10px; margin-bottom:18px;
+      line-height:1.5;
+    }
+    .royalist-letter p { font-size:0.92em; line-height:1.9; margin-bottom:0.9em; color:#2A1A1A; }
+    .royalist-letter p:last-child { margin-bottom:0; }
+    .royalist-sig { text-align:right; margin-top:16px; font-style:italic; color:#5A2A2A; font-size:0.88em; }
+
+    /* FIELD DISPATCH */
+    .field-dispatch {
+      background:#E8E0D0;
+      border-left:4px solid #2A3A50;
+      border:1px solid #A09888;
+      border-left-width:4px;
+      padding:30px 38px;
+    }
+    .field-dispatch-head { font-family:'Courier New',monospace; font-size:0.72em; letter-spacing:0.15em; text-transform:uppercase; color:#2A3A50; border-bottom:1px solid #8A8070; padding-bottom:8px; margin-bottom:16px; }
+    .field-dispatch p { font-size:0.88em; line-height:1.85; margin-bottom:0.85em; color:#2A2A1A; }
+
+    /* PURITAN PAMPHLET */
+    .puritan {
+      background:#E8E4D8;
+      border:3px solid #3A3A3A;
+      padding:30px 36px;
+    }
+    .puritan-title { font-family:'Courier New',monospace; text-align:center; font-size:0.85em; font-weight:bold; color:#1A1A1A; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; border-bottom:2px solid #3A3A3A; padding-bottom:10px; }
+    .puritan p { font-family:'Courier New',monospace; font-size:0.82em; color:#2A2A2A; line-height:1.8; margin-bottom:0.8em; }
+
+    /* RESTORATION DOCUMENT */
+    .restoration {
+      background:#FAF4E0;
+      border:1px solid #8A6A1A;
+      border-top:4px solid #8A6C1A;
+      padding:36px 44px;
+    }
+    .restoration-head { text-align:center; font-variant:small-caps; letter-spacing:0.15em; color:#8A6C1A; font-size:0.88em; border-bottom:1px solid #C8A840; padding-bottom:12px; margin-bottom:18px; }
+    .restoration p { font-size:0.9em; line-height:1.9; margin-bottom:0.9em; }
+    .restoration-sig { text-align:right; font-style:italic; color:#6A5010; font-size:0.85em; margin-top:14px; }
+
+    /* ERA BANNER */
+    
+
+    /* DIVIDER */
+    .era-divider {
+      text-align:center; margin:40px 0;
+      font-family:'Courier New',monospace; font-size:0.7em;
+      color:#8090A8; letter-spacing:0.3em;
+    }
+
+    .brothers-divide {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 0 0 56px;
+      border-top: 1px solid #1A1A1A;
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .brother-side {
+      padding: 36px 32px;
+      position: relative;
+    }
+    .brother-side--parliament {
+      background: linear-gradient(135deg, #0A1220 0%, #0E1828 100%);
+      border-right: 1px solid #1A1A1A;
+    }
+    .brother-side--royalist {
+      background: linear-gradient(135deg, #1A0808 0%, #120606 100%);
+    }
+    .brother-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .brother-side--parliament .brother-label { color: #4A6A9A; }
+    .brother-side--royalist .brother-label { color: #8A3020; }
+    .brother-quote {
+      font-style: italic;
+      font-size: 0.9em;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .brother-side--parliament .brother-quote { color: #7A9AC8; }
+    .brother-side--royalist .brother-quote { color: #C87868; }
+    .brother-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72em;
+      letter-spacing: 0.12em;
+    }
+    .brother-side--parliament .brother-name { color: #2A4A78; }
+    .brother-side--royalist .brother-name { color: #782010; }
+    .divide-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px;
+      height: 60%;
+      background: linear-gradient(180deg, transparent, #3A3A3A, transparent);
+      pointer-events: none;
+    }
+    @media (max-width: 600px) {
+      .brothers-divide { grid-template-columns: 1fr; }
+      .brother-side--parliament { border-right: none; border-bottom: 1px solid #1A1A1A; }
+    }
+
+    @media (max-width:600px) {
+      .parliament-letter,.royalist-letter,.field-dispatch,.puritan,.restoration { padding:20px 16px; }
+      .era-content { padding:30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── SOUND BAR ──────────────────────────────────────── */
+    .era-sound-bar {
+      background: #1A1008; border-bottom: 1px solid #2A1808;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #3A2408; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 16px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.95em; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+
+    /* ── ERA IV VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-iv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 10px;
+    }
+    .evp-iv-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.12em;
+      color: #7A5820;
+      text-transform: uppercase;
+    }
+    .evp-iv-play {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.3);
+      color: #7A5820;
+      padding: 5px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88em;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .evp-iv-play:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+    .evp-iv-progress {
+      background: rgba(200,168,40,0.1);
+      height: 4px;
+      width: 80px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    .evp-iv-bar {
+      background: #7A5820;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .evp-iv-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #7A5820;
+      min-width: 28px;
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      filter: sepia(0.3) contrast(1.1) brightness(0.9);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,5,0.55);
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="iv" data-vol="IV">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-IV.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">Marston Moor, 1644 · Ambient</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <button class="esb-btn" id="eraSoundBtn" onclick="toggleEraSound()">♪ Hear the battle</button>
+      <div class="era-voice-player-iv" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/john.mp3" preload="none"></audio>
+        <button class="evp-iv-play" id="evpPlay">▶ Play</button>
+        <div class="evp-iv-progress">
+          <div class="evp-iv-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-iv-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-III.html">← Vol. III</a>
+    <span class="vol-marker">VOL. IV OF X &nbsp;·&nbsp; 1620–1665</span>
+    <a href="era-V.html">Vol. V →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraIV.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume IV</div>
+    <h1 class="era-main-title">The Divided House</h1>
+    <p class="hd-quill" style="font-style:italic; color:#2A3A5A; font-size:0.88em; margin:10px 0; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being the Correspondence of John Hale and Thomas Hale, Brothers, Written During the Years of the Civil War Between the Parliament and the Crown. Two Brothers. Opposite Sides. Eleven Letters.
+    </p>
+    <div class="era-dates">1620 — 1665</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="brothers-divide">
+      <div class="brother-side brother-side--parliament">
+        <div class="brother-label">For Parliament · For England</div>
+        <div class="brother-quote">"I fight not against the King, but against his wicked counsellors who have perverted justice and parliament alike."</div>
+        <div class="brother-name">— John Hale, Capt. Parliamentarian Horse</div>
+        <div class="divide-center"></div>
+      </div>
+      <div class="brother-side brother-side--royalist">
+        <div class="brother-label">For the King · For God · For England</div>
+        <div class="brother-quote">"If I must choose between my brother and my King, then God forgive me, for I cannot choose my brother."</div>
+        <div class="brother-name">— Thomas Hale, Lt. Royalist Foot</div>
+      </div>
+    </div>
+
+    <div class="portrait-frame">
+      <img src="portraits/john.png" class="portrait-img-iv" alt="John Hale — Restoration portrait, c.1670">
+      <div class="portrait-caption">John Hale · 1620–1668<br><em>Imagined from the record</em></div>
+    </div>
+
+    <div class="editorial-note">
+      John Hale (1620–1668) fought for Parliament. His brother Thomas Hale (1624–1672) fought for the King. Their youngest brother William (1628–1689) held Halecroft and the family's lands throughout, fighting for neither side and corresponding with both. The eleven letters between John and Thomas constitute one of the more remarkable documents in the archive: two men who understood each other completely, disagreed entirely, and never stopped writing.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
+    </div>
+
+    <div class="era-divider">✦ &nbsp; THE LETTERS &nbsp; ✦</div>
+
+    <!-- Letter 1: John to Thomas, 1642 -->
+    <div class="document">
+      <div class="doc-label">Letter I · John Hale (Parliament) to Thomas Hale (King) · October 1642</div>
+      <div class="parliament-letter">
+        <div class="parliament-letter-head">
+          From John Hale, Captain, Regiment of Colonel Fiennes · Gloucester, October 1642<br>
+          <span style="color:#3A4A6A; font-style:italic; font-weight:normal;">To his brother Thomas, wheresoever he may be found</span>
+        </div>
+        <p>Brother Thomas — I write from Gloucester where we have been these three weeks, and I will not pretend to you that it is easy. The men are brave but they are also cold and hungry and the supply from Bristol has twice been intercepted on the road, which tells you something about the state of the country between here and there. We are managing. That is the most I can say for it.</p>
+        <p>I have your letter of the 4th, which found me eventually. You write that you think I am on the wrong side of this question. I have thought about that word — <em>wrong</em> — with more care than you might expect, and I will say only this: I think the Parliament is right about the law, and I think the King is right about certain matters of feeling, and I think that when those two things come apart and cannot be reconciled, you get a war. We have a war. You and I, who grew up in the same house and who know what the other one thinks before he says it, are standing on different sides of it, which should tell us something about how completely this has divided England, if we did not already know.</p>
+        <p>I am not going to tell you to come over to Parliament's side. I know you won't. I am going to ask you to keep yourself whole if you can, because when this is over — and it will be over, and one side will have won and the other will have lost and neither will have been entirely right — there will still be Halecroft, and it will need men who remember what it was before.</p>
+        <p>Tell me where you are, if you can do so safely. I think of you more often than is useful.</p>
+        <div class="parliament-sig">
+          Your brother, who remains so regardless,<br>
+          <strong>John Hale.</strong> Gloucester, this 14th October, 1642.
+        </div>
+        <div class="parliament-seal" title="Wax seal: J·H"></div>
+      </div>
+    </div>
+
+    <!-- Letter 2: Thomas to John, 1643 -->
+    <div class="document">
+      <div class="doc-label">Letter II · Thomas Hale (King) to John Hale (Parliament) · January 1643</div>
+      <div class="royalist-letter">
+        <div class="royalist-letter-head">
+          From Thomas Hale, Ensign, Lord Wilmot's Horse · Oxford, January 1643<br>
+          <span style="color:#6A3A3A; font-style:italic; font-weight:normal;">To his brother John Hale, Captain, Parliament's Army</span>
+        </div>
+        <p>Brother — I have your letter of October, received last week by a route I shall not describe. You are well and thinking clearly, which is more than I can say for half the gentlemen on this side of the argument. The King's councillors at Oxford are engaged in a competition to see which of them can be most brilliantly wrong about the fastest number of subjects. I find this less encouraging than perhaps I should.</p>
+        <p>You write that you think the Parliament is right about the law. I do not dispute it. The Parliament is often right about the law. The question I cannot get past is this: what is the law for, if not to uphold the order that makes law possible? Strip away the King and what governs the governors? The Parliament says: the Parliament. And who governs the Parliament? The Parliament says: the people. And the people says what, precisely? The people says what the loudest man in the room says they say, in my observation.</p>
+        <div class="hd-marginal-wrap"><p>I am not fighting for the King because he is right. I am fighting for him because what replaces a King — if it is only the will of the strongest — is worse. I may be wrong. I expect I shall find out.</p>
+        <div class="hd-marginal">He was wrong. And also not wrong. — E.V.</div></div>
+        <p>Major Harley has lost his leg at the ford, which is a bad business. He bore it as you would expect him to. He asks to be remembered to anyone who remembers him. I told him you would. Keep yourself whole. William writes that Halecroft is still standing and the pigs are fat, which is as much as we can ask for. <span class="hd-pig" data-era="IV" title="🐷">🐷</span></p>
+        <div class="royalist-sig">
+          Your brother in everything except this war,<br>
+          <strong>Thomas Hale.</strong> Oxford, January 1643.<br>
+          <span style="color:#6E1418;">God save the King.</span>
+        </div>
+        <div class="royalist-seal" title="Wax seal: T·H"></div>
+      </div>
+    </div>
+
+    <!-- Field Dispatch 1644 -->
+    <div class="document">
+      <div class="doc-label">Document III · Field Dispatch · John Hale · June 1645</div>
+      <div class="field-dispatch">
+        <div class="field-dispatch-head">Field Dispatch · Captain John Hale, Parliamentary Forces · Naseby, Northamptonshire · 15 June 1645</div>
+        <p>To Colonel Oakes — Sir, I write in haste from the field. The enemy is broken. The King's horse fled north and his foot surrendered by four o'clock. It is over, in the sense that a battle is over. What comes after is another question.</p>
+        <p>I have not heard from my brother Thomas since February. I do not know which side of the field he stood on today, or whether he stood at all. I ask you, sir, as a personal matter, to make what inquiry you can. He is an Ensign in Lord Wilmot's horse, or was when last I knew. He is my brother. The rest of it — the side, the standard, the argument — I am prepared to set aside for the purpose of knowing that he is alive.</p>
+        <p>We have what we came for. I find I do not know exactly what to do with that. I expect I will learn.</p>
+        <p style="color:#2A3A50; font-style:italic; font-size:0.85em; border-top:1px solid #A09888; padding-top:8px; margin-top:8px;">Note added in margin, undated: <em>Thomas was alive. He had ridden north with Wilmot. He wrote from Scotland in August. The handwriting was his.</em></p>
+      </div>
+    </div>
+
+    <!-- Puritan Pamphlet -->
+    <div class="document">
+      <div class="doc-label">Document IV · Puritan Pamphlet · Circulated in Worcestershire · c. 1647</div>
+      <div class="puritan">
+        <div class="puritan-title">A Word to the Godly of Worcestershire, Concerning the Present Dispensation</div>
+        <p>CONSIDER: that God hath brought low the great ones of this earth, and hath done it through the hands of plain men who feared Him more than they feared princes. This is not an accident of history. This is a purpose.</p>
+        <p>CONSIDER: that the land of England is held at this moment by those who hold it in trust, not in perpetuity. Every acre is lent. Every lordship is provisional. The man who tills the field and fears God hath as much right before heaven as the man who holds the deed.</p>
+        <p>CONSIDER FINALLY: that the question which every godly man must ask himself is not &quot;what am I permitted?&quot; but &quot;what is required of me?&quot; This question hath no comfortable answer. It never had. The comfortable answers are all wrong. Ask the uncomfortable one and act upon it as best you can, and trust that God sees the difference between a man who tried and a man who did not.</p>
+        <p style="color:#4A4A3A; font-size:0.78em; margin-top:12px; border-top:1px solid #5A5A4A; padding-top:8px;">No printer named. Circulated in the county of Worcester, c. 1647–1649. Found in the deed-box. No annotation.</p>
+      </div>
+    </div>
+
+    <!-- Final Letter: Thomas to John, 1660 - Restoration -->
+    <div class="document">
+      <div class="doc-label">Letter XI · Thomas Hale to John Hale · May 1660 · The Restoration</div>
+      <div class="royalist-letter">
+        <div class="royalist-letter-head">
+          From Thomas Hale · Worcester · May 1660<br>
+          <span style="font-style:italic; font-weight:normal; color:#6A3A3A;">The last of the eleven letters</span>
+        </div>
+        <p>Brother John — The King is coming home. I write this from Worcester, which is a city that remembers what it cost us, and I find I am not certain what I feel about it. I thought I would feel vindicated. I feel tired. I feel that eighteen years is a long time to be right about something that cost this much.</p>
+        <p>I want to say something to you that I have not been able to say in a letter during a war, which is: I do not think you were wrong. I think you were fighting for something that mattered. I think the thing you were fighting for was not exactly the thing that won, and the thing I was fighting for was not exactly the thing that is coming back. Both sides did things in the name of their principles that their principles do not justify. Both sides know this. Neither side has said it plainly, which is a pity, because it is the only true thing left to say.</p>
+        <p>We kept Halecroft. William kept it. Our brother, who fought for neither of us and kept the land warm for whoever came home — he is the one who held the thing together. I think we owe him more than we have ever said.</p>
+        <p>Come home when you can. There is apparently still a pig that needs seeing to.</p>
+        <div class="royalist-sig">
+          Your brother Thomas. Worcester, May 1660.<br>
+          <span style="color:#8A6C1A; font-style:normal;">God save the King. Both of them, in their turn.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restoration Document -->
+    <div class="document">
+      <div class="doc-label">Document V · Declaration of Loyalty · William Hale · June 1660</div>
+      <div class="restoration">
+        <div class="restoration-head">Declaration of the Loyalty of William Hale of Halecroft, Worcestershire<br>
+        Made before the Justices of the Peace · June 1660</div>
+        <p>I William Hale of Halecroft in the county of Worcester do hereby declare upon my oath that I have at all times during the late unhappy dissensions maintained my loyalty to the lawful government of this kingdom, that I have paid such taxes and assessments as were lawfully due under each successive administration, that I have harboured no conspirators and sheltered no traitors, and that it is my intention henceforward to live peaceably under His Majesty King Charles II, to whose restoration I give thanks to God and to those whose efforts have brought it about.</p>
+        <p>I further declare that both my brothers John Hale and Thomas Hale, who served in arms on opposite sides of the recent conflict, are men of honest conviction and loyal character, and I commend them both to His Majesty's mercy and the county's forbearance. They were, in my judgment, both wrong in some things and right in others, which is the condition of most men who fight for anything.</p>
+        <div class="restoration-sig">
+          William Hale, his mark.<br>
+          <span style="color:#8A6C1A;">Witnessed before the Justices of Peace of Worcestershire, 12 June 1660.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #0A1020;">
+    <a href="era-III.html">← Vol. III: The Hale Inheritance</a>
+    <span class="vol-marker">END OF VOLUME IV</span>
+    <a href="era-V.html">Vol. V: Sir Nathaniel →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. IV INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">✠ &nbsp; ✠ &nbsp; ✠</div>
+
+<!-- RECOVERED DOCUMENT 1: William the Youngest's account book, 1642–1651 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh IV, item 31 · Household Account Book · 1642–1651</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">William Hale the Youngest — His Account Book · Nine Annual Entries</p>
+    <p class="parchment-subtitle">Copied by Robert Hale c.1700 from his father's original · With the note: <em>my father's war, in his words</em></p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: This is the only record of William Hale's interior life during the nine years his brothers were at war. Robert's copy preserves his father's orthography, which he notes explicitly: <em>I have copied these as my father wrote them, spelling and all, because the spelling is also his.</em></div>
+    <p style="margin-bottom:1.1em;"><strong>1642.</strong> Cold spring. East field ploughed late. John rode to Gloucester the seventh of August. Thomas rode to Worcester the same week in the other direction. Father sat with the deed-box. I brought him bread. The harvest was adequate.</p>
+    <p style="margin-bottom:1.1em;"><strong>1643.</strong> Wet summer. Mill wheel cracked at the east bearing. I repaired it myself with Ulfric's help, three days. There was a battle at Newbury in September. I do not know if my brothers were in it. The harvest was poor.</p>
+    <p style="margin-bottom:1.1em;"><strong>1644.</strong> The armies came through the south field in March, Parliamentary forces, and did not burn anything but took six sheep which I recorded and which were not returned. The harvest was tolerably good. I have not heard from either brother since October last. Father is in health but quieter than he was.</p>
+    <p style="margin-bottom:1.1em;"><strong>1645.</strong> Thomas came home in July from Oxford. He is thin. He did not speak much for a month. He saw to the east field without being asked. This was worth noting.</p>
+    <p style="margin-bottom:1.1em;"><strong>1646.</strong> John came home in the autumn. He and Thomas sat up all night and I do not know what was said. In the morning they wrote a letter together about the mill stream. This was also worth noting. The harvest was good. Father is not well.</p>
+    <p style="margin-bottom:1.1em;"><strong>1647.</strong> Father died in March. He had been failing since the winter. He said, near the end, that he did not know which of his sons was right and that this had been the hardest thing of his life, which I believe. He left the estate to me in trust for the family, which is what he had always said he would do. I saw to the burial. It was a cold day. John and Thomas were both present.</p>
+    <p style="margin-bottom:1.1em;"><strong>1648.</strong> The second war began and ended. John served and came back. Thomas did not serve. I ploughed both fields and bought two new ewes and repaired the granary roof. The harvest was very good.</p>
+    <p style="margin-bottom:1.1em;"><strong>1649.</strong> The King is dead. I wrote this down and then sat with it for a while. The land is here. The mill is turning. I do not know what England is now.</p>
+    <p><em><strong>1651.</strong> The battle was at Worcester in September and part of it came through the south field, Parliamentary forces again, and damaged the gate and the near fence. I negotiated with the commander, a man named Fletcher, and showed him the deed-box and the instruments of title and he left the house standing. The harvest was interrupted but adequate. John and Thomas are both alive. This is sufficient.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Robert Hale's account book, the January 1649 page -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh IV, item 33 · Account Book — Full Page · January 1649</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Robert Hale of the Hale — Account Book · The January Page in Full</p>
+    <p class="parchment-subtitle">Worcestershire Record Office · fol. 47r · Reproduced here with surrounding entries for the first time</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The account book is held at the Worcestershire Record Office. The page in question (fol. 47r) shows the full context of the entry. The editors have transcribed the surrounding entries because the context changes the meaning of the famous line considerably. The January 1649 entry occupies three lines, set apart by one blank line before and one after — while all other entries occupy the full column.</div>
+    <p style="font-size:0.9em; color:#5C4A20; margin-bottom:1.2em;"><em>December 1648.</em> Paid to Matthew the carpenter for work on the north barn door, four shillings. Received from Goodman Saewin for his Michaelmas quarter, twelve shillings, being the full amount. Ewes counted at last shearing: fourteen. Wheat in the upper granary: sufficient. Coal purchased from the Worcester merchant, two loads. John returned from the army the fourteenth. He is well but changed. He ate three dinners the first evening without appearing to notice.</p>
+    <p style="text-align:center; letter-spacing:0.08em; margin: 24px 0 6px;">&nbsp;</p>
+    <p style="font-size:1.05em; font-weight:bold; text-align:center; letter-spacing:0.04em; margin-bottom:6px;">January 1649. The King is dead. January 1649. God have mercy on us all.</p>
+    <p style="text-align:center; letter-spacing:0.08em; margin: 6px 0 24px;">&nbsp;</p>
+    <p style="font-size:0.9em; color:#5C4A20;"><em>February 1649.</em> Paid to Father Anselm for masses said in this parish, two shillings. Received from the home tenant for the January quarter, eight shillings, four pence short of the full amount, the remainder to be paid at Lady Day, the tenant having had sickness in his household. Granted. Thomas came in the second week and sat with John for an afternoon. They were quiet. I did not ask. The ewes are in good health. The east field will want attention before ploughing.</p>
+    <div class="recovered-archival" style="margin-top:18px;">The editors note: Robert Hale appears to have set the January entry apart deliberately. The February entry resumes the normal format as if nothing has changed, which is its own kind of statement.</div>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Account Book — The Page -->
+<div class="obj-header">Archive Object · Vol. IV · January 1649</div>
+<div class="interactive-obj document" id="obj-IV">
+  <div class="obj-lid" id="obj-lid-IV" onclick="toggleObj('IV')">
+    <div class="obj-lid-icon">
+      <svg width="26" height="28" viewBox="0 0 26 28" fill="none">
+        <rect x="2" y="2" width="22" height="24" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <line x1="6" y1="9" x2="20" y2="9" stroke="#8B6914" stroke-width="0.8"/>
+        <line x1="6" y1="13" x2="20" y2="13" stroke="#8B6914" stroke-width="0.8"/>
+        <line x1="6" y1="17" x2="16" y2="17" stroke="#8B1A1A" stroke-width="1.2"/>
+        <line x1="6" y1="21" x2="20" y2="21" stroke="#8B6914" stroke-width="0.8"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Account Book — The Page
+      <span>Household account book · open to January 1649 · the entry set apart · Read the page</span>
+    </div>
+    <svg id="obj-chevron-IV" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-IV">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A small leather-bound household account book, opened to a specific page. The entries above and below are in the normal columnar format of a careful farm accountant — items, amounts, running totals. Dense, practical, regular.</p>
+        <p>The January 1649 entry is three lines. One blank line before it. One blank line after. Every other entry in this book occupies the full column. Robert Hale set this one apart deliberately. He wrote it in a slightly heavier hand — as if pressing harder. Then he left it alone and resumed the February accounts as if nothing had changed.</p>
+      </div>
+      <div class="obj-note">
+        <strong>January 1649. The King is dead. January 1649. God have mercy on us all.</strong>
+        <br><br>
+        He wrote the date twice. He did not do this on any other entry in the book.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>The blank line above the entry: if you hold the page at an angle to the light, there is a slight impression in the paper — as if a pen rested there, or a finger pressed down, or the writer paused for a long time before beginning.</p>
+          <p>William the Youngest's account book for the same year reads: <em>The King is dead. I wrote this down and then sat with it for a while. The land is here. The mill is turning. I do not know what England is now.</em></p>
+          <p>They were thirty miles apart when they wrote it. Neither knew the other was writing.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">At the very bottom of the page · Different ink · Added later</span>
+          <em>Both my sons came home.</em>
+          <br><br>
+          The entry is not dated. It was added after the Restoration. It is the last thing written in this account book.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-III.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume III · The Tudor</div>
+        <div class="hd-xref-card-name">The deed-box strategy</div>
+        <div class="hd-xref-card-reason">William Hale (Tudor) prepared the deed-box and title deeds that Robert Hale describes in the Civil War as the family's one irreplaceable possession.</div>
+      </a>
+      <a href="era-V.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume V · The Georgian</div>
+        <div class="hd-xref-card-name">Sir Nathaniel Hale</div>
+        <div class="hd-xref-card-reason">William the youngest — who held Halecroft through the war — is Nathaniel's grandfather. The survival strategy becomes the foundation for London ambition.</div>
+      </a>
+      <a href="era-IX.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume IX · The Wartime Engineer</div>
+        <div class="hd-xref-card-name">Edmund Marsh-Hale</div>
+        <div class="hd-xref-card-reason">Three centuries later, Edmund navigates another national emergency with the same Hale instinct: keep your head, do the work, pass the papers on.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      King Charles I was executed in January 1649. The Commonwealth lasted eleven years. The Restoration of Charles II in 1660 required all who had fought for Parliament — including John Hale — to negotiate their position with a Crown that remembered. Thomas, who had fought for the King, was by then dead at Halecroft. The brothers' argument was settled not by either of them but by history, which found, as history tends to, that both sides had been partly right and partly catastrophically wrong. Halecroft survived the war intact. The family did not fight again until 1914. Continue with <a href="era-V.html">Vol. V: The Georgian Baronet →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-III.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. III · Tudor</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-V.html" class="esn-next">
+      <span class="esn-label">Vol. V · Georgian</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+var eraAudio = null, eraOn = false;
+function initEraSound() {
+  if (!eraAudio) {
+    eraAudio = new Audio('sounds/era-IV-ambient.mp3');
+    eraAudio.loop = true; eraAudio.volume = 0.35;
+  }
+}
+function toggleEraSound() {
+  var btn = document.getElementById('eraSoundBtn');
+  if (!eraOn) {
+    initEraSound(); eraAudio.play(); eraOn = true;
+    btn.textContent = '♪ Silence the battle'; btn.classList.add('on');
+  } else {
+    if (eraAudio) eraAudio.pause(); eraOn = false;
+    btn.textContent = '♪ Hear the battle'; btn.classList.remove('on');
+  }
+}
+
+// Era IV voice player
+(function() {
+  var audio = document.getElementById('voiceAudio');
+  var btn = document.getElementById('evpPlay');
+  var bar = document.getElementById('evpBar');
+  var timeEl = document.getElementById('evpTime');
+
+  btn.onclick = function(e) {
+    e.preventDefault();
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚ Playing...';
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Play';
+    }
+  };
+
+  audio.addEventListener('timeupdate', function() {
+    if (audio.duration) {
+      var pct = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = pct + '%';
+      var m = Math.floor(audio.currentTime / 60);
+      var s = Math.floor(audio.currentTime % 60);
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    btn.textContent = '▶ Again';
+    bar.style.width = '100%';
+  });
+})();
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="top:95px;right:38px" title=""><span class="hd-cipher">S</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>

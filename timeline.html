@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chronicle Timeline · The Hale Dynasty · 1066–2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0D0B08;
+      color: #C8B890;
+      font-family: 'IM Fell English', Georgia, serif;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .tl-nav {
+      background: #0D0B08;
+      border-bottom: 1px solid rgba(200,168,60,0.12);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .tl-nav a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tl-nav a:hover { color: rgba(200,168,60,0.9); }
+    .tl-nav-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.3em;
+      color: rgba(200,168,60,0.3);
+      text-transform: uppercase;
+    }
+
+    /* ── HEADER ── */
+    .tl-header {
+      text-align: center;
+      padding: 56px 30px 40px;
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+    }
+    .tl-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.4em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tl-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.6em, 4vw, 2.6em);
+      color: rgba(200,168,60,0.9);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .tl-subtitle {
+      font-style: italic;
+      color: rgba(200,168,60,0.45);
+      font-size: 0.9em;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── FILTER BAR ── */
+    .tl-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid rgba(200,168,60,0.07);
+    }
+    .tl-filter-btn {
+      background: none;
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.5);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tl-filter-btn:hover,
+    .tl-filter-btn.active {
+      background: rgba(200,168,60,0.1);
+      border-color: rgba(200,168,60,0.5);
+      color: rgba(200,168,60,0.9);
+    }
+
+    /* ── TIMELINE BODY ── */
+    .tl-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 50px 30px 100px;
+      position: relative;
+    }
+
+    /* Vertical spine */
+    .tl-body::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        rgba(200,168,60,0) 0%,
+        rgba(200,168,60,0.18) 6%,
+        rgba(200,168,60,0.18) 94%,
+        rgba(200,168,60,0) 100%);
+      transform: translateX(-50%);
+    }
+
+    /* ── ERA GROUP HEADING ── */
+    .tl-era-head {
+      text-align: center;
+      position: relative;
+      margin: 52px 0 28px;
+    }
+    .tl-era-head-inner {
+      display: inline-block;
+      background: #0D0B08;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .tl-era-vol {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.35em;
+      color: rgba(200,168,60,0.35);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .tl-era-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.0em;
+      color: rgba(200,168,60,0.7);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── TIMELINE EVENT ── */
+    .tl-event {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      position: relative;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .tl-event.tl-in { opacity: 1; transform: none; }
+
+    /* Alternating: left / right */
+    .tl-event.tl-left  { flex-direction: row-reverse; }
+    .tl-event.tl-right { flex-direction: row; }
+
+    /* Dot on spine */
+    .tl-event::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 16px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(200,168,60,0.5);
+      transform: translateX(-50%);
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .tl-event:hover::before { background: rgba(200,168,60,0.9); }
+
+    /* Card side */
+    .tl-event-card {
+      width: calc(50% - 28px);
+      background: rgba(200,168,60,0.04);
+      border: 1px solid rgba(200,168,60,0.1);
+      padding: 14px 18px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .tl-event:hover .tl-event-card {
+      background: rgba(200,168,60,0.07);
+      border-color: rgba(200,168,60,0.22);
+    }
+    .tl-event-year {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.55);
+      margin-bottom: 4px;
+    }
+    .tl-event-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.88em;
+      color: rgba(200,168,60,0.85);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .tl-event-desc {
+      font-size: 0.78em;
+      line-height: 1.65;
+      color: rgba(200,168,60,0.5);
+      font-style: italic;
+    }
+    .tl-event-type {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.3);
+      border: 1px solid rgba(200,168,60,0.12);
+      padding: 1px 6px;
+      margin-top: 8px;
+    }
+    .tl-event-link {
+      display: block;
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tl-event-link:hover { color: rgba(200,168,60,0.75); }
+
+    /* Spacer (empty half) */
+    .tl-event-spacer { width: calc(50% - 28px); }
+
+    /* Hidden via filter */
+    .tl-event.tl-hidden { display: none; }
+
+    /* ── CENTURY MARKER ── */
+    .tl-century {
+      text-align: center;
+      margin: 14px 0 8px;
+      position: relative;
+    }
+    .tl-century span {
+      display: inline-block;
+      background: #0D0B08;
+      padding: 0 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.4em;
+      color: rgba(200,168,60,0.18);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── FOOTER ── */
+    .tl-footer {
+      text-align: center;
+      padding: 40px 20px 60px;
+      border-top: 1px solid rgba(200,168,60,0.07);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.2);
+    }
+    .tl-footer a { color: rgba(200,168,60,0.35); text-decoration: none; }
+    .tl-footer a:hover { color: rgba(200,168,60,0.65); }
+
+    @media (max-width: 640px) {
+      .tl-body::before { left: 16px; }
+      .tl-event { flex-direction: column !important; padding-left: 36px; }
+      .tl-event::before { left: 16px; }
+      .tl-event-card, .tl-event-spacer { width: 100%; }
+      .tl-event-spacer { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="tl-nav">
+    <a href="index.html">← Archive Index</a>
+    <span class="tl-nav-title">The Hale Dynasty · Chronicle Timeline</span>
+    <a href="documents.html">All Documents →</a>
+  </nav>
+
+  <header class="tl-header">
+    <div class="tl-label">MSS. Hale-Marsh Collection · Bodleian Library</div>
+    <h1 class="tl-title">Chronicle Timeline · 1066–2026</h1>
+    <p class="tl-subtitle">Nine hundred and sixty years of documents, letters, registers, and records — arranged as they happened.</p>
+  </header>
+
+  <div class="tl-filters" id="tl-filters">
+    <button class="tl-filter-btn active" data-filter="all">All</button>
+    <button class="tl-filter-btn" data-filter="letter">Letters</button>
+    <button class="tl-filter-btn" data-filter="legal">Legal</button>
+    <button class="tl-filter-btn" data-filter="death">Deaths</button>
+    <button class="tl-filter-btn" data-filter="register">Registers</button>
+    <button class="tl-filter-btn" data-filter="diary">Diaries</button>
+    <button class="tl-filter-btn" data-filter="object">Objects</button>
+    <button class="tl-filter-btn" data-filter="discovery">Discovery</button>
+  </div>
+
+  <div class="tl-body" id="tl-body">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. I: THE NORMAN · 1066–1215            -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume I</div>
+        <div class="tl-era-name">The Norman · 1066–1215</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 11th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1066</div>
+        <div class="tl-event-name">Royal Writ of Ranulf de la Hale</div>
+        <div class="tl-event-desc">King William confirms Ranulf's tenure at Halecroft. The land that will hold the family for nine centuries is granted in three lines of Latin.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-I.html" class="tl-event-link">Vol. I →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1087</div>
+        <div class="tl-event-name">Ranulf to his brother Geoffrey</div>
+        <div class="tl-event-desc">The earliest surviving letter in the collection. Ranulf writes from Halecroft about the harvest and a dispute with the mill at Pershore. He mentions the pig.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-I.html" class="tl-event-link">Vol. I →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1130</div>
+        <div class="tl-event-name">Pipe Roll Entry · Ranulf's heir</div>
+        <div class="tl-event-desc">The Pipe Roll of Henry I records Roger de la Hale paying scutage in lieu of knight service. The family is established.</div>
+        <div class="tl-event-type">Legal · Register</div>
+        <a href="era-I.html" class="tl-event-link">Vol. I →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-century"><span>— 12th Century —</span></div>
+
+    <div class="tl-event tl-left" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1214</div>
+        <div class="tl-event-name">William Hale purchases freehold</div>
+        <div class="tl-event-desc">The family converts from feudal tenure to freehold. The deed is referenced by Thomas at his inquest in 1351 and quoted in seven subsequent documents.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-I.html" class="tl-event-link">Vol. I →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. II: THE HOUSE OF HALE · 1349–1382    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume II</div>
+        <div class="tl-era-name">The House of Hale · 1349–1382</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 14th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="death register">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1348</div>
+        <div class="tl-event-name">Death Register · St. Wulfstan's</div>
+        <div class="tl-event-desc">Five members of the Hale family recorded dead in the pestilence. Thomas, aged eleven, is the sole survivor. Father Croft's register is the only document to record the infant Joan's name.</div>
+        <div class="tl-event-type">Register · Death</div>
+        <a href="era-II.html" class="tl-event-link">Vol. II →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1350</div>
+        <div class="tl-event-name">Thomas to his aunt Elspeth</div>
+        <div class="tl-event-desc">The earliest letter in Thomas's hand. Written aged twelve. He thanks her for not crying until he was past the gate. He asks if she kept any of his mother's things.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-II.html" class="tl-event-link">Vol. II →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1351</div>
+        <div class="tl-event-name">Inquisitio · Worcester Assizes</div>
+        <div class="tl-event-desc">Royal Chancery writ confirming Thomas Hale, aged thirteen, as heir to the Halecroft freehold. He proves his descent from the 1214 deed. The court notes he can read the Latin.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-II.html" class="tl-event-link">Vol. II →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="object">
+      <div class="tl-event-card">
+        <div class="tl-event-year">c. 1351</div>
+        <div class="tl-event-name">Matilda's Beehive · Archive Object</div>
+        <div class="tl-event-desc">The beehive kept by Matilda the beekeeper at Halecroft. She survived the pestilence. She brought Thomas a pot of honey without saying anything, which was her manner.</div>
+        <div class="tl-event-type">Object</div>
+        <a href="era-II.html" class="tl-event-link">Vol. II →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1382</div>
+        <div class="tl-event-name">Thomas's Remembrance to his son John</div>
+        <div class="tl-event-desc">Thomas, aged forty-four, writes what he knows to his son. He describes coming home to an empty house, the graves he could not count, and going to see to the pig. The letter that starts everything.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-II.html" class="tl-event-link">Vol. II →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. III: THE TUDOR · 1485–1558           -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume III</div>
+        <div class="tl-era-name">The Tudor · 1485–1558</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 15th–16th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1485</div>
+        <div class="tl-event-name">William Hale's Tudor Patent</div>
+        <div class="tl-event-desc">Henry VII confirms the Hale lands following Bosworth. The family has survived the Wars of the Roses by not choosing sides, which is its own kind of wisdom.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-III.html" class="tl-event-link">Vol. III →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1536</div>
+        <div class="tl-event-name">William Hale to his cousin in London</div>
+        <div class="tl-event-desc">A cautious letter about the dissolution of the nearby priory. William does not say what he thinks. This is the characteristic Hale epistolary style for the next three centuries.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-III.html" class="tl-event-link">Vol. III →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="object">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1554</div>
+        <div class="tl-event-name">The Chalice · Archive Object</div>
+        <div class="tl-event-desc">A silver chalice donated by the Hales to St. Wulfstan's, then recovered by them when the church was stripped under Edward VI. It is in the deed-box. It has not been used since.</div>
+        <div class="tl-event-type">Object</div>
+        <a href="era-III.html" class="tl-event-link">Vol. III →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. IV: THE PURITAN · 1640–1660          -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume IV</div>
+        <div class="tl-era-name">The Puritan · 1640–1660</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 17th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1642</div>
+        <div class="tl-event-name">Nathaniel Hale to Parliament</div>
+        <div class="tl-event-desc">Nathaniel petitions for protection of the Halecroft estate from Parliamentary requisition. He is careful not to say which side he supports. He supports Parliament. He does not say this.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-IV.html" class="tl-event-link">Vol. IV →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="diary">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1649</div>
+        <div class="tl-event-name">Nathaniel's diary · January</div>
+        <div class="tl-event-desc">Three entries around the execution of the King. Nathaniel does not comment on the event. He records the weather, the state of the south field, and that he could not sleep.</div>
+        <div class="tl-event-type">Diary</div>
+        <a href="era-IV.html" class="tl-event-link">Vol. IV →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1660</div>
+        <div class="tl-event-name">Deed of Indemnity · Restoration</div>
+        <div class="tl-event-desc">The family is confirmed in its estate following the Restoration. They had not taken a strong enough position under the Commonwealth to require punishment. This was intentional.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-IV.html" class="tl-event-link">Vol. IV →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. V: THE BROTHERS DIVIDE · 1700–1745   -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume V</div>
+        <div class="tl-era-name">The Brothers Divide · 1700–1745</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 18th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1718</div>
+        <div class="tl-event-name">Robert to Charles · The Breach</div>
+        <div class="tl-event-desc">Robert Hale informs his younger brother Charles that the entail will not be broken for his benefit. The letter is formal, scrupulously polite, and entirely final. They do not speak again.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-V.html" class="tl-event-link">Vol. V →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1719</div>
+        <div class="tl-event-name">Charles to Robert · The Reply</div>
+        <div class="tl-event-desc">Charles replies from London, where he has gone. He is equally formal. He says he understands. He does not understand. He will correspond with Halecroft twice a year for the next twenty-six years, and neither letter will mention the dispute.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-V.html" class="tl-event-link">Vol. V →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="object">
+      <div class="tl-event-card">
+        <div class="tl-event-year">c. 1740</div>
+        <div class="tl-event-name">The Snuffbox · Archive Object</div>
+        <div class="tl-event-desc">A silver snuffbox engraved with both brothers' initials, apparently a joint gift from their father. Found in the deed-box. Neither brother mentions it in correspondence.</div>
+        <div class="tl-event-type">Object</div>
+        <a href="era-V.html" class="tl-event-link">Vol. V →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="death">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1745</div>
+        <div class="tl-event-name">Charles Hale dies in London</div>
+        <div class="tl-event-desc">Charles dies without issue. His London possessions are sold. Robert does not attend the funeral. There is no record of whether he was invited.</div>
+        <div class="tl-event-type">Death</div>
+        <a href="era-V.html" class="tl-event-link">Vol. V →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. VI: THE HALE ENTAIL · 1780–1830      -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume VI</div>
+        <div class="tl-era-name">The Hale Entail · 1780–1830</div>
+      </div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1794</div>
+        <div class="tl-event-name">Augusta's letter to her solicitor</div>
+        <div class="tl-event-desc">Augusta Hale, widowed at thirty-one, writes to Alderton &amp; Sons about the management of the estate she cannot legally own. The first of forty-seven letters in this thread.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VI.html" class="tl-event-link">Vol. VI →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="diary">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1801</div>
+        <div class="tl-event-name">Augusta's diary · Estate accounts</div>
+        <div class="tl-event-desc">Three months of daily entries covering the management of 3,700 acres, two tenant disputes, the lambing season, and a visit from the entail's beneficiary. She describes him as 'punctual in his visits and in no other respect.'</div>
+        <div class="tl-event-type">Diary</div>
+        <a href="era-VI.html" class="tl-event-link">Vol. VI →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="legal">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1830</div>
+        <div class="tl-event-name">Augusta's death · Estate transfer</div>
+        <div class="tl-event-desc">Augusta Hale dies at sixty-seven, having managed Harton Hall for thirty-seven years without title or legal recognition. The estate passes to the male heir she has maintained it for. He arrives three days after her funeral.</div>
+        <div class="tl-event-type">Death · Legal</div>
+        <a href="era-VI.html" class="tl-event-link">Vol. VI →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. VII: THE VICTORIAN · 1840–1882       -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume VII</div>
+        <div class="tl-era-name">The Victorian · 1840–1882</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 19th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1867</div>
+        <div class="tl-event-name">Edmund to Clara · Beginning</div>
+        <div class="tl-event-desc">The first letter in Edmund Hale's correspondence with Clara Marsh. He is thirty. She is twenty-three. He is already married. The letter is charming, careful, and dishonest in ways he does not yet recognize.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1870</div>
+        <div class="tl-event-name">Edmund to Clara · Termination</div>
+        <div class="tl-event-desc">Edmund ends the arrangement. He uses the word 'exigencies.' Clara's diary records: 'I have read it four times. Each time it means the same thing, which is that he has decided I am not a person but a circumstance.'</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1877</div>
+        <div class="tl-event-name">Clara to Edmund · Thomas</div>
+        <div class="tl-event-desc">Clara informs Edmund that their son Thomas is now seven years old and in good health. Edmund receives the letter. He places it in the bundle. He retires the ribbon.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="object">
+      <div class="tl-event-card">
+        <div class="tl-event-year">c. 1882</div>
+        <div class="tl-event-name">Edmund's Confession · Document V</div>
+        <div class="tl-event-desc">Found in the deed-box under the lining. No date. No address. Edmund writes that he knows what he has not done, and that the knowing does not excuse the not-doing. The most honest thing he ever wrote.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="death">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1882</div>
+        <div class="tl-event-name">Coroner's Report · Edmund Hale</div>
+        <div class="tl-event-desc">Edmund Hale found in his locked study. Verdict: death by natural causes. Several sealed letters were found on the desk. The family did not speak of the matter again. The fingerprint on the report is his.</div>
+        <div class="tl-event-type">Death · Legal</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. VIII: THE WAR CORRESPONDENT · 1900–1922 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume VIII</div>
+        <div class="tl-era-name">The War Correspondent · 1900–1922</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 20th Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1891</div>
+        <div class="tl-event-name">Thomas Marsh-Hale sells Harton Hall</div>
+        <div class="tl-event-desc">Thomas sells his father's estate and buys a smaller property in Worcestershire. He takes the hyphenated name as a compromise — his father's name and his mother's. He keeps the deed-box.</div>
+        <div class="tl-event-type">Legal</div>
+        <a href="era-VIII.html" class="tl-event-link">Vol. VIII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1914–1918</div>
+        <div class="tl-event-name">Dispatches from the Western Front</div>
+        <div class="tl-event-desc">Thomas Marsh-Hale covers the war as a correspondent. Seven dispatches survive, together with four letters to his editor and three to his wife. He does not explain what he saw. He describes what he heard.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-VIII.html" class="tl-event-link">Vol. VIII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. IX: THE BLITZ · 1939–1945            -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume IX</div>
+        <div class="tl-era-name">The Blitz · 1939–1945</div>
+      </div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1940</div>
+        <div class="tl-event-name">Arthur Marsh-Hale · Blitz Memo</div>
+        <div class="tl-event-desc">Arthur Marsh-Hale, now at the Ministry, writes an internal memo about the dispersal of historical collections from London. He does not mention the family archive. He sends it to Worcestershire that week.</div>
+        <div class="tl-event-type">Letter</div>
+        <a href="era-IX.html" class="tl-event-link">Vol. IX →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="diary">
+      <div class="tl-event-card">
+        <div class="tl-event-year">1940–1941</div>
+        <div class="tl-event-name">Dorothy Marsh-Hale's diary · London</div>
+        <div class="tl-event-desc">Sixteen months of entries during the Blitz. Dorothy records what she can see from the window and what she cannot. She does not use the word 'afraid.' She uses the word 'waiting' eleven times.</div>
+        <div class="tl-event-type">Diary</div>
+        <a href="era-IX.html" class="tl-event-link">Vol. IX →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- VOL. X: THE CONTEMPORARY · 2018–2026      -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tl-era-head">
+      <div class="tl-era-head-inner">
+        <div class="tl-era-vol">Volume X</div>
+        <div class="tl-era-name">The Contemporary · 2018–2026</div>
+      </div>
+    </div>
+
+    <div class="tl-century"><span>— 21st Century —</span></div>
+
+    <div class="tl-event tl-right" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">2018</div>
+        <div class="tl-event-name">James Marsh-Hale deposits the deed-box</div>
+        <div class="tl-event-desc">James Marsh-Hale donates the family deed-box to the Bodleian Library. He writes a covering letter that is two sentences long. The archivists note the box had not been opened in at least forty years.</div>
+        <div class="tl-event-type">Legal · Object</div>
+        <a href="era-X.html" class="tl-event-link">Vol. X →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="discovery">
+      <div class="tl-event-card">
+        <div class="tl-event-year">2024</div>
+        <div class="tl-event-name">Eleanor recovers Matilda's letter</div>
+        <div class="tl-event-desc">Eleanor Voss uses multispectral imaging to recover Matilda the beekeeper's 1351 letter, written on the back of a wax tablet impression. It had been obscured by an ink wash for 673 years. Matilda wrote about the bees and the boy and what she understood.</div>
+        <div class="tl-event-type">Discovery</div>
+        <a href="era-X.html" class="tl-event-link">Vol. X →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-right" data-type="discovery">
+      <div class="tl-event-card">
+        <div class="tl-event-year">2024</div>
+        <div class="tl-event-name">Edmund's postscript · Beneath the lining</div>
+        <div class="tl-event-desc">During imaging of the deed-box lining, Eleanor finds a document written on the back of a blank envelope. Edmund Hale, 1882, addressing whoever will one day read the archive. Not catalogued. The editors included it because the alternative was to make Edmund's choice again.</div>
+        <div class="tl-event-type">Discovery</div>
+        <a href="era-VII.html" class="tl-event-link">Vol. VII →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+    <div class="tl-event tl-left" data-type="letter">
+      <div class="tl-event-card">
+        <div class="tl-event-year">2026</div>
+        <div class="tl-event-name">The Archive opens · MSS. Hale-Marsh</div>
+        <div class="tl-event-desc">The Hale-Marsh Collection is made publicly available by the Bodleian Library. Nine hundred and sixty years of the same family, the same land, the same questions, asked across nine centuries. The archive does not answer them. It keeps them.</div>
+        <div class="tl-event-type">Discovery</div>
+        <a href="era-X.html" class="tl-event-link">Vol. X →</a>
+      </div>
+      <div class="tl-event-spacer"></div>
+    </div>
+
+  </div><!-- /tl-body -->
+
+  <div class="tl-footer">
+    <p>MSS. Hale-Marsh Collection · Bodleian Library, Oxford · 1066–2026</p>
+    <p style="margin-top:10px;">
+      <a href="index.html">← Archive Index</a>
+      &nbsp;·&nbsp;
+      <a href="documents.html">All Documents</a>
+      &nbsp;·&nbsp;
+      <a href="family-tree.html">Family Tree</a>
+      &nbsp;·&nbsp;
+      <a href="voss.html">The Voss Branch</a>
+    </p>
+  </div>
+
+  <script>
+  /* ── Timeline scroll-reveal ── */
+  (function() {
+    var events = document.querySelectorAll('.tl-event');
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('tl-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    events.forEach(function(el) { io.observe(el); });
+  })();
+
+  /* ── Filter system ── */
+  (function() {
+    var buttons = document.querySelectorAll('.tl-filter-btn');
+    var events  = document.querySelectorAll('.tl-event');
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var filter = btn.dataset.filter;
+
+        // Update active button
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        // Show/hide events
+        events.forEach(function(ev) {
+          if (filter === 'all') {
+            ev.classList.remove('tl-hidden');
+          } else {
+            var type = (ev.dataset.type || '').toLowerCase();
+            if (type.indexOf(filter) !== -1) {
+              ev.classList.remove('tl-hidden');
+            } else {
+              ev.classList.add('tl-hidden');
+            }
+          }
+        });
+      });
+    });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+<script src="inquiry.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matilda's Letter — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #F4ECD8; color: #2A1E0E; font-family: Georgia, 'Times New Roman', serif; min-height: 100vh; }
+    /* Vellum texture body */
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 600px 400px at 20% 30%, rgba(160,110,40,0.06) 0%, transparent 70%), radial-gradient(ellipse 400px 300px at 80% 70%, rgba(120,80,30,0.05) 0%, transparent 70%), radial-gradient(ellipse 300px 500px at 50% 90%, rgba(140,100,40,0.04) 0%, transparent 80%); pointer-events: none; z-index: 0; }
+    .wrap { max-width: 580px; margin: 0 auto; padding: 100px 30px 120px; position: relative; z-index: 1; }
+    .header-note { font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.22em; text-transform: uppercase; color: #8B6914; text-align: center; margin-bottom: 10px; }
+    .doc-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.3em, 3vw, 1.8em); color: #2A1E0E; text-align: center; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .doc-sub { font-style: italic; font-size: 0.9em; color: #6A4A1E; text-align: center; margin-bottom: 40px; }
+    .imaging-note { border: 1px solid rgba(139,100,40,0.3); background: rgba(245,235,200,0.6); padding: 14px 18px; font-style: italic; font-size: 0.85em; color: #5C3A1E; line-height: 1.75; margin-bottom: 40px; text-align: center; }
+    hr.rule { border: none; border-top: 1px solid rgba(139,100,40,0.25); margin: 30px 0; }
+    /* The letter */
+    .letter { font-size: 1.02em; line-height: 2.1; color: #2A1E0E; }
+    .letter p { margin-bottom: 1.2em; }
+    .letter p.recovered { color: #3A2A0E; }
+    .rec-mark { color: #8B1A1A; font-size: 0.75em; vertical-align: super; margin-right: 2px; font-family: 'Courier New', monospace; }
+    .letter .opener::first-letter { font-family: 'Cinzel', Georgia, serif; font-size: 3em; float: left; line-height: 0.8; margin-right: 6px; margin-top: 6px; color: #3A2A0E; }
+    .gap { display: block; text-align: center; font-style: italic; font-size: 0.82em; color: rgba(90,60,20,0.4); letter-spacing: 0.12em; margin: 18px 0; font-family: 'Courier New', monospace; }
+    .provenance { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(139,100,40,0.2); font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(90,60,20,0.4); text-transform: uppercase; text-align: center; line-height: 1.9; }
+    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(42,30,14,0.9); border: 1px solid rgba(200,168,60,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .page-transition-overlay { position: fixed; inset: 0; background: #F4ECD8; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+    @media (max-width: 600px) { .wrap { padding: 60px 20px 80px; } }
+  </style>
+</head>
+<body data-vol="">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="wrap">
+
+  <div class="header-note">MSS. Hale-Marsh 3, item 7 · Bodleian Library, Oxford</div>
+  <h1 class="doc-title">Matilda of Halecroft</h1>
+  <p class="doc-sub">Her letter · Written c.1390 · Read in its entirety, January 2024</p>
+
+  <div class="imaging-note">
+    The opening and closing sections of this document were legible to the naked eye from the time of its first cataloguing in 1858. The central section — lines 9 through 23, approximately — was damaged by water and ink fading to the point of illegibility. Multispectral imaging commissioned by Eleanor Voss in January 2024 recovered twenty-three previously unreadable lines. The recovered portions are marked with an asterisk. The text of the recovered sections is transcribed as faithfully as the imaging permitted; five words remain unclear and are noted.
+  </div>
+
+  <hr class="rule">
+
+  <div class="letter">
+    <p class="opener">To whoever shall read this after I am gone, which will be soon enough, and I have had a long life and a good one and I am not complaining, only setting down what I know so that whoever comes after will have it.</p>
+
+    <p>My name is Matilda. I have kept the bees at the Hale since before the lord Ranulf came, and I kept them after he came, and I told the bees about him as is proper, and the bees took the news as bees do, which is to say they kept on. I have told the bees about every lord and every death and every birth and every marriage in this house for sixty years and the honey has been good throughout, which I take to mean that I have been doing it right.</p>
+
+    <p>Thomas Hale holds the land now. He is the last of his family by the pestilence and he was eleven when he came home and he has held it these forty years by the labour of his hands and I have watched him and he has been sufficient, which is all anyone can be.</p>
+
+    <p>I am writing this because Margery has married and gone to Pershore and I tracked her there and I know where she is, and her children will not know what they are, and their children will not know, and one day someone will need to know and there will be no one left who does unless I write it down.</p>
+
+    <p class="recovered"><span class="rec-mark">*</span>I have kept these bees through six reigns and four religions and two pestilences and I have seen what families do when the land is taken and what they do when the land is held, and I tell you that the holding is the thing. Not the holding back. The holding on. There is a difference and it matters.</p>
+
+    <p class="recovered"><span class="rec-mark">*</span>And I do set down here, for the keeping of the record, that Margery Hale married Thomas Voss of Pershore in the year 1373 and that she is the daughter of William Hale and the granddaughter of Thomas Hale who survived the pestilence and who came home from Pershore with a cooking pot and held this land alone from his eleventh year until his death. She carries that in her. Her children will carry it, though they will not know the name.</p>
+
+    <p class="recovered"><span class="rec-mark">*</span>Margery is a good woman and a careful one and she will manage what she has been given as the women of this house have always managed what they were given, which is to say: better than the men expected, and with less complaint than the men deserved, and with a thoroughness that the men noticed only when it was absent, which it rarely was.</p>
+
+    <p class="recovered"><span class="rec-mark">*</span>I write this not for the sons of this house, who will have the documents and the deeds and the court rolls and all the paper that paper requires. I write it for the ones who will come without knowing they are coming. Margery's line. The ones in Pershore. They will not have the paper. They will have the bees, if they are <span style="color:rgba(90,60,20,0.4);font-style:italic;">[word unclear]</span>, and they will have the land in their hands even if the land is not theirs, and they will have the question, which is: is this sufficient? And the answer, which I cannot give them, only tell them to keep asking.</span></p>
+
+    <p class="recovered"><span class="rec-mark">*</span>The deed-box is in the Hale. The keys are in the deed-box. The indentures are in the deed-box. If someone comes from Pershore with the name Voss and says they have a claim, they have a claim. This is the claim. I am setting it down here so that the truth is somewhere and so that when it is needed it can be found. The truth requires somewhere to be. I am giving it somewhere.</p>
+
+    <p class="recovered"><span class="rec-mark">*</span>I have been thinking about this for thirty years, since Margery was born and I held her in the yard and thought: she has Aelswith's eyes. I have been thinking about what to do with it. The answer is this letter. It is not much. But it is what I have and it is true and that is, I believe, <span style="color:rgba(90,60,20,0.4);font-style:italic;">[word unclear]</span>.</p>
+
+    <p>Keep asking. Keep the land. See to the pig.</p>
+
+    <p>Tell them the name does not end here.</p>
+
+    <p><em>Matilda. Her mark. Halecroft. Written c.1390.</em></p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- THE MATILDA CIPHER                                   -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div id="hd-cipher-section" style="margin-top:50px;">
+    <div style="font-family:'Courier New',monospace;font-size:0.65em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(139,100,40,0.5);text-align:center;margin-bottom:12px;">
+      Archival Note · MSS. Hale-Marsh 3, item 7 · Verso recto b
+    </div>
+    <div style="border:1px solid rgba(139,100,40,0.25);background:rgba(245,235,200,0.4);padding:26px 30px;margin-bottom:24px;text-align:center;">
+      <p style="font-style:italic;font-size:0.9em;color:rgba(90,60,20,0.65);line-height:1.75;margin-bottom:16px;">
+        Beneath the recovered text, on the lower verso, Eleanor Voss found a second inscription in a different hand — smaller, careful, and encoded. It is not Matilda's hand. The editors believe it was added by an unknown reader sometime in the fifteenth century, perhaps as a test of the finder's patience. The inscription reads:
+      </p>
+      <div id="cipher-text" style="font-family:'Courier New',monospace;font-size:1.1em;letter-spacing:0.28em;color:rgba(90,60,20,0.85);word-spacing:0.5em;line-height:2;">
+        VPPA LDVTYR VPPA ESP WLYO
+      </div>
+      <p style="font-family:'Courier New',monospace;font-size:0.62em;color:rgba(90,60,20,0.35);margin-top:10px;letter-spacing:0.15em;">
+        [ A substitution cipher · The key is a number · Shift each letter back by the key ]
+      </p>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
+      <label for="cipher-key" style="font-family:'Courier New',monospace;font-size:0.72em;letter-spacing:0.18em;color:rgba(90,60,20,0.55);">SHIFT KEY:</label>
+      <input type="number" id="cipher-key" min="1" max="25" value=""
+             placeholder="?"
+             style="width:64px;padding:6px 10px;background:rgba(245,235,200,0.8);border:1px solid rgba(139,100,40,0.35);color:#2A1E0E;font-family:'Courier New',monospace;font-size:1.1em;text-align:center;outline:none;">
+      <button id="cipher-decode-btn" onclick="attemptCipherDecode()"
+              style="padding:7px 20px;background:rgba(139,100,40,0.15);border:1px solid rgba(139,100,40,0.4);color:rgba(90,60,20,0.8);font-family:'Courier New',monospace;font-size:0.72em;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;">
+        Decode
+      </button>
+    </div>
+
+    <div id="cipher-result" style="min-height:60px;text-align:center;font-family:'Courier New',monospace;font-size:0.9em;letter-spacing:0.18em;color:rgba(90,60,20,0.7);transition:all 0.4s;"></div>
+
+    <div id="cipher-success" style="display:none;margin-top:24px;border:1px solid rgba(139,100,40,0.3);background:rgba(245,235,200,0.6);padding:22px 28px;text-align:center;">
+      <div style="font-family:'Courier New',monospace;font-size:0.62em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(139,100,40,0.45);margin-bottom:10px;">Decoded · Shift 11 · Thomas's Age</div>
+      <div style="font-size:1.15em;color:#2A1E0E;font-style:italic;margin-bottom:14px;line-height:1.7;">
+        "Keep asking. Keep the land."
+      </div>
+      <p style="font-size:0.82em;color:rgba(90,60,20,0.55);line-height:1.75;font-style:italic;">
+        The key is eleven — Thomas Hale's age when he came home from Pershore to an empty house. The unknown annotator knew the story. They encoded the only instruction Thomas ever needed, with the only number that mattered. The shift that brings it back is the age at which he learned it.
+      </p>
+      <div style="margin-top:14px;font-family:'Courier New',monospace;font-size:0.6em;letter-spacing:0.2em;color:rgba(139,100,40,0.3);">
+        ← Matilda's letter, written c.1390 · Cipher added c.15th century · Recovered 2024
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:16px;font-family:'Courier New',monospace;font-size:0.6em;letter-spacing:0.15em;color:rgba(139,100,40,0.3);">
+      The key is hidden somewhere in the archive. Those who have found all ten pigs know where to look.
+    </div>
+  </div>
+
+  <script>
+  function decodeCaesar(text, shift) {
+    return text.split('').map(function(ch) {
+      if (ch >= 'A' && ch <= 'Z') {
+        return String.fromCharCode(((ch.charCodeAt(0) - 65 - shift + 26) % 26) + 65);
+      }
+      return ch;
+    }).join('');
+  }
+
+  window.attemptCipherDecode = function() {
+    var input = document.getElementById('cipher-key');
+    var result = document.getElementById('cipher-result');
+    var success = document.getElementById('cipher-success');
+    var key = parseInt(input.value, 10);
+    if (isNaN(key) || key < 1 || key > 25) {
+      result.textContent = 'Enter a number between 1 and 25.';
+      result.style.color = 'rgba(180,80,80,0.6)';
+      return;
+    }
+    var decoded = decodeCaesar('VPPA LDVTYR VPPA ESP WLYO', key);
+    result.textContent = decoded;
+    result.style.color = 'rgba(90,60,20,0.75)';
+    if (key === 11) {
+      result.style.color = 'rgba(60,120,40,0.8)';
+      setTimeout(function() {
+        success.style.display = 'block';
+        try { localStorage.setItem('hd_cipher_solved', '1'); } catch(e){}
+      }, 600);
+    } else {
+      success.style.display = 'none';
+    }
+  };
+
+  document.getElementById('cipher-key').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') attemptCipherDecode();
+  });
+  </script>
+
+  <hr class="rule">
+
+  <div class="provenance">
+    MSS. Hale-Marsh 3, item 7<br>
+    Bodleian Library, University of Oxford<br>
+    Central section recovered by multispectral imaging · January 2024<br>
+    Transcribed by Eleanor Voss · Oxford, 2024<br>
+    <br>
+    <a href="the-email.html" style="color:rgba(139,100,40,0.4);text-decoration:none;">← The night Eleanor found it</a>
+    &nbsp; · &nbsp;
+    <a href="index.html" style="color:rgba(139,100,40,0.4);text-decoration:none;">Archive Home →</a>
+  </div>
+
+</div><!-- wrap -->
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="features.js"></script>
+<script src="transitions.js"></script>
+</body>
+</html>

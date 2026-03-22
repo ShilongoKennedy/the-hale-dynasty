@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bodleian Accession Register — MSS. Hale-Marsh Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 17px; }
+    body {
+      background: #E8E4DC;
+      color: #1A1A1A;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.75;
+    }
+
+    .era-nav {
+      background: #1A1A1A;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .era-nav a { color: #C8C0B0; text-decoration: none; }
+    .era-nav a:hover { color: #E8E0D0; }
+    .era-nav .vol-marker { color: #6A6050; }
+
+    .acc-header {
+      background: #EDE8DC;
+      border-bottom: 4px solid #1A1A1A;
+      border-top: 4px solid #1A1A1A;
+      padding: 50px 40px 44px;
+      text-align: center;
+    }
+    .acc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #3A3A3A;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .acc-title {
+      font-family: 'Playfair Display SC', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.4em, 3.5vw, 2.6em);
+      color: #1A1A1A;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .acc-subtitle {
+      font-style: italic;
+      color: #5A4020;
+      font-size: 0.87em;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .acc-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 30px 100px;
+    }
+
+    /* THE REGISTER */
+    .register-page {
+      background: #F4EDDA;
+      border: 2px solid #1A1A1A;
+      padding: 0;
+      margin-bottom: 50px;
+      box-shadow: 4px 6px 30px rgba(0,0,0,0.12);
+      position: relative;
+    }
+
+    /* Institutional header block */
+    .reg-institution {
+      background: #1A1A1A;
+      color: #D8D0C0;
+      padding: 22px 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .reg-institution-left {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      line-height: 1.8;
+    }
+    .reg-institution-right {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.12em;
+      text-align: right;
+      line-height: 1.9;
+      color: #A0988A;
+    }
+    .reg-collection-title {
+      text-align: center;
+      padding: 20px 34px 0;
+      font-family: 'Playfair Display SC', Georgia, serif;
+      font-size: 1.05em;
+      letter-spacing: 0.08em;
+      color: #1A1A1A;
+      border-bottom: 2px solid #1A1A1A;
+      padding-bottom: 16px;
+      margin: 0 0 0 0;
+    }
+    .reg-collection-subtitle {
+      text-align: center;
+      font-style: italic;
+      font-size: 0.8em;
+      color: #5A4020;
+      padding: 10px 34px 20px;
+      border-bottom: 1px solid #C8B070;
+    }
+
+    /* Register entries */
+    .reg-body { padding: 0 34px 34px; }
+
+    .reg-entry {
+      border-bottom: 1px solid #D4C490;
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 24px;
+      position: relative;
+    }
+    .reg-entry:last-child { border-bottom: none; }
+
+    .reg-entry-num {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.12em;
+      color: #8B1A1A;
+      line-height: 1.5;
+      padding-top: 2px;
+    }
+    .reg-entry-main {}
+    .reg-entry-title {
+      font-family: 'Playfair Display SC', Georgia, serif;
+      font-size: 0.9em;
+      color: #1A1A1A;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .reg-entry-meta {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.1em;
+      color: #5A4820;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+    .reg-entry-desc {
+      font-size: 0.85em;
+      color: #2A1A08;
+      line-height: 1.75;
+    }
+    .reg-condition {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-top: 6px;
+    }
+    .cond-good { background: #D4E8C4; color: #2A4A10; }
+    .cond-fair { background: #E8DCA4; color: #5A4010; }
+    .cond-poor { background: #E8C4B4; color: #5A1A10; }
+    .cond-fragile { background: #F0C0A0; color: #6A2A10; border: 1px solid #C08060; }
+
+    /* Eleanor's marginal annotations */
+    .caveat {
+      position: relative;
+      margin-top: 10px;
+      padding: 8px 14px 8px 36px;
+      background: rgba(139,104,20,0.07);
+      border-left: 3px solid #8B6820;
+      font-style: italic;
+      font-size: 0.8em;
+      color: #4A3410;
+      line-height: 1.65;
+    }
+    .caveat::before {
+      content: '✎';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      color: #8B6820;
+      font-style: normal;
+      font-size: 1.1em;
+    }
+    .caveat-attr {
+      display: block;
+      margin-top: 4px;
+      font-style: normal;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8B6820;
+    }
+
+    /* Stamped RECEIVED mark */
+    .reg-stamp {
+      position: absolute;
+      right: 0;
+      top: 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(139,26,26,0.4);
+      border: 1px solid rgba(139,26,26,0.3);
+      padding: 3px 7px;
+      transform: rotate(-5deg);
+      pointer-events: none;
+    }
+
+    /* Restriction notice */
+    .reg-restriction {
+      background: #1A1A1A;
+      color: #C8C0B0;
+      padding: 14px 34px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.8;
+      border-top: 2px solid #5A4020;
+    }
+
+    .editorial-note {
+      border-left: 3px solid #3A3A3A;
+      padding: 16px 20px;
+      background: #E0DCD0;
+      font-style: italic;
+      font-size: 0.85em;
+      color: #3A3020;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+    .editorial-note .attribution {
+      text-align: right;
+      margin-top: 10px;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      font-size: 0.85em;
+    }
+
+    .archival-footer {
+      margin-top: 20px;
+      font-size: 0.78em;
+      font-style: italic;
+      color: #5A4A30;
+      border-top: 1px solid #8A8070;
+      padding-top: 18px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .acc-content { padding: 40px 16px 70px; }
+      .reg-body { padding: 0 18px 22px; }
+      .reg-institution { padding: 16px 18px; }
+      .reg-entry { grid-template-columns: 1fr; gap: 4px; }
+      .reg-entry-num { padding-bottom: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="era-nav">
+    <a href="index.html">← The Collection</a>
+    <span class="vol-marker">MSS. Hale-Marsh · Bodleian Accession Register · 1924</span>
+    <a href="documents.html">All Documents →</a>
+  </nav>
+
+  <header class="acc-header">
+    <div class="acc-label">The Hale Dynasty · Institutional Record · Bodleian Libraries, Oxford</div>
+    <h1 class="acc-title">Bodleian Libraries — Accession Register</h1>
+    <p class="acc-subtitle">MSS. Hale-Marsh Collection · Accepted for deposit 14 March 1924 · Catalogue reference MS. Hale-Marsh I–X with Supplementary Boxes A–C · Condition reports and restrictions noted · Marginal annotations by E. Voss, 2024</p>
+  </header>
+
+  <div class="acc-content">
+
+    <div class="editorial-note">
+      The register reproduced below is the Bodleian's formal accession record for the Hale-Marsh papers, as submitted on deposit in March 1924 by the trustees of the estate of Miss Ruth Hale-Marsh. The record is in three hands: a principal cataloguing hand (Bodleian staff, 1924), a secondary hand adding condition notes (believed to be the same cataloguer, 1924–1928), and a third hand adding pencil annotations in the margins (Eleanor Voss, 2024). The pencil annotations are reproduced here in full.
+      <div class="attribution">— E.V., <em>Oxford, January 2024</em></div>
+    </div>
+
+    <div class="register-page">
+
+      <div class="reg-institution">
+        <div class="reg-institution-left">
+          Bodleian Libraries · University of Oxford<br>
+          Department of Special Collections and Western Manuscripts<br>
+          Broad Street · Oxford · OX1 3BG
+        </div>
+        <div class="reg-institution-right">
+          Accession No: 1924/0183<br>
+          Date of receipt: 14 March 1924<br>
+          Depositor: Hale-Marsh family trustees<br>
+          Processed by: R.H. Fellowes, Sub-Librarian
+        </div>
+      </div>
+
+      <div class="reg-collection-title">MSS. Hale-Marsh Collection</div>
+      <div class="reg-collection-subtitle">Papers of the Hale Family of Halecroft, Worcestershire, and the Marsh-Hale Family of Harlow, Essex · circa 1072–1924 · Donated in perpetuity</div>
+
+      <div class="reg-body">
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh I<br>
+            Boxes 1–2<br>
+            c. 1072–1400
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Norman and Medieval Papers</div>
+            <div class="reg-entry-meta">Manorial rolls · parish register fragments · inquest records · Latin writs · 2 boxes · approximately 340 items</div>
+            <div class="reg-entry-desc">
+              Includes the earliest surviving document in the family archive: a land grant notation, in Latin, dated approximately 1072, recording the tenure of one Aldric at Halecroft under the new Norman administration. Also includes the Thomas Hale inquisition material (1351), the Worcester Assizes depositions (1351), and Thomas Hale's Remembrance (1382). The Remembrance is the only document in this volume in English.
+            </div>
+            <span class="reg-condition cond-fair">Condition: Fair</span>
+            <div class="caveat">
+              The 1072 land notation is not, as the 1924 cataloguer believed, a grant. It is a confiscation notice. The distinction is significant. The notation records that Aldric <em>dedit</em> the land — gave it — which in this administrative context means it was taken. The family kept this document for 852 years without apparently recognising what it said about how the family began. Or perhaps they did recognise it and kept it anyway. I find I cannot decide which interpretation I prefer.
+              <span class="caveat-attr">— E.V., January 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh II<br>
+            Box 3<br>
+            c. 1400–1570
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Tudor Papers</div>
+            <div class="reg-entry-meta">Estate accounts · correspondence · household inventories · 1 box · approximately 180 items</div>
+            <div class="reg-entry-desc">
+              Principally account books and household inventories from the period of the Hale family's greatest expansion, including the acquisition of outlying farmland in 1487 and the rebuilding of the hall in 1521. Two items are flagged by the depositors as sensitive: a letter of 1535 that appears to concern an approach made to the family during the dissolution of the monasteries, and a second letter that is a response. The response is in a different hand and is unsigned. The editors note that neither letter is incriminating by the standards of any century other than the sixteenth.
+            </div>
+            <span class="reg-condition cond-good">Condition: Good</span>
+            <div class="caveat">
+              The dissolution letter was, I think, a near thing for the family. They were approached, they equivocated, and they apparently did nothing either way — which is to say, they held what they had and kept their heads down and survived, which is what this family has always done. The unsigned response says, in effect: we are grateful for the enquiry and will give the matter our full consideration. They gave it no consideration whatsoever, as far as I can tell. Wisely.
+              <span class="caveat-attr">— E.V., January 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh III<br>
+            Boxes 4–5<br>
+            c. 1620–1680
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Civil War and Interregnum Papers</div>
+            <div class="reg-entry-meta">Military correspondence · estate sequestration records · legal documents · 2 boxes · approximately 290 items</div>
+            <div class="reg-entry-desc">
+              Includes the letter informing Eleanor Hale of her husband Thomas's death at Edgehill (1642); the sequestration order of 1646 and the fine payment receipt of 1648; Eleanor Hale's correspondence with the estate trustees during the Interregnum (fourteen letters, all in her hand); and the restoration of tenure documents (1660). Eleanor Hale's letters are the most substantive correspondence in the entire archive prior to the Victorian period.
+            </div>
+            <span class="reg-condition cond-fair">Condition: Fair — moisture damage to box 5</span>
+            <div class="caveat">
+              Eleanor Hale's letters to the trustees are extraordinary. She is managing a sequestered estate, negotiating with a Parliamentary committee, raising a son alone, and she writes with a precision and a steadiness that I find remarkable for any period. The letter of November 1650 — in which she corrects a mathematical error in the sequestration calculation and asks, politely, that the committee reconsider the figure — is marked in the margin in pencil, presumably by George Hale cataloguing in 1858: <em>"Grandmother's letter — she was right, they revised it."</em> Yes. She was.
+              <span class="caveat-attr">— E.V., January 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh IV<br>
+            Box 6<br>
+            c. 1710–1745
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Georgian Papers</div>
+            <div class="reg-entry-meta">Estate accounts · correspondence · personal letters · 1 box · approximately 140 items</div>
+            <div class="reg-entry-desc">
+              A comparatively thin volume by the standards of the collection, reflecting a period of relative stability in the family's fortunes. The principal figure is Richard Hale (1700–1762), who managed the estate from his elder brother Charles's accession in 1741 without any formal title to the property. The correspondence between Richard and Charles is notable for its careful maintenance of deference on Richard's side and indifference on Charles's.
+            </div>
+            <span class="reg-condition cond-good">Condition: Good</span>
+            <div class="caveat">
+              Richard Hale wrote to his brother Charles approximately three hundred letters between 1741 and 1758. Charles appears to have replied to approximately twelve of them, mostly to request money. Richard's letter of June 1749 — in which he explains, in five patient paragraphs, that the estate cannot support the expenditure Charles has proposed, that the estate has not been able to support this expenditure for the past seven years, and that he, Richard, would be grateful for some acknowledgement that Charles has received at least some of the previous letters on this subject — is, I think, a masterpiece of restrained fury. He signs it, as always: <em>Your obedient brother, R.</em>
+              <span class="caveat-attr">— E.V., February 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh V<br>
+            Boxes 7–8<br>
+            c. 1795–1860
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Regency and Early Victorian Papers</div>
+            <div class="reg-entry-meta">Estate accounts · personal correspondence · diaries · 2 boxes · approximately 420 items</div>
+            <div class="reg-entry-desc">
+              The richest single volume of the collection, principally on account of the papers of Augusta Hale (1800–1858). Includes her correspondence (over two hundred letters), her household accounts (meticulously maintained from 1823 to 1857), and her diary fragments (four volumes, partial, 1818–1855). The diary volumes are flagged as restricted; see restriction notice below.
+            </div>
+            <span class="reg-condition cond-fair">Condition: Fair — diary vol. II water-stained</span>
+            <div class="caveat">
+              Augusta's accounts are kept in double-entry, which she apparently taught herself from a book. The handwriting in the accounts is noticeably different from the handwriting in her letters — smaller, more controlled, more careful — as if she understood that the accounts were a different kind of document and required a different kind of self. I think she was right about that. I also think it must have been exhausting to be Augusta Hale, and that the record does not fully account for this.
+              <span class="caveat-attr">— E.V., February 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            MS. Hale-Marsh VI<br>
+            Box 9<br>
+            c. 1860–1884
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Late Victorian Papers — The Edmund Hale Material</div>
+            <div class="reg-entry-meta">Correspondence · legal documents · deed-box contents · 1 box + 1 deed-box · approximately 95 items</div>
+            <div class="reg-entry-desc">
+              Contains the papers of Edmund Hale (1841–1882), the last of the Hale line in the main branch. Includes personal correspondence, estate documents, and the deed-box, which was deposited sealed. The deed-box contains, inter alia, forty-seven items catalogued under MS. Hale-Marsh VII items 1–47. Two items within the deed-box (items 38 and 39) were catalogued as sealed in 1924 and were not opened until January 2024.
+            </div>
+            <span class="reg-condition cond-fragile">Condition: Deed-box fragile — do not stack</span>
+            <div class="caveat">
+              Items 38 and 39 had been sealed for one hundred years. The wax was intact. When I cut it, the paper unfolded with a small sound that I thought was worth noting. I have been in this archive for eleven years. I have opened a great many sealed documents. This one was different, in the sense that I knew — before I read a word — that I was about to find out something that the person who sealed it had decided no one should know. He was wrong that no one should know. But I understand why he thought so.
+              <span class="caveat-attr">— E.V., January 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+        <div class="reg-entry">
+          <div class="reg-entry-num">
+            Supp. A–C<br>
+            Boxes 10–12<br>
+            c. 1884–1924
+          </div>
+          <div class="reg-entry-main">
+            <div class="reg-entry-title">The Hale-Marsh Supplementary Papers — The Transition Period</div>
+            <div class="reg-entry-meta">Legal correspondence · estate transfer documents · Marsh family papers · 3 boxes · approximately 310 items</div>
+            <div class="reg-entry-desc">
+              Material relating to the transfer of the Hale estate to the Hale-Marsh trustees following Edmund Hale's death, and subsequently to the Marsh-Hale family. Includes correspondence between the solicitors and Miss Ruth Hale-Marsh (Edmund's great-niece by the Marsh line), who directed that the papers be deposited at the Bodleian. Ruth's letter of instruction, dated November 1923, requests that the collection be treated as a complete archive — that nothing be discarded, regardless of apparent significance — and that a condition be placed on access to certain items for a period of one hundred years. The restriction lapsed, as directed, on 1 January 2024.
+            </div>
+            <span class="reg-condition cond-good">Condition: Good</span>
+            <div class="caveat">
+              Ruth Hale-Marsh knew what was in the deed-box. She must have — she was the one who directed the restriction. She chose one hundred years, which would have put her well beyond any living memory of the people involved. She wanted it found, eventually. She just wanted everyone who had been hurt by it to be safely dead first. I think that was a considered decision and possibly a kind one. I have thought about it a great deal.
+              <span class="caveat-attr">— E.V., March 2024</span>
+            </div>
+          </div>
+          <div class="reg-stamp">Received 1924</div>
+        </div>
+
+      </div><!-- end reg-body -->
+
+      <div class="reg-restriction">
+        Restriction Notice · Hale-Marsh Family Trust Instruction · November 1923<br>
+        The following items are restricted from public access for a period of one hundred years from the date of accession: MS. Hale-Marsh VII items 38, 39 (sealed letters); MS. Hale-Marsh V items 201–204 (Augusta Hale diary fragments, personal passages marked with a red cross in the original). Restriction on items 38–39 lapsed 1 January 2024. Restriction on diary items 201–204 lapsed 1 January 2024. Both restrictions have been lifted and materials are now available to all readers of the archive.
+      </div>
+
+    </div><!-- end register-page -->
+
+    <div class="archival-footer">
+      Bodleian Libraries Accession Register · Accession No. 1924/0183 · MSS. Hale-Marsh Collection. Original register held in the Bodleian Institutional Records Archive. This reproduction prepared by Eleanor Voss, January–March 2024, with marginal annotations added in the preparation of the published edition. The annotations represent the views of the archivist and are not part of the institutional record.
+    </div>
+
+  </div>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

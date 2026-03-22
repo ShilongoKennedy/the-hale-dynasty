@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagined From the Record — Portraits — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #07060A;
+      color: #C8A050;
+      font-family: 'Crimson Text', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(7,6,10,0.94);
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      padding: 10px 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+    .top-nav a { color: rgba(200,168,60,0.55); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #C8A83C; }
+    .top-nav .center { color: rgba(200,168,60,0.3); font-size: 0.9em; }
+
+    /* ── HEADER ──────────────────────────────────────────────── */
+    .gallery-header {
+      padding: 110px 40px 60px;
+      text-align: center;
+      border-bottom: 1px solid rgba(200,168,60,0.07);
+      position: relative;
+    }
+    .gallery-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(200,168,60,0.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .gallery-eyebrow {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(200,168,60,0.3); margin-bottom: 18px;
+    }
+    .gallery-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2em, 5vw, 3.6em);
+      color: #F0C840;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-shadow: 0 0 60px rgba(240,200,64,0.2);
+    }
+    .gallery-subtitle {
+      font-style: italic;
+      color: rgba(220,180,80,0.5);
+      font-size: 1.05em;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .gallery-note {
+      margin-top: 22px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em; letter-spacing: 0.12em;
+      color: rgba(200,168,60,0.2);
+    }
+
+    /* ── GALLERY GRID ─────────────────────────────────────────── */
+    .gallery-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 70px 30px 100px;
+    }
+
+    .gallery-era-section {
+      margin-bottom: 80px;
+    }
+    .gallery-era-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(200,168,60,0.2);
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+      padding-bottom: 10px;
+      margin-bottom: 36px;
+    }
+
+    .portrait-card {
+      display: flex;
+      gap: 44px;
+      align-items: flex-start;
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(200,168,60,0.05);
+      transition: opacity 0.3s;
+    }
+    .portrait-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .portrait-card:hover { opacity: 0.92; }
+
+    /* Alternate layout: odd cards have image left, even cards image right */
+    .portrait-card.reverse { flex-direction: row-reverse; }
+
+    .portrait-img-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 200px;
+    }
+    .portrait-img-frame {
+      width: 200px;
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+      background: #0E0C10;
+    }
+    .portrait-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s;
+      filter: sepia(20%) brightness(0.92) contrast(1.05);
+    }
+    .portrait-img-frame:hover img {
+      transform: scale(1.04);
+      filter: sepia(10%) brightness(1.0) contrast(1.08);
+    }
+    /* Era-specific frame borders */
+    .portrait-img-frame.frame-norman    { border: 1px solid rgba(200,168,60,0.4); }
+    .portrait-img-frame.frame-plague    { border: 1px solid rgba(107,18,18,0.6); }
+    .portrait-img-frame.frame-tudor     { border: 1px solid rgba(122,28,28,0.5); }
+    .portrait-img-frame.frame-civil     { border: 1px solid rgba(28,46,74,0.7); }
+    .portrait-img-frame.frame-georgian  { border: 1px solid rgba(106,88,24,0.5); }
+    .portrait-img-frame.frame-regency   { border: 1px solid rgba(92,24,40,0.6); }
+    .portrait-img-frame.frame-victorian { border: 1px solid rgba(58,10,24,0.7); }
+    .portrait-img-frame.frame-edwardian { border: 1px solid rgba(122,106,64,0.5); }
+    .portrait-img-frame.frame-wartime   { border: 1px solid rgba(26,46,72,0.6); filter: grayscale(30%); }
+    .portrait-img-frame.frame-modern    { border: 1px solid rgba(200,168,60,0.35); }
+
+    .portrait-img-caption {
+      text-align: center;
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em; letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.25);
+      line-height: 1.5;
+    }
+
+    /* Card text */
+    .portrait-card-body {
+      flex: 1;
+      padding-top: 4px;
+    }
+    .card-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.5em;
+      color: #D8A83C;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .card-dates {
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(200,168,60,0.3);
+      margin-bottom: 16px;
+    }
+    .card-desc {
+      font-size: 1.02em;
+      line-height: 1.75;
+      color: rgba(200,168,60,0.6);
+      margin-bottom: 18px;
+    }
+    .card-quote {
+      border-left: 2px solid rgba(200,168,60,0.15);
+      padding-left: 16px;
+      margin: 18px 0;
+      font-style: italic;
+      font-size: 0.95em;
+      color: rgba(200,168,60,0.45);
+      line-height: 1.7;
+    }
+    .card-link {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.64em; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(200,168,60,0.35);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,168,60,0.15);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .card-link:hover { color: #C8A83C; border-color: rgba(200,168,60,0.5); }
+
+    /* ── AUDIO PLAYER ────────────────────────────────────────── */
+    .portrait-audio-player {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 10px 14px;
+      background: rgba(200,168,60,0.03);
+      border: 1px solid rgba(200,168,60,0.1);
+      max-width: 340px;
+    }
+    .pap-btn {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(200,168,60,0.06);
+      border: 1px solid rgba(200,168,60,0.25);
+      color: #C8A83C;
+      font-size: 0.9em;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      padding: 0;
+    }
+    .pap-btn:hover { background: rgba(200,168,60,0.12); border-color: rgba(200,168,60,0.5); }
+    .pap-btn.playing { background: rgba(200,168,60,0.14); border-color: #C8A83C; }
+    .pap-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .pap-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(200,168,60,0.3);
+      margin-bottom: 5px;
+    }
+    .pap-bar {
+      width: 100%;
+      height: 2px;
+      background: rgba(200,168,60,0.08);
+      position: relative;
+      cursor: pointer;
+    }
+    .pap-progress {
+      height: 100%;
+      background: rgba(200,168,60,0.4);
+      width: 0%;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+    .pap-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.55em; letter-spacing: 0.08em;
+      color: rgba(200,168,60,0.22);
+      margin-top: 4px;
+    }
+
+    /* ── HOME BUTTON ─────────────────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 400;
+      width: 44px; height: 44px;
+      background: rgba(7,6,10,0.92);
+      border: 1px solid rgba(200,168,60,0.22);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: all 0.22s;
+      box-shadow: 0 3px 18px rgba(0,0,0,0.7);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
+    .home-float svg { width: 20px; height: 20px; }
+
+    /* ── PAGE OVERLAY ────────────────────────────────────────── */
+    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .portrait-card, .portrait-card.reverse {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .portrait-img-wrap { width: 160px; }
+      .portrait-img-frame { width: 160px; height: 200px; }
+      .card-quote { text-align: left; }
+    }
+  </style>
+</head>
+<body data-vol="">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<nav class="top-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="center">The Hale Dynasty · Portraits</span>
+  <a href="family-tree.html">Family Tree →</a>
+</nav>
+
+<header class="gallery-header">
+  <div class="gallery-eyebrow">MSS. Hale-Marsh Collection · Bodleian Library, Oxford</div>
+  <h1 class="gallery-title">Imagined From the Record</h1>
+  <p class="gallery-subtitle">Ten portraits. Nine centuries. No original likenesses survive — these are the faces the archive allows itself to imagine.</p>
+  <div class="gallery-note">Commission notes · A.F., London, 1884 · J.M-H., London, 1984 · E.V., Oxford, 2024</div>
+</header>
+
+<main class="gallery-main">
+
+  <!-- ERA I & II ─────────────────────────────────────── -->
+  <section class="gallery-era-section">
+    <div class="gallery-era-label">Era I–II · Norman & Pestilence · 1066–1395</div>
+
+    <article class="portrait-card">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-norman">
+          <img src="portraits/ranulf.png" alt="Ranulf de la Hale">
+        </div>
+        <div class="portrait-img-caption">Ranulf de la Hale · c.1040–c.1099<br>Imagined · illuminated manuscript tradition</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Ranulf de la Hale</div>
+        <div class="card-dates">c. 1040 – c. 1099 · Era I · Norman Arrival</div>
+        <p class="card-desc">Norman soldier who crossed with William the Conqueror in 1066. Given Halecroft in Worcestershire by royal writ. Found himself in a yard in an unfamiliar country with a language he could not speak and a people he did not understand. He asked his priest to help him frame the right question before he died.</p>
+        <blockquote class="card-quote">"Ask for justice. Not mercy."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/ranulf.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era I</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-I.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume I: The Norman Arrival</a>
+      </div>
+    </article>
+
+    <article class="portrait-card reverse">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-plague">
+          <img src="portraits/matilda.png" alt="Matilda of Halecroft">
+        </div>
+        <div class="portrait-img-caption">Matilda of Halecroft · c.1310–c.1395<br>Imagined · candlelit medieval tradition</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Matilda of Halecroft</div>
+        <div class="card-dates">c. 1310 – c. 1395 · Era II · The Pestilence</div>
+        <p class="card-desc">Free woman of Halecroft. Keeper of bees. She walked uninvited into the Inquest of 1351 to secure an eleven-year-old boy's inheritance. She left a letter in the deed-box in approximately 1390 — and it was addressed, across six centuries, to Eleanor Voss.</p>
+        <blockquote class="card-quote">"Keep asking. Keep the land. See to the pig."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/matilda.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era II</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-II.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume II: The Pestilence</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ERA III & IV ────────────────────────────────────── -->
+  <section class="gallery-era-section">
+    <div class="gallery-era-label">Era III–IV · Tudor & Civil War · 1485–1689</div>
+
+    <article class="portrait-card">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-tudor">
+          <img src="portraits/william.png" alt="William Hale">
+        </div>
+        <div class="portrait-img-caption">William Hale · 1522–1580<br>Imagined · Tudor portrait tradition, c.1545</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">William Hale</div>
+        <div class="card-dates">1522 – c. 1580 · Era III · The Tudor Inheritance</div>
+        <p class="card-desc">Son of John. In 1545, aged twenty-three, he purchased twelve acres of former priory land for four pounds during the Dissolution — the first Hale to buy land from a commercial transaction rather than a feudal lord. The bishop's visitors came to Halecroft in 1555 with pointed questions. He gave careful answers.</p>
+        <blockquote class="card-quote">"I wryte to yow from Worcestre in grete hastye, for the matter of the pryorie landes requireth answere before the sessyons do meete."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/william.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era III</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-III.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume III: The Tudor Inheritance</a>
+      </div>
+    </article>
+
+    <article class="portrait-card reverse">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-civil">
+          <img src="portraits/john.png" alt="John Hale">
+        </div>
+        <div class="portrait-img-caption">John Hale · 1620–1668<br>Imagined · Parliamentary officer, c.1645</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">John Hale</div>
+        <div class="card-dates">1620 – 1668 · Era IV · The Civil War Brothers</div>
+        <p class="card-desc">Fought for Parliament. His brother Thomas fought for the King. Their youngest brother William held Halecroft and corresponded with both. The eleven letters between John and Thomas are among the archive's most remarkable documents — two men who understood each other completely, disagreed entirely, and never stopped writing.</p>
+        <blockquote class="card-quote">"I am not going to tell you to come over to Parliament's side. I know you won't."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/john.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era IV</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-IV.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume IV: The Civil War Brothers</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ERA V & VI ──────────────────────────────────────── -->
+  <section class="gallery-era-section">
+    <div class="gallery-era-label">Era V–VI · Georgian & Regency · 1671–1832</div>
+
+    <article class="portrait-card">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-georgian">
+          <img src="portraits/nathaniel.png" alt="Sir Nathaniel Hale">
+        </div>
+        <div class="portrait-img-caption">Sir Nathaniel Hale, Bt. · 1671–1744<br>Imagined · Georgian portrait tradition, c.1720</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Sir Nathaniel Hale, Bt.</div>
+        <div class="card-dates">1671 – 1744 · Era V · The Georgian Ascent</div>
+        <p class="card-desc">The most entertaining voice in the entire archive. Left Worcestershire for London in 1698. Made a considerable fortune through means he describes with more relish than precision. Purchased a baronetcy in 1702. Lost a substantial sum in the South Sea Bubble. His wife Dorothea: "Then we have sufficient to begin again."</p>
+        <blockquote class="card-quote">"I have always been entirely candid about my origins, because there is no dignity in pretending that one's family did not begin somewhere."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/nathaniel.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era V</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-V.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume V: The Georgian Ascent</a>
+      </div>
+    </article>
+
+    <article class="portrait-card reverse">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-regency">
+          <img src="portraits/augusta.png" alt="Augusta Hale">
+        </div>
+        <div class="portrait-img-caption">Augusta Hale · 1771–1858<br>Imagined · Regency portrait tradition, c.1815</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Augusta Hale</div>
+        <div class="card-dates">1771 – 1858 · Era VI · The Regency Correspondence</div>
+        <p class="card-desc">Managed the Hale estate for thirty-seven years under an entail that prevented her inheriting it in her own name. Married at fifty-seven to Henry Alderton — he proposed while discussing timber rights. A woman of considerable force who ran the estate without title or compensation. Her letters are the archive's sharpest pleasure.</p>
+        <blockquote class="card-quote">"I have managed this estate for thirty-seven years. I am aware of its value. The question is whether you are."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/augusta.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era VI</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-VI.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume VI: The Regency Correspondence</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ERA VII & VIII ───────────────────────────────────── -->
+  <section class="gallery-era-section">
+    <div class="gallery-era-label">Era VII–VIII · Victorian & Edwardian · 1841–1933</div>
+
+    <article class="portrait-card">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-victorian">
+          <img src="portraits/edmund.png" alt="Edmund Hale II">
+        </div>
+        <div class="portrait-img-caption">Edmund Hale II · 1841–1882<br>Imagined · Victorian studio portrait, c.1875</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Edmund Hale II</div>
+        <div class="card-dates">1841 – 1882 · Era VII · The Victorian Confidence</div>
+        <p class="card-desc">The performance. The locked escritoire. The confession never made publicly. Two words on a folded paper found in the deepest compartment: <em>I know.</em> He sealed the escritoire in Shropshire in 1882, aged forty-one. What he knew, and whether the knowing was relief or weight, the archive does not say. He is forty-one. The door is locked.</p>
+        <blockquote class="card-quote">"I know."<br><span style="font-size:0.85em; color:rgba(200,168,60,0.3);">— Two words. Folded paper. Undated.</span></blockquote>
+        <div class="portrait-audio-player" data-src="audio/edmund.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era VII</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-VII.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume VII: The Victorian Confidence</a>
+      </div>
+    </article>
+
+    <article class="portrait-card reverse">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-edwardian">
+          <img src="portraits/thomas.png" alt="Thomas Marsh-Hale">
+        </div>
+        <div class="portrait-img-caption">Thomas Marsh-Hale · 1873–1951<br>Imagined · studio photograph, c.1916</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Thomas Marsh-Hale</div>
+        <div class="card-dates">1873 – 1951 · Era VIII · The Edwardian Record</div>
+        <p class="card-desc">Illegitimate son who claimed the hyphenated name — combining both lines of his descent. Journalist, soldier, archivist. Carried the archive's instruction in his head all his life. Witnessed the First World War and came back. The archive's most persistent inheritance, passed to him intact: <em>Keep asking.</em></p>
+        <blockquote class="card-quote">"A man has a right to his own name. Even if it takes him forty years to claim it."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/thomas.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era VIII</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-VIII.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume VIII: The Edwardian Record</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ERA IX & X ──────────────────────────────────────── -->
+  <section class="gallery-era-section">
+    <div class="gallery-era-label">Era IX–X · The World Wars & Contemporary · 1933–2026</div>
+
+    <article class="portrait-card">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-wartime">
+          <img src="portraits/edmundmarsh.png" alt="Edmund Marsh-Hale">
+        </div>
+        <div class="portrait-img-caption">Edmund Marsh-Hale · 1910–1978<br>Ministry of Supply · studio photograph, c.1943</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Edmund Marsh-Hale</div>
+        <div class="card-dates">1910 – 1978 · Era IX · The Wartime Engineer</div>
+        <p class="card-desc">Structural engineer. Ministry of Supply, 1939–1945. New Towns development programme after the war. Added names to bridges the specification did not require him to name. His wife Dorothy, when asked: <em>Specification does not call for it. Physics does.</em> Kept the family papers for thirty years. Passed them intact.</p>
+        <blockquote class="card-quote">"It is not sentiment. It is load-bearing."</blockquote>
+        <div class="portrait-audio-player" data-src="audio/edmundmarsh.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era IX</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-IX.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume IX: The Wartime Engineer</a>
+      </div>
+    </article>
+
+    <article class="portrait-card reverse">
+      <div class="portrait-img-wrap">
+        <div class="portrait-img-frame frame-modern">
+          <img src="portraits/eleanor.png" alt="Eleanor Voss">
+        </div>
+        <div class="portrait-img-caption">Eleanor Voss · 1983–<br>Oxford, January 2024</div>
+      </div>
+      <div class="portrait-card-body">
+        <div class="card-name">Eleanor Voss</div>
+        <div class="card-dates">1983 – present · Era X · The Contemporary Lineage</div>
+        <p class="card-desc">Medievalist, Bodleian Library, Oxford. Recovered Matilda's letter from the Hale archive in January 2024. Reconstructed the Voss genealogy from Margery's departure in 1373 to her own arrival at the Bodleian in 2018. She is not a Hale. She is the other side of the same story. The letter was addressed to her. It always was.</p>
+        <blockquote class="card-quote">"She was writing to Eleanor. She always was."<br><span style="font-size:0.85em; color:rgba(200,168,60,0.3);">— James Marsh-Hale, finding aid, February 2024</span></blockquote>
+        <div class="portrait-audio-player" data-src="audio/eleanor.mp3">
+          <button class="pap-btn" aria-label="Play narration">&#9654;</button>
+          <div class="pap-info">
+            <div class="pap-label">Voice narration · Era X</div>
+            <div class="pap-bar"><div class="pap-progress"></div></div>
+            <div class="pap-time">–:––</div>
+          </div>
+        </div>
+        <a href="era-X.html" class="card-link" style="margin-top:14px; display:inline-block;">→ Volume X: The Contemporary Lineage</a>
+      </div>
+    </article>
+  </section>
+
+</main>
+
+<a href="index.html" class="home-float" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="transitions.js"></script>
+<script src="features.js"></script>
+<script>
+// ── PORTRAIT AUDIO PLAYERS ────────────────────────────────────────────────
+(function() {
+  let currentAudio = null;
+  let currentBtn   = null;
+
+  function fmt(s) {
+    if (!isFinite(s)) return '–:––';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + String(sec).padStart(2,'0');
+  }
+
+  document.querySelectorAll('.portrait-audio-player').forEach(function(player) {
+    const src      = player.dataset.src;
+    const btn      = player.querySelector('.pap-btn');
+    const progress = player.querySelector('.pap-progress');
+    const timeEl   = player.querySelector('.pap-time');
+    const bar      = player.querySelector('.pap-bar');
+    let audio      = null;
+
+    function initAudio() {
+      if (audio) return;
+      audio = new Audio(src);
+      audio.preload = 'metadata';
+      audio.addEventListener('timeupdate', function() {
+        if (!audio.duration) return;
+        progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+      });
+      audio.addEventListener('ended', function() {
+        btn.innerHTML = '&#9654;';
+        btn.classList.remove('playing');
+        progress.style.width = '0%';
+        timeEl.textContent = fmt(0) + ' / ' + fmt(audio.duration);
+        currentAudio = null;
+        currentBtn   = null;
+      });
+      audio.addEventListener('loadedmetadata', function() {
+        timeEl.textContent = '0:00 / ' + fmt(audio.duration);
+      });
+    }
+
+    btn.addEventListener('click', function() {
+      initAudio();
+      // Stop any other playing audio
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        currentBtn.innerHTML = '&#9654;';
+        currentBtn.classList.remove('playing');
+      }
+      if (audio.paused) {
+        audio.play();
+        btn.innerHTML = '&#9646;&#9646;';
+        btn.classList.add('playing');
+        currentAudio = audio;
+        currentBtn   = btn;
+      } else {
+        audio.pause();
+        btn.innerHTML = '&#9654;';
+        btn.classList.remove('playing');
+        currentAudio = null;
+        currentBtn   = null;
+      }
+    });
+
+    bar.addEventListener('click', function(e) {
+      initAudio();
+      const rect = bar.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      if (audio.duration) {
+        audio.currentTime = ratio * audio.duration;
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Deed-Box · MSS. Hale-Marsh Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0D0B08;
+      color: #C8B890;
+      font-family: 'IM Fell English', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .db-nav {
+      background: #0D0B08;
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .db-nav a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .db-nav a:hover { color: rgba(200,168,60,0.9); }
+    .db-nav-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.28em;
+      color: rgba(200,168,60,0.22);
+      text-transform: uppercase;
+    }
+
+    /* ── HEADER ── */
+    .db-header {
+      text-align: center;
+      padding: 52px 30px 36px;
+      border-bottom: 1px solid rgba(200,168,60,0.08);
+    }
+    .db-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.4em;
+      color: rgba(200,168,60,0.32);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .db-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.6em, 4vw, 2.6em);
+      color: rgba(200,168,60,0.88);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .db-subtitle {
+      font-style: italic;
+      color: rgba(200,168,60,0.4);
+      font-size: 0.88em;
+      max-width: 520px;
+      margin: 0 auto 16px;
+    }
+
+    /* ── BOX ILLUSTRATION ── */
+    .db-box-scene {
+      display: flex;
+      justify-content: center;
+      padding: 32px 20px 24px;
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+    }
+    .db-box-svg { max-width: 320px; width: 100%; }
+
+    /* ── SEARCH / FILTER ── */
+    .db-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(200,168,60,0.07);
+    }
+    .db-search {
+      background: rgba(200,168,60,0.06);
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.88);
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.1em;
+      padding: 7px 14px;
+      outline: none;
+      width: 240px;
+    }
+    .db-search::placeholder { color: rgba(200,168,60,0.3); }
+    .db-filter {
+      background: none;
+      border: 1px solid rgba(200,168,60,0.18);
+      color: rgba(200,168,60,0.45);
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .db-filter:hover, .db-filter.active {
+      background: rgba(200,168,60,0.1);
+      border-color: rgba(200,168,60,0.45);
+      color: rgba(200,168,60,0.88);
+    }
+
+    /* ── DOCUMENT GRID ── */
+    .db-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px 80px;
+    }
+
+    /* ── FOLDED PAPER CARD ── */
+    .db-card {
+      position: relative;
+      background: #EDE0B8;
+      border: 1px solid rgba(139,90,30,0.35);
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .db-card::before {
+      /* Folded corner */
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(225deg, #C8A850 50%, #D4B870 50%);
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
+    }
+    .db-card:hover {
+      transform: translateY(-4px) rotate(0.5deg);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .db-card-era {
+      background: rgba(139,26,26,0.12);
+      border-bottom: 1px solid rgba(139,90,30,0.2);
+      padding: 6px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(139,26,26,0.75);
+    }
+    .db-card-body {
+      padding: 14px 16px 16px;
+    }
+    .db-card-year {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(80,50,15,0.55);
+      margin-bottom: 5px;
+    }
+    .db-card-title {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 0.88em;
+      color: #2A1A0E;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .db-card-desc {
+      font-size: 0.72em;
+      color: rgba(60,35,10,0.55);
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .db-card-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(139,26,26,0.55);
+      text-decoration: none;
+    }
+    .db-card-link:hover { color: rgba(139,26,26,0.9); }
+
+    .db-card.db-hidden { display: none; }
+
+    /* ── VIEWER OVERLAY ── */
+    .db-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4,3,2,0.92);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+    .db-overlay.open { display: flex; }
+    .db-overlay-inner {
+      background: #EDE0B8;
+      border: 2px solid rgba(139,90,30,0.5);
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 36px 40px;
+      position: relative;
+    }
+    .db-overlay-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.2em;
+      color: rgba(60,35,10,0.45);
+      cursor: pointer;
+    }
+    .db-overlay-close:hover { color: rgba(60,35,10,0.85); }
+    .db-overlay-era {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(139,26,26,0.6);
+      margin-bottom: 6px;
+    }
+    .db-overlay-year {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: rgba(80,50,15,0.55);
+      margin-bottom: 4px;
+    }
+    .db-overlay-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.2em;
+      color: #2A1A0E;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(139,90,30,0.25);
+    }
+    .db-overlay-body {
+      font-size: 0.92em;
+      color: #3A2510;
+      line-height: 1.82;
+    }
+    .db-overlay-body p { margin-bottom: 1em; }
+    .db-overlay-go {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(139,26,26,0.65);
+      text-decoration: none;
+      border: 1px solid rgba(139,26,26,0.25);
+      padding: 7px 16px;
+    }
+    .db-overlay-go:hover { background: rgba(139,26,26,0.08); color: rgba(139,26,26,0.9); }
+
+    /* ── COUNT ── */
+    .db-count {
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.25);
+      padding: 10px 20px 0;
+    }
+
+    /* ── FOOTER ── */
+    .db-footer {
+      text-align: center;
+      padding: 0 20px 50px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.18em;
+      color: rgba(200,168,60,0.15);
+    }
+    .db-footer a { color: rgba(200,168,60,0.28); text-decoration: none; }
+    .db-footer a:hover { color: rgba(200,168,60,0.6); }
+
+    @media (max-width: 500px) {
+      .db-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="db-nav">
+    <a href="index.html">← Archive Index</a>
+    <span class="db-nav-title">The Deed-Box · MSS. Hale-Marsh Collection</span>
+    <a href="timeline.html">Timeline →</a>
+  </nav>
+
+  <header class="db-header">
+    <div class="db-label">MSS. Hale-Marsh Collection · Bodleian Library, Oxford</div>
+    <h1 class="db-title">The Deed-Box</h1>
+    <p class="db-subtitle">Nine centuries of documents from a single family. Deposited 2018. Each folded and tied and kept. Now open.</p>
+  </header>
+
+  <!-- Animated deed-box SVG -->
+  <div class="db-box-scene">
+    <svg class="db-box-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Box body -->
+      <rect x="40" y="90" width="240" height="96" rx="3" fill="#2A1A0A" stroke="rgba(200,168,60,0.35)" stroke-width="1.5"/>
+      <!-- Box lid (slightly open) -->
+      <g id="db-box-lid" style="transform-origin:40px 90px; transform:rotate(-18deg);">
+        <rect x="40" y="60" width="240" height="34" rx="3" fill="#1E1208" stroke="rgba(200,168,60,0.4)" stroke-width="1.5"/>
+        <!-- Lid decorative edge -->
+        <rect x="40" y="88" width="240" height="6" fill="rgba(200,168,60,0.12)"/>
+        <!-- Lid brass plate -->
+        <rect x="128" y="70" width="64" height="16" rx="2" fill="rgba(200,168,60,0.12)" stroke="rgba(200,168,60,0.3)" stroke-width="1"/>
+        <text x="160" y="81" text-anchor="middle" font-family="'Courier New',monospace" font-size="7" fill="rgba(200,168,60,0.6)" letter-spacing="1.5">HALE-MARSH</text>
+      </g>
+      <!-- Papers visible in box -->
+      <g opacity="0.7">
+        <rect x="55" y="96" width="90" height="82" rx="1" fill="#EDE0B8" stroke="rgba(139,90,30,0.4)" stroke-width="1" transform="rotate(-3 100 137)"/>
+        <rect x="75" y="98" width="85" height="78" rx="1" fill="#E8D8A8" stroke="rgba(139,90,30,0.35)" stroke-width="1" transform="rotate(2 117 137)"/>
+        <rect x="140" y="96" width="110" height="82" rx="1" fill="#EDE0B8" stroke="rgba(139,90,30,0.4)" stroke-width="1" transform="rotate(1 195 137)"/>
+        <rect x="155" y="99" width="100" height="75" rx="1" fill="#E5D5A0" stroke="rgba(139,90,30,0.3)" stroke-width="1" transform="rotate(-2 205 137)"/>
+      </g>
+      <!-- Keyhole -->
+      <circle cx="160" cy="164" r="5" fill="none" stroke="rgba(200,168,60,0.5)" stroke-width="1.2"/>
+      <rect x="157.5" y="168" width="5" height="8" rx="1" fill="none" stroke="rgba(200,168,60,0.5)" stroke-width="1.2"/>
+      <!-- Box hinges -->
+      <rect x="80" y="86" width="18" height="8" rx="1" fill="rgba(200,168,60,0.25)" stroke="rgba(200,168,60,0.4)" stroke-width="0.8"/>
+      <rect x="222" y="86" width="18" height="8" rx="1" fill="rgba(200,168,60,0.25)" stroke="rgba(200,168,60,0.4)" stroke-width="0.8"/>
+      <!-- Shadow -->
+      <ellipse cx="160" cy="192" rx="120" ry="8" fill="rgba(0,0,0,0.35)"/>
+    </svg>
+  </div>
+
+  <!-- Controls -->
+  <div class="db-controls">
+    <input type="text" class="db-search" id="dbSearch" placeholder="Search documents…" oninput="filterDocs()">
+    <button class="db-filter active" data-vol="all" onclick="filterVol(this,'all')">All Volumes</button>
+    <button class="db-filter" data-vol="I"   onclick="filterVol(this,'I')">Vol. I</button>
+    <button class="db-filter" data-vol="II"  onclick="filterVol(this,'II')">Vol. II</button>
+    <button class="db-filter" data-vol="III" onclick="filterVol(this,'III')">Vol. III</button>
+    <button class="db-filter" data-vol="IV"  onclick="filterVol(this,'IV')">Vol. IV</button>
+    <button class="db-filter" data-vol="V"   onclick="filterVol(this,'V')">Vol. V</button>
+    <button class="db-filter" data-vol="VI"  onclick="filterVol(this,'VI')">Vol. VI</button>
+    <button class="db-filter" data-vol="VII" onclick="filterVol(this,'VII')">Vol. VII</button>
+    <button class="db-filter" data-vol="VIII" onclick="filterVol(this,'VIII')">Vol. VIII</button>
+    <button class="db-filter" data-vol="IX"  onclick="filterVol(this,'IX')">Vol. IX</button>
+    <button class="db-filter" data-vol="X"   onclick="filterVol(this,'X')">Vol. X</button>
+  </div>
+
+  <div class="db-count" id="dbCount"></div>
+
+  <!-- Document Grid -->
+  <div class="db-grid" id="dbGrid"></div>
+
+  <!-- Viewer overlay -->
+  <div class="db-overlay" id="dbOverlay" onclick="closeViewer(event)">
+    <div class="db-overlay-inner" id="dbOverlayInner">
+      <button class="db-overlay-close" onclick="closeViewer(null,true)">✕</button>
+      <div class="db-overlay-era"  id="ovEra"></div>
+      <div class="db-overlay-year" id="ovYear"></div>
+      <div class="db-overlay-title" id="ovTitle"></div>
+      <div class="db-overlay-body" id="ovBody"></div>
+      <a href="#" class="db-overlay-go" id="ovLink">Open in Archive →</a>
+    </div>
+  </div>
+
+  <div class="db-footer" id="dbFooter">
+    <p>MSS. Hale-Marsh Collection · Bodleian Library · 1066–2026</p>
+    <p style="margin-top:8px;">
+      <a href="index.html">← Archive Index</a> &nbsp;·&nbsp;
+      <a href="timeline.html">Timeline</a> &nbsp;·&nbsp;
+      <a href="documents.html">All Documents</a>
+    </p>
+  </div>
+
+  <script>
+  /* ── DOCUMENT DATA ── */
+  var DOCS = [
+    /* Vol. I */
+    { vol:'I', year:'1066', title:'Royal Writ of Ranulf de la Hale', desc:'King William confirms Ranulf\'s tenure at Halecroft, Worcestershire. Three lines of Latin. The land that holds the family for nine centuries.', link:'era-I.html', excerpt:'The writ is brief. The land is confirmed. Ranulf\'s name is spelled incorrectly but the seal is genuine. This is enough.' },
+    { vol:'I', year:'1087', title:'Ranulf to his brother Geoffrey', desc:'The earliest surviving letter in the Hale hand. He mentions the pig.', link:'era-I.html', excerpt:'I write from Halecroft which is in good order. The harvest was sufficient. There is a matter with the mill at Pershore which I must address. The pig is well.' },
+    { vol:'I', year:'1130', title:'Pipe Roll Entry · Roger de la Hale', desc:'Henry I\'s Pipe Roll records Roger paying scutage. The family is established in the county record.', link:'era-I.html', excerpt:'Roger de la Hale: scutage pro uno milite. Six shillings and eight pence.' },
+    { vol:'I', year:'1214', title:'Freehold Purchase Deed · William Hale', desc:'The family converts from feudal tenure to freehold. Referenced by Thomas at his 1351 inquest.', link:'era-I.html', excerpt:'Know all men by these presents that I, William Hale of the Hale, do purchase and hold in freehold the said lands at Halecroft...' },
+
+    /* Vol. II */
+    { vol:'II', year:'1348', title:'Death Register · St. Wulfstan\'s', desc:'Father Croft\'s record of the plague dead. Five Hales named. Thomas, aged eleven, sole survivor.', link:'era-II.html', excerpt:'November, feast of St. Martin — Richard Hale of the Hale, freeholder, aged four-and-forty. His wife Maud. Their son Edmund, aged eighteen.' },
+    { vol:'II', year:'1350', title:'Thomas to his aunt Elspeth', desc:'Earliest letter in Thomas\'s hand, written aged twelve from Halecroft to Pershore.', link:'era-II.html', excerpt:'Dere Auntie Elspeth, I do wryte to thanke you for kepinge me these monthes and for not creyinge until I was past the gate, which I dide notise and which I think was kinde.' },
+    { vol:'II', year:'1351', title:'Inquisitio · Worcester Assizes', desc:'Royal Chancery writ confirming Thomas as heir. The court notes he can read the Latin.', link:'era-II.html', excerpt:'The court findeth that Thomas Hale is the legitimate heir to the freehold at Halecroft and doth confirm him in his inheritance.' },
+    { vol:'II', year:'c.1351', title:'Matilda\'s Beehive · Archive Object', desc:'The beehive kept by Matilda at Halecroft. She survived the pestilence. She brought Thomas honey.', link:'era-II.html', excerpt:'The bees were not told about the pestilence. They continued.' },
+    { vol:'II', year:'1382', title:'Thomas\'s Remembrance to John', desc:'Thomas, aged forty-four, writes what he knows to his son. He describes coming home to an empty house and going to see to the pig.', link:'era-II.html', excerpt:'Keep asking. Keep the land. See to the pig. — Thomas Hale, his marke. Halecroft, Anno Domini 1382.' },
+
+    /* Vol. III */
+    { vol:'III', year:'1485', title:'Tudor Patent · William Hale', desc:'Henry VII confirms the Hale lands after Bosworth. The family survived by not choosing sides.', link:'era-III.html', excerpt:'Henry, by the grace of God, to all faithful subjects: know that we confirm William Hale in possession of the said lands at Halecroft...' },
+    { vol:'III', year:'1536', title:'William Hale to his cousin in London', desc:'A cautious letter about the dissolution of the nearby priory. He does not say what he thinks.', link:'era-III.html', excerpt:'Matters at the priory are as you will have heard. I say nothing beyond what is known, which is sufficient.' },
+    { vol:'III', year:'1554', title:'The Chalice · Archive Object', desc:'Silver chalice donated to St. Wulfstan\'s, then recovered when the church was stripped.', link:'era-III.html', excerpt:'Item: one silver chalice, gift of the Hale family, recovered by the same, now in private keeping.' },
+
+    /* Vol. IV */
+    { vol:'IV', year:'1642', title:'Nathaniel Hale to Parliament', desc:'Nathaniel petitions for protection of Halecroft. He does not say which side he supports.', link:'era-IV.html', excerpt:'Being a freeholder of long standing and quiet disposition, I humbly petition that the said lands at Halecroft be free from requisition.' },
+    { vol:'IV', year:'1649', title:'Nathaniel\'s Diary · January', desc:'Three entries around the execution of the King. He records the weather and that he could not sleep.', link:'era-IV.html', excerpt:'January 30. Very cold. South field frozen. Could not sleep. No note.' },
+    { vol:'IV', year:'1660', title:'Deed of Indemnity · Restoration', desc:'The family confirmed in its estate. They had not committed strongly enough under the Commonwealth to require punishment.', link:'era-IV.html', excerpt:'Being found to have conducted themselves with circumspection during the late disorders, the said Hale family is confirmed in its estates.' },
+
+    /* Vol. V */
+    { vol:'V', year:'1718', title:'Robert to Charles · The Breach', desc:'Robert informs his brother the entail will not be broken. They do not speak again.', link:'era-V.html', excerpt:'I must inform you that the entail stands as settled, and that it is not in my power — nor, I confess, my inclination — to break it.' },
+    { vol:'V', year:'1719', title:'Charles to Robert · The Reply', desc:'Charles replies from London. He says he understands. He does not understand.', link:'era-V.html', excerpt:'I understand your position and will not press the matter further. I remain, as ever, your affectionate brother.' },
+    { vol:'V', year:'c.1740', title:'The Snuffbox · Archive Object', desc:'Silver snuffbox engraved with both brothers\' initials. Found in the deed-box. Neither mentions it.', link:'era-V.html', excerpt:'R.H. and C.H. — a gift from their father. Still in the deed-box when the collection was deposited in 2018.' },
+    { vol:'V', year:'1745', title:'Charles Hale dies in London', desc:'Charles dies without issue. Robert does not attend the funeral.', link:'era-V.html', excerpt:'Mr Charles Hale, of Camberwell, died on the fourteenth of this month. He leaves no issue.' },
+
+    /* Vol. VI */
+    { vol:'VI', year:'1794', title:'Augusta to Alderton & Sons', desc:'The first of forty-seven letters from Augusta Hale about the estate she cannot legally own.', link:'era-VI.html', excerpt:'I write to you concerning the south field drainage and the Hadley tenancy, both of which require immediate resolution and neither of which the legal title permits me to resolve in my own name.' },
+    { vol:'VI', year:'1801', title:'Augusta\'s Diary · Estate Accounts', desc:'Three months of daily entries. She describes the estate\'s heir as punctual in his visits and in no other respect.', link:'era-VI.html', excerpt:'October 14. Mr. F. visited to inspect his interest. He inspected nothing. He took tea and departed. The south field decision remains unmade.' },
+    { vol:'VI', year:'1830', title:'Augusta\'s Death · Estate Transfer', desc:'Augusta dies at sixty-seven having managed Harton Hall thirty-seven years. The heir arrives three days after her funeral.', link:'era-VI.html', excerpt:'She left the estate in better order than she found it, and she found it in better order than any of the documents suggested it ought to be.' },
+
+    /* Vol. VII */
+    { vol:'VII', year:'1867', title:'Edmund to Clara · Beginning', desc:'The first letter in Edmund\'s correspondence with Clara Marsh. He is already married.', link:'era-VII.html', excerpt:'My dear Miss Marsh, I write to thank you for the considerable pleasure of your conversation last evening, which I confess stayed with me longer than I expected or perhaps deserved.' },
+    { vol:'VII', year:'1870', title:'Edmund to Clara · Termination', desc:'Edmund ends the arrangement using the word "exigencies." Clara\'s diary: "He has decided I am not a person but a circumstance."', link:'era-VII.html', excerpt:'The exigencies of my professional situation make it impossible for me to continue the present arrangement with any prospect of the certainty and stability that you deserve.' },
+    { vol:'VII', year:'1877', title:'Clara to Edmund · Thomas', desc:'Clara tells Edmund their son is seven years old. Edmund receives the letter. He ties the ribbon.', link:'era-VII.html', excerpt:'I write to inform you that Thomas is now seven years of age and in good health. He is a serious child. He has your eyes.' },
+    { vol:'VII', year:'c.1882', title:'Edmund\'s Confession', desc:'Found under the deed-box lining. No date. No address. "The only honest thing left."', link:'era-VII.html', excerpt:'I am writing this because I am not going to Brixton. I know I am not going. I am writing this because someone should know that I knew what I was not doing.' },
+    { vol:'VII', year:'1882', title:'Coroner\'s Report · Edmund Hale', desc:'Edmund found in locked study. Verdict: natural causes. Several sealed letters on the desk. Family did not speak of it again.', link:'era-VII.html', excerpt:'The deceased was found at approximately eleven o\'clock in the forenoon. The cause of death I find to be cardiac arrest. The letters were sealed and retained by the family.' },
+
+    /* Vol. VIII */
+    { vol:'VIII', year:'1891', title:'Thomas Marsh-Hale · Sale of Harton Hall', desc:'Thomas sells his father\'s estate and takes the hyphenated name. He keeps the deed-box.', link:'era-VIII.html', excerpt:'The property was sold for a sum sufficient to purchase the smaller estate at Birchwood. He took the name Marsh-Hale. He said it was a compromise. It was also an answer.' },
+    { vol:'VIII', year:'1914–18', title:'Dispatches · Western Front', desc:'Thomas Marsh-Hale covers the war as a correspondent. He does not explain what he saw.', link:'era-VIII.html', excerpt:'I am writing from a position I cannot name, at a time I am not permitted to specify, about things I cannot describe fully. The sounds are the worst of it.' },
+    { vol:'VIII', year:'1922', title:'Thomas M-H · Letter to his editor', desc:'After the war. He says he cannot write about it yet. He says this for eleven years.', link:'era-VIII.html', excerpt:'I find I am not yet ready to write the retrospective you have proposed. I am still, in certain respects, in it.' },
+
+    /* Vol. IX */
+    { vol:'IX', year:'1940', title:'Arthur\'s Memo · Collection Dispersal', desc:'Arthur Marsh-Hale, at the Ministry, writes about dispersal of historical collections from London.', link:'era-IX.html', excerpt:'It is recommended that collections of archival significance be removed from London to provincial locations. I note that certain family papers are already in Worcestershire.' },
+    { vol:'IX', year:'1940–41', title:'Dorothy\'s Diary · The Blitz', desc:'Sixteen months of entries. She uses the word "waiting" eleven times. She does not use the word "afraid."', link:'era-IX.html', excerpt:'October 15. Could hear the planes. Then the other sound. Then quiet. Waiting again.' },
+    { vol:'IX', year:'1945', title:'Arthur to his brother · V-E Day', desc:'A single letter, written on 8 May 1945. It is three sentences long and contains no military information.', link:'era-IX.html', excerpt:'It is over. I am well. Come home.' },
+
+    /* Vol. X */
+    { vol:'X', year:'2018', title:'James Marsh-Hale · Deposits the Deed-Box', desc:'James donates the family deed-box to the Bodleian. His covering letter is two sentences long.', link:'era-X.html', excerpt:'I enclose the deed-box, as discussed. I would be grateful if someone could tell me what is in it.' },
+    { vol:'X', year:'2022–24', title:'Eleanor Voss · Catalogue Notes', desc:'Eleanor begins cataloguing the collection. She finds the genealogical link to the Hales in October 2022.', link:'notes.html', excerpt:'I found the genealogical link six weeks after I started working on the box. I sat with this for some time.' },
+    { vol:'X', year:'2024', title:'Matilda\'s Letter Recovered', desc:'Multispectral imaging brings back 23 lost lines from Matilda\'s 1351 letter.', link:'matilda.html', excerpt:'Keep asking. Keep the land. See to the pig. Tell them the name does not end here.' },
+    { vol:'X', year:'2024', title:'Edmund\'s Postscript Recovered', desc:'A document found beneath the deed-box lining. Edmund addresses the reader directly from 1882.', link:'era-VII.html', excerpt:'You have read it. I want to be clear with you. I knew you would, eventually. That is why I wrote it.' },
+    { vol:'X', year:'2026', title:'The Archive Opens', desc:'The MSS. Hale-Marsh Collection opens to the public. 1066–2026. Nine centuries.', link:'index.html', excerpt:'The archive does not answer the questions. It keeps them.' }
+  ];
+
+  /* ── RENDER ── */
+  var currentVol = 'all';
+  var currentSearch = '';
+
+  function renderGrid() {
+    var grid = document.getElementById('dbGrid');
+    grid.innerHTML = '';
+    var visible = 0;
+    DOCS.forEach(function(doc, i) {
+      var matchVol = currentVol === 'all' || doc.vol === currentVol;
+      var q = currentSearch.toLowerCase();
+      var matchSearch = !q ||
+        doc.title.toLowerCase().indexOf(q) !== -1 ||
+        doc.desc.toLowerCase().indexOf(q) !== -1 ||
+        doc.year.toLowerCase().indexOf(q) !== -1;
+      if (!matchVol || !matchSearch) return;
+      visible++;
+      var card = document.createElement('div');
+      card.className = 'db-card';
+      card.innerHTML =
+        '<div class="db-card-era">Vol. ' + doc.vol + '</div>' +
+        '<div class="db-card-body">' +
+          '<div class="db-card-year">' + doc.year + '</div>' +
+          '<div class="db-card-title">' + doc.title + '</div>' +
+          '<div class="db-card-desc">' + doc.desc + '</div>' +
+          '<a href="' + doc.link + '" class="db-card-link" onclick="event.stopPropagation()">Open in archive →</a>' +
+        '</div>';
+      card.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') return;
+        openViewer(doc);
+      });
+      // Staggered reveal
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(12px)';
+      card.style.transition = 'opacity 0.35s ease ' + (visible * 30) + 'ms, transform 0.35s ease ' + (visible * 30) + 'ms';
+      grid.appendChild(card);
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        });
+      });
+    });
+    document.getElementById('dbCount').textContent =
+      visible + ' document' + (visible !== 1 ? 's' : '') + ' in the deed-box';
+  }
+
+  function filterVol(btn, vol) {
+    currentVol = vol;
+    document.querySelectorAll('.db-filter').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderGrid();
+  }
+
+  function filterDocs() {
+    currentSearch = document.getElementById('dbSearch').value;
+    renderGrid();
+  }
+
+  /* ── VIEWER ── */
+  function openViewer(doc) {
+    document.getElementById('ovEra').textContent  = 'Volume ' + doc.vol;
+    document.getElementById('ovYear').textContent = doc.year;
+    document.getElementById('ovTitle').textContent = doc.title;
+    document.getElementById('ovBody').innerHTML   =
+      '<p>' + doc.desc + '</p>' +
+      '<hr style="border:none;border-top:1px solid rgba(139,90,30,0.2);margin:16px 0;">' +
+      '<p style="font-style:italic;color:rgba(60,35,10,0.65);">' + doc.excerpt + '</p>';
+    document.getElementById('ovLink').href = doc.link;
+    document.getElementById('ovLink').textContent = 'Open Vol. ' + doc.vol + ' →';
+    document.getElementById('dbOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.closeViewer = function(e, force) {
+    if (force || (e && e.target === document.getElementById('dbOverlay'))) {
+      document.getElementById('dbOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeViewer(null, true);
+  });
+
+  /* ── LID ANIMATION on scroll ── */
+  (function() {
+    var lid = document.getElementById('db-box-lid');
+    var animated = false;
+    function onScroll() {
+      if (animated) return;
+      if (window.scrollY > 40) {
+        animated = true;
+        lid.style.transition = 'transform 1.2s ease';
+        lid.style.transform = 'rotate(-28deg)';
+        window.removeEventListener('scroll', onScroll);
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+  })();
+
+  /* Initial render */
+  renderGrid();
+  </script>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

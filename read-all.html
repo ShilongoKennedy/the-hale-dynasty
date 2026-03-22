@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hale Dynasty — Read the Full Archive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C8A83C;
+      --gold-dim: #7A5A18;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0A0806;
+      color: #B8A888;
+      font-family: Georgia, 'Times New Roman', serif;
+      opacity: 0;
+      animation: pageIn 1s ease 0.2s forwards;
+    
+      line-height: 1.7;
+    }
+    @keyframes pageIn { to { opacity: 1; } }
+
+    /* ── TOP NAV ──────────────────────────────────────── */
+    .read-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,8,6,0.96);
+      border-bottom: 1px solid #1A1610;
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .read-nav a { color: #4A3A20; text-decoration: none; transition: color 0.2s; }
+    .read-nav a:hover { color: var(--gold); }
+    .read-progress-label { color: #2A2010; }
+
+    /* Progress bar */
+    .read-progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--gold);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.1s linear;
+      opacity: 0.6;
+    }
+
+    /* ── OPENING ──────────────────────────────────────── */
+    .read-opening {
+      text-align: center;
+      padding: 100px 40px 80px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .read-opening h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2em, 5vw, 3.8em);
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .read-opening p {
+      font-style: italic;
+      color: #6A5A40;
+      font-size: 0.95em;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .read-opening .dates {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4em;
+      color: #3A2A10;
+      letter-spacing: 0.24em;
+      margin-top: 28px;
+    }
+
+    /* ── ERA DIVIDER ──────────────────────────────────── */
+    .era-divider {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .era-divider-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .era-spine {
+      width: 8px;
+      min-height: 120px;
+      flex-shrink: 0;
+    }
+    .era-divider-text {
+      flex: 1;
+      padding: 36px 60px;
+      border-top: 1px solid #1A1610;
+      border-bottom: 1px solid #1A1610;
+    }
+    .era-vol {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.3em;
+      color: #3A2A10;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .era-title-large {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.3em, 3vw, 2.2em);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .era-dates-small {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.9em;
+      letter-spacing: 0.2em;
+      color: #3A2A10;
+      margin-bottom: 12px;
+    }
+    .era-desc {
+      font-style: italic;
+      font-size: 0.88em;
+      color: #5A4A30;
+      line-height: 1.65;
+      max-width: 520px;
+    }
+    .era-divider-link {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-top: 16px;
+      padding: 6px 16px;
+      border: 1px solid #2A1E0A;
+      color: #4A3A1A;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .era-divider-link:hover { color: var(--gold); border-color: #5A4A20; }
+
+    /* ── EXCERPT BLOCK ────────────────────────────────── */
+    .excerpt-block {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 40px;
+      border-bottom: 1px solid #1A1610;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .excerpt-block.revealed { opacity: 1; transform: none; }
+
+    .excerpt-doc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.24em;
+      color: #2A2010;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .excerpt-text {
+      font-size: 0.96em;
+      line-height: 2.0;
+      color: #8A7A5A;
+      font-style: italic;
+    }
+    .excerpt-text p { margin-bottom: 1em; }
+    .excerpt-sig {
+      text-align: right;
+      font-size: 0.82em;
+      color: #4A3A20;
+      margin-top: 14px;
+      font-style: italic;
+    }
+
+    /* ── CLOSING ──────────────────────────────────────── */
+    .read-closing {
+      text-align: center;
+      padding: 100px 40px 120px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .read-closing h2 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.2em, 3vw, 2em);
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+    }
+    .read-closing p {
+      font-style: italic;
+      color: #5A4A30;
+      font-size: 0.92em;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+    .read-closing-link {
+      display: inline-block;
+      margin-top: 36px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4A3A20;
+      text-decoration: none;
+      border: 1px solid #2A1E0A;
+      padding: 10px 24px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .read-closing-link:hover { color: var(--gold); border-color: #5A4A20; }
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+      .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+</head>
+<body>
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="read-progress-bar" id="progressBar"></div>
+
+<nav class="read-nav">
+  <a href="index.html">← Archive Index</a>
+  <span class="read-progress-label" id="progressLabel">The Hale Dynasty · Complete Archive</span>
+  <a href="family-tree.html">Family Tree →</a>
+</nav>
+
+<!-- ── OPENING ─────────────────────────────────────────────────────────── -->
+<div class="read-opening">
+  <h1>The Hale Dynasty</h1>
+  <p>A complete chronicle in ten volumes. Nine centuries of one family, read end to end.</p>
+  <p>Each volume is presented here in its essential documents. To read any volume in full, follow the link at its heading.</p>
+  <div class="dates">1066 &mdash; 2026</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. I — NORMAN -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-i">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#C8A83C;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. I · Norman · 1066–1121</div>
+      <div class="era-title-large" style="color:#C8A83C;">The Chronicle of Halecroft</div>
+      <div class="era-dates-small">1066 — 1121</div>
+      <div class="era-desc">Brother Eadmer's account of the Conquest. Ranulf de la Hale arrives in Worcestershire. The land is named. The line begins.</div>
+      <a href="era-I.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Chronicle of Halecroft · Brother Eadmer · 1121</div>
+  <div class="excerpt-text">
+    <p>In the year of Our Lord one thousand and sixty-six, in the month of October, a man came to this valley who had not been here before. He was a Norman, one of the Conqueror's men, and he had been given the land by a king who had not asked the land's opinion. His name was Ranulf, and he was, by the accounts of those who had reason to fear him and those who had reason to be grateful, a man of considerable practical intelligence and very little patience.</p>
+    <p>He looked at the valley. He looked at what was left of the Saxon holding. He said something in French that no one understood. Then he stayed.</p>
+  </div>
+  <div class="excerpt-sig">— Brother Eadmer, Priory of Pershore, 1121</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. II — PLAGUE -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-ii">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#8B1A1A;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. II · Black Death · 1348–1390</div>
+      <div class="era-title-large" style="color:#8B1A1A;">The Plague Register</div>
+      <div class="era-dates-small">1348 — 1390</div>
+      <div class="era-desc">Matilda of Halecroft buries her father and both brothers in eleven weeks. She is the last one left who knows what the land is called. She writes it down.</div>
+      <a href="era-II.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Matilda of Halecroft · Letter · c.1390 · MS. Hale II, fol. 34v</div>
+  <div class="excerpt-text">
+    <p>Keep asking. Keep the land. See to the pig. Keep asking. Tell them where I am buried. Tell them who I was. Tell them the name does not end here.</p>
+  </div>
+  <div class="excerpt-sig">— Matilda of Halecroft, c.1390</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. III — TUDOR -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-iii">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#7A1C1C;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. III · Tudor · 1509–1558</div>
+      <div class="era-title-large" style="color:#7A1C1C;">The Hale Papers</div>
+      <div class="era-dates-small">1509 — 1558</div>
+      <div class="era-desc">The Reformation. Heresy trials. A letter that should have been burned. William Hale III walks a careful line between old faith and new law, and mostly survives.</div>
+      <a href="era-III.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">William Hale III · Letter to his steward · 1534</div>
+  <div class="excerpt-text">
+    <p>The King has dissolved the monastery at Pershore and taken the bells. I do not know what to make of this. I am told not to know what to make of this. I am learning, at some cost, that there are seasons in which the most prudent philosophy is to have very few opinions and to express them very quietly.</p>
+  </div>
+  <div class="excerpt-sig">— William Hale III, 1534</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. IV — CIVIL WAR -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-iv">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#1C2E4A;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. IV · Civil War · 1620–1665</div>
+      <div class="era-title-large" style="color:#4A6A9A;">The Brothers Divided</div>
+      <div class="era-dates-small">1620 — 1665</div>
+      <div class="era-desc">James fights for Parliament. Thomas fights for the King. They write to each other across the battleline. Thomas is killed at Worcester, 1651. James never forgives himself.</div>
+      <a href="era-IV.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Thomas Hale · Final letter to his brother · September 1651</div>
+  <div class="excerpt-text">
+    <p>James — if you find this after, know that I thought of you at Powick Bridge and did not fire. I do not know if you extended me the same courtesy. I suspect you did. We are, neither of us, very good at this. I am sorry for all of it. Give my love to the land. I think the land will still be there when the two of us have sorted ourselves out.</p>
+  </div>
+  <div class="excerpt-sig">— Thomas Hale, Worcester, September 1651</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. V — GEORGIAN -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-v">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#8B6914;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. V · Georgian · 1715–1790</div>
+      <div class="era-title-large" style="color:#8B6914;">Sir George Edward Hale, Bt.</div>
+      <div class="era-dates-small">1715 — 1790</div>
+      <div class="era-desc">The baronetcy. The fortune. The ambition. George Edward builds the Hale name into something socially legible, and pays for it in the usual ways.</div>
+      <a href="era-V.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">George Edward Hale · Memoir · c.1778</div>
+  <div class="excerpt-text">
+    <p>I was created baronet in the year 1762, which is the sort of thing one is meant to consider the crowning event of one's life. I considered it for approximately a fortnight. Then the wool prices collapsed and I had to think about something else.</p>
+  </div>
+  <div class="excerpt-sig">— Sir George Edward Hale, Bt., c.1778</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. VI — REGENCY -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-vi">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#5C1828;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. VI · Regency · 1771–1832</div>
+      <div class="era-title-large" style="color:#8A3848;">Augusta Hale</div>
+      <div class="era-dates-small">1771 — 1832</div>
+      <div class="era-desc">The sharpest person in the archive. Declined three marriage proposals. Wrote everything down. The letters are dangerous and funny and wise, and she knew it.</div>
+      <a href="era-VI.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Augusta Hale · Letter to her brother Edmund · March 1814</div>
+  <div class="excerpt-text">
+    <p>You ask whether I am content. I am content in the way that a person who has been given one small room in a very large house is content: I have made excellent use of the room, I have hung it beautifully, and I am not going to tell you what I think of the arrangement because you would find it ungrateful. I am not ungrateful. I am simply very clear-eyed about the size of the room.</p>
+  </div>
+  <div class="excerpt-sig">— Augusta Hale, March 1814</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. VII — VICTORIAN -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-vii">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#1A1A1A;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. VII · Victorian · 1868–1882</div>
+      <div class="era-title-large" style="color:#6A6A6A;">The Correspondence of Mr Edmund Hale</div>
+      <div class="era-dates-small">1868 — 1882</div>
+      <div class="era-desc">The locked study. The diary no one was meant to read. The confession on a plain white page. The question the coroner did not answer.</div>
+      <a href="era-VII.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Edmund Hale · Confession document · undated · c.1882</div>
+  <div class="excerpt-text">
+    <p>I have been performing Edmund Hale for forty-four years and I am very tired. The performance has been, by most measures, excellent. The reviews have been good. No one has noticed that it is a performance, which is either a tribute to my skill or an indictment of the audience, and I no longer have the energy to determine which.</p>
+    <p>I am not what anyone thinks I am. I have not been, for a very long time. I am leaving this here because I need someone to know, and there is no one I can tell.</p>
+  </div>
+  <div class="excerpt-sig">— Edmund Hale, c.1882</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. VIII — WWI -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-viii">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#7A6A40;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. VIII · WWI · 1873–1919</div>
+      <div class="era-title-large" style="color:#7A6A40;">Thomas</div>
+      <div class="era-dates-small">1873 — 1919</div>
+      <div class="era-desc">The illegitimate son. He claimed the name Marsh-Hale. Three letters, a service record, and a register entry. Killed at the Somme, 14 October 1916.</div>
+      <a href="era-VIII.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Thomas Marsh-Hale · Letter home · August 1916</div>
+  <div class="excerpt-text">
+    <p>I have been thinking about the house. Not with any particular plan — I don't have any particular plans at the moment, which seems prudent — but just the smell of it, and the way the light came through the kitchen window in the morning. I find myself thinking about very specific things. I don't know what that means. I think it probably means something.</p>
+  </div>
+  <div class="excerpt-sig">— Thomas Marsh-Hale, France, August 1916</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. IX — WWII -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-ix">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#1A2E48;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. IX · WWII · 1933–1960</div>
+      <div class="era-title-large" style="color:#4A6A8A;">The Name</div>
+      <div class="era-dates-small">1933 — 1960</div>
+      <div class="era-desc">The Blitz. Edmund Marsh-Hale survives. The New Towns. The family papers move to a box in Harlow. The question persists in Courier New.</div>
+      <a href="era-IX.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Edmund Marsh-Hale · Personal memo · October 1940</div>
+  <div class="excerpt-text">
+    <p>House at Clapham: destroyed. Contents: mostly gone. The family box was in the Anderson shelter. This is the only reason I am still in possession of nine hundred years of paper. I find this either very funny or very significant and I am not in the right state to determine which. Keeping the box. Keeping asking.</p>
+  </div>
+  <div class="excerpt-sig">— Edmund Marsh-Hale, October 1940</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- VOL. X — CONTEMPORARY -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="era-divider" id="vol-x">
+  <div class="era-divider-inner">
+    <div class="era-spine" style="background:#C8A83C;"></div>
+    <div class="era-divider-text">
+      <div class="era-vol">Vol. X · Contemporary · 1979–2026</div>
+      <div class="era-title-large" style="color:#C8A83C;">Hale</div>
+      <div class="era-dates-small">1979 — 2026</div>
+      <div class="era-desc">Eleanor Voss discovers Matilda's letter in the Bodleian. She is Matilda's descendant. She did not know. The archive is assembled. The question is answered.</div>
+      <a href="era-X.html" class="era-divider-link">Read full volume →</a>
+    </div>
+  </div>
+</div>
+<div class="excerpt-block">
+  <div class="excerpt-doc-label">Eleanor Voss · Email to James Marsh-Hale · 15 January 2024</div>
+  <div class="excerpt-text">
+    <p>Mr. Marsh-Hale — the imaging results are back. The central passage of the letter is legible. I have read it several times. I need to speak to you as soon as possible. She was writing to someone. I think she was writing to us. I think she knew that someone would eventually come looking, and she left enough of a trail to be found.</p>
+    <p>She was right. We found her.</p>
+  </div>
+  <div class="excerpt-sig">— Eleanor Voss, Bodleian Library, 15 January 2024</div>
+</div>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────────────── -->
+<div class="read-closing">
+  <h2>The Archive Ends Here</h2>
+  <p>Nine centuries. Ten volumes. One question, asked and re-asked across the generations.</p>
+  <p><em>"Keep asking. Keep the land. See to the pig."</em></p>
+  <p>— Matilda of Halecroft, c.1390</p>
+  <a href="index.html" class="read-closing-link">← Return to the Archive</a>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', function() {
+  var scrolled = window.scrollY;
+  var total = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = total > 0 ? (scrolled / total) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  // Update label with current volume
+  var vols = ['vol-i','vol-ii','vol-iii','vol-iv','vol-v','vol-vi','vol-vii','vol-viii','vol-ix','vol-x'];
+  var label = 'The Hale Dynasty · Complete Archive';
+  for (var i = vols.length - 1; i >= 0; i--) {
+    var el = document.getElementById(vols[i]);
+    if (el && el.getBoundingClientRect().top <= 80) {
+      var titles = ['Vol. I · Norman','Vol. II · Plague','Vol. III · Tudor','Vol. IV · Civil War',
+        'Vol. V · Georgian','Vol. VI · Regency','Vol. VII · Victorian','Vol. VIII · WWI',
+        'Vol. IX · WWII','Vol. X · Contemporary'];
+      label = titles[i];
+      break;
+    }
+  }
+  document.getElementById('progressLabel').textContent = label;
+});
+
+// Scroll reveal for excerpts
+var blocks = document.querySelectorAll('.excerpt-block');
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+blocks.forEach(function(b) { io.observe(b); });
+</script>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script src="transitions.js"></script>
+
+</body>
+</html>

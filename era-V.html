@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. V — The Memoirs of Sir Nathaniel Hale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#F2ECD8; color:#2A2010; font-family:'Lora', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#4A3A18; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#E8C060; text-decoration:none; } .era-nav a:hover { color:#FFD870; }
+    .era-nav .vol-marker { color:#A08040; }
+
+    .era-header {
+      background:#F8F2E4; border-bottom:4px solid #8B6914; border-top:1px solid #C8A840;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#8B6914; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'Cormorant Garamond','Cinzel',Georgia,serif; font-size:clamp(1.8em,4.5vw,3.2em); color:#2A2010; letter-spacing:0.06em; font-weight:600; margin-bottom:8px; }
+    .era-sub { font-style:italic; color:#6A5010; font-size:1em; margin-bottom:8px; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#8B6914; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
+
+    .portrait-frame { float:right; margin:0 0 32px 40px; text-align:center; position:relative; z-index:2; }
+    .portrait-img-v {
+      display:block; width:210px; height:auto;
+      border:6px solid #8B6914;
+      outline:2px solid #E8C850; outline-offset:-10px;
+      box-shadow:0 0 0 1px #6A5010, 6px 6px 22px rgba(0,0,0,0.6);
+    }
+    .portrait-caption { font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.1em; color:#5A4010; margin-top:8px; line-height:1.5; }
+    @media (max-width:600px) { .portrait-frame { float:none; margin:0 auto 28px; display:block; } }
+
+    .editorial-note {
+      border-left:3px solid #8B6914; padding:16px 20px; background:#EDE4C8;
+      font-style:italic; font-size:0.85em; color:#5A4010; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#8B6914; text-transform:uppercase; margin-bottom:6px; }
+
+    /* GEORGIAN MEMOIR — feels like a 1744 printed book, age-spotted */
+    .memoir-page {
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(150,120,60,0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 75%, rgba(130,100,50,0.07) 0%, transparent 35%),
+        radial-gradient(ellipse at 60% 10%, rgba(180,150,80,0.04) 0%, transparent 30%),
+        radial-gradient(ellipse at 30% 85%, rgba(140,110,55,0.05) 0%, transparent 38%),
+        #F8F2E4;
+      border:1px solid #C8A840;
+      padding:50px 56px;
+      position:relative;
+      line-height:1.95;
+    }
+    .memoir-page::before {
+      content:''; position:absolute; inset:6px; border:1px solid rgba(200,168,64,0.25); pointer-events:none;
+    }
+    .memoir-chapter {
+      text-align:center;
+      border-bottom:1px solid #C8A840;
+      padding-bottom:16px; margin-bottom:24px;
+    }
+    .memoir-chapter-num { font-family:'Cinzel',Georgia,serif; font-size:1.3em; color:#8B6914; letter-spacing:0.15em; display:block; margin-bottom:6px; }
+    .memoir-chapter-title { font-size:0.9em; font-style:italic; color:#5A4010; }
+    .memoir-page p { font-size:0.92em; margin-bottom:1em; text-align:justify; }
+    .memoir-page p:first-of-type::first-letter {
+      font-size:2.8em; float:left; line-height:0.8; margin-right:6px; margin-top:4px;
+      color:#8B6914; font-family:'Cinzel',Georgia,serif; font-weight:700;
+    }
+    .memoir-page p:last-child { margin-bottom:0; }
+    .memoir-folio {
+      text-align:right; font-size:0.75em; color:#8B6914; margin-top:20px;
+      font-family:'Courier New',monospace; letter-spacing:0.1em;
+    }
+
+    /* BROADSIDE — pasted in, slightly tilted */
+    .broadside {
+      background:#EEE4C4;
+      border:2px solid #8B6914;
+      padding:30px 40px;
+      text-align:center;
+      transform: rotate(-0.25deg);
+      box-shadow: 2px 3px 14px rgba(0,0,0,0.20), -1px -1px 0 rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .broadside::after {
+      content: '';
+      position: absolute; inset: 5px;
+      border: 1px solid rgba(139,105,20,0.30);
+      pointer-events: none;
+    }
+    .broadside-rule { border:none; border-top:2px solid #8B6914; margin:12px 0; }
+    .broadside-title { font-family:'Cinzel',Georgia,serif; font-size:1.15em; color:#4A3010; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+    .broadside-sub { font-style:italic; color:#6A5010; font-size:0.85em; margin-bottom:12px; }
+    .broadside-body { font-size:0.85em; line-height:1.8; color:#2A2010; }
+    .broadside-footer { font-size:0.72em; color:#8B6914; font-family:'Courier New',monospace; letter-spacing:0.08em; margin-top:12px; }
+
+    /* FORMAL LETTER */
+    .formal-letter {
+      background:#F8F2E4;
+      border-top:3px solid #8B6914;
+      border:1px solid #C8A840;
+      border-top-width:3px;
+      padding:36px 44px;
+    }
+    .formal-letter-head { font-variant:small-caps; letter-spacing:0.1em; color:#8B6914; font-size:0.8em; border-bottom:1px solid #C8A840; padding-bottom:10px; margin-bottom:18px; }
+    .formal-letter p { font-size:0.9em; line-height:1.9; margin-bottom:0.9em; }
+    .formal-letter-sig { text-align:right; margin-top:16px; font-style:italic; color:#5A4010; font-size:0.88em; }
+
+    /* ERA BANNER */
+    
+
+    @media (max-width:600px) {
+      .memoir-page { padding:30px 20px; }
+      .memoir-page p:first-of-type::first-letter { font-size:2em; }
+      .era-content { padding:30px 16px 60px; }
+      .era-seq-nav { flex-direction: column; gap: 14px; padding: 24px 16px; text-align: center; }
+      .esn-prev, .esn-next { justify-content: center; }
+      .era-nav { flex-wrap: wrap; gap: 6px; padding: 10px 14px; justify-content: center; }
+      .era-nav .vol-marker { order: -1; width: 100%; text-align: center; margin-bottom: 4px; font-size: 0.75em; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 55%;
+      filter: contrast(1.05) brightness(0.88);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,15,5,0.45);
+    }
+
+    
+    .era-sound-bar {
+      background: #1A1408; border-bottom: 1px solid #2A1E08;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #7A6A40; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(150,120,60,0.4); color: #9A8A60;
+      padding: 4px 14px; cursor: pointer; font-family: inherit; font-size: inherit;
+      letter-spacing: inherit; border-radius: 2px; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+
+    /* ── ERA V VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-v {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 10px;
+    }
+    .evp-v-label {
+      font-family: Georgia, serif;
+      font-size: 0.74em;
+      letter-spacing: 0.08em;
+      color: #9A8A60;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+    .evp-v-play {
+      background: none;
+      border: 1px solid rgba(150,120,60,0.4);
+      color: #9A8A60;
+      padding: 4px 12px;
+      font-family: Georgia, serif;
+      font-size: 0.88em;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .evp-v-play:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+    .evp-v-progress {
+      background: rgba(150,120,60,0.15);
+      height: 4px;
+      width: 80px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    .evp-v-bar {
+      background: #9A8A60;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .evp-v-time {
+      font-family: Georgia, serif;
+      font-size: 0.7em;
+      color: #9A8A60;
+      min-width: 28px;
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="v" data-vol="V">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-V.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">A gentleman's study · Ambient</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <button class="esb-btn" id="eraSoundBtn" onclick="toggleEraSound()">♪ Hear the quill</button>
+      <div class="era-voice-player-v" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/nathaniel.mp3" preload="none"></audio>
+        <button class="evp-v-play" id="evpPlay">♩ Play</button>
+        <div class="evp-v-progress">
+          <div class="evp-v-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-v-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-IV.html">← Vol. IV</a>
+    <span class="vol-marker">VOL. V OF X &nbsp;·&nbsp; 1671–1744</span>
+    <a href="era-VI.html">Vol. VI →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraV.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume V</div>
+    <h1 class="era-main-title">The Memoirs of Sir Nathaniel Hale</h1>
+    <p class="era-sub">of Worcestershire and later of London; Baronet; a Man Who Had Opinions and the Stamina to Express Them</p>
+    <p style="font-size:0.82em; color:#8B6914; margin-top:8px;">Dictated by Sir Nathaniel Hale to his secretary Mr. James Croft<br>in the years 1738–1744. Printed posthumously, London, 1746.</p>
+    <div class="era-dates">1671 — 1744</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/nathaniel.png" class="portrait-img-v" alt="Sir Nathaniel Hale, Bt. — Georgian portrait, c.1720">
+      <div class="portrait-caption">Sir Nathaniel Hale, Bt. · 1671–1744<br><em>Imagined from the record</em></div>
+    </div>
+
+    <div class="editorial-note">
+      Sir Nathaniel Hale (1671–1744) is the most entertaining voice in the entire archive, which is saying something given the competition. He bought the baronetcy in 1702, left Worcestershire in 1698 and returned only to die, built a considerable fortune through means he describes with more relish than precision, and dictated his memoirs in the last six years of his life to a secretary whom he addresses, in the margins, as "young Croft, who writes too slowly and winces too much." The memoirs are blunt, sardonic, digressive, and almost certainly accurate in all the ways that matter.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
+    </div>
+
+    <!-- Memoir Chapter 1 -->
+    <div class="document">
+      <div class="doc-label">Document I · Dictated Memoirs · Chapter I · Begun 1738</div>
+      <div class="memoir-page">
+        <div class="memoir-chapter">
+          <span class="memoir-chapter-num">CHAPTER I</span>
+          <span class="memoir-chapter-title">In Which the Author Accounts for His Origins, and Does Not Apologise for Them</span>
+        </div>
+        <p>I was born in the year 1671 at Halecroft in Worcestershire, which is a village of no particular distinction, and I was the second son of William Hale, gentleman, who was the second son of Thomas Hale who fought for the King and the eldest son of the Thomas Hale who survived the plague, which makes me the fifth Hale of Halecroft in direct descent from the Norman soldier who rode into the county in 1067 and announced himself as the new owner. This is a fact about which I have always been entirely candid, because there is no dignity in pretending that one's family did not begin somewhere, and a great deal of foolishness in the pretending. We began as a soldier who took a war prize. So did half the families in England. The other half began as the people the soldiers took the war prizes from, and some of them are now the same people. This is what six centuries looks like from the inside.</p>
+        <p>My father William was a quiet man who managed the estate with great competence and very little fuss. My uncle Thomas, who had been in the King's army during the war, was a loud man who managed nothing in particular but who had opinions about everything, which he shared freely and at length. Between the two of them I learned two things: that competence is worth more than confidence, and that confidence is worth more than it ought to be in the short term. I have applied both lessons throughout my life, sometimes simultaneously, which is either wisdom or hypocrisy, and I have never been entirely certain which.</p>
+        <p>I left Worcestershire for London in the year 1698, which was the year my elder brother Edmund died of a fever and the year I received his inheritance. I did not wait for a decent interval. I said to my mother: Edmund would have told me to go. She said: yes, he would, but he would also have told you to write more often than you will. I have written as often as I could manage, which is not as often as she deserved. This is the first thing I regret.</p>
+        <div class="memoir-folio">THE MEMOIRS OF SIR NATHANIEL HALE · CHAPTER I · p. 1</div>
+      </div>
+    </div>
+
+    <!-- Memoir Chapter V: The Baronetcy -->
+    <div class="document">
+      <div class="doc-label">Document II · Dictated Memoirs · Chapter V · On the Purchase of the Baronetcy</div>
+      <div class="memoir-page">
+        <div class="memoir-chapter">
+          <span class="memoir-chapter-num">CHAPTER V</span>
+          <span class="memoir-chapter-title">In Which the Author Acquires a Title and Reflects Upon What It Is and Is Not Worth</span>
+        </div>
+        <p>In the year 1702, I purchased a baronetcy. I paid six hundred pounds for it, which was the going rate and which I will not pretend was money well spent in any conventional sense, but which was money spent for a particular purpose, and that purpose was accomplished. The purpose was this: that the name Hale, which my family had carried for six hundred years as a respectable name but not a distinguished one, should henceforward have something attached to it that the world would notice before it decided to ignore it. I do not value titles for their own sake. I value what they do, which is to cause people to listen before they have decided not to. This is a small thing. It is also, in practice, a considerable one.</p>
+        <p>Young Croft asks me, at this point in the dictation, whether I am not embarrassed by the nakedness of this calculation. I am not. I was embarrassed once, when I was young, about many things that did not deserve embarrassment. I have used up all my embarrassment on those things and have none left for anything honest. Buying a baronetcy is perfectly honest. You want the thing, you have the money, you pay for it. What is the alternative? Pretending you don't want it and then obtaining it by some more circuitous route that takes twice as long and costs three times as much in favours owed? I have observed that method practised by men who consider themselves more refined than I am. It looks considerably worse from the outside.</p>
+        <p>My son Edmund — who is thirteen and already possessed of the family habit of asking inconvenient questions at inconvenient moments — asked me whether a title could be bought, what was it worth? I told him: precisely what you make of it, which is also true of a name, and a face, and a set of principles, all of which things you also did not purchase but merely inherited. He thought about this for a moment and then said: then the buying of it is no different from the inheriting of it. I said: you have understood exactly. He looked mildly dissatisfied with this conclusion, which is the correct response.</p>
+        <div class="memoir-folio">THE MEMOIRS OF SIR NATHANIEL HALE · CHAPTER V · p. 47</div>
+      </div>
+    </div>
+
+    <!-- Broadside -->
+    <div class="document">
+      <div class="doc-label">Document III · Broadside · London · 1706</div>
+      <div class="broadside">
+        <hr class="broadside-rule">
+        <div class="broadside-title">Sale of Timber and Agricultural Produce<br>From the Halecroft Estate, Worcestershire</div>
+        <hr class="broadside-rule">
+        <div class="broadside-sub">By Order of Sir Nathaniel Hale, Baronet, being the Surplus of the Estate's Annual Production</div>
+        <div class="broadside-body">
+          There will be offered for SALE by Public Tender at the offices of Messrs. Alderton &amp; Fletcher, Solicitors, in the City of Worcester, on the Second Tuesday of October next, the following items of produce from the Halecroft Estate:
+          <br><br>
+          Eighty loads of seasoned OAK TIMBER from the upper wood, suitable for building and furniture. Twenty loads of ELM. Three hundred bushels of prime WORCESTERSHIRE WHEAT. One hundred bushels of BARLEY. The whole of the AUTUMN APPLE CROP from the Hale orchards, running to approximately forty hogsheads of cider when pressed, or such quantity of unfermented fruit as purchasers may prefer.
+          <br><br>
+          Prospective purchasers are assured that all produce is of the quality for which the Halecroft estate has been known in this county for upwards of six centuries, which is to say: exactly what it claims to be and not a quarter-inch more or less.
+        </div>
+        <hr class="broadside-rule">
+        <div class="broadside-footer">Printed at Worcester. Autumn 1706. By authority of Sir Nathaniel Hale, Bt.</div>
+      </div>
+    </div>
+
+    <!-- Letter to his son -->
+    <div class="document">
+      <div class="doc-label">Document IV · Letter · Sir Nathaniel Hale to His Son Edmund · 1741</div>
+      <div class="formal-letter">
+        <div class="formal-letter-head">From Sir Nathaniel Hale, Baronet · London · March 1741 · To his son Edmund Hale</div>
+        <p>Edmund — I write from London, which is where I generally write from, though I am told by my physician that I ought to be at Halecroft, which is where I will die, and which I am in no hurry to reach. The journey is seven hours in a reasonable coach and I find that seven hours of contemplating one's own death is more than sufficient. Two hours would answer. But the road does not shorten itself for philosophical preference.</p>
+        <p>I want to say something to you that I have not been able to say in conversation, partly because you are twenty-seven and twenty-seven is an age at which a man does not listen to his father, and partly because I am seventy and seventy is an age at which a father has run out of ways to make his point without sounding as though he is making his will. I am making my will separately. This is something else.</p>
+        <p>Our family has been asking a question for six hundred years. Whether what we have done is sufficient. Whether the holding of a thing — the land, the name, the account of what happened — constitutes an answer to the question of whether we deserve to hold it. I do not think it does. I think the answer is in the asking, and the asking is never finished, which is either very satisfying or very exhausting depending on the day.</p>
+        <div class="hd-marginal-wrap"><p>You are a good man. You are better than I was at your age, which is not a high bar, but it is a true one. You will ask the question. I am confident of that. See that you do not stop asking it when the answer becomes inconvenient, which is the only moment the question matters.</p>
+        <div class="hd-marginal">Every father in this archive says some version of this. — E.V.</div></div>
+        <p>See to the pig. <span class="hd-pig" data-era="V" title="🐷">🐷</span> You know what I mean.</p>
+        <div class="formal-letter-sig">
+          Your father, Sir Nathaniel Hale, Bt.<br>
+          <span style="color:#8B6914;">London, March 1741. He died at Halecroft the following November.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #2A1A08;">
+    <a href="era-IV.html">← Vol. IV: The Divided House</a>
+    <span class="vol-marker">END OF VOLUME V</span>
+    <a href="era-VI.html">Vol. VI: The Hale Entail →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. V INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">❧ &nbsp; ❧ &nbsp; ❧</div>
+
+<!-- RECOVERED DOCUMENT 1: Dorothea to her sister Catherine, November 1721 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh V, item 44 · Private Letter · November 1721</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Dorothea Hale, née Fenwick, to her Sister Lady Catherine Pemberton</p>
+    <p class="parchment-subtitle">Written November 1721, one year after the South Sea Bubble · Not previously published · Found in the Pemberton family papers, Cumbria Archive</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The letter was found among the Pemberton family papers donated to the Cumbria Archive in 1978 and was not identified as Hale-adjacent until the 2024 catalogue review. Dorothea asks Catherine to burn it. Catherine did not.</div>
+    <p><span class="hd-dropcap">C</span>atherine, I write privately and ask you to burn this when you have read it, which I know you will not do because you never burn anything, but I ask it anyway because what follows is what I actually think and I am usually careful about who hears that.</p>
+    <p>The money is substantially gone. Not entirely — Nathaniel did not mortgage the land, which is the single act of financial discipline in his life for which I am unreservedly grateful, and which he maintained against considerable temptation at several points. But the London properties are sold, the counting-house is closed, and we are in the position of people who were prosperous and are now comfortable, which is a position I find I can manage without distress, though I confess the comfort has a different texture than the prosperity.</p>
+    <p>You will ask what I think of him. I shall tell you, and I ask you to receive it as the considered judgment of a woman who has had twenty years to form it rather than the complaint of a woman who is presently aggrieved, which I am not, precisely.</p>
+    <p>I married a man who was building something, and what he was building required materials that a man of strict probity would not have used, and I knew this when I married him. I knew the building was constructed partly of things that would not survive close examination. What I did not fully understand — what I think I underestimated — is the cost of living inside a structure whose foundations you cannot examine.</p>
+    <p>He is not a bad man. He is a man who made himself, by effort of will, into the man the situation required, and who has been maintaining that construction for thirty years, and who is, I suspect, rather more tired than he will ever say. The Bubble was not the cause of his exhaustion; it was the occasion of its becoming visible. When I found him in the morning room with the accounts he looked, for the first time in twenty years, like what he actually is, which is a man of considerable intelligence and genuine feeling who has been performing competence since he was fourteen years old.</p>
+    <p>I said: then we have sufficient to begin again. I meant it entirely. What I did not say, and what I mean equally: I am rather looking forward to the beginning again. The performance was accomplished, but it was also tiring to watch.</p>
+    <p>Burn this, Catherine. Or don't. You never do.</p>
+    <p><em>Your loving sister, Dorothea. Hale Court, November 1721.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Nathaniel's burned chapter, reconstructed from Crump's notes -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh V, item 51 (reconstructed) · Manuscript Fragment · Winter 1743–44</div>
+  <div class="memoir-page">
+    <div class="memoir-chapter">
+      <span class="memoir-chapter-num">Reconstructed from Crump's Shorthand</span>
+      <span class="memoir-chapter-title">Dictated by Sir Nathaniel Hale · December 1743 · Burned by his instruction · Notes retained by Josiah Crump</span>
+    </div>
+    <div class="recovered-archival" style="margin-bottom:18px;">Archival note: Crump's note on the retention: <em>He told me to burn the copy. He did not say anything about the notes. I kept the notes.</em> He burned the fair copy. He kept eleven pages of shorthand. He had been keeping notes Nathaniel thought burned for eleven years.</div>
+    <p>My father was a man who believed that the self was prior to the performance — that there existed, beneath all one said and did and appeared to be, a fixed and inalienable essence which the performance either revealed or concealed, and which constituted the real man. He held this belief with the quiet conviction of someone who has never had occasion to doubt it. He was, in this, fortunate.</p>
+    <p>I do not share the belief. I have spent sixty years being unable to share it, not from philosophy but from observation: I have looked, repeatedly and with considerable attention, for the fixed essence beneath my performance, and I have found nothing but further performance, each layer removed revealing another layer, until I arrived at the conclusion that there is no layer beneath — that the performance, conducted with sufficient conviction across sufficient time, does not conceal a self but constitutes one.</p>
+    <p>My father would find this terrifying. He would find it, in fact, the most terrifying thing I could say about myself — more terrifying than the South Sea losses, more terrifying than the baronetcy's purchase price. He believed that a man without a fixed self was not a man at all but a kind of absence shaped like one.</p>
+    <p>I believe he was wrong. I believe he was wrong in the specific way of a man who has never been required to make himself — who received himself as a given, unchanged from birth to death, and mistook the consistency of the gift for evidence of its metaphysical status. I made myself. The making was effortful and not always honest and produced, in the end, something that Francis inhabits as if it were natural — as if he were born to it — which, in a sense, he was.</p>
+    <p><em>That is what I burned for. Not for my own vindication, which I am past needing, but for his. So that what he is would not have to account for how it was made.</em></p>
+    <div class="memoir-folio">Reconstructed from Crump's shorthand · J. Crump, secretary · Hale Court · 1743–44</div>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The South Sea Company Broadside -->
+<div class="obj-header">Archive Object · Vol. V · June 1720</div>
+<div class="interactive-obj document" id="obj-V">
+  <div class="obj-lid" id="obj-lid-V" onclick="toggleObj('V')">
+    <div class="obj-lid-icon">
+      <svg width="24" height="28" viewBox="0 0 24 28" fill="none">
+        <rect x="1" y="1" width="22" height="26" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <line x1="4" y1="6" x2="20" y2="6" stroke="#8B6914" stroke-width="1.4"/>
+        <line x1="4" y1="10" x2="20" y2="10" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="4" y1="13" x2="20" y2="13" stroke="#8B6914" stroke-width="0.7"/>
+        <line x1="4" y1="16" x2="16" y2="16" stroke="#8B6914" stroke-width="0.7"/>
+        <text x="17" y="19" font-size="6" fill="#8B1A1A" font-style="italic">NB</text>
+        <line x1="16" y1="22" x2="20" y2="22" stroke="#8B1A1A" stroke-width="0.6" stroke-dasharray="1,1"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The South Sea Company Broadside
+      <span>June 1720 · with Nathaniel Hale's marginal annotation · Read the margin</span>
+    </div>
+    <svg id="obj-chevron-V" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-V">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A printed broadside on cream paper, showing the South Sea Company's June 1720 notice to proprietors. The text announces in large capitals that stock stands at <strong>ONE THOUSAND AND FIFTY POUNDS</strong> per share. The formal language of a firm that expects to continue indefinitely.</p>
+        <p>In the right margin, in a handwritten annotation immediately recognisable as Nathaniel Hale's hand from comparison with his letters: <em>I bought at 800. I sold at 400. I am, by this calculation, what is vulgarly called ruined.</em></p>
+      </div>
+      <div class="obj-note">
+        Nathaniel wrote this annotation with the same pen he was using for the accounts. He did not put it down. He completed the arithmetic and then wrote the conclusion. He filed the broadside. He kept it for twenty-four years.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>Beneath the fold, previously hidden: a second annotation. Smaller. Written later — the ink is slightly different, a touch darker.</p>
+          <p><em>And yet. The house is here. Dorothea said: then we have sufficient to begin again. She was right, as usual. I have been ruined twice before and rebuilt once. I expect the mathematics of the third time will be familiar.</em></p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">At the very bottom edge · The smallest annotation · Barely visible</span>
+          <em>Crump does not know about this one. Let him find it in the archive.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-IV.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume IV · The Civil War</div>
+        <div class="hd-xref-card-name">William the youngest</div>
+        <div class="hd-xref-card-reason">Sir Nathaniel is the grandson of William Hale, who held Halecroft through the Civil War by fighting for neither side. The London ambition is built on that survival.</div>
+      </a>
+      <a href="era-VI.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VI · The Regency</div>
+        <div class="hd-xref-card-name">Augusta Hale</div>
+        <div class="hd-xref-card-reason">Augusta is Nathaniel's granddaughter. She inherits his sardonic clarity and the estate his London fortune helped rebuild after the South Sea Bubble.</div>
+      </a>
+      <a href="era-VII.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VII · The Victorian</div>
+        <div class="hd-xref-card-name">Edmund Hale II</div>
+        <div class="hd-xref-card-reason">Nathaniel's descendants in the Victorian era have traded his bluntness for performance — but the same intelligence is underneath.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Nathaniel Hale, First Baronet, died at Halecroft in November 1741, as he had predicted. Edmund inherited the baronetcy and the estate in good order. The latter half of the eighteenth century was kind to the Hales: the enclosure of common land added acreage, the improvements to the Worcester road cut the journey to market, and Edmund's wife brought a useful connection to a Birmingham merchant house. The baronetcy endured one more generation before passing, in 1803, to a female heir — Augusta — who was barred by entail from inheriting the title but managed the estate with a precision that made the question irrelevant to anyone paying attention. Continue with <a href="era-VI.html">Vol. VI: The Regency Manager →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-IV.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. IV · Civil War</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-VI.html" class="esn-next">
+      <span class="esn-label">Vol. VI · Regency</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script>
+  // Era V — ambient sound
+  (function() {
+    var eraAudio = null, eraOn = false;
+    window.toggleEraSound = function() {
+      var btn = document.getElementById('eraSoundBtn');
+      if (!eraOn) {
+        if (!eraAudio) { eraAudio = new Audio('sounds/era-V-ambient.mp3'); eraAudio.loop = true; eraAudio.volume = 0.35; }
+        eraAudio.play(); eraOn = true;
+        btn.textContent = '♪ Silence the fire'; btn.classList.add('on');
+      } else {
+        if (eraAudio) eraAudio.pause(); eraOn = false;
+        btn.textContent = '♪ Hear the tavern'; btn.classList.remove('on');
+      }
+    };
+  })();
+
+  // Era V voice player
+  (function() {
+    var audio = document.getElementById('voiceAudio');
+    var btn = document.getElementById('evpPlay');
+    var bar = document.getElementById('evpBar');
+    var timeEl = document.getElementById('evpTime');
+
+    btn.onclick = function(e) {
+      e.preventDefault();
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = '❚❚ Playing...';
+      } else {
+        audio.pause();
+        btn.textContent = '♩ Play';
+      }
+    };
+
+    audio.addEventListener('timeupdate', function() {
+      if (audio.duration) {
+        var pct = (audio.currentTime / audio.duration) * 100;
+        bar.style.width = pct + '%';
+        var m = Math.floor(audio.currentTime / 60);
+        var s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      }
+    });
+
+    audio.addEventListener('ended', function() {
+      btn.textContent = '♩ Again';
+      bar.style.width = '100%';
+    });
+  })();
+  </script>
+
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:80px;left:35px" title=""><span class="hd-cipher">A</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>

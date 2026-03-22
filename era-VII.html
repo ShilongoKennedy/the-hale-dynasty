@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. VII — The Correspondence of Mr Edmund Hale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#E8E4DC; color:#1A1A1A; font-family:'Libre Baskerville', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#1A1A1A; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#C8C0B0; text-decoration:none; } .era-nav a:hover { color:#E8E0D0; }
+    .era-nav .vol-marker { color:#6A6050; }
+
+    .era-header {
+      background:#EDE8DC; border-bottom:4px solid #1A1A1A; border-top:4px solid #1A1A1A;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#3A3A3A; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'Playfair Display SC','Cinzel',Georgia,serif; font-size:clamp(1.6em,4vw,2.8em); color:#1A1A1A; letter-spacing:0.06em; margin-bottom:8px; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#3A3A3A; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
+
+    .editorial-note {
+      border-left:3px solid #3A3A3A; padding:16px 20px; background:#E0DCD0;
+      font-style:italic; font-size:0.85em; color:#3A3020; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#3A3A3A; text-transform:uppercase; margin-bottom:6px; }
+    .nota-bene { background:#E0DCD0; border-left:4px solid #6A6050; padding:12px 18px; font-style:italic; font-size:0.82em; color:#3A3020; margin-bottom:8px; }
+
+    /* VICTORIAN LETTER — black bordered, formal */
+    .victorian-letter {
+      background:#F0ECDC;
+      border:3px solid #1A1A1A;
+      padding:0;
+      position:relative;
+    }
+    .victorian-letter-border {
+      border:1px solid #1A1A1A;
+      margin:6px;
+      padding:34px 44px;
+    }
+    .vl-head {
+      text-align:center; border-bottom:1px solid #3A3A3A; padding-bottom:14px; margin-bottom:20px;
+    }
+    .vl-from { font-variant:small-caps; letter-spacing:0.12em; color:#1A1A1A; font-size:0.85em; }
+    .vl-date { font-style:italic; color:#4A4A4A; font-size:0.8em; margin-top:4px; }
+    .victorian-letter p { font-size:0.92em; line-height:2; margin-bottom:1em; }
+    .victorian-letter p:last-child { margin-bottom:0; }
+    .vl-sig { text-align:right; margin-top:18px; font-style:italic; color:#2A2A2A; font-size:0.88em; line-height:1.6; }
+
+    /* VICTORIAN DIARY */
+    .victorian-diary {
+      background:#F0ECDC;
+      border-left:4px solid #3A3A3A;
+      border:1px solid #9A9080;
+      border-left-width:4px;
+      padding:32px 44px;
+    }
+    .vd-entry { margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(154,144,128,0.3); }
+    .vd-entry:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+    .vd-date { font-style:italic; color:#4A4A3A; font-size:0.82em; margin-bottom:10px; }
+    .vd-entry p { font-size:0.9em; line-height:1.95; margin-bottom:0.85em; font-style:italic; }
+
+    /* SOLICITOR'S MEMORANDUM */
+    .solicitor {
+      background:#EEE8D8;
+      border:1px solid #8A8070;
+      border-top:3px solid #3A3A3A;
+      padding:30px 40px;
+    }
+    .sol-head { font-family:'Courier New',monospace; font-size:0.78em; letter-spacing:0.1em; text-transform:uppercase; color:#1A1A1A; border-bottom:1px solid #8A8070; padding-bottom:10px; margin-bottom:18px; }
+    .sol-field { display:flex; gap:16px; margin-bottom:6px; font-size:0.85em; }
+    .sol-label { font-family:'Courier New',monospace; color:#4A4A3A; min-width:80px; font-size:0.9em; }
+    .sol-value { color:#1A1A1A; }
+    .sol-body { margin-top:16px; font-size:0.88em; line-height:1.85; }
+    .sol-body p { margin-bottom:0.9em; }
+
+    /* ── THE CONFESSION ─────────────────────────────────────
+       This is the one document with NO performance.
+       Plain white. No border. No ornament. Just the words.
+    ── */
+    .confession-wrapper {
+      background: #F8F8F8;
+      padding: 70px 80px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .confession-wrapper p {
+      font-size: 0.95em;
+      line-height: 2.1;
+      margin-bottom: 1.2em;
+      color: #1A1A1A;
+    }
+    .confession-wrapper p:last-child { margin-bottom: 0; }
+    .confession-sig {
+      text-align: right;
+      margin-top: 24px;
+      font-size: 0.9em;
+      color: #2A2A2A;
+    }
+    .confession-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.2em;
+      color: #8A8080;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* NEWSPAPER — cut and pasted, slightly tilted */
+    .vic-newspaper {
+      background:#E8E0CC; border:1px solid #8A7A60;
+      padding:28px 36px; font-family:'Courier New',monospace;
+      transform: rotate(-0.4deg);
+      box-shadow: 2px 4px 16px rgba(0,0,0,0.22), -1px -1px 0 rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .vic-newspaper::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(255,245,180,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .vic-np-head { text-align:center; border-bottom:2px solid #1A1A1A; padding-bottom:10px; margin-bottom:16px; }
+    .vic-np-title { font-size:0.88em; font-weight:bold; letter-spacing:0.15em; text-transform:uppercase; }
+    .vic-np-sub { font-size:0.7em; color:#5A5040; margin-top:4px; }
+    .vic-np-body { font-size:0.78em; line-height:1.85; }
+    .vic-np-body p { margin-bottom:0.7em; }
+
+    /* ── CONFESSION: paragraphs surface slowly, one at a time ── */
+    .conf-p-init { opacity: 0; transition: opacity 2.2s ease; }
+    .conf-p-in   { opacity: 1; }
+
+    
+
+    .mystery-box {
+      max-width: 520px;
+      margin: 48px auto 60px;
+      border: 1px solid #1A1412;
+      background: linear-gradient(180deg, #0E0A06 0%, #080604 100%);
+      position: relative;
+    }
+    .mystery-box-lid {
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+      user-select: none;
+    }
+    .mystery-box-lid:hover { background: rgba(200,168,60,0.04); }
+    .mystery-keyhole {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #3A2A10;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s;
+    }
+    .mystery-box-lid:hover .mystery-keyhole { border-color: #C8A83C; }
+    .mystery-box-text {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.16em;
+      color: #4A3A20;
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+    .mystery-box-text span {
+      display: block;
+      font-size: 0.95em;
+      color: #2A1E0E;
+      margin-top: 4px;
+    }
+    .mystery-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.7s ease, padding 0.4s;
+      padding: 0 32px;
+    }
+    .mystery-content.open {
+      max-height: 600px;
+      padding: 0 32px 32px;
+    }
+    .mystery-doc {
+      border-top: 1px solid #1A1412;
+      padding-top: 24px;
+      font-style: italic;
+      font-size: 0.84em;
+      line-height: 1.8;
+      color: #8A7A5A;
+    }
+    .mystery-doc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.18em;
+      color: #3A2A10;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-style: normal;
+    }
+
+    /* ── FINGERPRINT REVEAL ──────────────────────────── */
+    .fingerprint-wrap {
+      position: relative;
+      display: inline-block;
+      cursor: crosshair;
+      margin: 18px 0 6px;
+    }
+    .fingerprint-smudge {
+      opacity: 0.18;
+      transition: opacity 0.3s ease;
+      display: block;
+    }
+    .fingerprint-wrap:hover .fingerprint-smudge { opacity: 0.32; }
+    .fingerprint-reveal {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Georgia, serif;
+      font-size: 0.78em;
+      font-style: italic;
+      color: rgba(60,30,10,0);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      text-decoration: line-through;
+      text-decoration-color: rgba(80,20,10,0.5);
+      transition: color 0.5s ease;
+      pointer-events: none;
+      text-shadow: 0 0 0 transparent;
+    }
+    .fingerprint-wrap:hover .fingerprint-reveal {
+      color: rgba(60,30,10,0.55);
+    }
+    .fp-hint {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      color: #2A1A08;
+      letter-spacing: 0.14em;
+      display: block;
+      margin-top: 4px;
+      font-style: normal;
+      opacity: 0.5;
+    }
+
+    @media (max-width:600px) {
+      .victorian-letter-border { padding:20px 16px; }
+      .confession-wrapper { padding:40px 20px; }
+      .era-content { padding:30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── PORTRAIT ───────────────────────────────────────── */
+    .portrait-frame {
+      float: right;
+      margin: 0 0 32px 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .portrait-svg { display: block; }
+    .portrait-img-vii {
+      display: block;
+      width: 220px;
+      height: auto;
+      border: 7px solid #1A1008;
+      outline: 2px solid #4A3818;
+      outline-offset: -10px;
+      box-shadow: 3px 3px 0 #0A0804, 8px 8px 28px rgba(0,0,0,0.9), inset 0 0 8px rgba(0,0,0,0.5);
+    }
+    .portrait-caption {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      color: #4A3A20;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .portrait-frame { float: none; margin: 0 auto 28px; display: block; }
+    }
+
+    /* ── REDACTED / DECLASSIFICATION ───────────────────────── */
+    .redacted {
+      background: #1A1008;
+      color: transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.6s, color 0.6s;
+      padding: 0 3px;
+    }
+    .redacted.revealed {
+      background: rgba(139,90,20,0.12);
+      color: inherit;
+      cursor: default;
+    }
+    .hd-decl-bar {
+      background: #100804;
+      border: 1px solid rgba(200,168,40,0.18);
+      border-radius: 3px;
+      padding: 18px 26px;
+      margin: 28px 0 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.1em;
+      color: #5A4020;
+    }
+    .hd-decl-bar h4 {
+      color: #8B6820; font-size: 1.05em; margin: 0 0 8px;
+      text-transform: uppercase; letter-spacing: 0.18em;
+    }
+    .hd-decl-bar p { margin: 0 0 12px; line-height: 1.6; }
+    .hd-decl-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.4);
+      color: #8B6820; padding: 7px 22px; cursor: pointer;
+      font-family: 'Courier New', monospace; font-size: 0.95em;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .hd-decl-btn:hover { background: rgba(200,168,40,0.08); color: #C8A830; }
+    .hd-decl-btn:disabled { opacity: 0.3; cursor: default; }
+    .hd-decl-status { margin-top: 10px; color: #4A3010; font-size: 0.9em; min-height: 1.2em; }
+
+    /* ── SOUND BAR ──────────────────────────────────────── */
+    .era-sound-bar {
+      background: #1A1008; border-bottom: 1px solid #2A1808;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #3A2408; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 16px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.95em; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+    .era-voice-player-vii { display:flex; align-items:center; gap:12px; margin-left:10px; }
+    .evp-vii-play { background:none; border:1px solid rgba(200,168,40,0.3); color:#8A7A50; padding:5px 12px; font-family:'Courier New',monospace; font-size:0.88em; letter-spacing:0.12em; cursor:pointer; transition:all 0.2s; text-transform:uppercase; }
+    .evp-vii-play:hover { border-color:#C8A828; color:#C8A840; }
+    .evp-vii-progress { background:rgba(200,168,40,0.1); height:4px; width:80px; border-radius:1px; overflow:hidden; }
+    .evp-vii-bar { background:#8A7A50; height:100%; width:0%; transition:width 0.1s linear; }
+    .evp-vii-time { font-family:'Courier New',monospace; font-size:0.7em; color:#8A7A50; min-width:28px; }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: sepia(0.3) contrast(1.2) brightness(0.8);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(5,5,5,0.60);
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="vii" data-vol="VII">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-VII.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">Edmund's study · Gas lamp burning · 1881</span>
+    <button class="esb-btn" id="eraSoundBtn" onclick="toggleEraSound()">♪ Hear the study</button>
+      <div class="era-voice-player-vii" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/edmund.mp3" preload="none"></audio>
+        <button class="evp-vii-play" id="evpPlay">⚜ Hear Edmund</button>
+        <div class="evp-vii-progress">
+          <div class="evp-vii-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-vii-time" id="evpTime">0:00</div>
+      </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-VI.html">← Vol. VI</a>
+    <span class="vol-marker">VOL. VII OF X &nbsp;·&nbsp; 1868–1882</span>
+    <a href="era-VIII.html">Vol. VIII →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraVII.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume VII</div>
+    <h1 class="era-main-title">The Correspondence of Mr Edmund Hale</h1>
+    <p class="hd-quill" style="font-style:italic; color:#4A4A3A; font-size:0.88em; margin:10px 0; max-width:600px; margin-left:auto; margin-right:auto;">
+      High Victorian. The performance. The letters with black borders. The diary no one was meant to read. The confession on a plain white page. The locked room in Shropshire.
+    </p>
+    <div class="era-dates">1868 — 1882</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/edmund.png" class="portrait-img-vii" alt="Edmund Hale — Victorian oil portrait, c.1880">
+      <div class="portrait-caption">Edmund Hale · 1838–1882<br><em>Harton Hall, Worcestershire · Imagined from the record</em></div>
+    </div>
+
+    <div class="editorial-note">
+      Edmund Hale (1841–1882) was George Edward Hale's son, Augusta's nephew, the last direct male heir of the main Hale line. He was, by all accounts, a man of considerable intelligence and considerable performance — these two things existing in a tension that the letters make visible. He maintained a correspondence of remarkable elaborateness, kept a diary, held a position in the county, and in August 1882 locked himself into the study of a house in Shropshire and did not come out. He left one document that belongs to neither the letters nor the diary. It is in this collection. It is the last thing in this section.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— T.M-H., <em>Oxford, 1919</em></div>
+    </div>
+
+    <!-- Victorian Letter I: Edmund to his solicitor -->
+    <div class="document">
+      <div class="doc-label">Document I · Edmund Hale to Mr. Alderton, Solicitor · January 1871</div>
+      <div class="victorian-letter">
+        <div class="victorian-letter-border">
+          <div class="vl-head">
+            <div class="vl-from">Edmund Hale, Esq. &nbsp;·&nbsp; Harton Hall, Worcestershire</div>
+            <div class="vl-date">The fourteenth day of January, in the year eighteen hundred and seventy-one</div>
+          </div>
+          <p>My dear Alderton — I write to you upon the matter of the timber valuation, which your letter of the ninth ultimo addresses with a thoroughness I find wholly satisfactory in its methodology and wholly dissatisfying in its conclusions, the latter being, I am afraid, a consequence of the former, since thoroughness applied to an inconvenient set of facts will produce inconvenient conclusions with a reliability that no amount of optimism can defeat.</p>
+          <p>The valuation of seven hundred pounds for the upper wood, which is the figure your surveyors have arrived at after what I must assume was a diligent examination, represents a decline of approximately one-third from the figure my father obtained in 1858, and a decline of rather more than that from the figure my aunt Augusta obtained in the year 1832, when the wood was at its most productive and when — I say this without quite the bitterness it might seem to imply — it was being managed by a woman who had no legal standing to manage it but who managed it better than anyone with legal standing to do so has managed it since.</p>
+          <p>I shall accept the offer. I find I am tired of the question, which is not the same as finding an answer to it, but which is at least a decision of a kind. Please proceed as you see fit. I shall be at Harton for the rest of this month if you require my signature upon anything.</p>
+          <div class="vl-sig">
+            I remain, my dear Alderton, with every regard,<br>
+            <strong>Edmund Hale.</strong>
+            <div style="font-style:normal; font-size:0.85em; color:#5A5A5A; margin-top:6px;">[Black-bordered writing paper. The border is formal mourning for his father, who died 1869.]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diary Entries -->
+    <div class="document">
+      <div class="doc-label">Document II · Edmund Hale's Private Diary · 1872–1878 · Three Entries</div>
+      <div class="victorian-diary">
+        <div class="vd-entry">
+          <div class="vd-date">March 14, 1872.</div>
+          <p>I have discovered, through the inquiry I have been conducting for the past six months into the matter of certain papers at my great-uncle's solicitor, that I have a half-brother. His name is Thomas. He is the son of my father and a woman named Clara Marsh, who is a seamstress in Brixton, London. He is born in the year 1873 — no, I have the dates wrong; he is born this year, 1873 — wait. I have been informed that Clara Marsh is presently in confinement, which is to say the boy has not yet arrived in the world and I am already thinking of him in the past tense, which is either a philosophical habit or a moral failing and I am not certain which. The question is what to do. My father did nothing, having died before he had the opportunity to do anything or to be seen to do anything, which amounts to the same thing in terms of outcome. I am alive. I have therefore no such convenient excuse.</p>
+        </div>
+        <div class="vd-entry">
+          <div class="vd-date">October 3, 1875.</div>
+          <p>I have seen the boy. He is two years old and he looks like a Hale, which is to say he looks like me, which is to say he looks like my father, which is the aspect of this situation that is most impossible to manage and the one I least know what to do with. Clara Marsh is a capable woman who is raising her son with more dignity than the circumstances warrant and considerably more than my family has provided. I gave her money. I feel correctly that this is insufficient and I am not certain what the sufficient thing would be. I keep asking the question without arriving at an answer. I have been told this is a family characteristic. I begin to see what they mean.</p>
+        </div>
+        <div class="vd-entry">
+          <div class="vd-date">January 19, 1878.</div>
+          <div class="hd-marginal-wrap"><p>The question that haunts the family — is what I have done sufficient? — is not, I now understand, a question about the large things. It is not a question about whether I have performed my duties, conducted my correspondence, maintained the estate, attended the appropriate occasions in appropriate attire. All of that I have done. I have done it with an elaborateness that I suspect is itself a symptom of the problem it is trying to solve. I perform sufficiency so thoroughly that I have perhaps performed in place of it. What I have not done is see to the pig. <span class="hd-pig" data-era="VII" title="🐷">🐷</span> The pig in my case is the boy in Brixton, who is five years old and has my father's eyes, and who will inherit nothing from the family that made him unless I act, which I have not acted, which is the thing I cannot stop writing down and cannot stop not doing.</p>
+          <div class="hd-marginal">He does act. Eventually. The boy is Thomas Marsh-Hale, Vol. VIII. — E.V.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Solicitor's Memorandum -->
+    <div class="document">
+      <div class="doc-label">Document III · Solicitor's Memorandum · Alderton &amp; Sons · August 1882</div>
+      <div class="solicitor">
+        <div class="sol-head">Memorandum — Alderton &amp; Sons, Solicitors · Worcester · Strictly Private and Confidential</div>
+        <div class="sol-field"><span class="sol-label">Date:</span><span class="sol-value">17 August 1882</span></div>
+        <div class="sol-field"><span class="sol-label">Re:</span><span class="sol-value">Edmund Hale, Esq., Harton Hall, Worcestershire</span></div>
+        <div class="sol-field"><span class="sol-label">Matter:</span><span class="sol-value">Death. Disposition of Estate. Related matters.</span></div>
+        <div class="sol-body">
+          <p>Mr. Edmund Hale was found deceased on the morning of the 14th of August at the house of Colonel Whitmore in Shropshire, where he had been a guest for the preceding fortnight. He was found in the study at eleven o'clock in the morning, the door having been locked from the inside. The circumstances have been examined by the county coroner, who has returned a verdict consistent with natural causes, <span class="redacted" id="rd-1" title="[REDACTED — request declassification]">the precise nature of which need not be further specified here — the coroner's private notes, seen by this office, indicate a more deliberate circumstance, which the family has asked us not to record.</span></p>
+          <p>We have been instructed to locate and inventory the papers of the deceased in preparation for probate. Among the papers found at Harton Hall there is one document of an unusual character, which has been sealed and placed in the deed-box pending further instruction. We recommend that this document be preserved with the family papers and that its contents be treated as confidential unless the family directs otherwise.</p>
+          <p>There is also the matter of <span class="redacted" id="rd-2" title="[REDACTED — request declassification]">a standing arrangement with one Clara Marsh, seamstress, of Brixton, London, and her son Thomas, aged nine years — who is, in our private assessment, the natural son of the deceased, though no formal acknowledgement was ever made or signed. Mr. Hale has been making quarterly payments to this address since 1873.</span> This arrangement is not formalised in any document we have been able to locate. We await the family's instruction as to whether it should continue.</p>
+          <div class="hd-decl-bar" id="hd-decl-bar">
+            <h4>Bodleian Libraries — Restricted Access Notice</h4>
+            <p>Two passages in this document have been withheld from the public record at the request of the Hale-Marsh family trust (1884). The restriction lapsed on 1 January 1984 under the Public Records Act. Declassification may be requested by any reader of the archive.</p>
+            <button class="hd-decl-btn" id="hd-decl-btn" onclick="requestDeclassification()">Request Declassification</button>
+            <div class="hd-decl-status" id="hd-decl-status"></div>
+          </div>
+          <p style="font-style:italic; color:#5A5040; font-size:0.85em; border-top:1px solid #8A8070; padding-top:10px; margin-top:4px;">Note added by hand, undated: <em>Payments continued. By instruction of Miss Ruth Hale (Augusta's granddaughter), who said the payments were just and the only question was whether they were enough. She was told they were all that was practicable. She said: practicable and sufficient are not the same thing. She continued the payments regardless.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSPAPER CUTTING -->
+    <div class="document">
+      <div class="doc-label">Document IV · Worcester Herald Cutting · August 1882</div>
+      <div class="vic-newspaper">
+        <div class="vic-np-head">
+          <div class="vic-np-title">Worcester Herald</div>
+          <div class="vic-np-sub">Saturday, 19 August 1882</div>
+        </div>
+        <div class="vic-np-body">
+          <p>DEATHS. — HALE. On the 14th of August, at Whitmore Park, Shropshire, EDMUND HALE, Esq., of Harton Hall, Worcestershire, in the forty-first year of his age. The last of his line in the main branch. A man of considerable attainment and wide acquaintance in the county. The estate passes to the trustees.</p>
+          <p>The funeral was held privately, at the family's request. The burial is at St. Wulfstan's, Halecroft, where the Hale family has been baptised, married, and buried since the year 1067. The stone is plain. The inscription records his name and dates and nothing else. It is consistent with his wishes as recorded.</p>
+          <p style="font-style:italic; font-size:0.9em; color:#4A4030; margin-top:8px;">[Cutting found in the deed-box, folded once. No annotation.]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── THE CONFESSION ────────────────────────────── -->
+    <div class="document">
+      <div class="confession-label">Document V · Found in the deed-box · No date · No addressee · No styling</div>
+      <div class="confession-wrapper">
+        <p>I have been performing sufficiency my entire life and I have not once asked whether the performance was the thing itself.</p>
+        <p>The letters with the black borders. The elaborate sentences. The meetings attended, the obligations discharged, the appropriate grief expressed at appropriate intervals. I have done all of it. I have done it well. And I have done it instead of the other thing, which was simpler and which I could not manage: to go to Brixton and to say to the boy that he is mine and that I am sorry it has taken me this long and that I do not know what to do now but I am here.</p>
+        <p>I have not gone to Brixton. I have sent money, which is not the same thing, which I know is not the same thing, which I have always known is not the same thing. The money arrives on time because I am a punctual man. It is the only punctual thing I have done in this matter. Everything else has been deferred: the acknowledgement, the visit, the plain sentence that would cost nothing except the performance.</p>
+        <p>Is what I have done sufficient? I know the answer. The answer is no. The answer has always been no. I have been asking the question as though it might one day return a different result, as though the asking were a kind of action that could substitute for the action itself. It cannot. My great-great-grandmother Matilda apparently understood this. She kept the bees and wrote the letter and set down what she knew so that whoever came after would know it. I have kept the accounts and written the letters and I have not set down what I know, which is that Thomas is my brother and that I have failed him in the only way that mattered.</p>
+        <p>I am writing this because I am not going to Brixton. I know I am not going. I am writing this because someone should know that I knew what I was not doing. The knowing does not excuse the not-doing. But it is the only honest thing left.</p>
+        <div class="confession-sig">
+          Edmund Hale.<br>
+          <span style="font-style:italic; color:#5A5050;">[No date. No address. Found in the deed-box, under the lining.]</span>
+        </div>
+        <div class="confession-breach" id="hd-confession-btn" onclick="openConfessionModal()" onkeydown="if(event.key==='Enter'||event.key===' ')openConfessionModal()" tabindex="0" role="button" aria-label="Postscript — continue reading" title="*">*</div>
+      </div>
+    </div>
+
+    <div class="mystery-box" id="mystery-box">
+      <div class="mystery-box-lid" onclick="toggleMystery()" id="mystery-lid">
+        <div class="mystery-keyhole">
+          <svg width="16" height="20" viewBox="0 0 16 20"><circle cx="8" cy="7" r="4" fill="none" stroke="#C8A83C" stroke-width="1.2"/><rect x="5.5" y="10" width="5" height="8" rx="1" fill="none" stroke="#C8A83C" stroke-width="1.2"/></svg>
+        </div>
+        <div class="mystery-box-text">
+          Coroner's Report — October 14, 1882
+          <span>Edmund Hale found in locked study. The door had to be forced.</span>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 14 14" style="margin-left:auto;flex-shrink:0;transition:transform 0.3s" id="mystery-chevron"><polyline points="2,4 7,10 12,4" fill="none" stroke="#4A3A20" stroke-width="1.5"/></svg>
+      </div>
+      <div class="mystery-content" id="mystery-content">
+        <div class="mystery-doc">
+          <div class="mystery-doc-label">HM Coroner · Worcester District · Ref. 1882/447</div>
+          <p>The deceased, Mr Edmund Hale, gentleman, aged 44, was found at approximately 11 o'clock in the forenoon of Tuesday last, having been absent from breakfast without explanation. The study door was locked from within. Entry was effected by the under-butler after some two hours.</p>
+          <p>The cause of death I find to be cardiac arrest, though I note that the deceased was in apparent good health. Several letters were found upon the writing desk, addressed to persons unknown. These were sealed and have been retained by the family.</p>
+          <p><em>Verdict: Death by natural causes.</em></p>
+          <p style="color:#4A3010; font-size:0.88em; margin-top:16px;">The letters were never delivered. Their contents are unknown. The family did not speak of the matter again. <a href="eleanor-journal.html" style="color:rgba(90,60,20,0.22); text-decoration:none; font-family:'Courier New',monospace; font-size:0.78em; letter-spacing:0.06em;" title="Ref. EV-J/2024/01/17">Ref. EV-J/2024</a></p>
+          <div class="fingerprint-wrap" title="Hover to examine">
+            <svg class="fingerprint-smudge" width="72" height="88" viewBox="0 0 72 88" fill="none">
+              <!-- Fingerprint whorl pattern — concentric arcs -->
+              <ellipse cx="36" cy="44" rx="6" ry="7" stroke="#6A3A10" stroke-width="1.2"/>
+              <ellipse cx="36" cy="44" rx="11" ry="13" stroke="#6A3A10" stroke-width="1"/>
+              <ellipse cx="36" cy="44" rx="16" ry="19" stroke="#6A3A10" stroke-width="1"/>
+              <ellipse cx="36" cy="44" rx="21" ry="25" stroke="#6A3A10" stroke-width="0.9"/>
+              <ellipse cx="36" cy="44" rx="26" ry="31" stroke="#6A3A10" stroke-width="0.8"/>
+              <ellipse cx="36" cy="44" rx="31" ry="37" stroke="#6A3A10" stroke-width="0.7"/>
+              <!-- Ridge breaks for realism -->
+              <path d="M36 37 Q42 38 44 44" stroke="#0A0806" stroke-width="1.5" fill="none"/>
+              <path d="M20 44 Q21 52 28 56" stroke="#0A0806" stroke-width="1.2" fill="none"/>
+              <path d="M52 44 Q51 36 44 32" stroke="#0A0806" stroke-width="1" fill="none"/>
+            </svg>
+            <span class="fingerprint-reveal">Edmund Hale — self-inflicted</span>
+            <span class="fp-hint">Examine print ↑</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #0A0A0A;">
+    <a href="era-VI.html">← Vol. VI: The Hale Entail</a>
+    <span class="vol-marker">END OF VOLUME VII</span>
+    <a href="era-VIII.html">Vol. VIII: Thomas →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+  function toggleMystery() {
+    var content = document.getElementById('mystery-content');
+    var chevron = document.getElementById('mystery-chevron');
+    if (!content) return;
+    var isOpen = content.classList.contains('open');
+    content.classList.toggle('open', !isOpen);
+    if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  }
+  </script>
+
+  <script>
+  /* ── THE CONFESSION: each paragraph surfaces from white, 2s apart ── */
+  (function(){
+    var wrapper = document.querySelector('.confession-wrapper');
+    if (!wrapper) return;
+    var paras = Array.from(wrapper.querySelectorAll('p'));
+    var sig   = wrapper.querySelector('.confession-sig');
+    var all   = sig ? paras.concat([sig]) : paras;
+    all.forEach(function(el){ el.classList.add('conf-p-init'); });
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        all.forEach(function(el, i){
+          setTimeout(function(){ el.classList.add('conf-p-in'); }, 400 + i * 2100);
+        });
+      });
+    }, { threshold: 0.2 });
+    io.observe(wrapper);
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents (skip .confession-wrapper as it has its own animation)
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. VII INJECTION — insert BEFORE the existing mystery-box div -->
+<!-- NOTE: era-VII already has a mystery-box (Coroner's Report). 
+     The recovered documents go BEFORE it. The interactive object
+     replaces / supplements the existing mystery-box. -->
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- RECOVERED DOCUMENT 1: Edmund's termination letter to Clara, January 1870 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VII, item 6b · Private Letter · January 1870</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Edmund Rathbone Hale, Lincoln's Inn Fields, to Miss Clara Marsh, 11 Camberwell New Road</p>
+    <p class="parchment-subtitle">January 1870 · The termination letter · Not previously published in full · Original in Clara Marsh's keeping for forty-four years</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The main chronicle summarises this letter as indicating that <em>the exigencies of his professional situation make a continuation of their present arrangement impossible.</em> The full letter is reproduced here. The editors have included it because the summary does not preserve the specific quality of its dishonesty, which is not crude but careful. Clara's journal entry from that week: <em>I have read it four times. Each time I read it it means the same thing, which is that he has decided I am not a person but a circumstance.</em></div>
+    <p>Miss Marsh,</p>
+    <p>I write to you in the full awareness of the inadequacy of any written communication to the weight of the present circumstances, and I ask you to receive what follows in the spirit of a man who finds himself in a position of considerable personal difficulty which he has, perhaps, handled with insufficient attention to the feelings of those most directly affected by it.</p>
+    <p>The exigencies of my professional situation — which have developed with a rapidity I did not anticipate — make it impossible for me to continue the present arrangement with any prospect of the certainty and stability that you deserve and that I had hoped, at the commencement of it, to be able to offer. I do not think it necessary to enumerate the specific pressures that have produced this conclusion, as you are a woman of considerable intelligence and will, I believe, understand them without enumeration.</p>
+    <p>The enclosed sum — one hundred pounds — represents my sincere attempt to discharge, in such material form as is available to me, the obligations of the past three years. I have arranged for a further payment to be made to you on the same terms as before, through the firm of Alderton and Co. of Shrewsbury, which has no connection to my own chambers and which will maintain the discretion the arrangement requires. The amount is forty pounds per annum, payable quarterly.</p>
+    <p>I am sensible that this falls short of what the situation demands. I am not in a position, at the present juncture, to offer anything more substantial. I ask you to believe — though I understand you have no reason to — that the constraint is genuine and not convenient.</p>
+    <p><em>I am, Miss Marsh, with the deepest regret and the sincerest assurance of my continued good wishes for your welfare, your obedient servant, Edmund Rathbone Hale.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Adelaide's diary — three entries, August–September 1882 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VII, item 52 · Private Diary · August–September 1882</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Adelaide Hale, née Ashbourne — Private Diary · Three Entries</p>
+    <p class="parchment-subtitle">August–September 1882 · The week in which Fairweather told her everything · Donated to the Bodleian by her descendants, 1967</p>
+    <hr class="parchment-rule">
+    <p><em><strong>Thursday.</strong></em> Fairweather came. He told me everything, or as close to everything as a man in his position can tell a woman in mine. It took two hours. He was uncomfortable throughout in the way of men who are performing an obligation they did not choose and who are doing so more honestly than the obligation strictly requires. I thanked him. He left.</p>
+    <p>I sat in the morning room for a considerable time after. The windows look south over the park. The park was in late summer colour. It was very fine.</p>
+    <p>I am not surprised. I want to be precise about this because I think precision matters here. I am not surprised in the sense of not having expected anything of this kind. I am surprised only in the specific detail, which is the detail of Thomas — of a child who exists, who is nine years old, who has Edmund's eyes. That detail I had not had.</p>
+    <p><em><strong>Friday.</strong></em> I slept. I did not expect to sleep but I did. I woke in the night once and lay very still in the dark and thought: there is a nine-year-old boy in Camberwell who does not know that the woman lying awake in Derbyshire is his father's wife. I thought: he does not know and it is not his fault and it is not, precisely, mine. Then I went back to sleep.</p>
+    <p><em><strong>Saturday.</strong></em> I have written to Edmund. I wrote three drafts and kept the fourth. The fourth says what I mean, which is: you were an extraordinarily convincing version of the man you were not. And then it says the harder thing, which is: I do not believe the performance was without sincerity. I believe you wished to be that man. I find this, in the final accounting, the most sorrowful thing about the entire affair.</p>
+    <p><em>I mean it. I mean the sorrowful. Not the anger, which is also there and which I have filed. The sorrowful is the part I am keeping. He tried to be better than he was, and the trying was real, and it was not sufficient, and I loved him for the trying, which is the worst of it.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 3: E. Rathbone to Thomas, October 1891 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VIII, item 3 · Private Letter · October 1891</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">E. Rathbone, 14 Harbour View Terrace, Bristol, to Thomas Marsh-Hale, Brixton</p>
+    <p class="parchment-subtitle">October 1891 · Thomas was eighteen · The only surviving letter from Edmund Hale to his son · Not previously published</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The archive has been building toward this letter for two volumes. The editors have held it until now — until the reader who has come this far — because a letter of this kind belongs to the person who was ready to receive it. Thomas kept it for sixty years. He read it to no one. James Marsh-Hale has read it every year since 1969. He read it to Eleanor Voss in February 2024, in the pub near the Bodleian. She listened without interrupting. When he finished she said: <em>he got there.</em> James said: <em>yes. Not in time. But he got there.</em></div>
+    <p>Thomas,</p>
+    <p>I do not know if you will read this. I am going to write it as if you will.</p>
+    <p>I am living in Bristol, where I have been for nine years, under the name Rathbone which is my mother's name and which I had some right to and which allows me to be, in this city, a man with no notable history. I am a copying clerk. I am good at it. It requires no performance of self, only of handwriting, at which I have always been competent.</p>
+    <p>I came to Camberwell in October 1882 and your mother let me in, which she did not have to, and I met you, which I had not done, and you looked at me across the room with the expression of a nine-year-old boy who has been told something about a person and is now measuring the telling against the person, and the person was not quite what the telling had suggested, in what direction I could not determine.</p>
+    <p>What I want to say — and I have been trying to find the right form for this for nine years, which is why it has taken nine years — is this: you are not the consequence of a mistake. You are the consequence of something real that I handled badly. The real thing was real. Your mother knows this and has, I think, always known it, and has raised you with it rather than without it, which was generous and which I did not deserve.</p>
+    <p>The name you carry — Marsh-Hale — is the accurate name. You are both things. You are more Hale than I was, which your mother told me and which I believe. You are whatever you have made yourself in eighteen years, without any assistance from me, and I have no claim on any of it.</p>
+    <p>I have one thing to tell you about the family you come from, the Hale part of it. They have been keeping land in Worcestershire since 1067 and they have been asking, for all of that time, whether what they have done is sufficient. None of them have answered it cleanly. All of them have kept asking. This is, apparently, what the family does. You have been doing it since you were twelve years old, which your mother told me and which I believe also.</p>
+    <p>Keep asking.</p>
+    <p><em>E. Rathbone. Bristol, October 1891.</em></p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Locked Escritoire -->
+<div class="obj-header">Archive Object · Vol. VII · Lincoln's Inn Fields, 1882</div>
+<div class="interactive-obj document" id="obj-VII">
+  <div class="obj-lid" id="obj-lid-VII" onclick="toggleObj('VII')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="26" viewBox="0 0 28 26" fill="none">
+        <rect x="2" y="8" width="24" height="16" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M2 8 L14 2 L26 8" stroke="#C8A83C" stroke-width="1.2" fill="rgba(200,168,60,0.06)"/>
+        <rect x="11" y="13" width="6" height="7" rx="0.5" stroke="#8B6914" stroke-width="1" fill="none"/>
+        <circle cx="14" cy="16" r="1.2" fill="#8B6914"/>
+        <line x1="14" y1="17.2" x2="14" y2="20" stroke="#8B6914" stroke-width="1"/>
+        <line x1="14" y1="5" x2="16" y2="8" stroke="#8B6914" stroke-width="0.8"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Locked Escritoire
+      <span>Victorian writing desk · key in the lock · not yet turned · Turn the key</span>
+    </div>
+    <svg id="obj-chevron-VII" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-VII">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A Victorian writing desk with a hinged flap — the flap is closed. The lock plate is polished bright at the keyhole from daily use. The key is in the lock, not quite turned — visible, accessible, but the flap remains shut. The desk is in a room that is orderly, the surface clear except for the desk itself and a single pen resting beside the inkwell. The room feels like a performance of order.</p>
+        <p>When the flap opens: the compartments and drawers are visible. Most contain innocuous items — pen, seal, inkwell, blank paper. One compartment holds a folded bundle of letters tied with ribbon, clearly kept carefully. Clara's letters. All of them. He kept all of them.</p>
+      </div>
+      <div class="obj-note">
+        He kept Clara's letters for five years. He read them daily or he locked them away without reading them or both at different times. The archive does not know which. The letters are in the Bodleian now. They have been read.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>The letters unfold. The first one is Clara's letter of January 1877 — the one that tells him about Thomas. He received it and did not reply. He put it in the bundle. He tied the ribbon.</p>
+          <p>He did this nine more times over five years — received a letter, read it, placed it in the bundle, retied the ribbon. Each one told him something he could not bear to act on. He kept them because throwing them away would have required admitting they existed.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">At the back of the deepest compartment · A small folded paper · Not a letter</span>
+          Two words. In Edmund's hand. No date. No recipient.
+          <br><br>
+          <em>I know.</em>
+          <br><br>
+          This is the most honest thing Edmund Hale ever wrote about himself.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-VI.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VI · The Regency</div>
+        <div class="hd-xref-card-name">Augusta Hale</div>
+        <div class="hd-xref-card-reason">Edmund II is Augusta's nephew. The estate he inherited was the one she held together for thirty-seven years without title or compensation.</div>
+      </a>
+      <a href="era-VIII.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VIII · The Edwardian</div>
+        <div class="hd-xref-card-name">Thomas Marsh-Hale</div>
+        <div class="hd-xref-card-reason">Thomas is Edmund's illegitimate son — the one person in the archive who understands what "I know" means, and chooses the hyphenated name regardless.</div>
+      </a>
+      <a href="era-X.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume X · The Contemporary</div>
+        <div class="hd-xref-card-name">The locked escritoire</div>
+        <div class="hd-xref-card-reason">Eleanor Voss and James Marsh-Hale are still asking the question Edmund sealed shut in 1882. The archive never closes a question — it only defers it.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Edmund Hale died at Harton Hall in August 1882, the last of the main line. The estate passed to trustees and then, after considerable legal work by Alderton & Sons, to his son Thomas — the boy in Brixton whom Edmund had spent four years failing to acknowledge. Thomas Marsh-Hale took the hyphenated name as a compromise, because he was the kind of man who found compromises that both resolved and remembered the thing they resolved. He sold Harton Hall in 1891 and bought a smaller property in Worcestershire. He kept the deed-box. He was thirty-three years old when the war began and forty-seven when it ended and he had seen both. Continue with <a href="era-VIII.html">Vol. VIII: The War Correspondent →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-VI.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. VI · Regency</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-VIII.html" class="esn-next">
+      <span class="esn-label">Vol. VIII · WWI</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+var eraAudio = null, eraOn = false;
+function initEraSound() {
+  if (!eraAudio) {
+    eraAudio = new Audio('sounds/era-VII-ambient.mp3');
+    eraAudio.loop = true; eraAudio.volume = 0.35;
+  }
+}
+function toggleEraSound() {
+  var btn = document.getElementById('eraSoundBtn');
+  if (!eraOn) {
+    initEraSound(); eraAudio.play(); eraOn = true;
+    btn.textContent = '♪ Silence the study'; btn.classList.add('on');
+  } else {
+    if (eraAudio) eraAudio.pause(); eraOn = false;
+    btn.textContent = '♪ Hear the study'; btn.classList.remove('on');
+  }
+}
+  </script>
+
+  <script>
+  /* ── REDACTED PAGES — Declassification ── */
+  function requestDeclassification() {
+    var btn = document.getElementById('hd-decl-btn');
+    var status = document.getElementById('hd-decl-status');
+    if (!btn || !status) return;
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+    status.textContent = 'Reference: 1882/447-DECL — forwarded to restricted access desk…';
+    setTimeout(function() {
+      var rd1 = document.getElementById('rd-1');
+      if (rd1) { rd1.classList.add('revealed'); }
+      status.textContent = 'Passage I restored. Processing passage II…';
+    }, 1500);
+    setTimeout(function() {
+      var rd2 = document.getElementById('rd-2');
+      if (rd2) { rd2.classList.add('revealed'); }
+      status.textContent = 'Declassification complete. Two passages restored from the sealed record.';
+      btn.textContent = 'Declassified';
+    }, 3200);
+  }
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script>
+  (function() {
+    var audio  = document.getElementById('voiceAudio');
+    var btn    = document.getElementById('evpPlay');
+    var bar    = document.getElementById('evpBar');
+    var timeEl = document.getElementById('evpTime');
+    if (!audio || !btn) return;
+    btn.onclick = function(e) {
+      e.preventDefault();
+      if (audio.paused) { audio.play(); btn.textContent = '❚❚ Playing...'; }
+      else { audio.pause(); btn.textContent = '⚜ Hear Edmund'; }
+    };
+    audio.addEventListener('timeupdate', function() {
+      if (audio.duration) {
+        bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        var m = Math.floor(audio.currentTime / 60);
+        var s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      }
+    });
+    audio.addEventListener('ended', function() { btn.textContent = '⚜ Again'; bar.style.width = '100%'; });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="top:70px;left:30px" title=""><span class="hd-cipher">C</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- THE CONFESSION BOX: Edmund addresses the reader directly -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <style>
+  /* ── Confession breach trigger ── */
+  .confession-breach {
+    display: inline-block;
+    margin-top: 22px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78em;
+    color: rgba(180,160,130,0.18);
+    cursor: pointer;
+    letter-spacing: 0.4em;
+    user-select: none;
+    transition: color 0.4s, opacity 0.4s;
+    outline: none;
+  }
+  .confession-breach:hover,
+  .confession-breach:focus {
+    color: rgba(180,160,130,0.42);
+  }
+
+  /* ── Full-screen confession modal ── */
+  #hd-confession-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(4,3,2,0);
+    transition: background 0.5s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #hd-confession-modal.hd-cfm-open {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  #hd-confession-modal.hd-cfm-visible {
+    background: rgba(4,3,2,0.96);
+  }
+  .hd-cfm-inner {
+    position: relative;
+    max-width: 640px;
+    width: 92%;
+    margin: 60px auto 80px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease 0.15s, transform 0.55s ease 0.15s;
+  }
+  #hd-confession-modal.hd-cfm-visible .hd-cfm-inner {
+    opacity: 1;
+    transform: none;
+  }
+  .hd-cfm-close {
+    position: absolute;
+    top: -36px;
+    right: 0;
+    background: none;
+    border: none;
+    color: rgba(200,168,60,0.4);
+    font-size: 1.1em;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    padding: 4px 8px;
+    transition: color 0.2s;
+  }
+  .hd-cfm-close:hover { color: rgba(200,168,60,0.8); }
+
+  .hd-cfm-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65em;
+    letter-spacing: 0.28em;
+    color: rgba(200,168,60,0.35);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(200,168,60,0.1);
+    padding-bottom: 12px;
+  }
+  .hd-cfm-body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.05em;
+    line-height: 1.82;
+    color: rgba(235,220,195,0.88);
+  }
+  .hd-cfm-body p {
+    margin: 0 0 1.4em;
+  }
+  .hd-cfm-body p:first-child {
+    margin-top: 0;
+  }
+  .hd-cfm-em {
+    font-style: italic;
+    color: rgba(235,220,195,0.62);
+  }
+  .hd-cfm-sig {
+    margin-top: 36px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.1em;
+    color: rgba(200,168,60,0.65);
+    border-top: 1px solid rgba(200,168,60,0.12);
+    padding-top: 20px;
+    line-height: 1.6;
+  }
+  .hd-cfm-note {
+    margin-top: 30px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.67em;
+    color: rgba(200,168,60,0.22);
+    letter-spacing: 0.12em;
+    line-height: 1.7;
+    border-top: 1px solid rgba(200,168,60,0.07);
+    padding-top: 16px;
+  }
+  </style>
+
+  <div id="hd-confession-modal" role="dialog" aria-modal="true" aria-labelledby="hd-cfm-title">
+    <div class="hd-cfm-inner">
+      <button class="hd-cfm-close" onclick="closeConfessionModal()" aria-label="Close">✕ close</button>
+      <div class="hd-cfm-label" id="hd-cfm-title">Postscript · Found beneath the lining · Not catalogued · Not dated</div>
+      <div class="hd-cfm-body">
+        <p>You have read it.</p>
+        <p>I want to be clear with you. I knew you would, eventually. That is why I wrote it — not for me, not for Clara, not for Thomas. For whoever came here, to this box, to this page, in whatever year this is.</p>
+        <p>The letters the Coroner mentioned. The sealed ones. I wrote seven of them that morning. Three were to Alderton &amp; Sons regarding the trust arrangements. One was to Adelaide. One was to the College. Two were to Thomas.</p>
+        <p>I did not send any of them.</p>
+        <p>I sealed them and left them on the desk because I could not decide whether to send them, and then the moment passed in which one could still send them, and then they were simply there — which was, I understood, a kind of answer in itself. The Coroner's note said <span class="hd-cfm-em">several letters were found upon the writing desk, addressed to persons unknown.</span> He was wrong about unknown. He was right about everything else.</p>
+        <p>You want to know what I said to Thomas.</p>
+        <p>I told him that the money was his and the house was his and that he should take the name if he wanted it, which was mine to give, which I should have given twelve years earlier. I told him I was sorry, which is not enough, but which was all I had and which I had not managed to say in forty-four years of being a man who paid his obligations on time.</p>
+        <p>I told him he was not a circumstance. I told him he was a person. I had been aware of this since 1870. I did not say so until that morning, in a letter I addressed and sealed and then held for two hours and then burned in the grate.</p>
+        <p>I burned them because I could not bear for the Coroner to read them. I understand that this was, once again, choosing the performance over the other thing. I am aware of the irony.</p>
+        <p>You are reading this instead.</p>
+        <p>The archive has my letters. It does not have those two. If Thomas ever came to know what they contained, it was not through me.</p>
+        <p>I do not know if this constitutes honesty or its precise opposite. I have been asking that question since January of 1870 and I have not arrived at an answer I can stand behind.</p>
+        <p>I am aware that this is not sufficient.</p>
+        <p>I am aware that I know this.</p>
+      </div>
+      <div class="hd-cfm-sig">
+        — E.R.H.
+      </div>
+      <div class="hd-cfm-note">
+        This document was found beneath the deed-box lining in 2024 during Eleanor Voss's multispectral imaging of the collection. It was written on the reverse of a blank envelope. The ink matches Edmund's hand. It does not appear in the catalogue. The editors debated its inclusion. They included it because the alternative was to make the same choice Edmund made, which was to decide something had not been said when it had.
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ── Confession Box modal ── */
+  (function() {
+    var modal = document.getElementById('hd-confession-modal');
+    if (!modal) return;
+
+    window.openConfessionModal = function() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Track in localStorage
+      try { localStorage.setItem('hd_confession_read', '1'); } catch(e){}
+      // Animate in
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          modal.classList.add('hd-cfm-open', 'hd-cfm-visible');
+        });
+      });
+    };
+
+    window.closeConfessionModal = function() {
+      modal.classList.remove('hd-cfm-visible');
+      setTimeout(function() {
+        modal.classList.remove('hd-cfm-open');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 520);
+    };
+
+    // Close on backdrop click
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeConfessionModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('hd-cfm-open')) {
+        closeConfessionModal();
+      }
+    });
+
+    // Reveal trigger slightly after confession animation completes (~12s)
+    var btn = document.getElementById('hd-confession-btn');
+    if (btn) {
+      btn.style.opacity = '0';
+      btn.style.transition = 'opacity 2s ease';
+      setTimeout(function() { btn.style.opacity = '1'; }, 12000);
+    }
+  })();
+  </script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

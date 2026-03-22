@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pig — MSS. Hale-Marsh · Bodleian Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #F4ECD8;
+      color: #2A1E0E;
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+
+    /* Vellum texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 30%, rgba(160,110,40,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 80% 70%, rgba(120,80,30,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 500px at 50% 90%, rgba(140,100,40,0.05) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 30px 120px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .archive-ref {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(139,100,40,0.5);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .pig-glyph {
+      display: block;
+      text-align: center;
+      font-size: 4em;
+      margin-bottom: 20px;
+      animation: pig-wander 8s ease-in-out infinite;
+    }
+
+    @keyframes pig-wander {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      20% { transform: translateX(-12px) rotate(-3deg); }
+      50% { transform: translateX(18px) rotate(2deg); }
+      75% { transform: translateX(-8px) rotate(-1deg); }
+    }
+
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.4em, 3.5vw, 2em);
+      color: #2A1E0E;
+      text-align: center;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-style: italic;
+      font-size: 0.88em;
+      color: #6A4A1E;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid rgba(139,100,40,0.25);
+      margin: 30px 0;
+    }
+
+    /* Certificate panel */
+    .certificate {
+      background: rgba(245,235,200,0.7);
+      border: 1px solid rgba(139,100,40,0.3);
+      border-top: 3px solid #8B6914;
+      padding: 36px 40px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .cert-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(139,100,40,0.5);
+      margin-bottom: 20px;
+    }
+
+    .cert-heading {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.25em;
+      color: #2A1E0E;
+      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+    }
+
+    .cert-body {
+      font-size: 0.95em;
+      line-height: 1.9;
+      color: #3A2A0E;
+      margin-bottom: 20px;
+    }
+
+    .cert-seal {
+      display: inline-block;
+      width: 58px;
+      height: 58px;
+      border: 2px solid rgba(139,100,40,0.3);
+      border-radius: 50%;
+      line-height: 58px;
+      font-size: 1.6em;
+      margin: 10px 0;
+      background: rgba(139,100,40,0.05);
+    }
+
+    .cert-date {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      color: rgba(139,100,40,0.55);
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    /* The note section */
+    .note-section {
+      font-size: 0.95em;
+      line-height: 2.0;
+      color: #2A1E0E;
+    }
+
+    .note-section p {
+      margin-bottom: 1.3em;
+    }
+
+    .note-section p.drop::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 3em;
+      float: left;
+      line-height: 0.82;
+      margin-right: 5px;
+      margin-top: 6px;
+      color: #3A2A0E;
+    }
+
+    .pull-quote {
+      border-left: 3px solid rgba(139,100,40,0.35);
+      padding: 12px 20px;
+      margin: 24px 0;
+      font-style: italic;
+      font-size: 1.02em;
+      color: #5C3A1E;
+      line-height: 1.85;
+    }
+
+    /* Where it appeared */
+    .trail-section {
+      margin-top: 40px;
+    }
+
+    .trail-heading {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(139,100,40,0.5);
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(139,100,40,0.15);
+      padding-bottom: 8px;
+    }
+
+    .trail-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .trail-list li a {
+      display: block;
+      padding: 10px 14px;
+      border: 1px solid rgba(139,100,40,0.2);
+      background: rgba(245,235,200,0.5);
+      font-size: 0.82em;
+      color: #5C3A1E;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+
+    .trail-list li a:hover {
+      border-color: #8B6914;
+      background: rgba(245,235,200,0.9);
+      color: #2A1E0E;
+    }
+
+    .trail-list li a .trail-era {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.2em;
+      color: rgba(139,100,40,0.5);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    /* Provenance footer */
+    .provenance {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(139,100,40,0.2);
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.15em;
+      color: rgba(90,60,20,0.4);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2.0;
+    }
+
+    .provenance a {
+      color: rgba(139,100,40,0.45);
+      text-decoration: none;
+    }
+
+    .provenance a:hover {
+      color: #8B6914;
+    }
+
+    /* Home button */
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(42,30,14,0.9);
+      border: 1px solid rgba(200,168,60,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+    }
+
+    .home-float:hover {
+      border-color: #C8A83C;
+      transform: scale(1.12);
+    }
+
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #F4ECD8;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    @media (max-width: 580px) {
+      .wrap { padding: 50px 20px 80px; }
+      .certificate { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="wrap">
+
+  <div class="archive-ref">MSS. Hale-Marsh · Bodleian Library, Oxford · Secret Annex</div>
+
+  <span class="pig-glyph">🐷</span>
+
+  <h1 class="page-title">The Pig of Halecroft</h1>
+  <p class="page-sub">A note upon the archive's most persistent symbol · Found in all ten volumes</p>
+
+  <hr class="rule">
+
+  <div class="certificate">
+    <div class="cert-label">Bodleian Library · Certificate of Completion</div>
+    <div class="cert-heading">You found them all.</div>
+    <div class="cert-body">
+      You have located the pig in every volume of the MSS. Hale-Marsh Collection —<br>
+      from the yard at Halecroft in 1067 to the letter written in Brixton in 1949.<br><br>
+      The pig has been there all along. Most readers pass it without noticing.<br>
+      You did not. The family would approve.
+    </div>
+    <div class="cert-seal">🐷</div>
+    <div class="cert-date">Awarded · MSS. Hale-Marsh Collection · Oxford</div>
+  </div>
+
+  <div class="note-section">
+    <p class="drop">The pig first appears in the archive in 1382, in the letter Thomas Hale wrote to his son before he died. He was eleven years old when the pestilence came to Halecroft. He came home from Pershore with a cooking pot and found the house empty. He did not know what else to do. So he went to see to the pig.</p>
+
+    <p>It is not, he explains, a lesson about pigs. It is a lesson about the next thing. When you do not know what is required of you, do the thing directly in front of you. The pig does not require you to understand anything. The pig requires you to act.</p>
+
+    <div class="pull-quote">
+      "See to the pig. The pig doth not require thee to understand anything. It requireth thee to do the next thing."<br>
+      <span style="font-style:normal; font-size:0.85em; color:rgba(90,60,20,0.6);">— Thomas Hale, 1382</span>
+    </div>
+
+    <p>From that letter forward, the phrase moves through the family like a gene — sometimes explicit, sometimes encoded, sometimes half-remembered. Nathaniel writes it to his son in 1741 without explaining it; he assumes Edmund will know. Thomas writes it to Rachel from a farmhouse in France in 1916, and means: come home and do the simple thing and wait for me. Edmund writes it to his brother in Harlow in 1947, and means: you already know what to do.</p>
+
+    <p>In Volume X, Eleanor Voss — the last person to appear in the archive, the one who recovered Matilda's letter using multispectral imaging — writes that her father called this "seeing to the pig, because that is what Thomas Hale called it in 1382, and because it is a better description than most of the more elevated formulations I have encountered."</p>
+
+    <p>The very last line of the last document in the collection is Matilda's voice — recovered from a damaged manuscript written in 1390, legible only after six hundred years — saying: <em>Keep asking. Keep the land. See to the pig.</em></p>
+
+    <p>The pig was always there. In the yard. At the beginning of England.</p>
+  </div>
+
+  <hr class="rule">
+
+  <div class="trail-section">
+    <div class="trail-heading">The pig appeared in · All Ten Volumes</div>
+    <ul class="trail-list">
+      <li><a href="era-I.html">
+        <span class="trail-era">Vol. I · 1066</span>
+        In the yard at Halecroft, 1067
+      </a></li>
+      <li><a href="era-II.html">
+        <span class="trail-era">Vol. II · 1349</span>
+        Thomas Hale's letter, 1382
+      </a></li>
+      <li><a href="era-III.html">
+        <span class="trail-era">Vol. III · 1540</span>
+        Inventory: swine in the upper wood
+      </a></li>
+      <li><a href="era-IV.html">
+        <span class="trail-era">Vol. IV · 1642</span>
+        Thomas's letter from Oxford, 1643
+      </a></li>
+      <li><a href="era-V.html">
+        <span class="trail-era">Vol. V · 1720</span>
+        Nathaniel's letter to Edmund, 1741
+      </a></li>
+      <li><a href="era-VI.html">
+        <span class="trail-era">Vol. VI · 1800</span>
+        Augusta's diary, 1822
+      </a></li>
+      <li><a href="era-VII.html">
+        <span class="trail-era">Vol. VII · 1870</span>
+        Edmund's diary, 1878
+      </a></li>
+      <li><a href="era-VIII.html">
+        <span class="trail-era">Vol. VIII · 1914</span>
+        Thomas's letter from France, 1916
+      </a></li>
+      <li><a href="era-IX.html">
+        <span class="trail-era">Vol. IX · 1945</span>
+        Edmund's letter to his brother, 1947
+      </a></li>
+      <li><a href="era-X.html">
+        <span class="trail-era">Vol. X · 1990</span>
+        Thomas Marsh-Hale's letter, 1949
+      </a></li>
+    </ul>
+  </div>
+
+  <div class="provenance">
+    MSS. Hale-Marsh Collection · Bodleian Library, University of Oxford<br>
+    This page is not catalogued.<br>
+    It is found only by those who look.<br>
+    <br>
+    <a href="index.html">← Return to the Archive</a>
+    <br><br>
+    <span style="font-size:0.75em;opacity:0.45;letter-spacing:0.08em;">
+      For the inscription on the verso of Matilda's letter:<br>
+      the key is the age at which Thomas came home.<br>
+      He was eleven. Shift back by eleven.<br>
+      <a href="matilda.html" style="color:rgba(139,100,40,0.4);text-decoration:none;">→ Matilda's Letter</a>
+    </span>
+  </div>
+
+</div><!-- wrap -->
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="features.js"></script>
+<script src="transitions.js"></script>
+</body>
+</html>

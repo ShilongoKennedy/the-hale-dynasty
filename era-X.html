@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. X — The Archive in Full</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html {
+      font-size: 18px;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #E8E4DC;
+      color: #1A1818;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* NAV — Bodleian deep blue signals the shift to contemporary */
+    .era-nav {
+      background: #1A2E48;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .era-nav a {
+      color: #9EB8D4;
+      text-decoration: none;
+    }
+
+    .era-nav a:hover {
+      color: #D4E8F8;
+    }
+
+    .era-nav .vol-marker {
+      color: #6A8BAA;
+    }
+
+    /* HEADER */
+    .era-header {
+      background: #1A2E48;
+      border-bottom: 4px solid #8B7240;
+      padding: 50px 40px 40px;
+      text-align: center;
+    }
+
+    .era-label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.75em;
+      letter-spacing: 0.3em;
+      color: #9EB8D4;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .era-main-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.5em, 4vw, 2.6em);
+      color: #F0E8D4;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .era-sub {
+      font-style: italic;
+      color: #9EB8D4;
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+
+    .era-dates {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 1.1em;
+      color: #8B7240;
+      letter-spacing: 0.2em;
+      margin-top: 12px;
+    }
+
+    .era-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px 30px 80px;
+    }
+
+
+    /* ── PORTRAIT ───────────────────────────────────────── */
+    .portrait-frame {
+      float: right;
+      margin: 0 0 32px 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .portrait-img-x {
+      display: block;
+      width: 220px;
+      height: auto;
+      border: 1px solid #B0A898;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.22);
+      filter: contrast(1.04) brightness(0.97);
+    }
+
+    .portrait-caption {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      color: #5A4A38;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .portrait-frame {
+        float: none;
+        margin: 0 auto 28px;
+        display: block;
+      }
+      .sound-bar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 16px;
+        text-align: center;
+      }
+      .era-voice-player-x {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 14px 16px;
+      }
+      .evp-x-label { font-size: 0.65em; }
+      .evp-x-progress { width: 100%; }
+    }
+
+    .editorial-note {
+      border-left: 3px solid #1A2E48;
+      padding: 16px 20px;
+      background: #DDD8CE;
+      font-style: italic;
+      font-size: 0.85em;
+      color: #3A3028;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    .document {
+      margin-bottom: 60px;
+    }
+
+    .doc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.25em;
+      color: #6A5A40;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* EMAIL */
+    .email-wrapper {
+      border: 1px solid #AAAAAA;
+      background: #F4F4F0;
+    }
+
+    .email-header {
+      background: #E4E4E0;
+      border-bottom: 1px solid #AAAAAA;
+      padding: 12px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      line-height: 1.85;
+      color: #3A3A38;
+    }
+
+    .email-header strong {
+      color: #1A2E48;
+    }
+
+    .email-body {
+      padding: 22px 28px;
+      font-size: 0.9em;
+      line-height: 1.9;
+      color: #1A1818;
+    }
+
+    .email-body p {
+      margin-bottom: 0.9em;
+    }
+
+    .email-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .email-stacked {
+      margin-top: 12px;
+    }
+
+    /* THOMAS'S LETTER (1949) */
+    .thomas-letter {
+      background: #F5F0E4;
+      border: 1px solid #C8A840;
+      border-top: 3px solid #8B7240;
+      padding: 36px 44px;
+    }
+
+    .thomas-letter-head {
+      text-align: center;
+      border-bottom: 1px solid #C8A840;
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+    }
+
+    .tl-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95em;
+      color: #4A3A10;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .tl-sub {
+      font-style: italic;
+      color: #8B7240;
+      font-size: 0.82em;
+      display: block;
+    }
+
+    .thomas-letter p {
+      font-size: 0.9em;
+      line-height: 1.9;
+      margin-bottom: 0.9em;
+      color: #2A2010;
+    }
+
+    .thomas-letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .thomas-letter-sig {
+      text-align: right;
+      font-style: italic;
+      font-size: 0.88em;
+      color: #5A4A20;
+      margin-top: 18px;
+      border-top: 1px solid #C8A840;
+      padding-top: 14px;
+    }
+
+    /* JOURNAL */
+    .journal-entry {
+      background: #FAFAFA;
+      border-left: 4px solid #1A2E48;
+      padding: 24px 30px;
+    }
+
+    .journal-head {
+      font-family: 'Courier New', monospace;
+      font-size: 0.76em;
+      font-weight: bold;
+      color: #1A2E48;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .journal-entry p {
+      font-size: 0.9em;
+      line-height: 1.9;
+      margin-bottom: 0.8em;
+      color: #1A1818;
+    }
+
+    .journal-entry p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ARCHIVE NOTE */
+    .archive-note {
+      background: #DDD8CE;
+      border: 1px solid #AAAAAA;
+      padding: 28px 36px;
+    }
+
+    .archive-note-head {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85em;
+      color: #1A2E48;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #AAAAAA;
+    }
+
+    .archive-note p {
+      font-size: 0.88em;
+      line-height: 1.85;
+      margin-bottom: 0.85em;
+      color: #2A2820;
+    }
+
+    .archive-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       MATILDA'S LETTER — THE CLIMACTIC DOCUMENT
+       Black background. Gold text. Double gold border.
+       ═══════════════════════════════════════════════════ */
+    .matilda-outer {
+      background: #1A1A1A;
+      padding: 50px 40px;
+    }
+
+    .matilda-border-outer {
+      border: 2px solid #C8A83C;
+      padding: 5px;
+    }
+
+    .matilda-border-inner {
+      border: 1px solid #C8A83C;
+      padding: 50px 54px;
+    }
+
+    .matilda-header {
+      text-align: center;
+      border-bottom: 1px solid rgba(200, 168, 60, 0.35);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+
+    .matilda-ornament {
+      color: #8B7230;
+      font-size: 0.9em;
+      letter-spacing: 0.5em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .matilda-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.1em;
+      color: #C8A83C;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .matilda-title-sub {
+      font-style: italic;
+      color: #8B7230;
+      font-size: 0.78em;
+      display: block;
+    }
+
+    .matilda-rule {
+      border: none;
+      border-top: 1px solid rgba(200, 168, 60, 0.25);
+      margin: 24px 0;
+    }
+
+    .matilda-border-inner p {
+      color: #C8A83C;
+      font-size: 0.92em;
+      line-height: 2.05;
+      margin-bottom: 1.3em;
+      text-align: justify;
+    }
+
+    .matilda-border-inner p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Recovered text: marginally brighter gold to mark the imaging-recovered sections */
+    .matilda-border-inner p.recovered {
+      color: #D4B860;
+    }
+
+    .matilda-rec-mark {
+      color: #8B7230;
+      font-size: 0.72em;
+      vertical-align: super;
+      margin-right: 2px;
+    }
+
+    .matilda-sig {
+      text-align: right;
+      font-style: italic;
+      color: #8B7230;
+      font-size: 0.88em;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(200, 168, 60, 0.3);
+    }
+
+    /* CLOSING */
+    .closing-block {
+      text-align: center;
+      padding: 50px 20px;
+      border-top: 2px solid #1A2E48;
+      border-bottom: 2px solid #1A2E48;
+      margin-top: 60px;
+    }
+
+    .closing-end {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #1A2E48;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .closing-tagline {
+      font-style: italic;
+      color: #6A5A40;
+      font-size: 0.95em;
+      margin-bottom: 16px;
+    }
+
+    .closing-dates {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 1.5em;
+      color: #1A2E48;
+      letter-spacing: 0.2em;
+    }
+
+    /* ── MATILDA ACCESS NOTICE ───────────────────────────── */
+    .matilda-access-notice {
+      background: #111111;
+      border: 1px solid #2A2A2A;
+      border-bottom: none;
+      padding: 18px 28px;
+      font-family: 'Courier New', monospace;
+      margin-top: 10px;
+    }
+
+    .man-header {
+      font-size: 0.76em;
+      letter-spacing: 0.25em;
+      color: #4A4A3A;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .man-status {
+      font-size: 0.76em;
+      letter-spacing: 0.15em;
+      color: rgba(200, 168, 60, 0.5);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .man-rule {
+      border: none;
+      border-top: 1px solid #2A2A2A;
+      margin: 10px 0;
+    }
+
+    .man-note {
+      font-style: italic;
+      font-size: 0.75em;
+      color: #4A4030;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      font-family: Georgia, serif;
+    }
+
+    /* ── MATILDA LETTER CINEMATIC REVEAL ─────────────────── */
+    /* JS adds .matilda-init to opt-in to the animation */
+    .matilda-outer.matilda-init {
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .matilda-outer.matilda-init.matilda-revealed {
+      opacity: 1;
+    }
+
+    /* Individual paragraph reveal — JS adds .mp class and staggered .mp-in */
+    .mp {
+      opacity: 0;
+      transform: translateY(7px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .mp.mp-in {
+      opacity: 1;
+      transform: none;
+    }
+
+
+
+    /* ── DISCOVERY MOMENT ────────────────────────────────── */
+    .discovery-moment {
+      max-width: 680px;
+      margin: 60px auto 80px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .discovery-prelude {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.2em;
+      color: #4A4028;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .discovery-prelude.visible {
+      opacity: 1;
+    }
+
+    .matilda-letter-final {
+      background: radial-gradient(ellipse at 50% 30%, rgba(232, 216, 160, 0.06) 0%, transparent 70%),
+        linear-gradient(180deg, #1A1508 0%, #100E06 100%);
+      border: 1px solid #3A2A0A;
+      padding: 48px 44px 52px;
+      position: relative;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.4s ease, transform 1.4s ease;
+    }
+
+    .matilda-letter-final.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .matilda-letter-final::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C8A83C, transparent);
+    }
+
+    .matilda-letter-final::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C8A83C, transparent);
+    }
+
+    .matilda-heading {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72em;
+      letter-spacing: 0.2em;
+      color: #C8A83C;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 28px;
+      opacity: 0.7;
+    }
+
+    .matilda-text {
+      font-style: italic;
+      font-size: 1em;
+      line-height: 1.9;
+      color: #C8B880;
+      font-family: Georgia, serif;
+    }
+
+    .matilda-text p {
+      margin-bottom: 1.3em;
+    }
+
+    .matilda-sig {
+      margin-top: 28px;
+      font-style: italic;
+      color: #8A7840;
+      text-align: right;
+      font-size: 0.9em;
+    }
+
+    .matilda-seal-final {
+      text-align: center;
+      margin-top: 28px;
+      opacity: 0;
+      transition: opacity 1.8s ease 0.6s;
+    }
+
+    .matilda-seal-final.visible {
+      opacity: 1;
+    }
+
+    .discovery-coda {
+      margin-top: 40px;
+      font-style: italic;
+      font-size: 0.84em;
+      color: #4A4028;
+      line-height: 1.8;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    .discovery-coda.visible {
+      opacity: 1;
+    }
+
+    @media (max-width:600px) {
+      .matilda-border-inner {
+        padding: 28px 18px;
+      }
+
+      .matilda-outer {
+        padding: 24px 12px;
+      }
+
+      .thomas-letter {
+        padding: 24px 20px;
+      }
+
+      .era-content {
+        padding: 30px 16px 60px;
+      }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .era-seq-nav a {
+      text-decoration: none;
+      transition: opacity 0.2s;
+      opacity: 0.85;
+      color: #3A3A3A;
+    }
+
+    .era-seq-nav a:hover {
+      opacity: 1;
+    }
+
+    .esn-prev,
+    .esn-next {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .esn-arrow {
+      font-size: 1.2em;
+    }
+
+    .esn-home {
+      opacity: 0.6 !important;
+      font-size: 0.88em;
+    }
+
+    .esn-home:hover {
+      opacity: 0.7 !important;
+    }
+
+    /* ── SOUND BAR ──────────────────────────────────────── */
+    .sound-bar {
+      background: #0A1020;
+      border-bottom: 1px solid #1A2E48;
+      padding: 10px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .sound-bar-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.18em;
+      color: #4A6A8A;
+      text-transform: uppercase;
+    }
+
+    .sound-toggle {
+      background: rgba(26, 46, 72, 0.4);
+      border: 1px solid #3A5A7A;
+      padding: 6px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.76em;
+      letter-spacing: 0.14em;
+      color: #8AB4D4;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+
+    .sound-toggle:hover {
+      color: #C8A83C;
+      border-color: #C8A83C;
+      background: rgba(200, 168, 60, 0.08);
+    }
+
+    .sound-toggle.active {
+      color: #C8A83C;
+      border-color: #C8A83C;
+      background: rgba(200, 168, 60, 0.1);
+    }
+
+
+    /* ── ERA X VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-x {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 16px 22px;
+      border: 1px solid rgba(138,180,212,0.2);
+      background: rgba(10,16,32,0.04);
+    }
+
+    .evp-x-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.14em;
+      color: #6A94B4;
+      text-transform: uppercase;
+      flex: 1;
+    }
+
+    .evp-x-play {
+      background: rgba(26, 46, 72, 0.4);
+      border: 1px solid #3A5A7A;
+      color: #8AB4D4;
+      padding: 6px 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.76em;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .evp-x-play:hover {
+      color: #C8A83C;
+      border-color: #C8A83C;
+      background: rgba(200, 168, 60, 0.08);
+    }
+
+    .evp-x-progress {
+      background: rgba(200, 168, 60, 0.1);
+      height: 4px;
+      width: 90px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .evp-x-bar {
+      background: #8AB4D4;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .evp-x-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      color: #8AB4D4;
+      min-width: 28px;
+      text-transform: uppercase;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(10, 6, 2, 0.92);
+      border: 1px solid rgba(200, 168, 60, 0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .home-float:hover {
+      border-color: #C8A83C;
+      transform: scale(1.12);
+    }
+
+    .home-float svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* ── REDACTED TEXT ───────────────────────────────── */
+    .redacted {
+      background: #1A1A1A;
+      color: transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline;
+      transition: background 0.6s ease, color 0.6s ease;
+      user-select: none;
+      padding: 0 2px;
+      position: relative;
+    }
+
+    .redacted::after {
+      content: '[CLASSIFIED]';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.55em;
+      letter-spacing: 0.1em;
+      color: rgba(200, 30, 30, 0.5);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .redacted.revealed {
+      background: rgba(180, 30, 30, 0.12);
+      color: inherit;
+      border-bottom: 1px solid rgba(180, 30, 30, 0.3);
+    }
+
+    .redacted.revealed::after {
+      display: none;
+    }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment,
+    .latin-writ,
+    .manorial-rolls,
+    .parchment-marginal,
+    .victorian-letter,
+    .victorian-diary,
+    .regency-letter,
+    .tudor-letter,
+    .plague-register,
+    .broadside,
+    .solicitor,
+    .memoir-page,
+    .blitz,
+    .memo,
+    .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+
+    .parchment:hover,
+    .latin-writ:hover,
+    .manorial-rolls:hover,
+    .parchment-marginal:hover,
+    .victorian-letter:hover,
+    .victorian-diary:hover,
+    .regency-letter:hover,
+    .tudor-letter:hover,
+    .plague-register:hover,
+    .broadside:hover,
+    .solicitor:hover,
+    .memoir-page:hover,
+    .blitz:hover,
+    .memo:hover,
+    .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+
+    .doc-zoom-overlay.open {
+      display: flex;
+    }
+
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.93) translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10, 6, 2, 0.9);
+      border: 1px solid rgba(200, 168, 60, 0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    .doc-zoom-close:hover {
+      background: rgba(30, 18, 6, 0.95);
+    }
+
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200, 168, 60, 0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page {
+        margin: 1.4cm 2cm;
+      }
+
+      .era-nav,
+      .era-seq-nav,
+      .access-header,
+      .era-banner,
+      .mystery-box,
+      .brothers-divide,
+      .death-toll,
+      .telegram-wrapper,
+      .royal-proclamation,
+      .memo-stamp,
+      .matilda-mystery,
+      nav,
+      button {
+        display: none !important;
+      }
+
+      body {
+        background: white !important;
+        color: black !important;
+        font-size: 11pt;
+      }
+
+      .era-header {
+        background: white !important;
+        border: none !important;
+        padding: 20pt 0 14pt;
+      }
+
+      .era-main-title {
+        font-size: 22pt !important;
+        color: black !important;
+      }
+
+      .era-content {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      a {
+        color: black !important;
+        text-decoration: none !important;
+      }
+
+      .victorian-letter,
+      .parchment,
+      .memoir-page,
+      .regency-letter,
+      .tudor-letter,
+      .broadside,
+      .pamphlet,
+      .plague-register,
+      .solicitor,
+      .victorian-diary,
+      .blitz,
+      .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+
+      .confession-wrapper {
+        background: white !important;
+      }
+
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 50%;
+      filter: contrast(1.05) brightness(0.9) saturate(0.9);
+      display: block;
+    }
+
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 10, 15, 0.50);
+    }
+
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+
+<body data-era="x" data-vol="X">
+  <div class="page-transition-overlay" id="pageOverlay"></div>
+
+  <div class="sound-bar">
+    <span class="sound-bar-label">Archive ambient sound</span>
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">♪ Enable sound</button>
+  </div>
+
+  <div class="era-banner">
+    <img class="banner-img" src="banners/era-X.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-IX.html">← Vol. IX</a>
+    <span class="vol-marker">VOL. X OF X &nbsp;·&nbsp; 1979–2026</span>
+    <a href="index.html">Return to Archive →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraX.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume X</div>
+    <h1 class="era-main-title">The Archive in Full</h1>
+    <p class="era-sub">Eleanor Voss, Bodleian Library, Oxford &nbsp;·&nbsp; James Marsh-Hale, London<br>
+      Co-authors. Collaborators. The next persons holding it.</p>
+    <p style="font-size:0.82em; color:#9EB8D4; margin-top:10px;">Compiled 2024–2026. Published London, 2026.</p>
+    <div class="era-dates">1979 — 2026</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="editorial-note">
+      Eleanor Voss (b. 1983) is a medievalist at the Bodleian Library, University of Oxford, specialising in property
+      records of the English West Midlands. She has worked with the Hale-Marsh collection for three years without
+      knowing what she was working toward. James Marsh-Hale (b. 1945) is the last person in the main line of the family.
+      He has known what he was working toward for most of his life. Neither of them knew quite what the other was until
+      January 2024, when the imaging results came back. This volume is what happened after. The final document in this
+      archive was written for you. It has been waiting approximately six hundred and thirty-five years.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— E.V. &amp; J.M-H.,
+        <em>Oxford &amp; London, 2026</em></div>
+    </div>
+
+
+    <div class="portrait-frame">
+      <img src="portraits/eleanor.png" class="portrait-img-x" alt="Eleanor Voss — January 2024">
+      <div class="portrait-caption">Eleanor Voss · Bodleian Library<br><em>Oxford, January 2024</em></div>
+    </div>
+
+    <!-- Document I: Initial emails, January 2024 -->
+    <div class="document">
+      <div class="doc-label">Document I · Email Correspondence · Bodleian Library, Oxford · January 2024</div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <strong>From:</strong>&nbsp;&nbsp;&nbsp;e.voss@bodleian.ox.ac.uk<br>
+          <strong>To:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j.marsh-hale@bodleian.ox.ac.uk<br>
+          <strong>Subject:</strong> MS. Marsh-Hale 3, item 7 — imaging results<br>
+          <strong>Date:</strong>&nbsp;&nbsp;&nbsp;&nbsp;15 January 2024
+        </div>
+        <div class="email-body">
+          <p>Mr. Marsh-Hale —</p>
+          <p>I am writing to you because you are listed as the depositing donor for MS. Marsh-Hale 3, the Hale family
+            papers held in our Special Collections. I have been working with this collection for <span class="redacted"
+              onclick="this.classList.toggle('revealed')">three years</span> as part of a project on medieval
+            Worcestershire property records, and in particular with item 7 — the document you will know as <span
+              class="redacted" onclick="this.classList.toggle('revealed')">Matilda's letter, written approximately
+              1390</span>.</p>
+          <p>Item 7 has been in our queue for multispectral imaging since <span class="redacted"
+              onclick="this.classList.toggle('revealed')">October 2022</span>. We received the results <span
+              class="redacted" onclick="this.classList.toggle('revealed')">last week</span>. A substantial portion of
+            the central text, previously illegible due to water damage and fading of the ink, has been recovered. I have
+            read the recovered section.</p>
+          <p>I do not quite know what to do with this. I would like to speak with you if that is possible. I can come to
+            London, or we could meet here in Oxford if you are able to travel. I realise this is a somewhat unusual way
+            to initiate a professional correspondence. I did not know how else to begin.</p>
+          <p>Eleanor Voss<br>
+            Bodleian Library, University of Oxford</p>
+        </div>
+      </div>
+
+      <div class="email-stacked">
+        <div class="email-wrapper">
+          <div class="email-header">
+            <strong>From:</strong>&nbsp;&nbsp;&nbsp;j.marsh-hale@bodleian.ox.ac.uk<br>
+            <strong>To:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.voss@bodleian.ox.ac.uk<br>
+            <strong>Subject:</strong> Re: MS. Marsh-Hale 3, item 7 — imaging results<br>
+            <strong>Date:</strong>&nbsp;&nbsp;&nbsp;&nbsp;17 January 2024
+          </div>
+          <div class="email-body">
+            <p>Dr. Voss —</p>
+            <p>Yes. I know the document. I have been waiting, though not quite certain in what form it would arrive. I
+              am in London. I am seventy-eight years old and I move carefully, but I travel. Could we meet in Oxford? I
+              have a great deal to tell you and some of it will take a while.</p>
+            <p>I suggest lunch. There is usually good soup near the Bodleian. You would know better than I would where.
+            </p>
+            <p>James Marsh-Hale</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document II: Thomas's Letter, 1949 -->
+    <div class="document">
+      <div class="doc-label">Document II · Personal Letter · Thomas Marsh-Hale · Brixton, London · Spring 1949</div>
+      <div class="thomas-letter">
+        <div class="thomas-letter-head">
+          <span class="tl-title">A Letter</span>
+          <span class="tl-sub">Written by Thomas Marsh-Hale in 1949.&nbsp;&nbsp;Addressed: To whoever comes
+            after.</span>
+        </div>
+        <p>I am writing this in Brixton in the spring of 1949. I am seventy-five years old. Rachel has been gone eight
+          years. Edmund is in the New Towns. Ruth is at the Bar. My body is not what it was.</p>
+        <p>I found this family's history in a reading room in Oxford thirty years ago and I have been thinking about it
+          ever since without quite finding the right form for the thinking. I am going to try to find it now, because I
+          think I may not have a great many more opportunities.</p>
+        <p>What I found in Oxford was a family that had been asking one question in different centuries and with
+          different tools and in different registers, and that had never quite answered it, and that had kept asking.
+          The question is: is what I have done sufficient? Ranulf asked it on his deathbed in 1115. Thomas Hale asked it
+          in 1382 in the form of a remembrance addressed to his son. The Civil War brothers asked it every time they
+          wrote to each other from opposite sides of a war. Augusta asked it in her journal, precisely and without
+          self-pity, every time she calculated what she had been permitted to do against what she was capable of. My
+          father asked it in France in 1916, in a letter to my mother, from a hole in the ground. Edmund Hale — my
+          father's father in the irregular line that neither of them chose — asked it in a locked room in Shropshire in
+          1882 and did not answer it, and the not answering was the end of him.</p>
+        <p>The question has not been answered. I do not think it can be answered once, in a way that settles it. I think
+          it is answered daily, by the choice to attend to what is actually in front of you, to look at the accurate
+          picture rather than the reassuring one, to come home when you could go elsewhere, to ask and not to stop
+          asking. My mother called this seeing to the pig, because that is what Thomas Hale called it in 1382, and
+          because it is a better description than most of the more elevated formulations I have encountered.</p>
+        <p>I am writing this for whoever comes after. I do not know who that is. It may be Edmund's children or their
+          children or someone I cannot imagine, someone whose connection to this family runs through a line I cannot
+          trace. Matilda knew there were two lines. I did not, when I read her letter. I think she was right that both
+          matter.</p>
+        <p>What I want to say to whoever comes after is this: you are from somewhere. It is a small place and an old one
+          and it has never been famous for anything except being there, persisting, holding the question open when it
+          would have been easier to close it. You did not choose this. It is still yours. The choosing is not in the
+          inheritance. The choosing is in what you do with it. The choosing is in whether you ask.</p>
+        <div class="hd-marginal-wrap"><p>Keep asking. See to the pig. <span class="hd-pig" data-era="X" title="🐷">🐷</span></p>
+        <div class="hd-marginal">Thomas Marsh-Hale, 1949. His grandfather Edmund wrote this same phrase in a diary in 1878. — E.V.</div></div>
+        <div class="thomas-letter-sig">
+          Thomas Marsh-Hale<br>
+          Written at Brixton, London, in the forty-fourth year of the reign of George VI. Spring, 1949.
+        </div>
+      </div>
+    </div>
+
+    <!-- Document III: Email exchange, September 2024 -->
+    <div class="document">
+      <div class="doc-label">Document III · Email Correspondence · Oxford &amp; London · September 2024</div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <strong>From:</strong>&nbsp;&nbsp;&nbsp;e.voss@bodleian.ox.ac.uk<br>
+          <strong>To:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j.marsh-hale@bodleian.ox.ac.uk<br>
+          <strong>Subject:</strong> Re: Book X draft — thoughts<br>
+          <strong>Date:</strong>&nbsp;&nbsp;&nbsp;&nbsp;3 September 2024
+        </div>
+        <div class="email-body">
+          <p>James, I have been sitting with the draft of Book X for two days and I want to say something about it that
+            I find difficult to put precisely.</p>
+          <p>You have written about me as though I am the end of something. The final destination. The person the
+            archive was always travelling toward. And I understand why — the structure of the ten books builds to this,
+            and Matilda's letter and Thomas's letter both seem addressed forward, and I am the forward.</p>
+          <p>But I am not sure I want to be a destination. I think I would rather be a continuation. I think what
+            Matilda was describing was not an endpoint but a resumption: the line that went underground in 1373 and has
+            come back up now, not to close something but to keep it open.</p>
+          <p>I am forty years old. I do not have children yet. I do not know whether I will. But the question does not
+            require children to continue. It requires attention. It requires someone to keep asking whether what they
+            have done is sufficient, which I have been doing professionally for fifteen years without knowing it had a
+            name or a history.</p>
+          <p>I think the book should end with me asking the question. Not answering it. Just: asking it. As a
+            continuation, not a conclusion.</p>
+          <p>What do you think?</p>
+        </div>
+      </div>
+
+      <div class="email-stacked">
+        <div class="email-wrapper">
+          <div class="email-header">
+            <strong>From:</strong>&nbsp;&nbsp;&nbsp;j.marsh-hale@bodleian.ox.ac.uk<br>
+            <strong>To:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.voss@bodleian.ox.ac.uk<br>
+            <strong>Subject:</strong> Re: Book X draft — thoughts<br>
+            <strong>Date:</strong>&nbsp;&nbsp;&nbsp;&nbsp;4 September 2024
+          </div>
+          <div class="email-body">
+            <p>Eleanor, yes. You are right. I wrote it as an ending because I am eighty years old and I have been
+              reading toward this for seventy years and I overcorrected. The error is exactly what you have identified:
+              treating the discovery as a destination rather than a resumption.</p>
+            <p>The archive has never ended. Every document in it was written for the next document. Matilda's letter was
+              written for whoever came after. Thomas's letter was written for whoever came after. The chronicle Brother
+              Eadmer wrote in 1121 ends: this chronicle to whoever comes after. The whole thing is addressed forward. It
+              has always been addressed forward.</p>
+            <p>You are not the end of it. You are the next person holding it.</p>
+            <p>I will revise the final chapter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document IV: James's Journal, 14 March 2026 -->
+    <div class="document">
+      <div class="doc-label">Document IV · Personal Journal · James Marsh-Hale · London · 14 March 2026</div>
+      <div class="journal-entry">
+        <div class="journal-head">James Marsh-Hale — journal, 14 March 2026</div>
+        <p>The book is finished. Eleanor and I have read it through together one last time and we are both satisfied
+          with it, which is to say we have both found things we would change and have decided to leave them as they are
+          because the changes would be improvements in the editing and not in the truth.</p>
+        <p>I have been thinking about Ranulf de la Hale standing in the hall in Worcestershire in the autumn of 1066,
+          not speaking the language of the people he had been given authority over, not knowing whether what had been
+          given to him was legitimately his or whether the people he was now responsible for would ever accept him. He
+          had no archive. He had no family history. He had a strip of confiscated Saxon land and a question he did not
+          yet know he was asking.</p>
+        <p>I have nine centuries of archive. I have the question in thirty languages, all of them saying the same thing.
+          I still cannot answer it cleanly. I think Matilda was right that you are not supposed to answer it cleanly.
+          You are supposed to keep it open and keep working and trust that whoever comes after will carry it forward.
+        </p>
+        <p>Eleanor will carry it forward. I am fairly sure of this. She has the quality. She has had it all along.
+          Matilda noticed it six hundred years before I did, which speaks to Matilda's exceptional perceptiveness and to
+          the slowness of institutions.</p>
+        <p>I am eighty-one. The pig still needs seeing to. I am going to make tea.</p>
+      </div>
+    </div>
+
+    <!-- Document V: A Note on the Archive -->
+    <div class="document">
+      <div class="doc-label">Document V · Institutional Record · Bodleian Library, University of Oxford</div>
+      <div class="archive-note">
+        <div class="archive-note-head">A Note on the Archive</div>
+        <p>The Hale family papers — comprising the Frere collection, the Marsh-Hale papers, and the documents reproduced
+          in this volume — are held at the Bodleian Library, University of Oxford, under the reference MSS. Hale-Marsh.
+          The collection is open to researchers. Matilda's letter is held in a climate-controlled case in the Special
+          Collections reading room. The enhanced imaging is available digitally.</p>
+        <p>The deed-box described in these volumes — the oak chest with lock and key, purchased or inherited by Robert
+          Hale no later than 1490, in which every significant document of the family's history was kept for four and a
+          half centuries — is also at the Bodleian. It is in reasonable condition. The lining has been repaired at least
+          twice. The crack in the lid, noted by Brother Anselm in 1538, is still visible if you look for it.</p>
+        <p>The beehives at Halecroft are still kept, by a family named Parry who farm the land that was once the Hale
+          holding. They are not Hales. They do not know about the archive. They keep the bees because the bees are there
+          and somebody has to.</p>
+      </div>
+    </div>
+
+    <!-- Document VI: MATILDA'S LETTER IN FULL -->
+    <div class="document" id="matilda">
+      <div class="doc-label">Document VI · Matilda of Halecroft · Her Letter · Written c.1390 · Read in its entirety,
+        January 2024</div>
+
+      <div class="matilda-access-notice">
+        <div class="man-header">Bodleian Library &nbsp;·&nbsp; Special Collections &nbsp;·&nbsp; MS. Marsh-Hale 3, item
+          7</div>
+        <div class="man-status">Enhanced imaging transcript &nbsp;·&nbsp; Text recovered January 2024 &nbsp;·&nbsp; Full
+          document</div>
+        <hr class="man-rule">
+        <div class="man-note">For the first time in six hundred and thirty-five years, this document is read in its
+          entirety. It was written for whoever reads it last.</div>
+      </div>
+
+      <div class="matilda-outer" style="margin-top:0;">
+        <div class="matilda-border-outer">
+          <div class="matilda-border-inner">
+
+            <div class="matilda-header">
+              <span class="matilda-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+              <span class="matilda-title">Matilda of Halecroft</span>
+              <span class="matilda-title-sub">Her letter, in full. Date: approximately 1390.</span>
+            </div>
+
+            <hr class="matilda-rule">
+
+            <p>To whoever shall read this after I am gone, which will be soon enough:</p>
+
+            <p>I have lived in this village since before any man in this room was born and I shall likely live here
+              after most of them are gone. I knew Ranulf de la Hale that built the hall, though I was young then and he
+              was old. I knew his son Leofric that built the Hale in the wood. I knew every man and woman of that family
+              through five generations to Richard that is dead of the plague and his sons that are dead and his son's
+              son Thomas that stands before the court now.</p>
+
+            <p class="recovered"><span class="matilda-rec-mark">*</span> I have kept these bees through six reigns and
+              two plagues and a rising that came to nothing and a hunger that came to much, and I have known the sons
+              and daughters of this family since before their fathers were born, and I set down what I know here because
+              I am the last who knows it.</p>
+
+            <p class="recovered"><span class="matilda-rec-mark">*</span> And I do set down here, for the keeping of the
+              record, that the line does not end with the sons of William Hale but continues also through his daughter
+              Margery, who married one Thomas Voss of Pershore in the year of Our Lord 1373, and whose line I have
+              followed these thirty years and know to be sound.</p>
+
+            <p class="recovered"><span class="matilda-rec-mark">*</span> Margery is a good woman and a careful one and
+              she has a daughter named Alice who has her grandmother Aelswith's eyes, which I remember though Aelswith
+              has been dead these forty years and the world has changed more times than I can comfortably count since
+              then. The blood runs in both lines. This is what families do. They go underground sometimes and come back
+              up somewhere else and they are still the same thing they always were, which is themselves.</p>
+
+            <p class="recovered"><span class="matilda-rec-mark">*</span> I write this not for the sons of this house,
+              who know who they are. I write it for whoever reads it last, who will not know where they are from until
+              this moment, and who will perhaps think it makes no great difference. It makes no great difference and it
+              makes all the difference. You are from here. This is where you are from. Halecroft, in the county of
+              Worcester, which is a small place and an old one and which has been your home since 1066 whether you knew
+              it or not.</p>
+
+            <p>You ask whether I have done enough. I do not know whether I have or not. I know only that I asked, and
+              that the asking is what this family does. They ask whether they have done enough. They do not always
+              answer, and perhaps there is no answer, but they ask.</p>
+
+            <p>The boy Thomas asked it at eleven, standing in an empty yard with a cooking pot, though he did not use
+              those words. He said: I had better see to the pig. It is the same question.</p>
+
+            <p>I am very old and I have kept bees longer than anyone living can remember and I have seen more than I
+              will say and I tell you this for nothing: a family that keeps asking whether it has done enough will keep
+              the land. A family that stops asking will lose it, sooner or later, one way or another.</p>
+
+            <p>Keep asking. Keep the land. See to the pig.</p>
+
+            <div class="matilda-sig">Matilda. &nbsp; Her mark.</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery Moment - Climactic Sequence -->
+    <div class="discovery-moment" id="discovery-moment">
+      <div class="discovery-prelude" id="disc-prelude">
+        · · · recovered from the Bodleian Library · Oxford · March 2026 · · ·
+      </div>
+      <div class="matilda-letter-final" id="matilda-final">
+        <div class="matilda-heading">The Letter of Matilda of Halecroft — 14th March, 1349</div>
+        <div class="matilda-text">
+          <p>To whosoever finds these words — know that I was here. That I lived. That I loved, and was afraid, and
+            buried my children, and still I lived.</p>
+          <p>The priest is gone. The lord is gone. Half the village is gone. I write this not for God — God has not
+            answered — but for whoever comes after. So that they know a woman named Matilda held this place together
+            when everything fell.</p>
+          <p>My father called this land Halecroft. I will call it that still. I will plant barley in the spring. I will
+            not leave.</p>
+          <p>If you are of my blood — and I believe someday someone will be — then know: we did not bend. We did not
+            break. We only kept going.</p>
+          <p>That is what it is to be of this line.</p>
+        </div>
+        <div class="matilda-sig">— Matilda of Halecroft, her mark ✦</div>
+        <div class="matilda-seal-final" id="matilda-seal-f">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="28" fill="none" stroke="#C8A83C" stroke-width="1.5" />
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#C8A83C" stroke-width="0.6" opacity="0.4" /><text x="32"
+              y="40" font-family="Georgia, serif" font-size="22" font-style="italic" text-anchor="middle"
+              fill="#C8A83C">M</text>
+            <circle cx="32" cy="4" r="2.5" fill="#C8A83C" opacity="0.7" />
+            <circle cx="60" cy="32" r="2.5" fill="#C8A83C" opacity="0.7" />
+            <circle cx="32" cy="60" r="2.5" fill="#C8A83C" opacity="0.7" />
+            <circle cx="4" cy="32" r="2.5" fill="#C8A83C" opacity="0.7" />
+          </svg>
+        </div>
+      </div>
+      <div class="discovery-coda" id="disc-coda">
+        Eleanor Voss identified this document in Bodleian MS. Hale-Marsh, Box 1, Folder 3.<br>
+        She sat for forty minutes before she could speak.<br>
+        <em>Six hundred and seventy-seven years. The line holds.</em>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="closing-block">
+      <span class="closing-end">End of Volume X &nbsp;·&nbsp; End of The Hale Dynasty</span>
+      <p class="closing-tagline">Ten volumes. Nine centuries. One question.</p>
+      <div class="closing-dates">1066 &nbsp;—&nbsp; 2026</div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #0A1828;">
+    <a href="era-IX.html">← Vol. IX: The Name</a>
+    <span class="vol-marker">END OF VOLUME X</span>
+    <a href="index.html">Return to Archive →</a>
+  </nav>
+
+  <script>
+    (function () {
+
+      // ── Scroll-reveal for all .document divs ──────────────────────────
+      var style = document.createElement('style');
+      style.textContent = [
+        '.doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}',
+        '.doc-reveal.doc-in{opacity:1;transform:none}'
+      ].join('');
+      document.head.appendChild(style);
+
+      var docObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('doc-in'); docObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.07 });
+
+      // Apply to all docs EXCEPT Matilda (handled separately)
+      document.querySelectorAll('.document').forEach(function (el) {
+        if (!el.id || el.id !== 'matilda') {
+          el.classList.add('doc-reveal');
+          docObs.observe(el);
+        }
+      });
+
+      // ── Matilda Letter — Cinematic reveal ─────────────────────────────
+      var matildaOuter = document.querySelector('#matilda .matilda-outer');
+      if (!matildaOuter) return;
+
+      // Opt in to the animation via JS (graceful degradation: no JS = always visible)
+      matildaOuter.classList.add('matilda-init');
+
+      // Tag every paragraph, header, sig, and hr inside the letter for staggered reveal
+      var revealEls = matildaOuter.querySelectorAll(
+        '.matilda-header, .matilda-border-inner > p, .matilda-border-inner > hr, .matilda-sig'
+      );
+      revealEls.forEach(function (el) { el.classList.add('mp'); });
+
+      var matildaFired = false;
+
+      var matildaObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !matildaFired) {
+            matildaFired = true;
+
+            // 1) Fade the outer wrapper in (2 seconds)
+            matildaOuter.classList.add('matilda-revealed');
+
+            // 2) Stagger each inner element
+            revealEls.forEach(function (el, i) {
+              setTimeout(function () {
+                el.classList.add('mp-in');
+              }, 800 + i * 380);
+            });
+
+            matildaObs.unobserve(matildaOuter);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      matildaObs.observe(matildaOuter);
+
+      // If the URL has #matilda hash (coming from the archive search),
+      // scroll smoothly and trigger reveal immediately after scroll
+      if (window.location.hash === '#matilda') {
+        var target = document.getElementById('matilda');
+        if (target) {
+          setTimeout(function () {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 600);
+        }
+      }
+
+      // ── Discovery Moment Cinematic Reveal ────────────────────────────
+      (function () {
+        var moment = document.getElementById('discovery-moment');
+        var prelude = document.getElementById('disc-prelude');
+        var letter = document.getElementById('matilda-final');
+        var seal = document.getElementById('matilda-seal-f');
+        var coda = document.getElementById('disc-coda');
+        if (!moment) return;
+        var started = false;
+        var obs = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting && !started) {
+            started = true;
+            setTimeout(function () { if (prelude) prelude.classList.add('visible'); }, 400);
+            setTimeout(function () { if (letter) letter.classList.add('revealed'); }, 1400);
+            setTimeout(function () { if (seal) seal.classList.add('visible'); }, 3200);
+            setTimeout(function () { if (coda) coda.classList.add('visible'); }, 4400);
+          }
+        }, { threshold: 0.2 });
+        obs.observe(moment);
+      })();
+
+    })();
+
+    // Ambient Sound
+    (function () {
+      var eraAudio = null, soundOn = false;
+      window.toggleSound = function () {
+        var btn = document.getElementById('soundToggle');
+        if (!soundOn) {
+          if (!eraAudio) { eraAudio = new Audio('sounds/era-X-ambient.mp3'); eraAudio.loop = true; eraAudio.volume = 0.35; }
+          eraAudio.play(); soundOn = true;
+          if (btn) { btn.textContent = '♪ Sound on'; btn.classList.add('active'); }
+        } else {
+          if (eraAudio) eraAudio.pause(); soundOn = false;
+          if (btn) { btn.textContent = '♪ Enable sound'; btn.classList.remove('active'); }
+        }
+      };
+    })();
+  </script>
+
+  <script>
+    (function () {
+      // Scroll reveal for documents
+      var revealEls = document.querySelectorAll(
+        '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+        '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+        '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+        '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+        '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+        '.closing-section, .nota-bene, .royal-proclamation'
+      );
+      revealEls.forEach(function (el) { el.classList.add('reveal'); });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+<!-- VOL. X INJECTION — insert before era-seq-nav -->
+<!-- NOTE: era-X has Matilda's letter already built in. 
+     The recovered documents go BEFORE the existing colophon.
+     The Shoebox interactive object also goes here. -->
+
+<div class="hd-section-rule">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- RECOVERED DOCUMENT 1: Eleanor's email to her father, June 2019 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh X, item 7 · Email · June 2019</div>
+  <div class="email-block">
+    <div style="font-family:'Courier New',monospace; font-size:0.75em; letter-spacing:0.12em; color:#4A6A4A; border-bottom:1px solid rgba(74,106,74,0.25); padding-bottom:12px; margin-bottom:18px;">
+      <div style="margin-bottom:4px;"><span style="color:#2D4A2D; font-weight:bold;">From:</span> e.voss@durham.ac.uk</div>
+      <div style="margin-bottom:4px;"><span style="color:#2D4A2D; font-weight:bold;">To:</span> d.voss@btinternet.com</div>
+      <div style="margin-bottom:4px;"><span style="color:#2D4A2D; font-weight:bold;">Subject:</span> The shoebox</div>
+      <div><span style="color:#2D4A2D; font-weight:bold;">Date:</span> June 2019</div>
+    </div>
+    <div class="recovered-archival" style="margin-bottom:18px;">Archival note: Written six weeks after David Voss's death, while Eleanor was clearing his house. The email was sent to his address, which no longer received messages. Eleanor's note attached to the document: <em>I needed to write it as if he could read it. I knew he couldn't. I sent it anyway.</em></div>
+    <p>Dad,</p>
+    <p>I found the shoebox. I've been going through the house for three weeks and I found it this afternoon on the second shelf of the spare room bookcase, behind the Ordnance Survey maps. Nike box, size 10. I don't know whose shoes those were.</p>
+    <p>I looked through everything. The medals. The photographs. The diary with the Latin I can't read and the drawings I can. And the conveyance — I know you knew what it was because you wrote <em>Property: keep</em> on the Post-it note on the back.</p>
+    <p>At the bottom of the conveyance, Dad, there's a note in a different hand from the 1640s. You knew it was there. You wrote <em>Property: keep.</em> Did you know what it said? Did you know about Halecroft?</p>
+    <p>I've been sitting with the shoebox for two hours trying to decide whether to look it up tonight or wait until I'm back in Durham with access to the databases. I decided to wait. I don't quite want to know yet in the middle of your house when you're not here to hear it.</p>
+    <p>The job at the Bodleian is still open. I saw it again yesterday. Medieval land records, West Midlands, based in Oxford. I've been not-applying for it for three months because Oxford seems like a statement and I'm not sure I'm ready to make it. But I think I'm going to apply.</p>
+    <p>I think you would have liked me to apply.</p>
+    <p>I think the shoebox wants me to apply.</p>
+    <p>I miss you. The house smells like your books and your tea and I keep expecting to hear you coming downstairs.</p>
+    <p><em>Eleanor</em></p>
+    <div class="recovered-archival" style="margin-top:18px;">Eleanor Voss was appointed to the postdoctoral fellowship at the Bodleian Library in November 2018. She took up the post in January 2019, five months before her father's death. She did not connect the shoebox to the Bodleian collection until 2023. She has noted, since: <em>I was in the same building as Matilda's letter for two years before I knew what I was looking for. My father knew something was there. He wrote Property: keep on a Post-it note and put it on the back of a 17th century conveyance. I think he was talking to me.</em></div>
+  </div>
+</div>
+
+<!-- Eleanor voice player — lives here, near her email -->
+<div class="era-voice-player-x" id="voicePlayer">
+  <audio id="voiceAudio" src="audio/eleanor.mp3" preload="none"></audio>
+  <span class="evp-x-label">♪ &nbsp;Eleanor Voss — reading from the archive · January 2024</span>
+  <button class="evp-x-play" id="evpPlay">▶ Play</button>
+  <div class="evp-x-progress">
+    <div class="evp-x-bar" id="evpBar"></div>
+  </div>
+  <div class="evp-x-time" id="evpTime">0:00</div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: James's finding aid with the two final sentences -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh Finding Aid, item 3 · Archival Finding Aid — Annotated · March 2001, annotated through 2024</div>
+  <div class="parchment" style="background:#FAFAF5; border-color:#C8C8B8;">
+    <p class="parchment-title" style="font-family:'Courier New',monospace; font-size:0.85em; letter-spacing:0.15em; color:#4A4A3A;">MSS. Marsh-Hale 3, item 7 — Finding Aid Entry</p>
+    <p class="parchment-subtitle" style="font-family:'Courier New',monospace; font-size:0.72em;">Compiled by James Marsh-Hale · Submitted to the Bodleian, March 2001 · Personal annotated copy</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival" style="margin-bottom:18px;">Archival note: This is James's personal annotated copy, found among his papers when he donated them to the Bodleian in 2023. The annotations are in a different ink from the printed finding aid — added later, at various dates. Two sentences at the bottom were added last. The ink is recent. The handwriting is slightly different from the rest — slower, as if written carefully.</div>
+    <p style="font-size:0.88em; line-height:1.8; margin-bottom:1em;"><strong>Matilda's letter.</strong> Single document, mounted between glass plates. Physical condition: fragile. The document is written on a fragment of medieval parchment approximately 15cm × 10cm. The text is in late Middle English, consistent with a date of c.1390. The hand is that of a literate layperson, not a trained scribe.</p>
+    <p style="font-size:0.88em; line-height:1.8; margin-bottom:1em;"><strong>Legible text (partial):</strong> opening section (lines 1–8) and closing section (lines 24–27) are legible to the naked eye. Central section (lines 9–23, approximately) is damaged by water and not currently legible.</p>
+    <p style="font-size:0.88em; line-height:1.8; margin-bottom:1em;"><strong>Significance:</strong> considerable. The document is the only surviving text in Matilda of Halecroft's hand. It appears to have been placed deliberately in the deed-box and found and replaced on at least two subsequent occasions without its contents being fully known.</p>
+    <p style="font-size:0.88em; line-height:1.8; margin-bottom:1em;"><strong>Recommendation:</strong> multispectral imaging of the central section is strongly advised when resources permit. The damaged portion may be recoverable and the significance of the document warrants the effort.</p>
+    <p style="font-size:0.82em; font-style:italic; color:#5C4A30; border-left:2px solid rgba(139,100,40,0.3); padding-left:12px; margin-bottom:8px;">— James Marsh-Hale, March 2001.</p>
+    <p style="font-size:0.82em; font-style:italic; color:#5C4A30; border-left:2px solid rgba(139,100,40,0.5); padding-left:12px; margin-bottom:8px;">[Annotation in different ink, added later: <em>I waited twenty-three years. I should have pressed harder. E.V. found it in 2024.</em>]</p>
+    <p style="font-size:0.9em; font-style:italic; color:#3B2A1A; border-left:3px solid #8B6914; padding-left:14px; margin-top:16px; line-height:1.9;">She was writing to Eleanor. She always was.</p>
+    <p style="font-family:'Courier New',monospace; font-size:0.7em; color:#8A7A5A; margin-top:12px;">Final two sentences added February 2024 · three weeks after the imaging results · in recent ink · written slowly</p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Shoebox -->
+<div class="obj-header">Archive Object · Vol. X · David Voss's spare room · 1983–2019</div>
+<div class="interactive-obj document" id="obj-X">
+  <div class="obj-lid" id="obj-lid-X" onclick="toggleObj('X')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
+        <rect x="1" y="7" width="26" height="14" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M1 7 Q14 3 27 7" stroke="#C8A83C" stroke-width="1.2" fill="rgba(200,168,60,0.06)" stroke-dasharray="2,0"/>
+        <rect x="9" y="3" width="8" height="4" rx="0.5" stroke="#8B6914" stroke-width="0.9" fill="rgba(200,168,60,0.08)"/>
+        <line x1="5" y1="11" x2="5" y2="18" stroke="#C8A83C" stroke-width="0.6" stroke-dasharray="1.5,1"/>
+        <text x="6" y="17" font-size="4.5" fill="#8B6914" font-family="monospace">Property: keep</text>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Shoebox
+      <span>Nike · size 10 · Post-it note: <em>Property: keep</em> · Open the box</span>
+    </div>
+    <svg id="obj-chevron-X" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-X">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A Nike shoebox, size 10, slightly worn at the corners, the lid sitting slightly askew. On the front, a Post-it note in a man's handwriting, slightly aged: <em>Property: keep.</em></p>
+        <p>Inside the open box: a small stack of photographs, face-down. A folded document. A slim diary. Two campaign medals in a small box.</p>
+        <p>David Voss assembled this shoebox in 1983 when his father Harold died. He kept it for thirty-six years. He never told Eleanor what was in it. He wrote <em>Property: keep</em> on the front and put it on the shelf behind the Ordnance Survey maps.</p>
+      </div>
+      <div class="obj-note">
+        He did not know why it needed keeping. He kept it anyway. This is, apparently, what the family does.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>The photographs, face down: Harold Voss and his family, 1905. The diary: Edmund Voss's, 1888, with the entry wondering where the name Voss came from. The medals: Harold's, from the First World War. Two of them.</p>
+          <p>The folded document at the bottom: the 1643 conveyance, transferring a cottage and half-acre at the edge of Halecroft parish. In the margin, in a seventeenth-century hand: <em>this land has been in this family since our grandmother's grandmother came from Halecroft.</em></p>
+          <p>David Voss put the Post-it note on the back of this conveyance. He knew what it was. He did not know what to do with that knowledge. He kept it for thirty-six years and left it for Eleanor to find.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">At the very bottom · Beneath everything else · A Nike receipt · 1983</span>
+          The shoes cost £24.99. David Voss bought them for work. He used the box because it was the right size.
+          <br><br>
+          He put his family's history in the box that came with his work shoes.
+          <br><br>
+          <em>He kept the box because it was the right size. The history fit inside it.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Secret navigation link — revealed when hale_complete = true -->
+<div style="text-align:center; margin: 60px 0 20px; font-family:'Courier New',monospace; font-size:0.72em; letter-spacing:0.18em; text-transform:uppercase;">
+  <a id="secret-nav-link" href="the-email.html" style="color:#8B6914; text-decoration:none; opacity:0.7; transition:opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+    ✦ &nbsp; A letter found &nbsp; ✦
+  </a>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-II.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume II · The Pestilence</div>
+        <div class="hd-xref-card-name">Matilda's letter, c.1390</div>
+        <div class="hd-xref-card-reason">The letter Eleanor recovers in January 2024 was placed in the deed-box six hundred and thirty-four years earlier. It was addressed to her. It always was.</div>
+      </a>
+      <a href="era-I.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume I · The Norman</div>
+        <div class="hd-xref-card-name">The beginning</div>
+        <div class="hd-xref-card-reason">Eleanor's discovery completes the circle: from Ranulf's arrival in a Worcestershire yard in 1066 to her reading Matilda's letter in a Bodleian reading room in 2024.</div>
+      </a>
+      <a href="family-tree.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">The Family Tree</div>
+        <div class="hd-xref-card-name">The full lineage</div>
+        <div class="hd-xref-card-reason">Twenty generations. The Hale line and the Voss branch — separated in 1373, reunited when Eleanor opens the deed-box in 2024.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Eleanor Voss presented her paper — <em>"Multispectral Recovery of a Previously Illegible Section of MSS. Hale-Marsh 3, item 7"</em> — at the Bodleian medieval manuscripts colloquium in March 2024. The paper was received well. She has since been contacted by three other institutions with damaged manuscripts. James Marsh-Hale, who is eighty-one and making tea, called her the week after the imaging came back. He was not surprised by what the letter said. He was, he told her, relieved that it was there. The archive continues to be held at the Bodleian. The deed-box is in Worcester. The Hale is still standing. The question remains open.
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-IX.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. IX · Blitz</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="index.html" class="esn-next">
+      <span class="esn-label">Archive</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5"
+        stroke-linejoin="round" />
+    </svg>
+  </a>
+
+  <script>
+    // Reveal all redactions on triple-click anywhere
+    var clickCount = 0;
+    document.addEventListener('click', function () {
+      clickCount++;
+      if (clickCount >= 3) {
+        clickCount = 0;
+        document.querySelectorAll('.redacted').forEach(function (el) {
+          el.classList.add('revealed');
+        });
+      }
+      setTimeout(function () { if (clickCount > 0) clickCount = 0; }, 800);
+    });
+  </script>
+
+  <script>
+    // Era X voice player
+    (function () {
+      var audio = document.getElementById('voiceAudio');
+      var btn = document.getElementById('evpPlay');
+      var bar = document.getElementById('evpBar');
+      var timeEl = document.getElementById('evpTime');
+
+      btn.onclick = function (e) {
+        e.preventDefault();
+        if (audio.paused) {
+          audio.play();
+          btn.textContent = '❚❚ Playing...';
+        } else {
+          audio.pause();
+          btn.textContent = '▶ Play';
+        }
+      };
+
+      audio.addEventListener('timeupdate', function () {
+        if (audio.duration) {
+          var pct = (audio.currentTime / audio.duration) * 100;
+          bar.style.width = pct + '%';
+          var m = Math.floor(audio.currentTime / 60);
+          var s = Math.floor(audio.currentTime % 60);
+          timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        }
+      });
+
+      audio.addEventListener('ended', function () {
+        btn.textContent = '▶ Again';
+        bar.style.width = '100%';
+      });
+    })();
+
+    function speakEleanor() { } // deprecated - now using HTML5 audio
+    if (window.speechSynthesis) { window.speechSynthesis.onvoiceschanged = window.speechSynthesis.onvoiceschanged || function () { }; }
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('docZoomOverlay');
+      var inner = document.getElementById('docZoomInner');
+      var zoomTargets = document.querySelectorAll(
+        '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+        '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+        '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+        '.blitz, .memo, .email-block'
+      );
+      zoomTargets.forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          // Don't trigger if clicking a link/button inside
+          if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+          inner.innerHTML = '';
+          var clone = el.cloneNode(true);
+          clone.style.cursor = 'default';
+          inner.appendChild(clone);
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+          // Re-run any click handlers on cloned elements
+          clone.querySelectorAll('.redacted').forEach(function (r) {
+            r.addEventListener('click', function () { this.classList.toggle('revealed'); });
+          });
+        });
+      });
+      window.closeDocZoom = function (e, force) {
+        if (force || (e && e.target === overlay)) {
+          overlay.classList.remove('open');
+          document.body.style.overflow = '';
+          setTimeout(function () { inner.innerHTML = ''; }, 300);
+        }
+      };
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeDocZoom(null, true);
+      });
+    })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+  <script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:70px;right:35px" title=""><span class="hd-cipher">A</span></div>
+<script src="inquiry.js"></script>
+</body>
+
+</html>

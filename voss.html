@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Voss Archive — MSS. Hale-Marsh · Bodleian Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #EFF4EC;
+      color: #1A2A16;
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 30%, rgba(50,100,40,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 80% 70%, rgba(30,80,20,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 500px at 50% 90%, rgba(40,90,30,0.04) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-nav {
+      background: #1A2A10;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 100;
+    }
+    .top-nav a { color: #8AAA70; text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #B0CC90; }
+    .top-nav .center { color: #4A6A38; }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 30px 120px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .archive-ref {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.45);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.5em, 4vw, 2.2em);
+      color: #1A2A16;
+      text-align: center;
+      letter-spacing: 0.07em;
+      margin-bottom: 8px;
+    }
+
+    .page-sub {
+      font-style: italic;
+      font-size: 0.9em;
+      color: #4A6A30;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-date-range {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.4);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid rgba(50,100,30,0.2);
+      margin: 30px 0;
+    }
+
+    /* Editorial note */
+    .editorial {
+      border-left: 3px solid rgba(50,100,30,0.35);
+      padding: 14px 20px;
+      background: rgba(50,100,30,0.04);
+      font-style: italic;
+      font-size: 0.88em;
+      color: #3A5A28;
+      line-height: 1.85;
+      margin-bottom: 40px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(50,100,30,0.15);
+    }
+
+    .tl-entry {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 0 20px;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .tl-marker {
+      width: 46px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(50,100,30,0.4);
+      background: #EFF4EC;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-dot.key {
+      border-color: #4A8030;
+      background: rgba(50,100,30,0.1);
+      width: 15px;
+      height: 15px;
+    }
+
+    .tl-content {
+      padding-bottom: 6px;
+    }
+
+    .tl-dates {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.45);
+      margin-bottom: 4px;
+    }
+
+    .tl-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.02em;
+      color: #1A3014;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .tl-name.key { color: #2A5018; }
+
+    .tl-era {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.45);
+      border: 1px solid rgba(50,100,30,0.18);
+      padding: 2px 7px;
+      margin-bottom: 10px;
+    }
+
+    .tl-desc {
+      font-size: 0.91em;
+      line-height: 1.85;
+      color: #2A3A20;
+    }
+
+    .tl-quote {
+      border-left: 2px solid rgba(50,100,30,0.25);
+      padding: 8px 14px;
+      margin: 10px 0;
+      font-style: italic;
+      font-size: 0.88em;
+      color: #3A5A28;
+      line-height: 1.75;
+    }
+
+    .tl-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.5);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(50,100,30,0.2);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tl-link:hover { color: #3A7020; border-bottom-color: rgba(50,100,30,0.5); }
+
+    /* Dividing sections */
+    .tl-section-head {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(50,100,30,0.35);
+      margin: 40px 0 28px 66px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(50,100,30,0.1);
+    }
+
+    /* The discovery panel */
+    .discovery-panel {
+      background: rgba(50,100,30,0.05);
+      border: 1px solid rgba(50,100,30,0.2);
+      border-top: 3px solid rgba(50,100,30,0.4);
+      padding: 30px 36px;
+      margin: 48px 0;
+    }
+
+    .disc-heading {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.1em;
+      color: #1A3014;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .disc-body {
+      font-size: 0.91em;
+      line-height: 1.9;
+      color: #2A3A20;
+    }
+
+    .disc-body p { margin-bottom: 1.1em; }
+
+    .disc-body p:last-child { margin-bottom: 0; }
+
+    /* Matilda's note panel */
+    .matilda-panel {
+      background: rgba(245,235,200,0.7);
+      border: 1px solid rgba(139,100,40,0.25);
+      padding: 24px 30px;
+      margin: 36px 0;
+      font-style: italic;
+      font-size: 0.9em;
+      line-height: 1.9;
+      color: #3A2A0E;
+    }
+
+    .matilda-panel .panel-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(139,100,40,0.4);
+      font-style: normal;
+      margin-bottom: 10px;
+    }
+
+    /* Provenance */
+    .provenance {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(50,100,30,0.15);
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      color: rgba(50,80,30,0.4);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2.0;
+    }
+
+    .provenance a {
+      color: rgba(50,100,30,0.4);
+      text-decoration: none;
+    }
+    .provenance a:hover { color: #4A8030; }
+
+    /* Home button */
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(20,36,14,0.9);
+      border: 1px solid rgba(90,150,60,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+    }
+    .home-float:hover { border-color: #5A9A3C; transform: scale(1.12); }
+
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #EFF4EC;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    @media (max-width: 580px) {
+      .wrap { padding: 40px 16px 80px; }
+      .timeline::before { left: 18px; }
+      .tl-entry { grid-template-columns: 38px 1fr; gap: 0 14px; }
+      .tl-marker { width: 38px; }
+      .discovery-panel { padding: 20px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<nav class="top-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="center">MSS. Hale-Marsh · Voss Branch</span>
+  <a href="family-tree.html">Family Tree →</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="archive-ref">MSS. Hale-Marsh Collection · Bodleian Library, Oxford · The Voss Genealogy</div>
+
+  <h1 class="page-title">The Voss Archive</h1>
+  <p class="page-sub">Margery Hale to Eleanor Voss · 1373–2026</p>
+  <div class="page-date-range">Six hundred and fifty-one years · One unbroken line · One recovered letter</div>
+
+  <hr class="rule">
+
+  <div class="editorial">
+    In 1373, Margery Hale — daughter of Thomas Hale, the plague survivor — married Thomas Voss of Pershore and left Halecroft. Matilda the beekeeper tracked her departure and wrote it down in a letter that would not be readable for six hundred and fifty-one years. What follows is a reconstruction of what happened to the line Margery began: a family that held in Pershore for six centuries, unaware that the name Voss was grafted onto a Hale root in 1373, and that they were always, in some sense, asking the same question as the family they had left.
+  </div>
+
+  <div class="matilda-panel">
+    <div class="panel-label">Matilda of Halecroft · Her letter · c.1390 · Recovered January 2024</div>
+    "I am writing this because Margery has married and gone to Pershore and I tracked her there and I know where she is, and her children will not know what they are, and their children will not know, and one day someone will need to know and there will be no one left who does unless I write it down."<br><br>
+    "The deed-box is in the Hale. The keys are in the deed-box. The indentures are in the deed-box. If someone comes from Pershore with the name Voss and says they have a claim, they have a claim."
+  </div>
+
+  <hr class="rule">
+
+  <div class="timeline">
+
+    <div class="tl-section-head">The Founding · 1373</div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot key"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1352–? · c.1350–c.1402</div>
+        <div class="tl-name key">Margery Hale &amp; Thomas Voss</div>
+        <div class="tl-era">Voss Branch Begins · 1373</div>
+        <div class="tl-desc">
+          <p>Margery Hale, daughter of Thomas Hale — the eleven-year-old who came home from Pershore with a cooking pot and held the land alone for forty years — married Thomas Voss of Pershore in 1373 and left Halecroft. She did not stop being a Hale. She carried it with her. Matilda the beekeeper, who had kept the bees at the Hale for sixty years, watched her go and wrote it down in a letter that no one would be able to read for six centuries.</p>
+          <div class="tl-quote">"Margery Hale married Thomas Voss of Pershore in the year 1373 and she is the daughter of William Hale and the granddaughter of Thomas Hale who survived the pestilence… She carries that in her. Her children will carry it, though they will not know the name." — Matilda, c.1390</div>
+          <p>Thomas Voss's origins are unrecorded. He was from Pershore, a small town on the River Avon thirty miles from Halecroft. His descendants would hold in Pershore for six centuries, unaware that the name Voss was grafted onto a Hale root in the year the plague was still within living memory.</p>
+        </div>
+        <a href="era-II.html" class="tl-link">→ Vol. II: The House of Hale</a>
+      </div>
+    </div>
+
+    <div class="tl-section-head">The Early Line · 1378–1568</div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1378–c.1445</div>
+        <div class="tl-name">Alice Voss</div>
+        <div class="tl-era">Voss · Late Medieval</div>
+        <div class="tl-desc">
+          <p>Daughter of Margery and Thomas Voss. Matilda's recovered letter notes that she had "her grandmother Aelswith's eyes" — a detail that reaches across three generations to the English widow who had stayed at Halecroft when the Norman came in 1067, and who was the making of the family. Alice married Robert Carpenter in 1399 and held in Pershore. The connection to the Hales is already, by this generation, a thing that no living person can trace.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1400–1568</div>
+        <div class="tl-name">Thomas · Margaret · William · Anne Voss</div>
+        <div class="tl-era">Voss · Tudor</div>
+        <div class="tl-desc">
+          <p>Four generations in Pershore through the same religious upheavals as the Hales at Halecroft, thirty miles east. The Dissolution of the Monasteries. The Protestant settlement. The Marian reaction. The Elizabethan settlement. William Voss became a draper — literate, a man of standing. The line held quietly in Pershore, asking the same questions the Hales were asking in a different register, with no knowledge that they were asking the same questions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-section-head">The Middle Line · 1522–1720</div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1522–c.1625</div>
+        <div class="tl-name">John Fletcher-Voss</div>
+        <div class="tl-era">Voss · Jacobean</div>
+        <div class="tl-desc">
+          <p>Schoolmaster who kept the Voss name alive through a period when the male line threatened to fail. His son held Pershore through the Civil War: neutral. The same strategy as the Hales at Halecroft — who sent one son to each side and held the land regardless. The parallel goes unremarked for another four centuries.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1592–c.1685</div>
+        <div class="tl-name">Mary Voss</div>
+        <div class="tl-era">Voss · Restoration</div>
+        <div class="tl-desc">
+          <p>Acquitted at Worcester assizes, 1623 — the charge and nature of the case are unrecorded, which is either a mercy or a testimony to the limits of the archive. Her son Samuel took her name: Samuel Partridge-Voss. The Voss line holds in Pershore through the Interregnum and the Restoration. The women of this branch, like the women of the Hale branch, are the ones who hold.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1648–c.1720</div>
+        <div class="tl-name">George Voss</div>
+        <div class="tl-era">Voss · Restoration</div>
+        <div class="tl-desc">
+          <p>Held in Pershore through the Restoration and the Glorious Revolution. The Voss family's strategy, like the Hales', was to survive the politics and tend the land. They were thirty miles apart and three centuries removed from their shared origin and they were still doing the same thing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-section-head">The Modern Line · 1820–2019</div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">c.1820–c.1890</div>
+        <div class="tl-name">Hannah Voss</div>
+        <div class="tl-era">Voss · Victorian</div>
+        <div class="tl-desc">
+          <p>Schoolmistress at Pershore National School, 1847–1883. The Inspector's report reads: <em>"makes the children feel that the past was not past but continuous."</em> This is the most Hale-like sentence written by anyone in the Voss line. Hannah did not know this. The Inspector did not know this. The archive notes it with the quiet satisfaction of a record that has been waiting a hundred and thirty years to make its point.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">1852–1921</div>
+        <div class="tl-name">Edmund Voss</div>
+        <div class="tl-era">Voss · Victorian</div>
+        <div class="tl-desc">
+          <p>Solicitor's clerk, Worcester. His diary, January 1888: <em>"I have been thinking about where the name comes from. I should look into this."</em> He did not look into it. He was the only person in six generations of Vosses to ask the question directly — to wonder, however briefly, whether the name carried a history he did not know. He then let it go. He died in 1921. The archive treats this with a gentle irony it does not permit itself in many places.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">1891–1967</div>
+        <div class="tl-name">Harold Voss</div>
+        <div class="tl-era">Voss · Edwardian / WWI</div>
+        <div class="tl-desc">
+          <p>Served in the First World War, 1914–1918. Came home. Grew dahlias. Developed a sweet pea variety over thirty years of careful crossing — each year slightly different, the final form never declared finished. This is the Hale instinct under completely different conditions: the patient work of improvement through attention, the refusal to call anything finished, the sense that the question remains open. Harold did not know any of this. He thought he was growing sweet peas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">1941–2019</div>
+        <div class="tl-name">David Voss</div>
+        <div class="tl-era">Voss · Contemporary</div>
+        <div class="tl-desc">
+          <p>History teacher, Harrogate. Assembled the shoebox of family papers — birth certificates, photographs, a fragment of a letter from Worcester, three postcards from the First World War, a bill of sale from 1888 for a small Pershore property. Wrote "Property: keep" on the Post-it note that he stuck to the top of the shoebox. Did not know why it needed keeping. Kept it anyway. Left the shoebox to his daughter Eleanor when he died in 2019. She was in the middle of her doctorate at Oxford. She would not find the time to open it for nearly four years.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-section-head">The Recovery · 2018–2026</div>
+
+    <div class="tl-entry">
+      <div class="tl-marker"><div class="tl-dot key"></div></div>
+      <div class="tl-content">
+        <div class="tl-dates">1983–</div>
+        <div class="tl-name key">Eleanor Voss</div>
+        <div class="tl-era">Era X · Contemporary</div>
+        <div class="tl-desc">
+          <p>Medievalist, Bodleian Library, Oxford. Came to the Hale-Marsh collection in 2018 because the damaged fourteenth-century manuscript was in her area of expertise. Spent four years on it. Commissioned multispectral imaging in January 2024. The central section of the letter — twenty-three previously unreadable lines — became readable.</p>
+          <div class="tl-quote">"I am writing this because Margery has married and gone to Pershore… one day someone will need to know and there will be no one left who does unless I write it down." — Matilda, c.1390</div>
+          <p>That someone was Eleanor. Matilda had written the letter for her — had addressed it, across six hundred and fifty-one years, to whoever would come from Pershore with the name Voss. Eleanor opened her father's shoebox the same week the imaging came back. The connection was not difficult to make, once you had the pieces.</p>
+          <p>The archive does not record what Eleanor said when she understood. It records that she transcribed the letter faithfully and accurately, that the provenance is established beyond reasonable doubt, and that the central section has been deposited with the Bodleian in full. The rest is hers.</p>
+        </div>
+        <a href="era-X.html" class="tl-link">→ Vol. X: The Discovery</a>
+      </div>
+    </div>
+
+  </div><!-- .timeline -->
+
+  <div class="discovery-panel">
+    <div class="disc-heading">What Matilda left for Eleanor</div>
+    <div class="disc-body">
+      <p>Matilda's letter — written c.1390, damaged, partially illegible since at least 1858, recovered in January 2024 — was addressed to no one specific. It was addressed to whoever would come from Pershore with the name Voss, in whatever century they happened to arrive. It described Margery's departure. It established the claim. It explained where the deed-box was.</p>
+      <p>The deed-box has been at the Hale since the fourteenth century. The keys have been in the deed-box. The indentures have been in the deed-box. Matilda wrote this down so that when the person came from Pershore, there would be something to find.</p>
+      <p>Eleanor Voss came from Pershore. She came six hundred and fifty-one years after Margery left, with a doctorate in medieval manuscripts and a shoebox of family papers that she had not yet opened, and she found the letter, and she found the deed-box, and the claim it describes is hers to decide what to do with.</p>
+      <p>The archive does not record what she decided. That is not what archives are for.</p>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="provenance">
+    MSS. Hale-Marsh Collection · Bodleian Library, University of Oxford<br>
+    Voss genealogy reconstructed by Eleanor Voss, 2024<br>
+    From Margery Hale, married Thomas Voss, Pershore, 1373<br>
+    To Eleanor Voss, Bodleian Library, Oxford, 2024<br>
+    Six hundred and fifty-one years.<br>
+    <br>
+    <a href="matilda.html">← Matilda's Letter</a>
+    &nbsp; · &nbsp;
+    <a href="family-tree.html">Family Tree →</a>
+    &nbsp; · &nbsp;
+    <a href="index.html">Archive Home</a>
+  </div>
+
+</div><!-- wrap -->
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#5A9A3C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="features.js"></script>
+<script src="transitions.js"></script>
+</body>
+</html>

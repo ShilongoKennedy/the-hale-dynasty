@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matilda's Bees — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #F0E8C8;
+      color: #2A1E08;
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 500px 400px at 15% 25%, rgba(180,140,40,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 85% 75%, rgba(160,120,30,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-nav {
+      background: #2A1A00;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 100;
+    }
+    .top-nav a { color: #C8A83C; text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
+    .top-nav a:hover { opacity: 1; }
+    .top-nav .center { color: rgba(200,168,60,0.35); }
+
+    .wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 70px 30px 120px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .archive-ref {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(139,100,30,0.4);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.4em, 4vw, 2em);
+      color: #2A1E08;
+      text-align: center;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-style: italic;
+      font-size: 0.88em;
+      color: #6A4A10;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .page-date {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(139,100,30,0.38);
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid rgba(139,100,30,0.2);
+      margin: 28px 0;
+    }
+
+    /* Editorial note */
+    .editorial {
+      border-left: 3px solid rgba(139,100,30,0.3);
+      padding: 12px 18px;
+      background: rgba(200,168,60,0.04);
+      font-style: italic;
+      font-size: 0.84em;
+      color: #5C3A10;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    /* Scene text */
+    .scene {
+      font-size: 0.97em;
+      line-height: 2.1;
+      color: #2A1E08;
+    }
+
+    .scene p { margin-bottom: 1.3em; }
+
+    .scene p.opener::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.78;
+      margin-right: 5px;
+      margin-top: 6px;
+      color: #3A2A08;
+    }
+
+    /* Choice panel */
+    .choice-panel {
+      display: none;
+      margin: 30px 0;
+      padding: 20px 24px;
+      border: 1px solid rgba(139,100,30,0.25);
+      background: rgba(200,168,60,0.03);
+    }
+
+    .choice-panel.visible { display: block; }
+
+    .choice-prompt {
+      font-style: italic;
+      font-size: 0.88em;
+      color: #5C3A10;
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+
+    .choice-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: 1px solid rgba(139,100,30,0.25);
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.88em;
+      color: #4A3010;
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.5;
+    }
+
+    .choice-btn:hover {
+      background: rgba(200,168,60,0.05);
+      border-color: rgba(139,100,30,0.5);
+      color: #2A1E08;
+    }
+
+    .choice-btn:last-child { margin-bottom: 0; }
+
+    /* Response text */
+    .response {
+      display: none;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(139,100,30,0.15);
+      font-size: 0.95em;
+      line-height: 2.0;
+      color: #2A1E08;
+    }
+
+    .response.visible { display: block; }
+    .response p { margin-bottom: 1.2em; }
+
+    .response p:last-child { margin-bottom: 0; }
+
+    /* Continue button */
+    .continue-btn {
+      display: none;
+      background: none;
+      border: 1px solid rgba(139,100,30,0.35);
+      padding: 10px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(139,100,30,0.6);
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.2s;
+    }
+
+    .continue-btn.visible { display: inline-block; }
+    .continue-btn:hover { border-color: rgba(139,100,30,0.7); color: #6A4A10; }
+
+    /* End panel */
+    .end-panel {
+      display: none;
+      margin-top: 40px;
+      padding: 24px 28px;
+      border: 1px solid rgba(139,100,30,0.25);
+      border-top: 2px solid rgba(139,100,30,0.35);
+      background: rgba(200,168,60,0.03);
+      font-size: 0.88em;
+      line-height: 1.9;
+      color: #5C3A10;
+      font-style: italic;
+    }
+
+    .end-panel.visible { display: block; }
+
+    .end-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(139,100,30,0.4);
+      font-style: normal;
+      margin-bottom: 10px;
+    }
+
+    .end-links {
+      margin-top: 16px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .end-link {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(139,100,30,0.5);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139,100,30,0.2);
+      transition: all 0.2s;
+    }
+
+    .end-link:hover { color: #6A4A10; border-bottom-color: rgba(139,100,30,0.5); }
+
+    /* Bee glyph */
+    .bee-glyph {
+      display: inline-block;
+      font-size: 0.95em;
+      opacity: 0.55;
+      margin: 0 3px;
+    }
+
+    /* Provenance */
+    .provenance {
+      margin-top: 50px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(139,100,30,0.15);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.14em;
+      color: rgba(100,70,20,0.35);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2.0;
+    }
+
+    /* Home button */
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(42,30,0,0.9);
+      border: 1px solid rgba(200,168,60,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+
+    /* ── WANDERING BEE ─────────────────────────────────────────── */
+    .hd-wandering-bee {
+      position: fixed;
+      font-size: 1.1em;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0.55;
+      transition: opacity 1s;
+      transform-origin: center;
+    }
+
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #F0E8C8;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    @media (max-width: 580px) {
+      .wrap { padding: 50px 18px 80px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<nav class="top-nav">
+  <a href="era-II.html">← Vol. II: The Pestilence</a>
+  <span class="center">Matilda's Bees</span>
+  <a href="index.html">Archive →</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="archive-ref">A micro-story from the archive · Halecroft · Morning of the Inquest · 1351</div>
+
+  <h1 class="page-title">Matilda's Bees</h1>
+  <p class="page-sub">A morning from the beekeeper's life · January, 1351</p>
+  <div class="page-date">Reconstructed from the MSS. Hale-Marsh Collection · 2024</div>
+
+  <hr class="rule">
+
+  <div class="editorial">
+    This is a reconstruction. No document records Matilda's thoughts on the morning of January 1351, when she gave testimony before the inquest that saved Thomas Hale's tenure at the Hale. What we know is what she said — the testimony is preserved in the MSS. Hale-Marsh collection. What she thought before she said it is ours to imagine. <span class="bee-glyph">🐝</span>
+  </div>
+
+  <div id="story-main" class="scene">
+    <p class="opener">The bees know before you do. That is what Matilda had always believed, and sixty years of keeping had not dissuaded her. She went to the hives in the dark, before the frost had lifted from the grass, and she listened. The hives were quiet in the way that meant they were all right. She had listened to bees long enough to know the difference.</p>
+
+    <p>The inquest was today. She had known for three weeks that it was coming. She had given testimony before — twice, for the first Thomas, and once for William, and once for the matter of the mill boundary in the year of the great plague on the continent that had not yet come to England and everyone hoped would not. She was not afraid of testimony. She was afraid of what happened if she gave it wrong.</p>
+
+    <p>Thomas was eleven years old. He had come home from Pershore in the spring with a cooking pot and an expression that she had recognised immediately — she had seen it on the face of every child who had ever lost everything and had to begin again anyway. She had brought him honey that first week without saying anything. He had said nothing either. They had understood each other.</p>
+
+    <p>The inquest would ask whether he was the legitimate heir. Whether the holding should pass to him. Whether an eleven-year-old boy who had held the Hale alone for six months had the right to go on holding it.</p>
+
+    <p>Matilda leaned against the nearest hive and thought about what she was going to say.</p>
+  </div>
+
+  <!-- Choice 1 -->
+  <div id="choice-1" class="choice-panel visible">
+    <div class="choice-prompt">The inquest commissioner would ask her first about the blood. Who was Thomas's father? Who was his grandfather? Could she trace the line?</div>
+    <button class="choice-btn" onclick="handleChoice(1, 'A')">She could. She had been there for all of it. She had told the bees about every death and every birth in this house for sixty years.</button>
+    <button class="choice-btn" onclick="handleChoice(1, 'B')">She could not trace it fully — the records were gone, the priest was dead, the witnesses scattered. She would have to say what she knew and trust that it was enough.</button>
+  </div>
+
+  <div id="response-1-A" class="response">
+    <p>She went through it in her head, as she would go through it before the commissioner: Richard Hale, who had been the father, who had died in November of 1348 at the feast of St Martin. His wife Maud, gone the same week. Their son Edmund, their son William, their son Thomas who was this Thomas, who had been eleven when it happened and who was now twelve. She had told the bees about every single one of them. The bees had taken the news as bees do.</p>
+    <p>The blood was not the problem. The blood was clear. The problem was the custom — whether a boy of eleven could hold, whether the manor would accept him, whether the other freeholders would stand with him or whether one of them would make a claim and find a commissioner willing to hear it.</p>
+    <p>She decided she would answer the question about the blood simply and quickly, and then say what she had come to say.</p>
+    <button class="continue-btn visible" onclick="advanceTo(2)">Continue →</button>
+  </div>
+
+  <div id="response-1-B" class="response">
+    <p>The priest at St Wulfstan's had died in December. The parish register had been kept carelessly in the last year, in the way that carelessly-kept things are kept when the keeper expects to be alive to correct them later. Matilda had her memory, which was exact, and the testimony of old Robert the Miller's widow, who was seventy-three and reliable, and her own word, which was worth something in this parish because she had been here longer than anyone.</p>
+    <p>She decided she would not apologise for what she could not produce. She would say what she knew, clearly, and let the commissioner determine what to make of it. She had found, in sixty years, that clarity was more persuasive than documentation, most of the time.</p>
+    <button class="continue-btn visible" onclick="advanceTo(2)">Continue →</button>
+  </div>
+
+  <!-- Story continues -->
+  <div id="section-2" class="scene" style="display:none; margin-top:24px;">
+    <p>The frost was lifting now. <span class="bee-glyph">🐝</span> She could hear the bees beginning to move inside the hives — a low, warm sound, like the house breathing. She had told the bees about the inquest the night before, as she told them everything. She was not certain that it was necessary. She did it because it was the correct thing to do.</p>
+    <p>She had been trying to work out what the commissioner would actually be asking. Not the formal question — the formal question was about the blood and the holding. The real question was whether Halecroft would be better off with Thomas in it, or with someone else, or with no one at all and the land absorbed back into the manor. She thought she knew the answer to that question. She was going to make sure the commissioner did too.</p>
+  </div>
+
+  <!-- Choice 2 -->
+  <div id="choice-2" class="choice-panel" style="display:none;">
+    <div class="choice-prompt">What would she say when the commissioner asked whether the boy was capable of holding the land?</div>
+    <button class="choice-btn" onclick="handleChoice(2, 'A')">She would say what she had seen: that he had managed the bees, the livestock, the winter stores, all of it, better than most grown men would have.</button>
+    <button class="choice-btn" onclick="handleChoice(2, 'B')">She would not defend him on the grounds of capability. She would say that the question of capability was the wrong question.</button>
+  </div>
+
+  <div id="response-2-A" class="response">
+    <p>She would not exaggerate. She would not say he had done it perfectly. She would say he had done what was required — that the bees were healthy, the livestock accounted for, the winter stores sufficient, the holding intact. She had watched him do it. She had not helped him more than he had needed, and he had needed less than she had expected.</p>
+    <p>She would say: I have kept these bees at the Hale for sixty years. I have seen men twice his age fail to manage what he has managed in six months. I am not telling you he is a man. I am telling you he is doing what a man would do, which is not nothing.</p>
+    <button class="continue-btn visible" onclick="advanceTo(3)">Continue →</button>
+  </div>
+
+  <div id="response-2-B" class="response">
+    <p>The question the commissioner was trained to ask was: is this person capable of discharging the obligations of the holding? It was a sensible question. But it was not the question Matilda thought most needed answering.</p>
+    <p>The question she wanted to answer was this: if you take this holding away from Thomas Hale, what do you create? You create a boy with nothing and a family whose line ends here, and a holding that belongs to no one who loves it. And a family that keeps asking whether it has done enough will keep the land, and a family that stops asking will lose it, and there is no one in this parish who will ask the question the way this boy will ask it, because his father asked it and his grandfather asked it and they are gone and he is what is left.</p>
+    <p>She was going to say this. She was not certain the commissioner was going to understand it. She was going to say it anyway.</p>
+    <button class="continue-btn visible" onclick="advanceTo(3)">Continue →</button>
+  </div>
+
+  <!-- Story final section -->
+  <div id="section-3" class="scene" style="display:none; margin-top:24px;">
+    <p>The sun was up now, properly. The frost was gone. She could see across the yard to the house where the boy was, presumably awake, presumably frightened, though he was the kind of child who did not show fright in any way she could easily read. She had known him all his life. She had been the one to tell him about his father's death, and his mother's, and his brothers'. She had told him simply, because that was what the situation required.</p>
+    <p>She pushed away from the hive and started across the yard. The bees hummed behind her. <span class="bee-glyph">🐝</span></p>
+    <p>She thought: I have kept these bees through six reigns. I have told them about everything. I will tell them about this too, tonight, and they will take the news as they always do, which is to say: they will keep on.</p>
+    <p>She was ready.</p>
+  </div>
+
+  <!-- Choice 3 -->
+  <div id="choice-3" class="choice-panel" style="display:none;">
+    <div class="choice-prompt">As she crossed the yard, Thomas came out of the house. He looked at her. She looked at him. He said nothing. She said—</div>
+    <button class="choice-btn" onclick="handleChoice(3, 'A')">"The bees are well. That is a good sign."</button>
+    <button class="choice-btn" onclick="handleChoice(3, 'B')">"Go and wash your face. The commissioner will be here at midday."</button>
+    <button class="choice-btn" onclick="handleChoice(3, 'C')">Nothing. She nodded. He nodded. They went in.</button>
+  </div>
+
+  <div id="response-3-A" class="response">
+    <p>He looked at her for a moment. He said: "Are they?"</p>
+    <p>"Yes," she said. "I listened."</p>
+    <p>He nodded. He seemed to be deciding whether this was useful information. Then he said: "I will go and wash."</p>
+    <p>She went in. She had said what she needed to say. The bees were well, and that was a good sign, and he was twelve years old and he needed to know that someone had listened for him this morning before the hard thing came. She had listened. The bees were well. She had told him.</p>
+    <button class="continue-btn visible" onclick="showEnd()">Read what happened at the inquest →</button>
+  </div>
+
+  <div id="response-3-B" class="response">
+    <p>He looked at her. He said: "I know."</p>
+    <p>She said: "I know you know."</p>
+    <p>He went in. She followed. There was nothing more to say. The inquest would happen and they would both do what they had to do and either it would be enough or it would not, and if it was not she would find something else to try, and if it was she would tell the bees tonight and they would take the news as they always did. She was not afraid. She had been doing necessary things for sixty years. This was one more necessary thing.</p>
+    <button class="continue-btn visible" onclick="showEnd()">Read what happened at the inquest →</button>
+  </div>
+
+  <div id="response-3-C" class="response">
+    <p>There was nothing that needed saying. He was twelve years old and she was seventy and they had already said everything necessary to each other in the months since his family had died, mostly without words. She had brought him honey. He had said thank you. They had agreed, without saying so, that the holding was worth keeping and that keeping it was what they were going to do.</p>
+    <p>Inside, the house was quiet and cold and smelled of smoke and the winter it had been. She put more wood on the fire. He sat down at the table. The morning went on.</p>
+    <button class="continue-btn visible" onclick="showEnd()">Read what happened at the inquest →</button>
+  </div>
+
+  <!-- End panel -->
+  <div id="end-panel" class="end-panel">
+    <div class="end-label">What the archive records · January 1351</div>
+    <p>Matilda of Halecroft gave testimony before the inquest commissioner on the holding of the Hale in January 1351. Her testimony is the longest in the record. The commissioner found in Thomas Hale's favour. The holding remained with Thomas. He held it until his death in 1395, forty-four years later.</p>
+    <p>What Matilda said to him in the yard that morning, if anything, is not recorded. What she said before the commissioner is. The archive has both: the official record, in Latin, and Matilda's letter, recovered in 2024, which says: <em>"I have kept these bees through six reigns and four religions and two pestilences and I have seen what families do when the land is taken and what they do when the land is held, and I tell you that the holding is the thing."</em></p>
+    <p>She told the bees that night. They took the news as they always did. <span class="bee-glyph">🐝</span></p>
+    <div class="end-links">
+      <a href="era-II.html" class="end-link">← Vol. II: The Pestilence</a>
+      <a href="matilda.html" class="end-link">Matilda's Letter →</a>
+      <a href="index.html" class="end-link">Archive Home</a>
+    </div>
+  </div>
+
+  <div class="provenance">
+    Reconstructed from MSS. Hale-Marsh Collection · Bodleian Library, Oxford<br>
+    The inquest record survives in Latin · Matilda's letter recovered January 2024<br>
+    What happened in the yard that morning is not on record.
+  </div>
+
+</div><!-- wrap -->
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<!-- Wandering bee -->
+<div class="hd-wandering-bee" id="wanderingBee" aria-hidden="true">🐝</div>
+
+<script src="features.js"></script>
+<script src="transitions.js"></script>
+<script>
+// ── WANDERING BEE ─────────────────────────────────────────────────────────
+(function() {
+  var bee = document.getElementById('wanderingBee');
+  var vw = window.innerWidth, vh = window.innerHeight;
+  var x = Math.random() * (vw * 0.6) + vw * 0.1;
+  var y = Math.random() * (vh * 0.5) + vh * 0.15;
+  var targetX = x, targetY = y;
+  var velX = 0, velY = 0;
+  var flip = false;
+
+  function newTarget() {
+    targetX = Math.random() * (vw - 80) + 40;
+    targetY = Math.random() * (vh - 120) + 60;
+  }
+  newTarget();
+
+  function tick() {
+    var dx = targetX - x, dy = targetY - y;
+    var dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < 30) newTarget();
+    velX += dx * 0.006;
+    velY += dy * 0.006;
+    velX *= 0.94;
+    velY *= 0.94;
+    x += velX;
+    y += velY;
+    flip = velX < 0;
+    bee.style.left = x + 'px';
+    bee.style.top  = y + 'px';
+    bee.style.transform = 'scaleX(' + (flip ? -1 : 1) + ')';
+    requestAnimationFrame(tick);
+  }
+  bee.style.left = x + 'px';
+  bee.style.top  = y + 'px';
+  setTimeout(tick, 800);
+
+  // Gently update viewport on resize
+  window.addEventListener('resize', function() { vw = window.innerWidth; vh = window.innerHeight; });
+})();
+
+// ── BRANCHING STORY ENGINE ────────────────────────────────────────────────
+function handleChoice(step, choice) {
+  // Hide the choice panel
+  const panel = document.getElementById('choice-' + step);
+  if (panel) panel.classList.remove('visible');
+
+  // Show the chosen response
+  const response = document.getElementById('response-' + step + '-' + choice);
+  if (response) response.classList.add('visible');
+}
+
+function advanceTo(step) {
+  // Show next scene section
+  const section = document.getElementById('section-' + step);
+  if (section) section.style.display = '';
+
+  // Show next choice panel
+  const choicePanel = document.getElementById('choice-' + step);
+  if (choicePanel) {
+    choicePanel.style.display = 'block';
+    // Small delay before adding visible class (smooth reveal)
+    setTimeout(() => choicePanel.classList.add('visible'), 50);
+  }
+
+  // Scroll to the new content
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function showEnd() {
+  const endPanel = document.getElementById('end-panel');
+  if (endPanel) {
+    endPanel.classList.add('visible');
+    endPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+</script>
+
+<script>
+/* ── PERMANENT BEE HIVE AMBIENT SOUND ── */
+(function() {
+  var beeAudio = null;
+  var beeOn = false;
+
+  function initBeeSound() {
+    if (!beeAudio) {
+      beeAudio = new Audio('sounds/bees-hive.mp3');
+      beeAudio.loop = true;
+      beeAudio.volume = 0.28;
+    }
+  }
+
+  // Auto-start on first user interaction (respects browser autoplay policy)
+  function onFirstInteraction() {
+    if (beeOn) return;
+    initBeeSound();
+    beeAudio.play().catch(function(){});
+    beeOn = true;
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('scroll', onFirstInteraction);
+    document.removeEventListener('keydown', onFirstInteraction);
+  }
+
+  document.addEventListener('click', onFirstInteraction);
+  document.addEventListener('scroll', onFirstInteraction, { passive: true });
+  document.addEventListener('keydown', onFirstInteraction);
+
+  // Fade out when leaving
+  window.addEventListener('beforeunload', function() {
+    if (beeAudio && beeOn) {
+      beeAudio.volume = 0;
+    }
+  });
+})();
+</script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

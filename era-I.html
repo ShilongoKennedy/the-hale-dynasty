@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. I — The Chronicle of de la Hale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    html {
+      font-size: 18px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #E4D7B2;
+      color: #3B2A1A;
+      font-family: 'IM Fell English', Georgia, serif;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    .era-nav {
+      background: #3B2A1A;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .era-nav a {
+      color: #C8A050;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .era-nav a:hover {
+      color: #E8C060;
+    }
+
+    .era-nav .vol-marker {
+      color: #7A5A28;
+    }
+
+    /* ── ERA HEADER ─────────────────────────────────────── */
+    .era-header {
+      background: #F5EDD6;
+      border-bottom: 3px solid #5C3A1E;
+      padding: 50px 40px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .era-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.80em;
+      letter-spacing: 0.3em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .era-title-ornament {
+      color: #8B1A1A;
+      font-size: 1.3em;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .era-main-title {
+      font-family: 'Uncial Antiqua', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.8em, 4.5vw, 3.2em);
+      color: #3B2A1A;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .era-subtitle {
+      font-style: italic;
+      font-size: 1em;
+      color: #7A5C1E;
+      margin-bottom: 18px;
+    }
+
+    .era-dates {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.1em;
+      color: #8B1A1A;
+      letter-spacing: 0.2em;
+    }
+
+    /* ── MAIN CONTENT ────────────────────────────────────── */
+    .era-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 50px 30px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── EDITORIAL NOTE ──────────────────────────────────── */
+    .editorial-note {
+      border-left: 3px solid #8B1A1A;
+      padding: 16px 20px;
+      background: #F0E8D0;
+      font-style: italic;
+      font-size: 0.95em;
+      color: #5C3A1E;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    /* ── DOCUMENT WRAPPER ────────────────────────────────── */
+    .document {
+      margin-bottom: 60px;
+    }
+
+    .doc-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.25em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── PARCHMENT DOCUMENT ──────────────────────────────── */
+    .parchment {
+      /* Layered gradients simulate vellum texture and age spots */
+      background-color: #EBD8B7;
+      background-image:
+        radial-gradient(ellipse 70px 50px at 12% 18%, rgba(139, 90, 30, 0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 40px 30px at 88% 72%, rgba(100, 60, 20, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 90px 60px at 55% 90%, rgba(120, 80, 30, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50px 70px at 95% 10%, rgba(110, 70, 20, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 160px 60px at 20% 100%, rgba(160, 110, 40, 0.06) 0%, transparent 80%);
+      border: 1px solid #A88F5B;
+      padding: 40px 44px;
+      position: relative;
+      line-height: 1.85;
+      font-size: 1.05em;
+    }
+
+    .parchment::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(139, 100, 40, 0.15);
+      pointer-events: none;
+    }
+
+    /* ── MARGINALIA LAYOUT ────────────────────────────────── */
+    /* Parchment with actual left-margin annotations */
+    .parchment-marginal {
+      background-color: #EBD8B7;
+      background-image:
+        radial-gradient(ellipse 70px 50px at 12% 18%, rgba(139, 90, 30, 0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 40px 30px at 88% 72%, rgba(100, 60, 20, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50px 70px at 95% 10%, rgba(110, 70, 20, 0.07) 0%, transparent 70%);
+      border: 1px solid #A88F5B;
+      position: relative;
+      line-height: 1.85;
+      font-size: 1.05em;
+      /* Two-column: narrow left margin + main text */
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .parchment-marginal::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(139, 100, 40, 0.12);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .margin-col {
+      border-right: 1px solid rgba(139, 100, 40, 0.2);
+      padding: 40px 8px 40px 14px;
+      background-image: radial-gradient(ellipse 60px 80px at 50% 30%, rgba(139, 90, 30, 0.04) 0%, transparent 80%);
+    }
+
+    .marginal-note {
+      font-family: Georgia, serif;
+      font-size: 0.78em;
+      font-style: italic;
+      color: #8B5A18;
+      line-height: 1.45;
+      margin-bottom: 28px;
+      text-align: right;
+      transform: rotate(-0.8deg);
+      display: block;
+    }
+
+    .marginal-note::before {
+      content: '✦';
+      color: #C8A050;
+      font-style: normal;
+      font-size: 0.8em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .main-col {
+      padding: 40px 40px 40px 20px;
+    }
+
+    .main-col p {
+      margin-bottom: 1em;
+    }
+
+    .main-col p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── WAX SEAL ─────────────────────────────────────────── */
+    .wax-seal-wrap {
+      text-align: right;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(45, 74, 45, 0.3);
+    }
+
+    .wax-seal {
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #A02020, #5A0808);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), inset 0 1px 3px rgba(255, 200, 150, 0.15);
+      position: relative;
+      vertical-align: top;
+    }
+
+    .wax-seal::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 180, 100, 0.2);
+    }
+
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 45% 40%, rgba(200, 100, 60, 0.3), transparent 70%);
+    }
+
+    .wax-seal-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.75em;
+      font-weight: 600;
+      color: rgba(255, 220, 160, 0.65);
+      letter-spacing: 0.08em;
+      z-index: 2;
+    }
+
+    .parchment-title {
+      text-align: center;
+      font-family: 'Uncial Antiqua', Georgia, serif;
+      font-size: 1.2em;
+      color: #8B1A1A;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .parchment-subtitle {
+      text-align: center;
+      font-style: italic;
+      color: #7A5C1E;
+      font-size: 0.88em;
+      margin-bottom: 20px;
+    }
+
+    .parchment-rule {
+      border: none;
+      border-top: 1px solid #B8A070;
+      margin: 18px 0;
+    }
+
+    .parchment p {
+      margin-bottom: 1em;
+    }
+
+    /* ── ERA BANNER ──────────────────────────────────────── */
+
+    .parchment p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── DOMESDAY INSCRIPTION ─────────────────────────────── */
+    .domesday-inscription {
+      text-align: center;
+      padding: 48px 20px;
+      position: relative;
+    }
+
+    .domesday-latin {
+      font-family: 'Uncial Antiqua', Georgia, serif;
+      font-size: clamp(1.2em, 3vw, 1.8em);
+      color: var(--gold, #C8A83C);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    .domesday-latin.revealed {
+      opacity: 1;
+    }
+
+    .domesday-latin span {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: inline;
+    }
+
+    .domesday-latin span.char-in {
+      opacity: 1;
+    }
+
+    .domesday-translation {
+      font-style: italic;
+      font-size: 0.78em;
+      color: #6A5A3A;
+      margin-top: 16px;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transition: opacity 1.2s ease 0.5s;
+    }
+
+    .domesday-translation.visible {
+      opacity: 1;
+    }
+
+    .domesday-rule {
+      width: 80px;
+      border: none;
+      border-top: 1px solid #3A2A10;
+      margin: 20px auto 0;
+    }
+
+    .rubricated {
+      color: #8B1A1A;
+    }
+
+    .chapter-number {
+      color: #8B1A1A;
+      font-size: 1.4em;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .chapter-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1em;
+      margin-bottom: 4px;
+    }
+
+    .chapter-date {
+      text-align: center;
+      font-style: italic;
+      color: #8B1A1A;
+      font-size: 0.85em;
+      margin-bottom: 18px;
+    }
+
+    .scribe-note {
+      background: #EDE0B8;
+      border-left: 3px solid #B8A070;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-style: italic;
+      font-size: 0.83em;
+      color: #5C4020;
+      line-height: 1.6;
+    }
+
+    /* ── LATIN WRIT ──────────────────────────────────────── */
+    .latin-writ {
+      background: #F4EDD4;
+      border: 2px solid #2D4A2D;
+      outline: 4px solid #F5EDD6;
+      outline-offset: -8px;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    .latin-writ::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid #2D4A2D;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .writ-header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.9em;
+      color: #2D4A2D;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .writ-subheader {
+      text-align: center;
+      font-style: italic;
+      color: #2D4A2D;
+      font-size: 0.82em;
+      margin-bottom: 18px;
+    }
+
+    .writ-rule {
+      border: none;
+      border-top: 1px solid #2D4A2D;
+      opacity: 0.4;
+      margin: 14px 0;
+    }
+
+    .writ-latin {
+      font-style: italic;
+      color: #1A3A1A;
+      font-size: 0.88em;
+      line-height: 1.9;
+    }
+
+    .writ-latin p {
+      margin-bottom: 0.7em;
+    }
+
+    .writ-translation {
+      font-size: 0.88em;
+      line-height: 1.9;
+      color: #3B2A1A;
+    }
+
+    .writ-translation p {
+      margin-bottom: 0.7em;
+    }
+
+    .writ-section-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #2D4A2D;
+      letter-spacing: 0.15em;
+      font-style: normal;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ── MANORIAL ROLLS ──────────────────────────────────── */
+    .manorial-rolls {
+      background: #F5EDD6;
+      border: 1px solid #8B1A1A;
+      padding: 28px 34px;
+    }
+
+    .rolls-header {
+      font-size: 0.8em;
+      font-variant: small-caps;
+      letter-spacing: 0.1em;
+      color: #8B1A1A;
+      border-bottom: 1px solid #B8A070;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .rolls-entry {
+      margin-bottom: 14px;
+      font-size: 0.88em;
+      line-height: 1.75;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(184, 160, 112, 0.3);
+    }
+
+    .rolls-entry:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .rolls-year {
+      color: #8B1A1A;
+      font-weight: bold;
+    }
+
+    /* ── COLOPHON ────────────────────────────────────────── */
+    .colophon {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid #B8A070;
+      border-bottom: 1px solid #B8A070;
+      margin-top: 50px;
+    }
+
+    .colophon-latin {
+      font-style: italic;
+      color: #8B1A1A;
+      font-size: 0.9em;
+      margin-bottom: 6px;
+    }
+
+    .colophon-english {
+      font-style: italic;
+      color: #5C3A1E;
+      font-size: 0.82em;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 600px) {
+
+      .parchment,
+      .latin-writ,
+      .manorial-rolls {
+        padding: 24px 20px;
+      }
+
+      .era-header {
+        padding: 30px 20px;
+      }
+
+      .era-content {
+        padding: 30px 16px 60px;
+      }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .era-seq-nav a {
+      text-decoration: none;
+      transition: opacity 0.2s;
+      opacity: 0.85;
+      color: #3A3A3A;
+    }
+
+    .era-seq-nav a:hover {
+      opacity: 1;
+    }
+
+    .esn-prev,
+    .esn-next {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .esn-arrow {
+      font-size: 1.2em;
+    }
+
+    .esn-home {
+      opacity: 0.6 !important;
+      font-size: 0.88em;
+    }
+
+    .esn-home:hover {
+      opacity: 0.7 !important;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── WAX SEAL INTERACTIVE ───────────────────────────── */
+    .wax-seal {
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .wax-seal:hover {
+      transform: scale(1.12) rotate(-2deg);
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.55), 0 0 20px rgba(200, 140, 40, 0.28);
+    }
+
+    .wax-seal-hint {
+      display: block;
+      font-size: 0.76em;
+      font-style: italic;
+      color: #7A5A28;
+      margin-top: 6px;
+      letter-spacing: 0.06em;
+      opacity: 0.75;
+    }
+
+    /* ── PORTRAIT LIGHTBOX ──────────────────────────────── */
+    .portrait-lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      z-index: 600;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .portrait-lb.open {
+      display: flex;
+    }
+
+    .portrait-inner {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      animation: prtIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes prtIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .portrait-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #100804;
+      border: 1px solid #C8A028;
+      color: #C8A028;
+      font-size: 0.9em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .portrait-close:hover {
+      background: #2A1A08;
+    }
+
+    .ranulf-img {
+      width: 100%;
+      max-width: 360px;
+      display: block;
+      border: 4px solid #8B6010;
+      box-shadow: 0 0 0 2px #C8A028, 0 12px 60px rgba(0, 0, 0, 0.95);
+    }
+
+    .portrait-quote {
+      font-style: italic;
+      color: #C8A870;
+      font-size: 0.95em;
+      line-height: 1.75;
+      margin: 16px 0 4px;
+      padding: 0 12px;
+    }
+
+    .portrait-attribution {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.2em;
+      color: #4A3010;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* ── ERA I VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player {
+      background: #C8A028;
+      border: 3px solid #8B6914;
+      padding: 20px 24px;
+      text-align: center;
+      max-width: 280px;
+      margin: 0 auto 12px;
+      position: relative;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .era-voice-player::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="2" height="2" fill="%23654321" opacity="0.1"/></svg>');
+      pointer-events: none;
+    }
+
+    .evp-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #3B2A1A;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .evp-play {
+      background: none;
+      border: 2px solid #3B2A1A;
+      color: #3B2A1A;
+      padding: 10px 24px;
+      font-family: Georgia, serif;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .evp-play:hover {
+      background: rgba(59, 42, 26, 0.08);
+      border-color: #2A1A08;
+      color: #2A1A08;
+    }
+
+    .evp-progress {
+      background: rgba(59, 42, 26, 0.2);
+      height: 6px;
+      border-radius: 2px;
+      margin: 8px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .evp-bar {
+      background: #3B2A1A;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .evp-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #3B2A1A;
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portrait-voice-btn {
+      background: none;
+      border: 1px solid rgba(200, 168, 40, 0.35);
+      color: #9A7030;
+      padding: 7px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.76em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .portrait-voice-btn:hover,
+    .portrait-voice-btn.speaking {
+      border-color: #C8A828;
+      color: #E8C850;
+    }
+
+    .portrait-dismiss-btn {
+      display: block;
+      margin: 8px auto 0;
+      font-size: 0.6em;
+      color: #2A1A08;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .portrait-dismiss-btn:hover {
+      color: #6A4A20;
+    }
+
+    /* ── SOUND BAR (Norman priory) ──────────────────────── */
+    .norman-sound-bar {
+      background: #1A0E06;
+      border-bottom: 1px solid #2A1808;
+      padding: 8px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.14em;
+    }
+
+    .nsb-label {
+      color: #3A2408;
+      text-transform: uppercase;
+    }
+
+    .nsb-btn {
+      background: none;
+      border: 1px solid rgba(200, 168, 40, 0.3);
+      color: #7A5820;
+      padding: 5px 16px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .nsb-btn:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+
+    .nsb-btn.on {
+      color: #C8A840;
+      border-color: rgba(200, 168, 40, 0.6);
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(10, 6, 2, 0.92);
+      border: 1px solid rgba(200, 168, 60, 0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .home-float:hover {
+      border-color: #C8A83C;
+      transform: scale(1.12);
+    }
+
+    .home-float svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment,
+    .latin-writ,
+    .manorial-rolls,
+    .parchment-marginal,
+    .victorian-letter,
+    .victorian-diary,
+    .regency-letter,
+    .tudor-letter,
+    .plague-register,
+    .broadside,
+    .solicitor,
+    .memoir-page,
+    .blitz,
+    .memo,
+    .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+
+    .parchment:hover,
+    .latin-writ:hover,
+    .manorial-rolls:hover,
+    .parchment-marginal:hover,
+    .victorian-letter:hover,
+    .victorian-diary:hover,
+    .regency-letter:hover,
+    .tudor-letter:hover,
+    .plague-register:hover,
+    .broadside:hover,
+    .solicitor:hover,
+    .memoir-page:hover,
+    .blitz:hover,
+    .memo:hover,
+    .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+
+    .doc-zoom-overlay.open {
+      display: flex;
+    }
+
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.93) translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10, 6, 2, 0.9);
+      border: 1px solid rgba(200, 168, 60, 0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    .doc-zoom-close:hover {
+      background: rgba(30, 18, 6, 0.95);
+    }
+
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200, 168, 60, 0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page {
+        margin: 1.4cm 2cm;
+      }
+
+      .era-nav,
+      .era-seq-nav,
+      .access-header,
+      .era-banner,
+      .mystery-box,
+      .brothers-divide,
+      .death-toll,
+      .telegram-wrapper,
+      .royal-proclamation,
+      .memo-stamp,
+      .matilda-mystery,
+      nav,
+      button {
+        display: none !important;
+      }
+
+      body {
+        background: white !important;
+        color: black !important;
+        font-size: 11pt;
+      }
+
+      .era-header {
+        background: white !important;
+        border: none !important;
+        padding: 20pt 0 14pt;
+      }
+
+      .era-main-title {
+        font-size: 22pt !important;
+        color: black !important;
+      }
+
+      .era-content {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      a {
+        color: black !important;
+        text-decoration: none !important;
+      }
+
+      .victorian-letter,
+      .parchment,
+      .memoir-page,
+      .regency-letter,
+      .tudor-letter,
+      .broadside,
+      .pamphlet,
+      .plague-register,
+      .solicitor,
+      .victorian-diary,
+      .blitz,
+      .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+
+      .confession-wrapper {
+        background: white !important;
+      }
+
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: sepia(0.5) contrast(1.1);
+      display: block;
+    }
+
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 10, 0, 0.55);
+    }
+
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    to {
+      opacity: 1;
+    }
+    }
+
+    body {}
+
+    /* ══ ERA-I CREATIVE OVERHAUL ════════════════════════════════════ */
+
+    /* ── Timeline progress thread (left rail) ───────────────────── */
+    #hd-timeline {
+      position: fixed;
+      left: 18px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom,
+          transparent 0%,
+          rgba(185, 148, 50, 0.18) 8%,
+          rgba(185, 148, 50, 0.22) 50%,
+          rgba(185, 148, 50, 0.12) 92%,
+          transparent 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hd-tl-node {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(185, 148, 50, 0.35);
+      background: rgba(14, 12, 10, 0.9);
+      cursor: default;
+      transition: border-color 0.5s, box-shadow 0.5s, background 0.5s;
+      pointer-events: all;
+    }
+
+    .hd-tl-node.lit {
+      border-color: rgba(200, 168, 60, 0.9);
+      background: rgba(185, 148, 50, 0.25);
+      box-shadow: 0 0 10px rgba(200, 168, 60, 0.35);
+    }
+
+    .hd-tl-label {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.12em;
+      color: rgba(185, 148, 50, 0.0);
+      white-space: nowrap;
+      pointer-events: none;
+      transition: color 0.5s;
+    }
+
+    .hd-tl-node.lit .hd-tl-label {
+      color: rgba(185, 148, 50, 0.6);
+    }
+
+    /* ── Illuminated Drop Caps ───────────────────────────────────── */
+    .hd-dropcap {
+      float: left;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 4.4em;
+      line-height: 0.78;
+      margin: 4px 10px 0 0;
+      color: #8B1A1A;
+      font-weight: 700;
+      text-shadow: 1px 1px 0 rgba(185, 148, 50, 0.5), -1px -1px 0 rgba(100, 40, 10, 0.2);
+      border: 1.5px solid rgba(185, 148, 50, 0.4);
+      padding: 6px 8px 4px;
+      background: linear-gradient(135deg, rgba(245, 237, 214, 0.9) 0%, rgba(235, 220, 180, 0.5) 100%);
+      box-shadow: inset 0 0 12px rgba(185, 148, 50, 0.1), 2px 2px 6px rgba(60, 30, 10, 0.12);
+    }
+
+    /* ── Marginal notes (enhanced) ───────────────────────────────── */
+    .margin-col .marginal-note {
+      display: block;
+      font-size: 0.74em;
+      font-style: italic;
+      color: #7A4A20;
+      margin-bottom: 22px;
+      line-height: 1.5;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      padding-left: 14px;
+      border-left: 2px solid rgba(139, 26, 26, 0.3);
+    }
+
+    .margin-col .marginal-note::before {
+      content: '☞ ';
+      font-style: normal;
+      color: rgba(139, 26, 26, 0.55);
+      font-size: 0.95em;
+    }
+
+    .margin-col .marginal-note.mn-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── Ink brush section dividers ──────────────────────────────── */
+    .hd-ink-divider {
+      display: block;
+      width: 100%;
+      height: 28px;
+      margin: 10px 0 6px;
+      overflow: visible;
+    }
+
+    /* ── Confession audio trigger (Document V) ───────────────────── */
+    .hd-confession-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 18px;
+      padding: 12px 18px;
+      background: rgba(139, 26, 26, 0.06);
+      border: 1px solid rgba(139, 26, 26, 0.18);
+      border-left: 3px solid rgba(139, 26, 26, 0.45);
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      color: #8B1A1A;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease, background 0.3s;
+    }
+
+    .hd-confession-trigger.cf-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hd-confession-trigger:hover {
+      background: rgba(139, 26, 26, 0.1);
+    }
+
+    .hd-confession-trigger .cf-icon {
+      font-size: 1.3em;
+      opacity: 0.7;
+    }
+
+    .hd-confession-trigger .cf-playing {
+      display: none;
+    }
+
+    .hd-confession-trigger.playing .cf-idle {
+      display: none;
+    }
+
+    .hd-confession-trigger.playing .cf-playing {
+      display: inline;
+    }
+
+    /* ── Raven visitor ───────────────────────────────────────────── */
+    #hd-raven {
+      position: fixed;
+      right: -80px;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #hd-raven.raven-land {
+      opacity: 1;
+      animation: ravenBob 2.8s ease-in-out infinite;
+    }
+
+    #hd-raven.raven-fly {
+      opacity: 0;
+      transform: translate(-120px, -40px) scale(0.6);
+      transition: opacity 0.8s ease, transform 1.2s ease;
+    }
+
+    @keyframes ravenBob {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      30% {
+        transform: translateY(-4px) rotate(-2deg);
+      }
+
+      60% {
+        transform: translateY(-2px) rotate(1deg);
+      }
+    }
+
+    /* ── Latin tooltips ──────────────────────────────────────────── */
+    .hd-latin {
+      border-bottom: 1px dotted rgba(139, 26, 26, 0.4);
+      cursor: help;
+      position: relative;
+    }
+
+    .hd-latin::after {
+      content: attr(data-tr);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(245, 237, 214, 0.98);
+      border: 1px solid rgba(139, 26, 26, 0.35);
+      color: #3B2A1A;
+      font-size: 0.78em;
+      font-style: normal;
+      padding: 6px 10px;
+      white-space: nowrap;
+      font-family: Georgia, serif;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .hd-latin:hover::after {
+      opacity: 1;
+    }
+
+    /* ── Illuminated vine borders (left + right) ─────────────────── */
+    .hd-vine-left,
+    .hd-vine-right {
+      position: fixed;
+      top: 0;
+      width: 48px;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.32;
+    }
+
+    .hd-vine-left {
+      left: 0;
+    }
+
+    .hd-vine-right {
+      right: 0;
+      transform: scaleX(-1);
+    }
+
+    .hd-vine-path {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      transition: stroke-dashoffset 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hd-vine-path.grown {
+      stroke-dashoffset: 0;
+    }
+
+
+    @media (max-width: 900px) {
+
+      #hd-timeline,
+      .hd-vine-left,
+      .hd-vine-right {
+        display: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+
+<body data-era="i" data-vol="I">
+
+  <!-- ── Illuminated vine borders ───────────────────────── -->
+  <svg class="hd-vine-left" viewBox="0 0 48 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <path class="hd-vine-path" id="vinePathLeft"
+      d="M24,0 C24,0 20,40 28,80 C36,120 16,160 24,200 C32,240 18,280 26,320 C34,360 14,400 24,440 C34,480 18,520 24,560 C30,600 16,640 24,680 C32,720 20,760 24,800"
+      fill="none" stroke="rgba(185,148,50,0.7)" stroke-width="1.5" />
+    <!-- Leaf clusters at intervals -->
+    <ellipse cx="28" cy="80" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(20,28,80)" />
+    <ellipse cx="16" cy="160" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-25,16,160)" />
+    <ellipse cx="32" cy="240" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(15,32,240)" />
+    <ellipse cx="14" cy="320" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-30,14,320)" />
+    <ellipse cx="34" cy="400" rx="5" ry="9" fill="rgba(185,148,50,0.45)" transform="rotate(10,34,400)" />
+    <ellipse cx="18" cy="480" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-20,18,480)" />
+    <ellipse cx="28" cy="560" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(25,28,560)" />
+    <ellipse cx="16" cy="640" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-15,16,640)" />
+    <ellipse cx="30" cy="720" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(18,30,720)" />
+    <!-- Small star flowers -->
+    <circle cx="22" cy="120" r="2.5" fill="rgba(185,148,50,0.6)" />
+    <circle cx="28" cy="200" r="2" fill="rgba(139,26,26,0.5)" />
+    <circle cx="20" cy="280" r="2.5" fill="rgba(185,148,50,0.6)" />
+    <circle cx="30" cy="360" r="2" fill="rgba(139,26,26,0.5)" />
+    <circle cx="22" cy="440" r="2.5" fill="rgba(185,148,50,0.6)" />
+    <circle cx="26" cy="520" r="2" fill="rgba(139,26,26,0.5)" />
+    <circle cx="20" cy="600" r="2.5" fill="rgba(185,148,50,0.6)" />
+  </svg>
+  <svg class="hd-vine-right" viewBox="0 0 48 800" preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg">
+    <path class="hd-vine-path" id="vinePathRight"
+      d="M24,0 C24,0 20,40 28,80 C36,120 16,160 24,200 C32,240 18,280 26,320 C34,360 14,400 24,440 C34,480 18,520 24,560 C30,600 16,640 24,680 C32,720 20,760 24,800"
+      fill="none" stroke="rgba(185,148,50,0.7)" stroke-width="1.5" />
+    <ellipse cx="28" cy="80" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(20,28,80)" />
+    <ellipse cx="16" cy="160" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-25,16,160)" />
+    <ellipse cx="32" cy="240" rx="5" ry="8" fill="rgba(185,148,50,0.45)" transform="rotate(15,32,240)" />
+    <ellipse cx="14" cy="320" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-30,14,320)" />
+    <ellipse cx="34" cy="400" rx="5" ry="9" fill="rgba(185,148,50,0.45)" transform="rotate(10,34,400)" />
+    <ellipse cx="18" cy="480" rx="4" ry="7" fill="rgba(139,26,26,0.35)" transform="rotate(-20,18,480)" />
+    <circle cx="22" cy="120" r="2.5" fill="rgba(185,148,50,0.6)" />
+    <circle cx="28" cy="200" r="2" fill="rgba(139,26,26,0.5)" />
+    <circle cx="20" cy="280" r="2.5" fill="rgba(185,148,50,0.6)" />
+  </svg>
+
+  <!-- ── Timeline progress thread ───────────────────────── -->
+  <div id="hd-timeline">
+    <div class="hd-tl-node" id="tln-1066" style="top:15%" title="1066 — The Conquest">
+      <span class="hd-tl-label">1066</span>
+    </div>
+    <div class="hd-tl-node" id="tln-1086" style="top:32%" title="1086 — Domesday">
+      <span class="hd-tl-label">1086</span>
+    </div>
+    <div class="hd-tl-node" id="tln-1097" style="top:55%" title="1097 — Plea Rolls">
+      <span class="hd-tl-label">1097</span>
+    </div>
+    <div class="hd-tl-node" id="tln-1121" style="top:78%" title="1121 — Chronicle complete">
+      <span class="hd-tl-label">1121</span>
+    </div>
+  </div>
+
+  <!-- ── Raven visitor ────────────────────────────────────── -->
+  <svg id="hd-raven" width="64" height="42" viewBox="0 0 64 42" xmlns="http://www.w3.org/2000/svg">
+    <!-- body -->
+    <ellipse cx="28" cy="26" rx="20" ry="11" fill="#18100c" />
+    <!-- head -->
+    <ellipse cx="48" cy="16" rx="9" ry="8.5" fill="#18100c" />
+    <!-- beak -->
+    <path d="M55,14 Q63,12 57,18 Z" fill="#1a1210" />
+    <!-- tail -->
+    <path d="M10,28 Q2,36 8,26 Q4,32 12,24 Z" fill="#18100c" />
+    <!-- eye -->
+    <circle cx="50" cy="14" r="2" fill="#C8A83C" />
+    <circle cx="50.5" cy="13.5" r="0.7" fill="#0a0806" />
+    <!-- wing fold lines -->
+    <path d="M18,22 Q28,16 44,20" fill="none" stroke="#251810" stroke-width="1.2" />
+    <path d="M22,27 Q32,22 42,25" fill="none" stroke="#251810" stroke-width="0.8" />
+    <!-- feet -->
+    <line x1="30" y1="36" x2="26" y2="42" stroke="#18100c" stroke-width="1.5" />
+    <line x1="36" y1="37" x2="32" y2="42" stroke="#18100c" stroke-width="1.5" />
+    <line x1="26" y1="42" x2="22" y2="41" stroke="#18100c" stroke-width="1" />
+    <line x1="26" y1="42" x2="28" y2="40" stroke="#18100c" stroke-width="1" />
+    <line x1="32" y1="42" x2="28" y2="41" stroke="#18100c" stroke-width="1" />
+  </svg>
+
+  <div class="page-transition-overlay" id="pageOverlay"></div>
+
+  <div class="era-banner">
+    <img class="banner-img" src="banners/era-I.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="norman-sound-bar">
+    <span class="nsb-label">Priory of St Mary, Worcester · Ambient</span>
+    <button class="nsb-btn" id="normanSoundBtn" onclick="toggleNormanSound()">♪ Hear the priory</button>
+  </div>
+
+  <nav class="era-nav">
+    <a href="index.html">← Archive</a>
+    <span class="vol-marker">VOL. I OF X &nbsp;·&nbsp; 1066–1121</span>
+    <a href="era-II.html">Vol. II →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraI.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume I</div>
+    <span class="era-title-ornament">✦</span>
+    <h1 class="era-main-title">The Chronicle of de la Hale</h1>
+    <p class="era-subtitle">of Worcestershire</p>
+    <p class="hd-quill"
+      style="font-style:italic; color:#5C3A1E; font-size:0.88em; margin:10px 0 16px; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being the True Account of the Coming of Ranulf de la Hale to the Kingdom of England in the Year of Our Lord 1066,
+      and of his Descendants unto the Third Generation, Compiled from Divers Chronicles, Writs, and Testimonies.
+    </p>
+    <p style="font-size:0.82em; color:#8B1A1A;">Set down by Brother Eadmer of Worcester, Monk of the Cathedral Priory of
+      St. Mary,<br>
+      in the Year of Our Lord 1121. <em>Anno Domini MXXI.</em></p>
+    <div style="margin-top:16px;" class="era-dates">1066 — 1121</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="domesday-inscription">
+      <div class="domesday-latin" id="domesday-text">
+        <span id="dsd-chars"></span>
+      </div>
+      <div class="domesday-translation" id="domesday-trans">
+        "In Halecroft, Ranulf holds one hide of the King. There is land for two ploughs. There are four villagers and
+        two smallholders. Value: twenty shillings."
+        <br><em style="font-size:0.9em; color:#4A3A20;">— Domesday Book, 1086, Worcestershire Folio</em>
+      </div>
+      <hr class="domesday-rule">
+    </div>
+
+    <div class="editorial-note">
+      Brother Eadmer's Chronicle was discovered in the manuscript collection of Worcester Cathedral Priory in 1872.
+      It constitutes the founding document of the Hale family history. The language of the original is Latin;
+      what follows is drawn from the chronicle in Eadmer's own English rendering, together with the documents
+      he preserved. The reader will observe that Eadmer is, throughout, a man of considerable intellectual honesty.
+      He does not invent. Where he is uncertain, he says so. This is rarer than it sounds.
+      <div style="text-align:right; margin-top:10px; font-style:normal; letter-spacing:0.1em; font-size:0.85em;">
+        — A.F., <em>London, November 1884</em>
+      </div>
+    </div>
+
+    <!-- DOCUMENT 1: Eadmer's Preface — with true marginalia -->
+    <div class="document">
+      <div class="doc-label">Document I · The Preface of Brother Eadmer · Anno Domini 1121</div>
+      <div class="parchment-marginal">
+        <!-- LEFT MARGIN — Eadmer's own annotations -->
+        <div class="margin-col">
+          <span class="marginal-note">Sources from divers witnesses. Six occasions with Edwin.</span>
+          <span class="marginal-note">Anno Domini 1121. 55 years since Conquest.</span>
+          <span class="marginal-note">A chronicle that invents is a sermon, not a record.</span>
+          <span class="marginal-note">Memory: the presence of God in time. — August.</span>
+        </div>
+        <!-- MAIN TEXT -->
+        <div class="main-col">
+          <p class="parchment-title rubricated">The Preface of Brother Eadmer</p>
+          <p class="parchment-subtitle">Being an Account of the Sources from which this Chronicle is Drawn</p>
+          <hr class="parchment-rule">
+          <p><span class="hd-dropcap">I</span>n the name of God the Father, and of His Son our Lord Jesus Christ, and of
+            the Holy Spirit, one God in three persons, I Brother Eadmer, a monk of the Cathedral Priory of the Blessed
+            Virgin Mary at Worcester, unworthy servant and poor sinner, set down here what I have gathered, by diligent
+            inquiry and by the testimony of those who saw and heard and did, of the history of the family called de la
+            Hale, who hold their lands at Halecroft in the county of Worcester by the grant of King William the
+            Conqueror and by the subsequent confirmation of his son King William Rufus, and whose present lord, Sir
+            Geoffrey de la Hale, has charged me upon his soul and mine to preserve what is known before it is lost.</p>
+          <p>I write in the year 1121, which is to say in the fifty-fifth year since the coming of the Normans to
+            England, and in the twenty-first year of the reign of our present sovereign lord King Henry, the Conqueror's
+            youngest son. Those who lived through the first years of the Conquest are now old, or dead, or speaking with
+            the uncertain memory of age.</p>
+          <p>The sources from which I have drawn are these: first, such entries as exist in the annals of this house
+            pertaining to events in this county; second, the oral testimony of Edwin the Saxon, who is now past seventy
+            years of age and who was a young man in the household of the thegn Leofric of Halecroft when the Normans
+            came, and who has spoken to me on six separate occasions, with a frankness that I attribute to his age and
+            to his evident conviction that there is no longer anything to fear from the truth; third, a writ of land
+            grant, in Latin, which Sir Geoffrey holds in his charter chest and permitted me to read and to copy; fourth,
+            the testimony of Dame Maud de la Hale, Sir Geoffrey's mother, who is sixty years of age; and fifth, my own
+            observation of the de la Hale family and their tenants over many years of pastoral acquaintance.</p>
+          <p>I have endeavoured to set down what is true, and to mark clearly what is uncertain, and to omit what cannot
+            be verified. A chronicle that invents is not a chronicle but a sermon, and I have had enough experience of
+            sermons to know that they are more satisfying to the preacher than to the congregation.</p>
+          <p>I dedicate this work to the glory of God and to the preservation of memory, which is itself, as the blessed
+            Augustine teaches, a form of the presence of God in time.</p>
+          <div style="text-align:right; margin-top:16px; font-style:italic; font-size:0.88em; color:#5C3A1E;">
+            Brother Eadmer of Worcester<br>
+            The Priory of St Mary, Worcester<br>
+            <span style="color:#8B1A1A;">Written in the month of October, Anno Domini 1121.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <svg class="hd-ink-divider" viewBox="0 0 800 28" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,14 Q100,6 200,14 Q300,22 400,12 Q500,4 600,14 Q700,22 800,10" fill="none" stroke="rgba(139,26,26,0.2)"
+        stroke-width="2.5" stroke-linecap="round" />
+      <path d="M80,14 Q200,20 320,13 Q440,6 560,15 Q680,22 760,11" fill="none" stroke="rgba(185,148,50,0.15)"
+        stroke-width="1.2" stroke-linecap="round" />
+      <circle cx="400" cy="12" r="3" fill="rgba(139,26,26,0.2)" />
+      <circle cx="200" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+      <circle cx="600" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+    </svg>
+
+    <!-- DOCUMENT 2: Chronicle Chapter II — Edwin's Testimony -->
+    <div class="document">
+      <div class="doc-label">Document II · The Chronicle · Chapter II · Anno Domini 1066</div>
+      <div class="parchment">
+        <span class="chapter-number rubricated">II</span>
+        <div class="chapter-title">Of the Battle of Hastings, Being the Account of Edwin the Saxon Who Saw It from the
+          English Side</div>
+        <div class="chapter-date">The fourteenth day of October, Anno Domini 1066</div>
+        <hr class="parchment-rule">
+        <p>What follows is the testimony of Edwin, son of Godwin, formerly of the household of the thegn Leofric of
+          Halecroft, as given by him to Brother Eadmer of Worcester in the Priory of St Mary in the years 1119 and 1120.
+          I have set it down as nearly as possible in his own words, though I have translated from the English tongue
+          into Latin and here back again, and some loss is inevitable in any such passage. I note, for the reader's
+          benefit, that Edwin is a man of remarkable lucidity at his age, and that his account of the battle is
+          consistent, across three separate tellings, in all material particulars.</p>
+        <p style="font-style:italic; color:#5C3A1E;">— Brother Eadmer.</p>
+
+        <div class="scribe-note">
+          ✦ ✦ ✦
+        </div>
+
+        <p>&ldquo;<span class="hd-dropcap">I</span> was seventeen years old in the year the Normans came. My father was
+          a free man, a ceorlisc man as we say, who held two virgates of land from the thegn Leofric at Halecroft, and I
+          was in Leofric's service as a household man, which meant I carried messages and kept accounts and did whatever
+          was asked of me, and when Leofric rode to war I rode with him. This is how I came to be at the great
+          battle.&rdquo;</p>
+        <div class="scribe-note">
+          &ldquo;The battle was on the fourteenth day of October, on a ridge called Senlac, which the English call the
+          hoary apple tree hill. The Normans came up the slope toward us. We had the high ground, which should have been
+          an advantage, and in the morning it was. The Norman knights came up the hill and we held the shield wall and
+          they broke on it like water on a cliff face. I was in the middle of the line with Leofric's men and I could
+          feel the wall through my own shield, the pressure of a thousand men all leaning into it at once, and the
+          weight of the horses and the spearmen coming against it, and for a time the wall held and the Normans fell
+          back down the slope.&rdquo;
+          <br><br>
+          &ldquo;The king died in the late afternoon. I did not see it. I heard it pass down the line like a wave, the
+          word that Harold was dead, and then the line began to come apart, and the dying really began. Leofric took an
+          axe-blow to the shoulder in that last hour and did not die of it then but died of the wound three weeks later,
+          in great pain, which was a worse death than Harold's. I carried him off the field on my back. He was not a
+          light man.&rdquo;
+        </div>
+        <div class="hd-marginal-wrap"><p>&ldquo;The Norman came in the spring of 1067. He came with two other soldiers and a clerk who carried a
+          document, and he rode into the yard at Halecroft <span class="hd-pig" data-era="I" title="🐷">🐷</span> and looked at the house and the fields and the mill and the
+          wood, and my father and the other free men stood in the yard and looked at him, and he looked back at us, and
+          the clerk read the document, which was in Latin and which none of us could understand, and the Norman said
+          something to the clerk and the clerk said to us, in English that was not quite English: 'This man is Ranulf de
+          la Hale. This land is his, by the king's gift. You serve him now.'&rdquo;</p>
+        <div class="hd-marginal">cf. Domesday 1086: Ranulf confirmed. Twelve villeins, three freemen, a mill. — E.V.</div></div>
+        <p>&ldquo;That is how it was done. That is how England changed hands.&rdquo;</p>
+        <div class="scribe-note">
+          <em>[Note by the scribe, Brother Eadmer:]</em> That evening, Edwin told me, his father said: <em>he is a
+            practical man. I do not know yet whether that is better or worse than the other kind. We will find out.</em>
+          My father was right on both counts. — Edwin's testimony, as recorded by Brother Eadmer.
+        </div>
+      </div>
+    </div>
+
+
+    <svg class="hd-ink-divider" viewBox="0 0 800 28" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,14 Q100,6 200,14 Q300,22 400,12 Q500,4 600,14 Q700,22 800,10" fill="none" stroke="rgba(139,26,26,0.2)"
+        stroke-width="2.5" stroke-linecap="round" />
+      <path d="M80,14 Q200,20 320,13 Q440,6 560,15 Q680,22 760,11" fill="none" stroke="rgba(185,148,50,0.15)"
+        stroke-width="1.2" stroke-linecap="round" />
+      <circle cx="400" cy="12" r="3" fill="rgba(139,26,26,0.2)" />
+      <circle cx="200" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+      <circle cx="600" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+    </svg>
+
+    <!-- DOCUMENT 3: The Writ -->
+    <div class="document">
+      <div class="doc-label">Document III · Royal Writ · Issued at Winchester · Anno Domini 1067</div>
+      <div class="latin-writ">
+        <div class="writ-header">Writ of King William I, Granting Lands at Halecroft</div>
+        <div class="writ-subheader">Issued at Winchester, in the year of Our Lord 1067</div>
+        <hr class="writ-rule">
+        <span class="writ-section-label">[In the original Latin:]</span>
+        <div class="writ-latin">
+          <p><em class="hd-latin"
+              data-tr="William, King of the English, to all his faithful men, French and English in Worcestershire, greeting.">Willelmus
+              rex Anglorum omnibus fidelibus suis Francis et Anglis in Wigornscira salutem.</em></p>
+          <p><em class="hd-latin"
+              data-tr="Know that I have given and granted to Ranulf de la Hale, my soldier, for his faithful service.">Sciatis
+              me dedisse et concessisse Ranulfo de Hala, militi meo, pro servitio suo fideli ad Hastingas et alibi,
+              terram que vocatur Halecroft in comitatu Wigorniensi, que fuit Leofric thegni, qui contra me pugnavit et
+              mortuus est.</em></p>
+          <p><em class="hd-latin"
+              data-tr="The said Ranulf shall hold the said land and all its appurtenances in perpetuity.">Tenebit ipse
+              Ranulfus dictam terram et omnes pertinencias suas sibi et heredibus suis de me et heredibus meis per
+              servitium unius militis in perpetuum.</em></p>
+          <p><em>Testibus: Roberto Comite Moritonii. Willelmo Episcopo Londoniensi. Datum apud Wintoniam.</em></p>
+        </div>
+        <hr class="writ-rule">
+        <span class="writ-section-label">[Translation:]</span>
+        <div class="writ-translation">
+          <p>William, King of the English, to all his faithful men, French and English, in Worcestershire, greeting.</p>
+          <p>Know that I have given and granted to Ranulf de la Hale, my soldier, for his faithful service at Hastings
+            and elsewhere, the land called Halecroft in the county of Worcester, which was the land of the thegn
+            Leofric, who fought against me and is dead.</p>
+          <p>The said Ranulf shall hold the said land and all its appurtenances, to himself and his heirs, from me and
+            my heirs, by the service of one knight, in perpetuity.</p>
+          <p>Witnessed by: Robert, Count of Mortain. William, Bishop of London. Given at Winchester.</p>
+        </div>
+        <hr class="writ-rule">
+        <div class="scribe-note" style="background: rgba(255,255,255,0.3);">
+          <em>[Note by the scribe, Brother Eadmer:]</em> This document is authentic, as I judge by the form of the
+          Latin, the witnesses named, and the condition of the seal, which though broken retains the impression of King
+          William's equestrian figure. The grant is made &ldquo;for faithful service at Hastings and elsewhere&rdquo; —
+          the <em>elsewhere</em> is not specified, but Dame Maud tells me her father-in-law Ranulf said it referred to
+          the harrying of certain villages in Kent that resisted the Norman advance in the weeks after Hastings. He did
+          not speak of this with pride, she said, but he did not speak of it with shame either. He spoke of it as a
+          soldier speaks of what he has done — which is to say, as something that happened, and that produced a
+          consequence, and that is now over. — <em>Brother Eadmer.</em>
+        </div>
+        <!-- WAX SEAL -->
+        <div class="wax-seal-wrap">
+          <span
+            style="font-style:italic; font-size:0.75em; color:#5A4020; margin-right:14px; vertical-align:middle;">[Seal
+            of William I, King of the English]</span>
+          <div class="wax-seal" id="waxSeal" title="Open the seal" onclick="openPortrait()" role="button" tabindex="0"
+            aria-label="Seal of King William I — press to open portrait">
+            <span class="wax-seal-text">W · R</span>
+          </div>
+          <span class="wax-seal-hint">Press the seal</span>
+        </div>
+      </div>
+    </div>
+
+
+    <svg class="hd-ink-divider" viewBox="0 0 800 28" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,14 Q100,6 200,14 Q300,22 400,12 Q500,4 600,14 Q700,22 800,10" fill="none" stroke="rgba(139,26,26,0.2)"
+        stroke-width="2.5" stroke-linecap="round" />
+      <path d="M80,14 Q200,20 320,13 Q440,6 560,15 Q680,22 760,11" fill="none" stroke="rgba(185,148,50,0.15)"
+        stroke-width="1.2" stroke-linecap="round" />
+      <circle cx="400" cy="12" r="3" fill="rgba(139,26,26,0.2)" />
+      <circle cx="200" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+      <circle cx="600" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+    </svg>
+
+    <!-- DOCUMENT 4: Plea Rolls -->
+    <div class="document">
+      <div class="doc-label">Document IV · Worcestershire Plea Rolls · 1097–1121</div>
+      <div class="manorial-rolls">
+        <div class="rolls-header">From the Worcestershire Plea Rolls, entries concerning the de la Hale family, years
+          1097–1121</div>
+        <div class="rolls-entry">
+          <span class="rolls-year">1097.</span> William de la Hale appears before the sheriff's court to confirm his
+          tenure of Halecroft following his father's retirement. The tenure is confirmed. He pays the relief — the
+          inheritance fee — of ten shillings. Noted as a man who speaks good French and better English and who keeps his
+          court rolls in correct Latin.
+        </div>
+        <div class="rolls-entry">
+          <span class="rolls-year">1103.</span> Leofric, younger son of the late Ranulf de la Hale, brings a complaint
+          against a neighbour to the east who has encroached upon the boundary of his woodland holding. The boundary is
+          walked by the county surveyor. The neighbour is found to have encroached by twenty yards. He is required to
+          remove his fence and pay a small penalty. Leofric is recorded as satisfied with the judgment.
+        </div>
+        <div class="rolls-entry">
+          <span class="rolls-year">1115.</span> Geoffrey de la Hale succeeds to Halecroft on the death of his father
+          William. He does homage before the sheriff. He is noted as a young man of about twenty-two years, well-spoken
+          in both languages, who has already demonstrated competence in the management of his estate. His tenure is
+          confirmed without dispute.
+        </div>
+        <div class="rolls-entry">
+          <span class="rolls-year">1119.</span> Geoffrey de la Hale commissions a monk of the Cathedral Priory to
+          compile the history of his family for the preservation of the record. This is noted as an unusual act for a
+          man of his station, most such compilations being reserved for families of greater eminence. The prior of
+          Worcester approves the commission, noting that the preservation of local history is a work of piety and
+          scholarship equally.
+        </div>
+      </div>
+    </div>
+
+
+    <svg class="hd-ink-divider" viewBox="0 0 800 28" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,14 Q100,6 200,14 Q300,22 400,12 Q500,4 600,14 Q700,22 800,10" fill="none" stroke="rgba(139,26,26,0.2)"
+        stroke-width="2.5" stroke-linecap="round" />
+      <path d="M80,14 Q200,20 320,13 Q440,6 560,15 Q680,22 760,11" fill="none" stroke="rgba(185,148,50,0.15)"
+        stroke-width="1.2" stroke-linecap="round" />
+      <circle cx="400" cy="12" r="3" fill="rgba(139,26,26,0.2)" />
+      <circle cx="200" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+      <circle cx="600" cy="14" r="2" fill="rgba(185,148,50,0.22)" />
+    </svg>
+
+    <!-- DOCUMENT 5: Ranulf's Death -->
+    <div class="document">
+      <div class="doc-label">Document V · Chronicle · Final Chapter · Anno Domini 1098–1121</div>
+      <div class="parchment">
+        <p class="parchment-title rubricated">Of What Halecroft Became, and of the Long Work of a Name</p>
+        <p class="parchment-subtitle">Concluded by Brother Eadmer, October 1121</p>
+        <hr class="parchment-rule">
+        <p><span class="hd-dropcap">I</span>n the summer of 1098, the year before his death, Ranulf did something that
+          Edwin did not understand until later. He walked, alone, from Halecroft to the church of St Mary at Worcester,
+          which was a journey of approximately seven miles, and presented himself at the door of this priory and asked
+          to speak with a priest.</p>
+
+        <div class="hd-confession-trigger" id="hdConfTrigger" onclick="hdPlayConf()">
+          <span class="cf-icon">🕯</span>
+          <span>
+            <span class="cf-idle">Hear the confession at Worcester &nbsp;·&nbsp; ♪ Play</span>
+            <span class="cf-playing">Playing — Ranulf at Worcester Priory, 1098 ·&nbsp; ♪</span>
+          </span>
+        </div>
+        <audio id="hdConfAudio" src="audio/confession.mp3" preload="none"></audio>
+
+        <p>Ranulf told the monk: I have held land in this county for thirty years that I took in a war. I have tried to
+          hold it well. I am going to die and I want to know whether what I have done is, in the reckoning of the
+          Church, sufficient, or whether there is something else required of me. The monk asked him: have you confessed
+          your sins? He said: regularly, to my parish priest, but I am not speaking of sins. I am speaking of the weight
+          of a transaction. The land was taken. I have held it. Is the holding a sufficient answer to the taking? The
+          monk said: that is a question for God's judgment, not mine. Ranulf said: I thought so. Then can you at least
+          tell me what form the question should take in prayer, so that I am asking God the right thing? The monk
+          thought for a considerable time and then said: <em>ask for justice. Not mercy — any man can ask for mercy. Ask
+            for justice, and mean it, which is the harder ask, because justice may not find for you.</em> Ranulf said:
+          yes. That is the right question. He thanked the monk, walked home, and was dead within the year.</p>
+        <p>Whether that is sufficient answer to the question he asked on his deathbed — <em>is that sufficient?</em> — I
+          do not know. The question does not admit of a final answer, and I think Ranulf knew this before he asked it.
+          He asked it anyway, because the asking is what a man of conscience does, even when the answer is withheld.</p>
+        <p>I have finished this chronicle on the fourth day of October, 1121, which is the anniversary, within a day, of
+          the battle. Fifty-five years is a long time in a human life and a short time in the life of a family. The mill
+          is turning. The fields are in their autumn colours. The yew in the churchyard is exactly as it has always
+          been.</p>
+        <p>I commend the souls of all those named in these pages to the mercy of God, and this chronicle to the care of
+          whoever comes after.</p>
+      </div>
+    </div>
+
+    <div class="colophon">
+      <div class="colophon-latin"><em>EXPLICIT</em><br>Hic finit Chronica Domus de la Hale de Wigornscira.</div>
+      <div class="colophon-english">&ldquo;Here ends the Chronicle of the House of de la Hale of Worcestershire.&rdquo;
+      </div>
+    </div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-II.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume II · The Pestilence</div>
+        <div class="hd-xref-card-name">Matilda of Halecroft</div>
+        <div class="hd-xref-card-reason">Ranulf's descendants hold the Hale through the Black Death. A free woman testifies to save the line in 1351.</div>
+      </a>
+      <a href="era-VI.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VI · The Regency</div>
+        <div class="hd-xref-card-name">Augusta Hale</div>
+        <div class="hd-xref-card-reason">Like Aelswith, Augusta manages an estate in her own name but not her own title — eight centuries later, the same constraint.</div>
+      </a>
+      <a href="era-X.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume X · The Contemporary</div>
+        <div class="hd-xref-card-name">Eleanor Voss</div>
+        <div class="hd-xref-card-reason">The medievalist who finally recovers Matilda's letter traces everything back to the yard at Halecroft, 1066.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      The Domesday Survey of 1086 confirmed Ranulf's tenure. The Hale passed intact to his sons. Within two generations the family had learned enough French to manage the courts, enough Latin to keep their records, and enough English to retain the labour of the men who had always worked the land. The Norman and the Saxon did not reconcile — they simply continued, side by side, until the distinction ceased to be practical. By 1200 the Hales were a family of Worcestershire, not of conquest. Continue with <a href="era-II.html">Vol. II: The House of Hale →</a>
+    </div>
+  </div>
+
+  </div><!-- era-content -->
+
+  <nav class="era-nav" style="border-top: 1px solid #2A1A0A;">
+    <a href="index.html">← Archive Home</a>
+    <span class="vol-marker">END OF VOLUME I</span>
+    <a href="era-II.html">Vol. II: The House of Hale →</a>
+  </nav>
+
+  <script>
+    (function () {
+      var s = document.createElement("style");
+      s.textContent = ".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+      document.head.appendChild(s);
+      var o = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("doc-in"); o.unobserve(e.target); } }); }, { threshold: 0.07 });
+      document.querySelectorAll(".document").forEach(function (el) { el.classList.add("doc-reveal"); o.observe(el); });
+    })();
+
+    // Domesday Inscription Animation
+    (function () {
+      var container = document.getElementById('dsd-chars');
+      var block = document.getElementById('domesday-text');
+      var trans = document.getElementById('domesday-trans');
+      if (!container || !block) return;
+      var text = 'HALECROFTÆ · IN COMITATU VIGORNIÆ · RANULFUS TENET · TERRA EST';
+      var spans = [];
+      text.split('').forEach(function (c) {
+        var s = document.createElement('span');
+        s.textContent = c;
+        container.appendChild(s);
+        spans.push(s);
+      });
+      block.classList.add('revealed');
+      var started = false;
+      function reveal() {
+        spans.forEach(function (s, i) {
+          setTimeout(function () {
+            s.classList.add('char-in');
+            if (i === spans.length - 1) {
+              setTimeout(function () {
+                trans.classList.add('visible');
+              }, 600);
+            }
+          }, i * 55);
+        });
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !started) {
+          started = true;
+          setTimeout(reveal, 600);
+        }
+      }, { threshold: 0.4 });
+      obs.observe(block.parentElement);
+    })();
+  </script>
+
+  <script>
+    (function () {
+      // Scroll reveal for documents
+      var revealEls = document.querySelectorAll(
+        '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+        '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+        '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+        '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+        '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+        '.closing-section, .nota-bene, .royal-proclamation'
+      );
+      revealEls.forEach(function (el) { el.classList.add('reveal'); });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     VOL. I INJECTION — insert before closing </div><!-- era-content -->
+     Contains: 3 recovered documents + Royal Seal interactive object
+═══════════════════════════════════════════════════════════════════ -->
+
+<div class="hd-section-rule">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- RECOVERED DOCUMENT 1: Gaston's Letter, c.1085 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh I, item 24a · Private Letter · c.1085</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Gaston, of the Household of Ranulf de la Hale, to Arnulf de Boissy, Hereford</p>
+    <p class="parchment-subtitle">Written in Norman French, c.1085 · Translation by the editors · Original at the Bodleian</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: This letter was discovered in the de Boissy family papers donated to the Hereford Cathedral Archive in 1923. It was not connected to the Hale collection until Eleanor Voss identified the correspondent in 2024. It is the only surviving document in Gaston's hand, and the only account of the Halecroft household from a Norman perspective.</div>
+    <p><span class="hd-dropcap">A</span>rnulf, my friend, you ask how I find myself in England after twenty years, and I shall tell you plainly, because you are the only man in this country who was at the crossing with me and who therefore understands what it means to have stayed.</p>
+    <p>I live in Worcestershire, on the estate of Ranulf de la Hale, who was at the crossing with us both and who received land here by the King's grant and who has held it now these eighteen years. I hold a portion of his western pasture in exchange for my service, which arrangement suits us both, he being a man who keeps his word in transactions even when the transaction is informal and the word was given on a boat in the dark crossing the sea.</p>
+    <p>He has changed. I say this not as a criticism; I have changed also, though in fewer directions. He came here a man of appetite — you remember him, the third son, the one who would not wait — and he is still that man, but the appetite has found its object and settled. The land is what he wanted. He has the land.</p>
+    <p>The wife. You will ask about the wife. She was an English widow when he married her, which his Norman neighbours considered a step downward, and she has been the making of this household, which his Norman neighbours do not consider at all because they are not paying attention. Her name is Aelswith. She speaks our French better than most of the Normans in this county and she speaks English as though the language were a room she has lived in all her life, which it is. She knows everything about this estate — the fields, the tenants, the disputes, the mill — and she has given Ranulf the knowledge as though it were a gift rather than a transaction, which is a quality I have not seen in any other person in my life.</p>
+    <p>Their children speak both languages without choosing between them. The eldest boy writes Latin with a peculiarity that the Worcester monk describes as producing sentences that have the logic of French grammar and the word-order of English held together by Latin conjunctions. I find this accurate and not uncharming.</p>
+    <p>I am well. I am old. I did not expect to be old in England but I did not expect most of what has happened to me, and England is a better place than the crossing suggested. Tell me what is happening in Hereford. Tell me whether the mill at Arnulf is still run by that impossible man.</p>
+    <p><em>Your friend who has been here longer than he intended. Gaston. Written at Halecroft.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Worcester Priory Annals, winter 1073 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh I, item 8b · Worcester Priory Annals · Winter 1073</div>
+  <div class="parchment-marginal">
+    <div class="margin-col">
+      <div class="marginal-note" style="color:#5C3A1E; font-size:0.82em; line-height:1.6;">
+        In the hand of<br>Brother Aldric,<br>Infirmarian<br><br>Added privately<br>beside the<br>formal entry
+      </div>
+    </div>
+    <div class="main-col" style="padding:40px 40px 40px 28px;">
+      <p class="parchment-title rubricated">Marginal Entry — Worcester Priory Annals</p>
+      <p class="parchment-subtitle">In the hand of Brother Aldric · A note beside the formal burial record</p>
+      <hr class="parchment-rule">
+      <div class="recovered-archival" style="margin-bottom:18px;">Archival note: The formal entry records only: <em>This winter, one called the Beekeeper, free woman of Halecroft, of great age, was buried at St Peter's church by Father Cynewulf. Ranulf de la Hale attended.</em> The marginal note below, in a different hand, is what follows.</div>
+      <p>She knew the bees before the Conquest. She knew the bees before Leofric, who held the land before the Norman came. She knew the bees, some say, before anyone now living can say when her knowing began. Father Cynewulf told me she kept three hives at the edge of the wood where the spring rises, and that the hives will go on, and that someone will keep them, because the hives at Halecroft have always been kept and do not require a particular person to keep them, only a person.</p>
+      <!-- The spring is referred to in all later family documents as "the well." It does not appear in the formal estate records. See: the-well.html -->
+      <p style="font-size:0.8em; font-style:italic; color:#7A6040; margin-top:8px; padding-left:14px; border-left:2px solid rgba(139,100,40,0.22);">Editors' note: The spring mentioned here is referred to in later Hale family correspondence only as <em>the well</em>. No formal survey of it appears anywhere in the estate papers.</p>
+      <p>She did not speak much in the last years. She spoke to the bees. This is the practice of beekeepers: you tell the hives what happens in the village, the births and the deaths and the changes of lord, so that they know what world they are sustaining. She told them about the Norman. She told them when Aelswith married him. She told them when the children were born. She told them everything, and the bees listened, and the honey was good.</p>
+      <p><em>Ranulf de la Hale attended the burial. He stood at the back of the church and did not speak to anyone and left before the earth was filled. I do not know what that means. I have been thinking about it since.</em></p>
+      <p style="font-size:0.88em; color:#5C3A1E;">— Brother Aldric, this winter, in the year of Our Lord 1073.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 3: Aelswith's marginal note, c.1092 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh I, item 24c · Marginal Annotation · c.1092</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Marginal Annotation in a Household Ledger</p>
+    <p class="parchment-subtitle">Worcester Cathedral Priory Account Ledger · In a female hand identified as Aelswith's · c.1092</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The formal entry reads: <em>Received from Ranulf de la Hale of Halecroft, two silver candlesticks of Winchester work, given in memory of his wife Aelswith, died 1079.</em> The annotation below, in a different hand and a different ink, was written — the editors believe — before Aelswith's death, not after. She wrote it while she could still see him from where she sat.</div>
+    <p><span class="hd-dropcap">T</span>hese candlesticks were his finest things. He said so to me the winter before we married. I asked him why he had bought them if he did not know what they were for. He said: I knew they were for something. I did not know what. I find this is true of most of the things worth having.</p>
+    <p>He was a man who bought things before he knew their purpose, which is a kind of faith. He bought the land before he knew how to hold it. He married me before he knew how to ask for what he needed. He planted the wheat without knowing whose hunger it was for. I did not know this about him until the candlesticks. After that I knew quite a lot.</p>
+    <p>He kept them on the shelf above the fire for nine years. I looked at them every evening. I think he looked at them too, though he never said so. When I was dying he sat beside me for three days without sleeping and when it was over he went into the yard and stood for a long time. Then he gave the candlesticks to the church.</p>
+    <p>I would have liked him to keep them. But I think he could not look at them anymore, and giving them to the church was the closest he could come to giving them to me in a form that would last.</p>
+    <p>He was a good man. He was not a good man at the beginning, and he was always trying, which is better than many. He is still trying. I can see him from here.</p>
+    <p><em>Written by the hand of one who was his wife. Halecroft. The year of Our Lord 1092.</em></p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Royal Seal of William I -->
+<div class="obj-header">Archive Object · Vol. I · 1067</div>
+<div class="interactive-obj document" id="obj-I">
+  <div class="obj-lid" id="obj-lid-I" onclick="toggleObj('I')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="12" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M10 14 Q14 8 18 14 Q14 20 10 14Z" stroke="#C8A83C" stroke-width="1" fill="rgba(200,168,60,0.08)"/>
+        <line x1="8" y1="6" x2="20" y2="22" stroke="#8B1A1A" stroke-width="1.2" stroke-dasharray="2,1"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Royal Seal of William I
+      <span>A broken wax seal impression · Winchester, 1067 · Press to examine</span>
+    </div>
+    <svg id="obj-chevron-I" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-I">
+    <div class="obj-inner">
+      <!-- Layer 1 -->
+      <div class="obj-doc">
+        <p>A broken wax seal impression, approximately 8cm diameter, showing the equestrian figure of King William I on horseback, carrying a sword and pennant. The seal is cracked — a single clean fracture running from the top through the rider's head to the lower edge — consistent with the crack noted in Brother Eadmer's examination of 1119.</p>
+        <p>The wax is dark reddish-brown, aged almost to black at the edges. Mounted behind glass in a small dark frame. The equestrian figure remains clear despite the crack: the king rides left, sword raised, pennant extending behind him. The reverse impression shows the legend: <em>WILLELMVS REX ANGLOR</em>.</p>
+      </div>
+      <div class="obj-note">
+        This seal granted Ranulf de la Hale one hide of land at Halecroft. The land was not the king's to give — it had belonged to the thegn Leofric, who fought against William and died at Hastings. The grant was legal. These two facts coexisted for nine centuries without resolving each other.
+      </div>
+
+      <!-- Layer 2: unlocks when all 10 volumes visited -->
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · Available to readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>Brother Eadmer examined this seal in 1119 when compiling his chronicle. His note: <em>the seal is authentic, as I judge by the form of the Latin, the witnesses named, and the condition of the seal, which though broken retains the impression of King William's equestrian figure.</em></p>
+          <p>The crack was already in it when Eadmer held it. It had been cracked, he implies, since before the document reached the Hale family. The land changed hands under a seal that was already broken. The grant was valid. The seal was broken. Both things were true from the beginning.</p>
+        </div>
+        <!-- Easter Egg -->
+        <div class="obj-egg">
+          <span class="obj-egg-label">Beneath the frame · Latin note in Eadmer's hand</span>
+          <em>sigillum fractum sed verum</em> — The broken seal is true.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+  <nav class="era-seq-nav">
+    <a href="index.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Archive</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-II.html" class="esn-next">
+      <span class="esn-label">Vol. II · Plague</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <!-- ── FLOATING HOME CREST ─────────────────────────────── -->
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5"
+        stroke-linejoin="round" />
+      <path d="M10 21v-5h4v5" fill="rgba(200,168,60,0.12)" stroke="none" />
+    </svg>
+  </a>
+
+  <!-- ── PORTRAIT LIGHTBOX ─────────────────────────────────── -->
+  <div id="portraitLb" class="portrait-lb" role="dialog" aria-modal="true" aria-label="Portrait of Ranulf de la Hale">
+    <div class="portrait-inner">
+      <button class="portrait-close" onclick="closePortrait()" aria-label="Close portrait">✕</button>
+
+      <img src="portraits/ranulf.png" class="ranulf-img"
+        alt="Ranulf de la Hale — illuminated manuscript portrait, c.1087">
+
+      <p class="portrait-quote">
+        «&thinsp;Ces terres sont miennes par la grâce du roi Guillaume. J'ai combattu à Hastings. J'ai tenu Halecroft
+        trente ans. Mes fils le tiendront après moi — jusqu'à la fin des temps.&thinsp;»
+      </p>
+      <p class="portrait-attribution">Norman French · circa 1087 · transcribed by Brother Eadmer</p>
+
+      <div class="era-voice-player" id="voicePlayer">
+        <div class="evp-label">AVDI VOCEM</div>
+        <audio id="voiceAudio" src="audio/ranulf.mp3" preload="none"></audio>
+        <button class="evp-play" id="evpPlay" onclick="toggleVoice()">✦ Play</button>
+        <div class="evp-progress">
+          <div class="evp-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-time" id="evpTime">0:00</div>
+      </div>
+
+      <button class="portrait-dismiss-btn" onclick="closePortrait()">Close — Return to the Chronicle</button>
+    </div>
+  </div>
+
+  <script>
+    // ── PORTRAIT LIGHTBOX ──────────────────────────────────────
+    function openPortrait() {
+      document.getElementById('portraitLb').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePortrait() {
+      document.getElementById('portraitLb').classList.remove('open');
+      document.body.style.overflow = '';
+      var audio = document.getElementById('voiceAudio');
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      var btn = document.getElementById('evpPlay');
+      if (btn) btn.textContent = '✦ Play';
+    }
+    // Close on backdrop
+    document.getElementById('portraitLb').addEventListener('click', function (e) {
+      if (e.target === this) closePortrait();
+    });
+    // Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePortrait();
+      if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.id === 'waxSeal') {
+        openPortrait();
+      }
+    });
+
+    // ── ERA I VOICE PLAYER ──────────────────────────────────────
+    (function () {
+      var audio = document.getElementById('voiceAudio');
+      var btn = document.getElementById('evpPlay');
+      var bar = document.getElementById('evpBar');
+      var timeEl = document.getElementById('evpTime');
+
+      window.toggleVoice = function () {
+        if (audio.paused) {
+          audio.play();
+          btn.textContent = '❚❚ Playing...';
+        } else {
+          audio.pause();
+          btn.textContent = '✦ Play';
+        }
+      };
+
+      audio.addEventListener('timeupdate', function () {
+        if (audio.duration) {
+          var pct = (audio.currentTime / audio.duration) * 100;
+          bar.style.width = pct + '%';
+          var m = Math.floor(audio.currentTime / 60);
+          var s = Math.floor(audio.currentTime % 60);
+          timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        }
+      });
+
+      audio.addEventListener('ended', function () {
+        btn.textContent = '✦ Play again';
+        bar.style.width = '100%';
+      });
+    })();
+
+    // ── AMBIENT SOUND (era-I) ─────────────────────────
+    var normanAudio = null;
+    var normanOn = false;
+
+    function initNormanSound() {
+      if (!normanAudio) {
+        normanAudio = new Audio('sounds/era-I-ambient.mp3');
+        normanAudio.loop = true;
+        normanAudio.volume = 0.35;
+      }
+    }
+
+    function toggleNormanSound() {
+      var btn = document.getElementById('normanSoundBtn');
+      if (!normanOn) {
+        initNormanSound();
+        normanAudio.play();
+        normanOn = true;
+        btn.textContent = '♪ Silence the priory';
+        btn.classList.add('on');
+      } else {
+        if (normanAudio) normanAudio.pause();
+        normanOn = false;
+        btn.textContent = '♪ Hear the priory';
+        btn.classList.remove('on');
+      }
+    }
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('docZoomOverlay');
+      var inner = document.getElementById('docZoomInner');
+      var zoomTargets = document.querySelectorAll(
+        '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+        '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+        '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+        '.blitz, .memo, .email-block'
+      );
+      zoomTargets.forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          // Don't trigger if clicking a link/button inside
+          if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+          inner.innerHTML = '';
+          var clone = el.cloneNode(true);
+          clone.style.cursor = 'default';
+          inner.appendChild(clone);
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+          // Re-run any click handlers on cloned elements
+          clone.querySelectorAll('.redacted').forEach(function (r) {
+            r.addEventListener('click', function () { this.classList.toggle('revealed'); });
+          });
+        });
+      });
+      window.closeDocZoom = function (e, force) {
+        if (force || (e && e.target === overlay)) {
+          overlay.classList.remove('open');
+          document.body.style.overflow = '';
+          setTimeout(function () { inner.innerHTML = ''; }, 300);
+        }
+      };
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeDocZoom(null, true);
+      });
+    })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+  <script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:72px;right:75px" title=""><span class="hd-cipher">P</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+
+</html>

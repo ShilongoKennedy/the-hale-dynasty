@@ -1,0 +1,878 @@
+/* THE HALE DYNASTY — features.css */
+
+/* ══ CREST ON ERA HEADERS ═══════════════════════════════════ */
+.era-crest-wrap {
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+  filter:drop-shadow(0 0 18px rgba(100,60,20,0.2));
+}
+.era-crest-img {
+  width:clamp(110px,14vw,170px);
+  height:auto;
+  display:block;
+  -webkit-mask-image:radial-gradient(ellipse 72% 78% at center, black 28%, transparent 100%);
+  mask-image:radial-gradient(ellipse 72% 78% at center, black 28%, transparent 100%);
+}
+
+/* ══ TORN / BURNED EDGES PER ERA ════════════════════════════ */
+
+/* All era headers: relative for pseudo-elements */
+[data-era] .era-header { position:relative; overflow:visible; }
+
+/* Era I — Norman: rough torn bottom edge */
+[data-era="i"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-13px; left:0; right:0;
+  height:14px;
+  background:#F5EDD6;
+  clip-path:polygon(0 0,2% 100%,5% 20%,8% 90%,11% 10%,14% 80%,17% 35%,20% 95%,23% 15%,26% 75%,29% 40%,32% 88%,35% 18%,38% 72%,41% 42%,44% 92%,47% 22%,50% 68%,53% 38%,56% 85%,59% 18%,62% 72%,65% 32%,68% 88%,71% 15%,74% 68%,77% 42%,80% 90%,83% 28%,86% 78%,89% 22%,92% 68%,95% 38%,98% 82%,100% 0,100% 0);
+  z-index:2;
+}
+
+/* Era II — Plague: scorched burn glow on header */
+[data-era="ii"] .era-header {
+  box-shadow:
+    inset 0 -4px 22px rgba(180,55,10,0.22),
+    inset 4px 0 18px rgba(160,40,8,0.1),
+    inset -4px 0 18px rgba(160,40,8,0.1);
+}
+[data-era="ii"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-2px; left:0; right:0;
+  height:4px;
+  background:linear-gradient(to right,
+    transparent 0%,
+    rgba(200,80,15,0.35) 15%,
+    rgba(220,100,20,0.5) 30%,
+    rgba(190,70,12,0.4) 50%,
+    rgba(215,95,18,0.45) 70%,
+    rgba(200,80,15,0.3) 85%,
+    transparent 100%);
+  filter:blur(1px);
+  z-index:2;
+}
+
+/* Era IV — Civil War: battle-scarred angular slash across corner */
+[data-era="iv"] .era-header::before {
+  content:'';
+  position:absolute;
+  top:0; right:0;
+  width:60px; height:60px;
+  background:linear-gradient(135deg,
+    transparent 48%,
+    rgba(110,20,20,0.18) 49%,
+    rgba(110,20,20,0.22) 51%,
+    transparent 52%);
+  z-index:3;
+  pointer-events:none;
+}
+[data-era="iv"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-2px; left:0; right:0;
+  height:3px;
+  background:linear-gradient(to right,
+    rgba(28,46,74,0.6) 0%,
+    rgba(110,20,24,0.5) 30%,
+    rgba(28,46,74,0.55) 65%,
+    rgba(110,20,24,0.45) 100%);
+  z-index:2;
+}
+
+/* Era VI — Regency: elegant scalloped lace border */
+[data-era="vi"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-8px; left:10%; right:10%;
+  height:9px;
+  background:#FAF4E4;
+  clip-path:polygon(
+    0 0,2% 100%,4% 0,6% 100%,8% 0,10% 100%,12% 0,14% 100%,
+    16% 0,18% 100%,20% 0,22% 100%,24% 0,26% 100%,28% 0,30% 100%,
+    32% 0,34% 100%,36% 0,38% 100%,40% 0,42% 100%,44% 0,46% 100%,
+    48% 0,50% 100%,52% 0,54% 100%,56% 0,58% 100%,60% 0,62% 100%,
+    64% 0,66% 100%,68% 0,70% 100%,72% 0,74% 100%,76% 0,78% 100%,
+    80% 0,82% 100%,84% 0,86% 100%,88% 0,90% 100%,92% 0,94% 100%,
+    96% 0,98% 100%,100% 0,100% 0);
+  z-index:2;
+}
+
+/* Era VII — Victorian: heavy industrial serrated edge */
+[data-era="vii"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-10px; left:0; right:0;
+  height:11px;
+  background:#EDE8DC;
+  clip-path:polygon(
+    0 0,2.5% 100%,5% 0,7.5% 100%,10% 0,12.5% 100%,15% 0,17.5% 100%,
+    20% 0,22.5% 100%,25% 0,27.5% 100%,30% 0,32.5% 100%,35% 0,37.5% 100%,
+    40% 0,42.5% 100%,45% 0,47.5% 100%,50% 0,52.5% 100%,55% 0,57.5% 100%,
+    60% 0,62.5% 100%,65% 0,67.5% 100%,70% 0,72.5% 100%,75% 0,77.5% 100%,
+    80% 0,82.5% 100%,85% 0,87.5% 100%,90% 0,92.5% 100%,95% 0,97.5% 100%,100% 0);
+  z-index:2;
+}
+
+/* Era IX — WWII: blast-frayed ragged tear with ember glow */
+[data-era="ix"] .era-header {
+  box-shadow:inset 0 -6px 28px rgba(20,30,50,0.2);
+}
+[data-era="ix"] .era-header::after {
+  content:'';
+  position:absolute;
+  bottom:-14px; left:0; right:0;
+  height:15px;
+  background:#E4E8EE;
+  clip-path:polygon(
+    0 0,1% 60%,3% 10%,5% 80%,7% 30%,10% 100%,13% 20%,15% 75%,
+    17% 40%,19% 90%,21% 15%,24% 65%,26% 35%,28% 85%,31% 10%,33% 70%,
+    35% 45%,38% 95%,40% 20%,42% 60%,45% 30%,47% 80%,49% 15%,52% 70%,
+    54% 40%,56% 88%,58% 18%,61% 62%,63% 35%,65% 82%,68% 12%,70% 58%,
+    72% 38%,74% 85%,77% 22%,79% 65%,81% 42%,83% 90%,86% 15%,88% 55%,
+    90% 35%,92% 78%,95% 20%,97% 62%,99% 38%,100% 0,100% 0);
+  z-index:2;
+}
+
+/* ══ CIPHER GLYPH POSITIONING ═══════════════════════════════ */
+.hd-cipher-wrap {
+  position:fixed;   /* stays in viewport corner, doesn't scroll */
+  z-index:5;
+  line-height:1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INTERACTIVE OBJECT SYSTEM — shared across all era pages
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── INTERACTIVE OBJECT WRAPPER ─────────────────────────────────── */
+.interactive-obj {
+  margin: 60px 0;
+  border: 1px solid rgba(168,144,112,0.35);
+  background: #F2EAD5;
+  position: relative;
+}
+
+.interactive-obj::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(139,100,40,0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── OBJECT LID (clickable trigger) ─────────────────────────────── */
+.obj-lid {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 24px;
+  cursor: pointer;
+  background: rgba(58,42,24,0.04);
+  border-bottom: 1px solid rgba(168,144,112,0);
+  transition: background 0.2s, border-color 0.3s;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+}
+
+.obj-lid:hover {
+  background: rgba(58,42,24,0.07);
+}
+
+.obj-lid.obj-lid-opened {
+  border-bottom-color: rgba(168,144,112,0.3);
+}
+
+.obj-lid-icon {
+  flex-shrink: 0;
+  color: #C8A83C;
+  opacity: 0.8;
+}
+
+.obj-lid-text {
+  flex: 1;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4A3A20;
+}
+
+.obj-lid-text span {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 1.1em;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #3B2A1A;
+  margin-top: 3px;
+}
+
+.obj-chevron {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: #8A7A5A;
+}
+
+/* ── OBJECT CONTENT (hidden / shown) ────────────────────────────── */
+.obj-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  z-index: 1;
+}
+
+.obj-content.obj-open {
+  max-height: 2400px;
+}
+
+.obj-inner {
+  padding: 28px 28px 32px;
+  border-top: 1px solid rgba(168,144,112,0.3);
+}
+
+/* ── OBJECT DOCUMENT ────────────────────────────────────────────── */
+.obj-doc {
+  font-size: 0.92em;
+  line-height: 1.85;
+  color: #3B2A1A;
+  margin-bottom: 20px;
+}
+
+.obj-doc p { margin-bottom: 0.9em; }
+.obj-doc p:last-child { margin-bottom: 0; }
+
+.obj-note {
+  margin-top: 18px;
+  padding: 12px 16px;
+  background: rgba(139,26,26,0.04);
+  border-left: 3px solid #8B1A1A;
+  font-style: italic;
+  font-size: 0.88em;
+  color: #5C3A1E;
+  line-height: 1.7;
+}
+
+/* ── LAYER 2 (hidden until all 10 volumes visited) ──────────────── */
+.obj-layer2 {
+  display: none;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px dashed rgba(168,144,112,0.4);
+  opacity: 0;
+  transition: opacity 0.6s ease 0.2s;
+}
+
+.obj-layer2-active.obj-layer2,
+.obj-layer2.obj-layer2-active {
+  display: block;
+  opacity: 1;
+}
+
+.obj-layer2-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.68em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8B6914;
+  margin-bottom: 14px;
+}
+
+/* ── EASTER EGG ─────────────────────────────────────────────────── */
+.obj-egg {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: rgba(139,100,20,0.06);
+  border: 1px solid rgba(139,100,20,0.2);
+  font-size: 0.85em;
+  color: #4A3010;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.obj-egg-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8B6914;
+  font-style: normal;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ── OBJECT HEADER (vol designation) ───────────────────────────── */
+.obj-header {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.25em;
+  color: #8B6914;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ── RECOVERED DOCUMENT BLOCK ───────────────────────────────────── */
+.recovered-doc {
+  margin: 50px 0;
+}
+
+.recovered-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.25em;
+  color: #8B1A1A;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.recovered-archival {
+  background: rgba(139,26,26,0.05);
+  border-left: 3px solid rgba(139,26,26,0.3);
+  padding: 12px 16px;
+  font-style: italic;
+  font-size: 0.88em;
+  color: #5C3A1E;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ── SECTION DIVIDER ────────────────────────────────────────────── */
+.hd-section-rule {
+  text-align: center;
+  color: rgba(139,100,40,0.3);
+  font-size: 1.2em;
+  letter-spacing: 0.4em;
+  margin: 50px 0;
+  user-select: none;
+}
+
+/* ── COMPLETION NAV ─────────────────────────────────────────────── */
+#secret-nav-link {
+  display: none;
+}
+
+/* ── PRINT OVERRIDES ────────────────────────────────────────────── */
+@media print {
+  .interactive-obj, .obj-layer2, .obj-egg { display: none !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PART C — PORTRAIT LIGHTBOX · PROGRESS TRACKER · KEYBOARD NAV
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── PORTRAIT LIGHTBOX ──────────────────────────────────────────── */
+#hd-portrait-lb {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 2, 1, 0.97);
+  z-index: 99990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#hd-portrait-lb.hd-lb-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#hd-portrait-lb-img {
+  max-width: min(680px, 90vw);
+  max-height: 75vh;
+  object-fit: contain;
+  display: block;
+  border: 1px solid rgba(200, 168, 60, 0.18);
+  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.8);
+}
+
+#hd-portrait-lb-caption {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(200, 168, 60, 0.55);
+  text-align: center;
+  max-width: 90vw;
+}
+
+#hd-portrait-lb-hint {
+  font-family: Georgia, serif;
+  font-size: 0.7em;
+  font-style: italic;
+  color: rgba(200, 168, 60, 0.28);
+  letter-spacing: 0.08em;
+}
+
+#hd-portrait-lb-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: transparent;
+  border: 1px solid rgba(200, 168, 60, 0.22);
+  color: rgba(200, 168, 60, 0.5);
+  font-size: 1em;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, border-color 0.2s;
+  font-family: monospace;
+  border-radius: 0;
+}
+
+#hd-portrait-lb-close:hover {
+  color: rgba(200, 168, 60, 1);
+  border-color: rgba(200, 168, 60, 0.6);
+}
+
+/* ── PORTRAIT FRAME HOVER CUE ───────────────────────────────────── */
+.portrait-frame img.hd-portrait-zoomable {
+  cursor: zoom-in;
+  transition: opacity 0.2s;
+}
+.portrait-frame img.hd-portrait-zoomable:hover {
+  opacity: 0.88;
+}
+
+/* ── PROGRESS TRACKER (index page) ─────────────────────────────── */
+#hd-progress {
+  text-align: center;
+  margin: 14px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hd-prog-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.66em;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(200, 168, 60, 0.45);
+}
+
+.hd-prog-pips {
+  display: flex;
+  gap: 6px;
+}
+
+.hd-pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(200, 168, 60, 0.12);
+  border: 1px solid rgba(200, 168, 60, 0.22);
+  transition: background 0.4s;
+}
+
+.hd-pip.hd-pip-on {
+  background: rgba(200, 168, 60, 0.62);
+  border-color: rgba(200, 168, 60, 0.78);
+}
+
+/* ── VISITED ERA BOX MARK ───────────────────────────────────────── */
+.archive-box.hd-box-visited {
+  position: relative;
+}
+
+.archive-box.hd-box-visited .box-enter::after {
+  content: ' ✓';
+  opacity: 0.5;
+  font-size: 0.85em;
+}
+
+/* ── ERA KEYBOARD NAV HINT (era pages) ──────────────────────────── */
+#hd-keynav-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Courier New', monospace;
+  font-size: 0.62em;
+  letter-spacing: 0.2em;
+  color: rgba(139, 100, 40, 0.35);
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#hd-keynav-hint.hd-kn-visible {
+  opacity: 1;
+}
+
+/* ── ELSEWHERE IN THE ARCHIVE (cross-reference panels) ─────────── */
+.hd-xref {
+  margin: 60px 0 0;
+  padding: 28px 32px 32px;
+  border-top: 1px solid rgba(200,168,60,0.18);
+  background: rgba(200,168,60,0.025);
+}
+.hd-xref-heading {
+  font-family: 'Courier New', monospace;
+  font-size: 0.62em; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(200,168,60,0.5);
+  margin-bottom: 20px;
+}
+.hd-xref-grid {
+  display: flex; flex-wrap: wrap; gap: 14px;
+}
+.hd-xref-card {
+  background: rgba(200,168,60,0.03);
+  border: 1px solid rgba(200,168,60,0.16);
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  flex: 1 1 200px;
+  min-width: 180px;
+  max-width: 280px;
+  transition: border-color 0.2s, background 0.2s;
+  display: block;
+}
+.hd-xref-card:hover {
+  border-color: rgba(200,168,60,0.38);
+  background: rgba(200,168,60,0.06);
+}
+.hd-xref-card-vol {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6em; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(200,168,60,0.45);
+  margin-bottom: 5px;
+}
+.hd-xref-card-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.85em;
+  color: rgba(200,168,60,0.75);
+  margin-bottom: 5px;
+  font-style: italic;
+}
+.hd-xref-card-reason {
+  font-family: 'Courier New', monospace;
+  font-size: 0.58em; letter-spacing: 0.06em;
+  color: rgba(200,168,60,0.45);
+  line-height: 1.5;
+}
+
+/* ── WHAT HAPPENED NEXT ─────────────────────────────────────────── */
+.hd-whathappened {
+  margin: 24px 0 0;
+  padding: 24px 28px 28px;
+  border: 1px solid rgba(200,168,60,0.18);
+  border-top: 2px solid rgba(200,168,60,0.28);
+  background: rgba(200,168,60,0.02);
+}
+.hd-whn-heading {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6em; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(200,168,60,0.52);
+  margin-bottom: 16px;
+}
+.hd-whn-body {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.82em;
+  line-height: 1.8;
+  color: rgba(200,168,60,0.62);
+  font-style: italic;
+}
+.hd-whn-body strong {
+  font-style: normal;
+  color: rgba(200,168,60,0.75);
+  font-weight: normal;
+}
+.hd-whn-body a {
+  color: rgba(200,168,60,0.65);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200,168,60,0.3);
+  transition: color 0.2s, border-color 0.2s;
+}
+.hd-whn-body a:hover {
+  color: rgba(200,168,60,0.9);
+  border-bottom-color: rgba(200,168,60,0.6);
+}
+
+/* ── LIGHT-BACKGROUND OVERRIDES (era-I parchment) ───────────────── */
+/* Used when body has class 'hd-bg-light' — added by features.js on era-I */
+body.hd-bg-light .hd-xref {
+  border-top-color: rgba(80,50,10,0.25);
+  background: rgba(80,50,10,0.025);
+}
+body.hd-bg-light .hd-xref-heading { color: rgba(80,50,10,0.55); }
+body.hd-bg-light .hd-xref-card {
+  border-color: rgba(80,50,10,0.18);
+  background: rgba(80,50,10,0.025);
+}
+body.hd-bg-light .hd-xref-card:hover {
+  border-color: rgba(80,50,10,0.38);
+  background: rgba(80,50,10,0.05);
+}
+body.hd-bg-light .hd-xref-card-vol { color: rgba(80,50,10,0.48); }
+body.hd-bg-light .hd-xref-card-name { color: rgba(60,35,8,0.8); }
+body.hd-bg-light .hd-xref-card-reason { color: rgba(80,50,10,0.52); }
+body.hd-bg-light .hd-whathappened {
+  border-color: rgba(80,50,10,0.18);
+  border-top-color: rgba(80,50,10,0.3);
+  background: rgba(80,50,10,0.02);
+}
+body.hd-bg-light .hd-whn-heading { color: rgba(80,50,10,0.52); }
+body.hd-bg-light .hd-whn-body { color: rgba(60,35,8,0.68); }
+body.hd-bg-light .hd-whn-body a { color: rgba(60,35,8,0.65); border-bottom-color: rgba(80,50,10,0.3); }
+body.hd-bg-light .hd-whn-body a:hover { color: rgba(60,35,8,0.9); border-bottom-color: rgba(80,50,10,0.55); }
+
+/* ── CANDLELIGHT MODE BUTTON ────────────────────────────────────── */
+#hd-candle-mode-btn {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 38px; height: 38px;
+  background: rgba(8,6,4,0.85);
+  border: 1px solid rgba(200,168,60,0.18);
+  border-radius: 50%;
+  color: rgba(200,168,60,0.55);
+  font-size: 1em;
+  cursor: pointer;
+  z-index: 390;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+#hd-candle-mode-btn:hover {
+  border-color: rgba(200,168,60,0.45);
+  background: rgba(20,14,6,0.9);
+}
+
+/* ── MARGINALIA MODE BUTTON ─────────────────────────────────────── */
+#hd-marg-btn {
+  position: fixed;
+  bottom: 74px;
+  left: 28px;
+  width: 38px; height: 38px;
+  background: rgba(8,6,4,0.85);
+  border: 1px solid rgba(200,168,60,0.18);
+  border-radius: 50%;
+  color: rgba(200,168,60,0.55);
+  font-size: 1em;
+  cursor: pointer;
+  z-index: 390;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+#hd-marg-btn:hover {
+  border-color: rgba(200,168,60,0.45);
+  background: rgba(20,14,6,0.9);
+}
+
+/* ── PRINT BUTTON ───────────────────────────────────────────────── */
+#hd-print-btn {
+  position: fixed;
+  bottom: 120px;
+  left: 28px;
+  width: 38px; height: 38px;
+  background: rgba(8,6,4,0.85);
+  border: 1px solid rgba(200,168,60,0.18);
+  border-radius: 50%;
+  color: rgba(200,168,60,0.55);
+  font-size: 1em;
+  cursor: pointer;
+  z-index: 390;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+#hd-print-btn:hover {
+  border-color: rgba(200,168,60,0.45);
+  background: rgba(20,14,6,0.9);
+}
+
+/* ── MARGINALIA ─────────────────────────────────────────────────── */
+.hd-marginal {
+  display: none;
+  position: absolute;
+  right: calc(100% + 18px);
+  top: 0;
+  width: 140px;
+  font-family: 'Segoe Script', 'Comic Sans MS', Georgia, cursive;
+  font-size: 0.72em;
+  color: rgba(120,80,20,0.6);
+  line-height: 1.5;
+  font-style: italic;
+  transform: rotate(-1.5deg);
+  pointer-events: none;
+  border-right: 1px solid rgba(120,80,20,0.15);
+  padding-right: 10px;
+  text-align: right;
+}
+.hd-marginal-wrap {
+  position: relative;
+}
+body.hd-marg-on .hd-marginal {
+  display: block;
+}
+@media (max-width: 900px) {
+  .hd-marginal { display: none !important; }
+  #hd-marg-btn { display: none !important; }
+}
+
+/* ── PIG TRAIL ──────────────────────────────────────────────────── */
+.hd-pig {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 0.9em;
+  opacity: 0.18;
+  transition: opacity 0.3s, transform 0.3s;
+  user-select: none;
+  vertical-align: middle;
+  line-height: 1;
+}
+.hd-pig:hover { opacity: 0.55; }
+.hd-pig.hd-pig-found { opacity: 0.55; }
+
+/* ── PROGRESS RING ──────────────────────────────────────────────── */
+#hd-progress-ring {
+  position: fixed;
+  bottom: 28px;
+  right: 74px;
+  width: 36px;
+  height: 36px;
+  z-index: 390;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#hd-progress-ring.visible { opacity: 1; pointer-events: auto; }
+#hd-progress-ring svg { display: block; }
+#hd-progress-ring .ring-track {
+  fill: none;
+  stroke: rgba(200,168,60,0.1);
+  stroke-width: 2.5;
+}
+#hd-progress-ring .ring-fill {
+  fill: none;
+  stroke: rgba(200,168,60,0.6);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transform-origin: 18px 18px;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset 0.4s ease, stroke 0.4s;
+}
+#hd-progress-ring.ring-complete .ring-fill {
+  stroke: rgba(200,168,60,0.9);
+  filter: drop-shadow(0 0 4px rgba(200,168,60,0.5));
+}
+#hd-progress-ring .ring-label {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  fill: rgba(200,168,60,0.55);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+#hd-progress-ring.ring-complete .ring-label {
+  fill: rgba(200,168,60,0.9);
+}
+/* toast notification when a volume is fully read */
+#hd-vol-toast {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background: rgba(12,9,4,0.94);
+  border: 1px solid rgba(200,168,60,0.35);
+  border-left: 3px solid rgba(200,168,60,0.7);
+  padding: 10px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.62em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(200,168,60,0.75);
+  z-index: 500;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+  max-width: 220px;
+  line-height: 1.6;
+}
+#hd-vol-toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── BODLEIAN BAR ───────────────────────────────────────────────── */
+#hd-bodleian-bar {
+  background: rgba(200,168,60,0.025);
+  border-bottom: 1px solid rgba(200,168,60,0.12);
+  padding: 6px 24px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.58em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(200,168,60,0.6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+.hdb-sep { opacity: 0.4; }
+.hdb-ref { color: rgba(200,168,60,0.8); font-weight: bold; }
+@media (max-width: 600px) {
+  #hd-bodleian-bar { font-size: 0.5em; padding: 4px 12px; }
+}
+
+/* ── PRINT STYLES ───────────────────────────────────────────────── */
+@media print {
+  #hd-bodleian-bar,
+  .top-nav, .era-nav, .era-seq-nav,
+  .home-float, .era-sound-bar,
+  #hd-fx-toggle, #hd-candle-mode-btn, #hd-marg-btn, #hd-print-btn,
+  #hd-confession-btn, #hd-keynav-hint, #hd-progress,
+  .hd-xref, .hd-whathappened,
+  .page-transition-overlay, .era-crest-wrap,
+  .obj-trigger, .portrait-frame
+  { display: none !important; }
+
+  body { background: #fff !important; color: #000 !important; }
+  .era-header { background: none !important; color: #000 !important; box-shadow: none !important; }
+  .era-main-title { color: #000 !important; font-size: 1.6em !important; }
+  .era-content { max-width: 100% !important; padding: 20px 0 !important; }
+  .document { break-inside: avoid; margin-bottom: 20px; }
+  .tudor-letter, .regency-letter, .memoir-page, .memo,
+  .parliament-letter, .royalist-letter, .field-dispatch,
+  .blitz, .ministry-doc, .new-towns
+  { background: #fff !important; border: 1px solid #ccc !important; color: #000 !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+  .doc-label { color: #333 !important; font-size: 0.75em; }
+  .hd-marginal { display: none !important; }
+}
+
+/* ── CONTRAST FIXES — sound bar label and vol marker ────────────────
+   Original inline colours were near-black on near-black.
+   These global overrides restore legibility on all era pages.
+   ─────────────────────────────────────────────────────────────────── */
+.nsb-label {
+  color: #8A6830 !important;   /* warm gold-brown, readable on #1A0E06 bg */
+}
+.era-nav .vol-marker {
+  color: #C8A050 !important;   /* same as .era-nav a — clearly readable */
+}
+
+/* ── ERA HEADER / CONTENT SPACING ───────────────────────────────────
+   Reduce the visual gap between the header date range and first document.
+   ─────────────────────────────────────────────────────────────────── */
+.era-header {
+  padding-bottom: 28px !important;
+}
+.era-content {
+  padding-top: 32px !important;
+}

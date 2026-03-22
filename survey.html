@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Halecroft Survey — 1840 Tithe Map — MSS. Hale-Marsh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 17px; }
+    body {
+      background: #E8E4DC;
+      color: #1A1A1A;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.75;
+    }
+
+    .era-nav {
+      background: #1A1A1A;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .era-nav a { color: #C8C0B0; text-decoration: none; }
+    .era-nav a:hover { color: #E8E0D0; }
+    .era-nav .vol-marker { color: #6A6050; }
+
+    .survey-header {
+      background: #EDE8DC;
+      border-bottom: 4px solid #1A1A1A;
+      border-top: 4px solid #1A1A1A;
+      padding: 48px 40px 42px;
+      text-align: center;
+    }
+    .survey-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.3em;
+      color: #3A3A3A;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .survey-title {
+      font-family: 'Playfair Display SC', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.5em, 3.8vw, 2.6em);
+      color: #1A1A1A;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .survey-subtitle {
+      font-style: italic;
+      color: #5A4020;
+      font-size: 0.87em;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .survey-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 30px 90px;
+    }
+
+    .editorial-note {
+      border-left: 3px solid #3A3A3A;
+      padding: 16px 20px;
+      background: #E0DCD0;
+      font-style: italic;
+      font-size: 0.85em;
+      color: #3A3020;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* TOGGLE CONTROLS */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .toggle-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #5A4020;
+    }
+    .toggle-btn {
+      background: none;
+      border: 1px solid #5A4020;
+      color: #5A4020;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .toggle-btn.active {
+      background: #1A1A1A;
+      border-color: #1A1A1A;
+      color: #C8C0B0;
+    }
+    .toggle-btn:hover:not(.active) { background: rgba(90,64,32,0.08); }
+
+    .map-instruction {
+      font-size: 0.78em;
+      font-style: italic;
+      color: #6A5030;
+      margin-left: auto;
+    }
+
+    /* THE MAP CONTAINER */
+    .map-wrap {
+      background: #F2E8D0;
+      border: 2px solid #1A1A1A;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 4px 6px 30px rgba(0,0,0,0.14);
+      margin-bottom: 30px;
+    }
+    .map-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Field states */
+    .field {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .field:hover .field-shape { opacity: 0.85; filter: brightness(1.08); }
+    .field-shape {
+      transition: fill 0.4s, opacity 0.3s;
+    }
+
+    /* Info panel */
+    .field-panel {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      background: rgba(20,10,4,0.88);
+      color: #C8B890;
+      padding: 14px 20px;
+      font-size: 0.78em;
+      line-height: 1.7;
+      border: 1px solid rgba(200,168,40,0.28);
+      pointer-events: none;
+      transition: opacity 0.3s;
+      opacity: 0;
+      max-width: 380px;
+    }
+    .field-panel.visible { opacity: 1; pointer-events: auto; }
+    .field-panel-title {
+      font-family: 'Playfair Display SC', Georgia, serif;
+      font-size: 1.05em;
+      color: #D8C890;
+      margin-bottom: 4px;
+    }
+    .field-panel-then { color: #C8B890; }
+    .field-panel-now { color: #90A8C0; display: none; }
+    body.show-now .field-panel-then { display: none; }
+    body.show-now .field-panel-now { display: block; }
+
+    /* Apron below map */
+    .map-apron {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5A4020;
+    }
+    .legend-swatch {
+      width: 22px;
+      height: 14px;
+      border: 1px solid rgba(90,64,32,0.3);
+      border-radius: 2px;
+    }
+
+    /* Schedule table */
+    .apportionment {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8em;
+      margin-bottom: 40px;
+    }
+    .apportionment th {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: #1A1A1A;
+      color: #C8C0B0;
+      padding: 8px 14px;
+      text-align: left;
+    }
+    .apportionment td {
+      padding: 8px 14px;
+      border-bottom: 1px solid #D4C490;
+      color: #2A1A08;
+      line-height: 1.5;
+    }
+    .apportionment tr:hover td { background: rgba(200,168,40,0.05); }
+    .apportionment tr:last-child td { border-bottom: none; }
+
+    .archival-footer {
+      font-size: 0.78em;
+      font-style: italic;
+      color: #5A4A30;
+      border-top: 1px solid #8A8070;
+      padding-top: 18px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .survey-content { padding: 36px 16px 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="era-nav">
+    <a href="era-VI.html">← Vol. VI</a>
+    <span class="vol-marker">MSS. Hale-Marsh · The Halecroft Survey · Tithe Apportionment 1840</span>
+    <a href="documents.html">All Documents →</a>
+  </nav>
+
+  <header class="survey-header">
+    <div class="survey-label">The Hale Dynasty · Material Record · Bodleian Libraries</div>
+    <h1 class="survey-title">The Halecroft Survey</h1>
+    <p class="survey-subtitle">Tithe Apportionment Map, Parish of Halecroft, Worcestershire · Surveyed 1840 · Deposited at the Tithe Commission, Westminster · Reproduced by permission — click each field to read its history — toggle to see what stands there now</p>
+  </header>
+
+  <div class="survey-content">
+
+    <div class="editorial-note">
+      The Tithe Apportionment of 1840 required every parish in England and Wales to produce a map of its lands, identifying each field and its owner, occupier, acreage, land use, and annual tithe value. The Halecroft survey was conducted in August of that year, when the estate was managed by Augusta Hale following her husband's effective departure from the property. Augusta's name appears as both owner and occupier of all Hale lands — a legal designation that accurately reflects the practical situation. The map survives in the Worcester Record Office. This is a schematic reconstruction.
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">View:</span>
+      <button class="toggle-btn active" id="btn-then" onclick="setView('then')">1840 — as surveyed</button>
+      <button class="toggle-btn" id="btn-now" onclick="setView('now')">Now — present day</button>
+      <span class="map-instruction">Click any field on the map to read its record</span>
+    </div>
+
+    <div class="map-wrap" id="map-wrap">
+      <svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" id="tithe-map">
+
+        <!-- MAP BACKGROUND — aged parchment -->
+        <rect width="800" height="560" fill="#F0E5C8"/>
+
+        <!-- Vignette overlay -->
+        <radialGradient id="vign" cx="50%" cy="50%" r="70%">
+          <stop offset="60%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="rgba(80,40,10,0.18)"/>
+        </radialGradient>
+        <rect width="800" height="560" fill="url(#vign)"/>
+
+        <!-- ── NATURAL FEATURES ── -->
+        <!-- River / brook -->
+        <path d="M0,300 Q80,290 120,310 Q180,330 240,315 Q290,300 350,310 Q400,320 450,305 Q500,290 560,305 Q620,320 680,300 Q740,285 800,295"
+          fill="none" stroke="#7090A8" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M0,300 Q80,290 120,310 Q180,330 240,315 Q290,300 350,310 Q400,320 450,305 Q500,290 560,305 Q620,320 680,300 Q740,285 800,295"
+          fill="none" stroke="#9EB4C8" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <!-- River label -->
+        <text x="200" y="288" font-family="Georgia, serif" font-size="9" fill="#506880" font-style="italic" opacity="0.8">Halecroft Brook</text>
+
+        <!-- Road (main) -->
+        <path d="M400,0 Q398,80 395,150 Q392,220 390,280 Q388,340 385,410 Q382,480 380,560"
+          fill="none" stroke="#C8B890" stroke-width="6" opacity="0.5"/>
+        <path d="M400,0 Q398,80 395,150 Q392,220 390,280 Q388,340 385,410 Q382,480 380,560"
+          fill="none" stroke="#A8985A" stroke-width="2" opacity="0.5" stroke-dasharray="6,4"/>
+        <text x="396" y="30" font-family="Georgia, serif" font-size="8" fill="#7A6A40" font-style="italic" transform="rotate(88 396 30)">Halecroft Lane</text>
+
+        <!-- Road (cross) -->
+        <path d="M0,200 Q120,198 200,200 Q280,202 390,200 Q460,198 560,200 Q680,202 800,200"
+          fill="none" stroke="#C8B890" stroke-width="5" opacity="0.45"/>
+        <path d="M0,200 Q120,198 200,200 Q280,202 390,200 Q460,198 560,200 Q680,202 800,200"
+          fill="none" stroke="#A8985A" stroke-width="1.5" opacity="0.45" stroke-dasharray="6,4"/>
+        <text x="30" y="192" font-family="Georgia, serif" font-size="8" fill="#7A6A40" font-style="italic">Worcester Road</text>
+
+        <!-- ── FIELDS ── -->
+
+        <!-- FIELD 1: The Home Close — immediately N of Hall -->
+        <g class="field" onclick="selectField('f1')" id="g-f1">
+          <path class="field-shape" id="fs-f1"
+            d="M210,60 L380,55 L385,190 L205,195 Z"
+            fill="#A8C878" stroke="#5A4020" stroke-width="1.5" opacity="0.75"/>
+          <text x="292" y="130" font-family="Georgia, serif" font-size="11" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Home Close</text>
+          <text x="292" y="145" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 1</text>
+        </g>
+
+        <!-- FIELD 2: The Great Meadow — S of brook, W side -->
+        <g class="field" onclick="selectField('f2')" id="g-f2">
+          <path class="field-shape" id="fs-f2"
+            d="M30,330 L230,325 L235,480 L25,485 Z"
+            fill="#C8D890" stroke="#5A4020" stroke-width="1.5" opacity="0.72"/>
+          <text x="130" y="410" font-family="Georgia, serif" font-size="11" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Great Meadow</text>
+          <text x="130" y="425" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 2</text>
+        </g>
+
+        <!-- FIELD 3: The Priests Acre — W of road, central -->
+        <g class="field" onclick="selectField('f3')" id="g-f3">
+          <path class="field-shape" id="fs-f3"
+            d="M30,215 L175,212 L178,312 L28,318 Z"
+            fill="#B8C870" stroke="#5A4020" stroke-width="1.5" opacity="0.72"/>
+          <text x="103" y="265" font-family="Georgia, serif" font-size="10" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Priest's Acre</text>
+          <text x="103" y="280" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 3</text>
+        </g>
+
+        <!-- FIELD 4: Orchard — between Hall and road -->
+        <g class="field" onclick="selectField('f4')" id="g-f4">
+          <path class="field-shape" id="fs-f4"
+            d="M205,200 L380,196 L383,295 L202,298 Z"
+            fill="#D8E0A0" stroke="#5A4020" stroke-width="1.5" opacity="0.72"/>
+          <text x="292" y="250" font-family="Georgia, serif" font-size="10" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Orchard</text>
+          <text x="292" y="265" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 4</text>
+          <!-- Orchard tree dots -->
+          <circle cx="240" cy="240" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="268" cy="228" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="296" cy="240" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="324" cy="228" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="352" cy="240" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="254" cy="268" r="5" fill="#90A060" opacity="0.5"/>
+          <circle cx="310" cy="268" r="5" fill="#90A060" opacity="0.5"/>
+        </g>
+
+        <!-- FIELD 5: Far Field — E of road, N strip -->
+        <g class="field" onclick="selectField('f5')" id="g-f5">
+          <path class="field-shape" id="fs-f5"
+            d="M398,50 L620,48 L618,195 L400,196 Z"
+            fill="#B0C880" stroke="#5A4020" stroke-width="1.5" opacity="0.72"/>
+          <text x="508" y="125" font-family="Georgia, serif" font-size="11" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Far Field</text>
+          <text x="508" y="140" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 5</text>
+        </g>
+
+        <!-- FIELD 6: The Marsh Ground — SE, low-lying -->
+        <g class="field" onclick="selectField('f6')" id="g-f6">
+          <path class="field-shape" id="fs-f6"
+            d="M400,320 L600,315 L605,490 L395,495 Z"
+            fill="#98B880" stroke="#5A4020" stroke-width="1.5" opacity="0.68"/>
+          <text x="500" y="408" font-family="Georgia, serif" font-size="11" fill="#2A3A10" text-anchor="middle" opacity="0.8" font-style="italic">Marsh Ground</text>
+          <text x="500" y="423" font-family="Georgia, serif" font-size="9" fill="#3A4A20" text-anchor="middle" opacity="0.7">No. 6</text>
+          <!-- Marsh hatch marks -->
+          <line x1="420" y1="360" x2="420" y2="375" stroke="#607050" stroke-width="0.8" opacity="0.5"/>
+          <line x1="435" y1="355" x2="435" y2="370" stroke="#607050" stroke-width="0.8" opacity="0.5"/>
+          <line x1="450" y1="360" x2="450" y2="375" stroke="#607050" stroke-width="0.8" opacity="0.5"/>
+          <line x1="465" y1="355" x2="465" y2="370" stroke="#607050" stroke-width="0.8" opacity="0.5"/>
+          <line x1="480" y1="360" x2="480" y2="375" stroke="#607050" stroke-width="0.8" opacity="0.5"/>
+        </g>
+
+        <!-- FIELD 7: Wood Piece — NE corner -->
+        <g class="field" onclick="selectField('f7')" id="g-f7">
+          <path class="field-shape" id="fs-f7"
+            d="M630,45 L780,48 L782,198 L628,196 Z"
+            fill="#7A9850" stroke="#5A4020" stroke-width="1.5" opacity="0.68"/>
+          <text x="706" y="125" font-family="Georgia, serif" font-size="11" fill="#1A2A08" text-anchor="middle" opacity="0.8" font-style="italic">Wood Piece</text>
+          <text x="706" y="140" font-family="Georgia, serif" font-size="9" fill="#2A3A10" text-anchor="middle" opacity="0.7">No. 7</text>
+          <!-- Tree symbols -->
+          <circle cx="660" cy="90" r="10" fill="#5A7830" opacity="0.45"/>
+          <circle cx="690" cy="80" r="8" fill="#5A7830" opacity="0.4"/>
+          <circle cx="720" cy="90" r="10" fill="#5A7830" opacity="0.45"/>
+          <circle cx="750" cy="82" r="8" fill="#5A7830" opacity="0.4"/>
+          <circle cx="670" cy="155" r="9" fill="#5A7830" opacity="0.4"/>
+          <circle cx="700" cy="162" r="7" fill="#5A7830" opacity="0.38"/>
+          <circle cx="730" cy="152" r="9" fill="#5A7830" opacity="0.4"/>
+          <circle cx="760" cy="162" r="7" fill="#5A7830" opacity="0.38"/>
+        </g>
+
+        <!-- HALL footprint -->
+        <rect x="100" y="80" width="96" height="72" fill="#D4B890" stroke="#5A3A10" stroke-width="2" opacity="0.85"/>
+        <rect x="108" y="88" width="80" height="56" fill="none" stroke="#8A6A30" stroke-width="0.8" opacity="0.5"/>
+        <!-- Hall label -->
+        <text x="148" y="118" font-family="'Playfair Display SC', Georgia, serif" font-size="10" fill="#3A2010" text-anchor="middle" opacity="0.9">Harton</text>
+        <text x="148" y="132" font-family="'Playfair Display SC', Georgia, serif" font-size="10" fill="#3A2010" text-anchor="middle" opacity="0.9">Hall</text>
+
+        <!-- Church -->
+        <rect x="620" y="215" width="48" height="64" fill="#D4B890" stroke="#5A3A10" stroke-width="1.5" opacity="0.8"/>
+        <!-- Tower -->
+        <rect x="630" y="200" width="20" height="28" fill="#C0A078" stroke="#5A3A10" stroke-width="1.5" opacity="0.8"/>
+        <!-- Cross on tower -->
+        <line x1="640" y1="194" x2="640" y2="204" stroke="#5A3A10" stroke-width="1.5" opacity="0.8"/>
+        <line x1="636" y1="198" x2="644" y2="198" stroke="#5A3A10" stroke-width="1.5" opacity="0.8"/>
+        <text x="644" y="298" font-family="Georgia, serif" font-size="9" fill="#3A2010" text-anchor="middle" font-style="italic" opacity="0.8">St. Wulfstan's</text>
+
+        <!-- Compass rose -->
+        <g transform="translate(748,498)">
+          <text font-family="serif" font-size="10" fill="#5A4020" text-anchor="middle" y="-18" opacity="0.7">N</text>
+          <line x1="0" y1="-14" x2="0" y2="14" stroke="#5A4020" stroke-width="1" opacity="0.6"/>
+          <line x1="-14" y1="0" x2="14" y2="0" stroke="#5A4020" stroke-width="1" opacity="0.6"/>
+          <polygon points="0,-14 -3,-6 0,-8 3,-6" fill="#5A4020" opacity="0.7"/>
+        </g>
+
+        <!-- Scale bar -->
+        <line x1="30" y1="530" x2="130" y2="530" stroke="#5A4020" stroke-width="1.5" opacity="0.7"/>
+        <line x1="30" y1="526" x2="30" y2="534" stroke="#5A4020" stroke-width="1.5" opacity="0.7"/>
+        <line x1="130" y1="526" x2="130" y2="534" stroke="#5A4020" stroke-width="1.5" opacity="0.7"/>
+        <line x1="80" y1="527" x2="80" y2="533" stroke="#5A4020" stroke-width="1" opacity="0.7"/>
+        <text x="80" y="544" font-family="'Courier New', monospace" font-size="8" fill="#5A4020" text-anchor="middle" opacity="0.7">0 &nbsp; ½ &nbsp; 1 mile (approx.)</text>
+
+        <!-- Map title cartouche -->
+        <rect x="580" y="340" width="200" height="110" fill="#F5EDD6" stroke="#5A4020" stroke-width="1.5" opacity="0.9"/>
+        <rect x="584" y="344" width="192" height="102" fill="none" stroke="#8A7040" stroke-width="0.7" opacity="0.8"/>
+        <text x="680" y="365" font-family="'Playfair Display SC', Georgia, serif" font-size="9" fill="#2A1A08" text-anchor="middle" opacity="0.9">Parish of Halecroft</text>
+        <text x="680" y="380" font-family="Georgia, serif" font-size="8" fill="#4A3018" text-anchor="middle" font-style="italic" opacity="0.85">Tithe Apportionment</text>
+        <text x="680" y="394" font-family="'Courier New', monospace" font-size="8" fill="#4A3018" text-anchor="middle" opacity="0.8">1840</text>
+        <line x1="595" y1="400" x2="765" y2="400" stroke="#8A7040" stroke-width="0.7" opacity="0.7"/>
+        <text x="680" y="414" font-family="Georgia, serif" font-size="7.5" fill="#4A3018" text-anchor="middle" font-style="italic" opacity="0.75">Surveyed by W. Radstock</text>
+        <text x="680" y="428" font-family="Georgia, serif" font-size="7.5" fill="#4A3018" text-anchor="middle" font-style="italic" opacity="0.75">for the Tithe Commission</text>
+        <text x="680" y="442" font-family="'Courier New', monospace" font-size="7" fill="#4A3018" text-anchor="middle" opacity="0.7">Worcester Rec. Office · T/A/107</text>
+
+        <!-- Selected field highlight overlay -->
+        <path id="highlight-overlay" d="M0,0" fill="none" stroke="#C8A830" stroke-width="3" stroke-dasharray="6,3" opacity="0" pointer-events="none"/>
+
+      </svg>
+
+      <!-- Info panel -->
+      <div class="field-panel" id="field-panel">
+        <div class="field-panel-title" id="fp-title">—</div>
+        <div class="field-panel-then" id="fp-then">—</div>
+        <div class="field-panel-now" id="fp-now">—</div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="map-apron">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#A8C878;"></div> Arable land
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#C8D890;"></div> Meadow / pasture
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#D8E0A0;"></div> Orchard
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#7A9850;"></div> Woodland
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#98B880;"></div> Marsh / low-lying
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#D4B890;"></div> Buildings
+      </div>
+    </div>
+
+    <!-- Apportionment Schedule -->
+    <table class="apportionment">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name on Map</th>
+          <th>Land Use</th>
+          <th>Acres</th>
+          <th>Owner · 1840</th>
+          <th>Tithe (annual)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Home Close</td><td>Arable</td><td>14a 2r 12p</td><td>Augusta Hale</td><td>£1 4s 6d</td></tr>
+        <tr><td>2</td><td>Great Meadow</td><td>Meadow / Pasture</td><td>32a 1r 8p</td><td>Augusta Hale</td><td>£2 18s 0d</td></tr>
+        <tr><td>3</td><td>Priest's Acre</td><td>Arable (glebe)</td><td>4a 0r 22p</td><td>Vicar of Halecroft</td><td>exempt</td></tr>
+        <tr><td>4</td><td>Orchard</td><td>Orchard</td><td>6a 3r 5p</td><td>Augusta Hale</td><td>£0 16s 4d</td></tr>
+        <tr><td>5</td><td>Far Field</td><td>Arable</td><td>28a 0r 18p</td><td>Augusta Hale</td><td>£2 8s 10d</td></tr>
+        <tr><td>6</td><td>Marsh Ground</td><td>Rough pasture</td><td>18a 2r 30p</td><td>Augusta Hale</td><td>£0 12s 0d</td></tr>
+        <tr><td>7</td><td>Wood Piece</td><td>Woodland</td><td>11a 1r 14p</td><td>Augusta Hale</td><td>exempt</td></tr>
+      </tbody>
+    </table>
+
+    <div class="archival-footer">
+      Halecroft Tithe Apportionment, 1840. Worcester Record Office reference T/A/107. Original map and schedule deposited by the Tithe Commission, 1843. Reproduced schematically. All field names, acreages, owners, and tithe valuations are drawn from the original apportionment schedule. Field boundaries are approximate.
+    </div>
+
+  </div><!-- end survey-content -->
+
+  <script>
+  var fieldData = {
+    f1: {
+      path: 'M210,60 L380,55 L385,190 L205,195 Z',
+      title: 'No. 1 — The Home Close · 14a 2r 12p',
+      then: 'Arable — winter wheat. Immediately north of the hall, bounded by the Worcester Road to the east. Augusta Hale records in her account book for 1840: "Home Close — harvest fair, 12 bushel to the acre. Better than last year." The field had been in continuous cultivation since at least the 1521 survey, where it appears as "le Home Clos," suggesting the name is older still.',
+      now: 'Now: The Home Close is a housing estate built in 1972. Twenty-three semi-detached houses, a cul-de-sac, and a small play area. The street is named Hale Close, though the connection to the family appears to be unknown to current residents. The hall itself was demolished in 1968.'
+    },
+    f2: {
+      path: 'M30,330 L230,325 L235,480 L25,485 Z',
+      title: 'No. 2 — The Great Meadow · 32a 1r 8p',
+      then: 'Meadow and pasture — cattle and sheep. South of the brook, the largest single field on the estate. The 1840 schedule notes it as "permanent grass, good quality." Augusta Hale grazed a herd of twelve shorthorn cattle here from 1828 to 1856. The meadow had not been ploughed since the famine of 1317, when the manorial rolls record a failed attempt to put it into arable.',
+      now: 'Now: The Great Meadow is divided by the M5 motorway, which was constructed through the parish in 1962. The northern portion — approximately eight acres — remains as agricultural grassland. The southern portion is a motorway embankment and service road. The brook still runs beneath the motorway through a concrete culvert.'
+    },
+    f3: {
+      path: 'M30,215 L175,212 L178,312 L28,318 Z',
+      title: 'No. 3 — Priest\'s Acre · 4a 0r 22p · Glebe land',
+      then: 'Glebe arable — attached to the living of St. Wulfstan\'s. Exempt from tithe (being the vicar\'s own land). The field is mentioned in the 1351 inquest as "the acre belonging to the church," suggesting continuous ecclesiastical tenure. Father Croft, who died in the plague of 1348 and who taught Thomas Hale to read, would have farmed this land or had it farmed on his behalf.',
+      now: 'Now: The Priest\'s Acre was sold by the Church Commissioners in 1971 and is now a small commercial property — a builders\' merchant and its yard. The current occupants are unaware of the field\'s medieval origins. The soil, visible at the edges of the yard, is the same dark Worcester clay it has always been.'
+    },
+    f4: {
+      path: 'M205,200 L380,196 L383,295 L202,298 Z',
+      title: 'No. 4 — Orchard · 6a 3r 5p',
+      then: 'Orchard — apple, pear, and damson. Augusta Hale\'s account books list the varieties: "Ribston Pippin, Golden Pippin, Worcester Pearmain, Jargonelle pear, and the Halecroft damson which I believe is particular to this place." The damson was sold to a Worcestershire preserve-maker from 1831 onwards. Augusta noted in 1847: "The old apple tree by the wall — I believe it was here before my time and before my mother\'s time. It still bears."',
+      now: 'Now: The orchard was grubbed out in 1955. The site is a paddock. One old apple tree — possibly the one Augusta noted — survived in the hedgerow until 2018, when it was removed during hedge-laying. A cutting was taken by a local resident and the grafted tree is growing in a garden three miles away in Pershore.'
+    },
+    f5: {
+      path: 'M398,50 L620,48 L618,195 L400,196 Z',
+      title: 'No. 5 — Far Field · 28a 0r 18p',
+      then: 'Arable — rotation crop. The largest arable field, east of the road, bordered to the north by a ditch and hedgerow. The 1840 schedule notes it as "in good heart." Augusta Hale leased this field to a neighbouring farmer from 1836 to 1858 at a rent of £22 per annum, following her husband\'s departure from the estate. It is the first Hale land to have been let out since the Interregnum.',
+      now: 'Now: Far Field is still agricultural land — currently contract-farmed as part of a larger holding. It has been in continuous arable production since 1840. The hedgerow on the northern boundary, which appears in the 1840 map, still stands, and is one of the oldest features of the present landscape at Halecroft.'
+    },
+    f6: {
+      path: 'M400,320 L600,315 L605,490 L395,495 Z',
+      title: 'No. 6 — Marsh Ground · 18a 2r 30p',
+      then: 'Rough pasture and marsh — low-lying, liable to flood. The schedule notes: "Not improvable without considerable drainage." Augusta Hale attempted to drain the field in 1841, engaging a Droitwich engineer. The attempt was only partially successful; the field remained waterlogged in winter. The family had called it "the Marsh Ground" since at least 1317, which is also where the family name "Marsh" — later combined with "Hale" — may originate.',
+      now: 'Now: The Marsh Ground was designated a Site of Special Scientific Interest in 1989 for its wet grassland habitat and breeding wading birds. It is managed by a wildlife trust. The drainage works of 1841 are no longer maintained, and the field is once again liable to seasonal flooding. The curlews, which vanished from the site in the 1960s, returned in 2019.'
+    },
+    f7: {
+      path: 'M630,45 L780,48 L782,198 L628,196 Z',
+      title: 'No. 7 — Wood Piece · 11a 1r 14p',
+      then: 'Woodland — oak, ash, field maple. Exempt from tithe. The wood appears on every survey of the Hale estate since 1521, and is likely older. The 1582 estate map (now lost, but described in an 1858 catalogue note by George Hale) showed it as "ye Olde Wood." Augusta Hale sold timber from the wood in 1839 to raise funds for the drainage of the Marsh Ground. She recorded this in her account book with the note: "Regret it. The wood is worth more standing."',
+      now: 'Now: Wood Piece survives as ancient woodland. It was purchased by the Woodland Trust in 2004. The oldest oaks are estimated at 300–400 years old, placing their origin in the Tudor period. A footpath runs through it. The Woodland Trust\'s information board does not mention the Hale family. Augusta Hale was right that it was worth more standing.'
+    }
+  };
+
+  var currentView = 'then';
+  var currentField = null;
+
+  function selectField(id) {
+    var data = fieldData[id];
+    if (!data) return;
+    currentField = id;
+    document.getElementById('fp-title').textContent = data.title;
+    document.getElementById('fp-then').innerHTML = data.then;
+    document.getElementById('fp-now').innerHTML = data.now;
+    document.getElementById('field-panel').classList.add('visible');
+
+    // Move highlight
+    var hl = document.getElementById('highlight-overlay');
+    hl.setAttribute('d', data.path);
+    hl.style.opacity = '1';
+  }
+
+  function setView(view) {
+    currentView = view;
+    if (view === 'then') {
+      document.body.classList.remove('show-now');
+      document.getElementById('btn-then').classList.add('active');
+      document.getElementById('btn-now').classList.remove('active');
+    } else {
+      document.body.classList.add('show-now');
+      document.getElementById('btn-now').classList.add('active');
+      document.getElementById('btn-then').classList.remove('active');
+    }
+    // Re-show panel if a field is selected
+    if (currentField) {
+      document.getElementById('field-panel').classList.add('visible');
+    }
+  }
+  </script>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

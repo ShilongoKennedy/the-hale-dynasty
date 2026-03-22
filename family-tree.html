@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hale Lineage — Family Tree — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: #080604;
+      color: #C8A050;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    /* ── NAVIGATION ──────────────────────────────────────────── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(8,6,4,0.92);
+      border-bottom: 1px solid rgba(200,168,60,0.12);
+      padding: 10px 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .top-nav a { color: rgba(200,168,60,0.6); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #C8A83C; }
+    .top-nav .center { color: rgba(200,168,60,0.35); font-size: 0.9em; }
+
+    /* ── HEADER ──────────────────────────────────────────────── */
+    .tree-header {
+      position: fixed; top: 40px; left: 0; right: 0; z-index: 190;
+      background: linear-gradient(180deg, #080604 60%, transparent 100%);
+      padding: 24px 30px 30px;
+      text-align: center;
+      pointer-events: none;
+    }
+    .tree-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2.2em, 5vw, 4em);
+      color: #F0C840;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 80px rgba(240,200,64,0.35), 0 0 30px rgba(220,160,40,0.2), 0 2px 6px rgba(0,0,0,0.9);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .tree-subtitle {
+      font-style: italic;
+      color: rgba(220,180,80,0.6);
+      font-size: 1em;
+      letter-spacing: 0.05em;
+    }
+    .tree-legend {
+      margin-top: 12px;
+      display: flex; justify-content: center; gap: 22px;
+      flex-wrap: wrap;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(200,168,60,0.3);
+      pointer-events: auto;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── TREE VIEWPORT ───────────────────────────────────────── */
+    #treeViewport {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow: auto;
+      cursor: grab;
+    }
+    #treeViewport:active { cursor: grabbing; }
+    #treeViewport svg { display: block; }
+
+    /* ── SCROLL HINT ──────────────────────────────────────────── */
+    .scroll-hint {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(200,168,60,0.2);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ── TOOLTIP ──────────────────────────────────────────────── */
+    #tooltip {
+      position: fixed;
+      width: 270px;
+      background: rgba(8,5,2,0.96);
+      border: 1px solid rgba(200,168,60,0.2);
+      padding: 14px 16px;
+      pointer-events: none;
+      z-index: 300;
+      opacity: 0;
+      transition: opacity 0.15s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+    #tooltip.visible { opacity: 1; }
+    #tt-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.9em; color: #D4A840; letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    #tt-era {
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(200,168,60,0.35); margin-bottom: 10px;
+    }
+    #tt-desc {
+      font-size: 0.82em; line-height: 1.7; color: rgba(200,168,60,0.6);
+    }
+    #tt-link {
+      display: block; margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(200,168,60,0.35);
+    }
+    #tt-portrait {
+      display: none;
+      float: right;
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,60,0.25);
+      object-fit: cover;
+      margin: 0 0 10px 12px;
+      filter: sepia(60%) brightness(0.8) contrast(1.1);
+      shape-outside: circle();
+    }
+    #tt-portrait.visible { display: block; }
+
+    /* ── HOME BUTTON ─────────────────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 400;
+      width: 44px; height: 44px;
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.22);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: all 0.22s;
+      box-shadow: 0 3px 18px rgba(0,0,0,0.7);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
+    .home-float svg { width: 20px; height: 20px; }
+
+    /* ── SECRET LINK ─────────────────────────────────────────── */
+    #secret-nav-link { display: none; }
+
+    /* ── VIEW TOGGLE BUTTON ───────────────────────────────────── */
+    #view-toggle {
+      position: fixed; top: 52px; right: 16px; z-index: 210;
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.5);
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      backdrop-filter: blur(6px);
+    }
+    #view-toggle:hover { color: #C8A83C; border-color: rgba(200,168,60,0.4); }
+
+    /* ── LIST VIEW ────────────────────────────────────────────── */
+    #list-view {
+      display: none;
+      position: fixed;
+      top: 40px; left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      background: #080604;
+      z-index: 150;
+      padding: 60px 20px 100px;
+    }
+    #list-view.visible { display: block; }
+    .lv-era-block {
+      margin-bottom: 36px;
+    }
+    .lv-era-heading {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(200,168,60,0.22);
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .lv-person {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(200,168,60,0.04);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .lv-person:hover { background: rgba(200,168,60,0.03); }
+    .lv-portrait {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: #100E08;
+      border: 1px solid rgba(200,168,60,0.12);
+      overflow: hidden;
+    }
+    .lv-portrait img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: sepia(40%) brightness(0.85);
+    }
+    .lv-dot {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: #100E08;
+      border: 1px solid rgba(200,168,60,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lv-dot-inner {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .lv-text { flex: 1; min-width: 0; }
+    .lv-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.82em; color: #B89030;
+      letter-spacing: 0.04em;
+    }
+    .lv-name.lv-key { color: #C8A83C; }
+    .lv-dates {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em; letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.28);
+      margin-top: 2px;
+    }
+    .lv-arrow {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em; color: rgba(200,168,60,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── TREE SEARCH ─────────────────────────────────────────── */
+    #tree-search-wrap {
+      position: fixed;
+      top: 52px;
+      left: 16px;
+      z-index: 210;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    #tree-search {
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.7);
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      padding: 6px 10px;
+      width: 200px;
+      outline: none;
+      backdrop-filter: blur(6px);
+      -webkit-appearance: none;
+    }
+    #tree-search::placeholder { color: rgba(200,168,60,0.25); }
+    #tree-search:focus { border-color: rgba(200,168,60,0.4); }
+    #tree-search-clear {
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.15);
+      color: rgba(200,168,60,0.4);
+      font-size: 0.65em;
+      padding: 5px 8px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+    #tree-search-clear:hover { color: rgba(200,168,60,0.8); border-color: rgba(200,168,60,0.35); }
+
+    /* ── PAGE OVERLAY ────────────────────────────────────────── */
+    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  </style>
+</head>
+<body data-vol="">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<nav class="top-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="center">The Hale Dynasty · Family Tree</span>
+  <a href="portraits.html">Portraits →</a>
+</nav>
+
+<div class="tree-header">
+  <div class="tree-title">The Hale Family Tree</div>
+  <div class="tree-subtitle">Ranulf de la Hale, 1066 — Eleanor Voss, 2026 · Nine centuries. One unbroken line.</div>
+  <div class="tree-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#C8A83C;border:1px solid rgba(200,168,60,0.4)"></span> Key figures</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#6B1212"></span> Plague era</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#1C2E4A"></span> Civil War</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#5C1828"></span> Victorian</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#3A5820;border:1px solid #3A5820"></span> Voss branch</span>
+    <span class="legend-item" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open era</span>
+  </div>
+</div>
+
+<div id="treeViewport"></div>
+
+<div id="tooltip">
+  <img id="tt-portrait" src="" alt="">
+  <div id="tt-name"></div>
+  <div id="tt-era"></div>
+  <div id="tt-desc"></div>
+  <span id="tt-link"></span>
+</div>
+
+<div class="scroll-hint" id="scrollHint">Scroll to navigate · Click nodes to open era</div>
+
+<button id="view-toggle" aria-label="Toggle list view">☰ List View</button>
+
+<div id="tree-search-wrap">
+  <input id="tree-search" type="search" placeholder="Search names, eras, dates…" aria-label="Search family tree" autocomplete="off" spellcheck="false">
+  <button id="tree-search-clear" aria-label="Clear search" style="display:none">✕</button>
+</div>
+
+<div id="list-view" role="region" aria-label="Family tree list view"></div>
+
+<a href="index.html" class="home-float" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<span id="secret-nav-link"><a href="the-email.html" style="display:none" id="secret-inner-link">✦ A letter found</a></span>
+
+<script src="transitions.js"></script>
+<script src="features.js"></script>
+<script>
+// ── FAMILY TREE DATA ──────────────────────────────────────────────────────────
+const W = 920, H = 3160;
+const MX = 380;   // main Hale line X
+const SX = 180;   // side characters (Matilda, Aelswith, siblings) X
+const VX = 680;   // Voss branch X
+
+// ── PORTRAIT MAP ─────────────────────────────────────────────────────────────
+const PORTRAIT_MAP = {
+  'ranulf':       'portraits/ranulf.png',
+  'matilda_bk':   'portraits/matilda.png',
+  'william_mon':  'portraits/william.png',
+  'civil_war':    'portraits/john.png',
+  'nathaniel':    'portraits/nathaniel.png',
+  'augusta':      'portraits/augusta.png',
+  'edmund_vict':  'portraits/edmund.png',
+  'thomas_mh':    'portraits/thomas.png',
+  'edmund_mh':    'portraits/edmundmarsh.png',
+  'eleanor_voss': 'portraits/eleanor.png',
+};
+
+const PEOPLE = [
+  // ── MAIN HALE LINE ──────────────────────────────────────────────────────
+  {
+    id:'ranulf', x:MX, y:100,
+    name:'Ranulf de la Hale', dates:'c.1040–c.1099',
+    era:'Era I · Norman', eraColor:'#C8A83C', link:'era-I.html', key:true,
+    desc:'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ. Dismounted in a Worcestershire yard and asked what he had been given. Asked his priest to help him frame the right question before he died: "Ask for justice. Not mercy."',
+    branch:'main'
+  },
+  {
+    id:'aelswith', x:MX+170, y:100,
+    name:'Aelswith', dates:'c.1045–1079',
+    era:'Era I · Norman (spouse)', eraColor:'#A8882C', link:'era-I.html', key:false,
+    desc:'English widow of the previous thegn, Leofric. Chose to remain at Halecroft. Taught Ranulf the language of the people, the customs of the land. "He is still trying. I can see him from here." She was the making of Halecroft. Died 1079.',
+    branch:'main', spouse:true
+  },
+  {
+    id:'leofric', x:MX, y:250,
+    name:'Leofric de la Hale', dates:'c.1072–c.1135',
+    era:'Era I · Norman', eraColor:'#A8882C', link:'era-I.html', key:false,
+    desc:'Youngest son of Ranulf and Aelswith. Named for the English thegn. Went into the wood east of Halecroft, built a house at the spring with his own hands (1100–1103). Founded the Hale — the woodland settlement that became the family\'s primary holding for nine centuries. Married Godiva of Worcester, 1104. Brother William inherited the manor; brother Maud married Roger de Beaumont.',
+    branch:'main'
+  },
+  {
+    id:'robert_hale', x:MX, y:400,
+    name:'Robert Hale', dates:'c.1140–c.1195',
+    era:'Early Medieval', eraColor:'#8A6820', link:'era-II.html', key:false,
+    desc:'Free tenant of the Hale holding. 12 acres woodland and 4 arable. Owed suit of court twice yearly and a hen at Christmas. Married Edith, formerly Edith atte Pond of Pershore. "The English yeoman in his early form." Their son William was baptised Michaelmas 1189.',
+    branch:'main'
+  },
+  {
+    id:'william_elder', x:MX, y:550,
+    name:'William Hale the Elder', dates:'c.1165–c.1248',
+    era:'Early Medieval', eraColor:'#7A5818', link:'era-II.html', key:false,
+    desc:'Son of Robert. Purchased the freehold of the Hale from the lord of the manor in 1214 — the first Hale to own rather than hold the land. Served on the manorial jury in 1231 and 1244. Built a second barn. Sent his son Edmund to the priory school at Worcester. Held fourteen acres freehold for fifty-one years.',
+    branch:'main'
+  },
+  {
+    id:'edmund_med', x:MX, y:700,
+    name:'Edmund Hale', dates:'c.1227–1287',
+    era:'Early Medieval', eraColor:'#7A5818', link:'era-II.html', key:false,
+    desc:'Educated at Worcester Priory 1235–1244. Returned with literacy, legal reasoning, and a tendency to quote Ovid. In 1254 his reading of the Latin deed settled a contested boundary dispute in the family\'s favour — his education was, in practical terms, the most valuable thing his father had ever purchased. Married Agnes, Pershore tanner\'s daughter.',
+    branch:'main'
+  },
+  {
+    id:'william_younger', x:MX, y:850,
+    name:'William Hale the Younger', dates:'c.1260–c.1310',
+    era:'Famine era', eraColor:'#7A5818', link:'era-II.html', key:false,
+    desc:'Held the Hale through the Great Famine (1315–1322) without defaulting or requiring assistance. His woodland acres were better-drained than the open fields. Served as jury foreman in 1320. His wife Margaret gave bread from their oven to starving tenants in 1318. "The Hales had survived. The Hale had held."',
+    branch:'main'
+  },
+  {
+    id:'richard_plague', x:MX, y:1000,
+    name:'Richard Hale', dates:'c.1304–November 1348',
+    era:'Era II · Plague', eraColor:'#6B1212', link:'era-II.html', key:false, plague:true,
+    desc:'Freeholder of the Hale. Served as jury foreman seven times — his grandfather Edmund\'s office, now his. Died of plague at the feast of St Martin, November 1348, aged approximately forty-four. His wife Maud, his three sons Edmund, William, Thomas, his youngest son Walter — all gone by Christmas. The household of the Hale perished in fourteen months.',
+    branch:'main'
+  },
+  {
+    id:'thomas_survivor', x:MX, y:1160,
+    name:'Thomas Hale', dates:'1338–1395',
+    era:'Era II · Plague Survivor', eraColor:'#C8A83C', link:'era-II.html', key:true,
+    desc:'Son of William, grandson of Richard. Aged eleven when the plague came. Had been sent to stay with his mother\'s aunt in Pershore; returned in April 1349 to find everyone dead. Set down the cooking pot. Looked about him. Said: I had better see to the pig. Brother Anselm, who waited for him: "I watched him go into the yard and I thought: this one will not break." His inheritance confirmed by inquest, 1351.',
+    branch:'main'
+  },
+  {
+    id:'matilda_bk', x:SX, y:1160,
+    name:'Matilda of Halecroft', dates:'c.1310–c.1395',
+    era:'Era II · Keeper', eraColor:'#C8A83C', link:'era-II.html', key:true, matilda:true,
+    desc:'Free woman of Halecroft. Kept bees. Testified uninvited at the Inquest of 1351 to secure Thomas Hale\'s inheritance: "Give him his land. He is eleven years old and he came home and he saw to the pig. That is a Hale." Left a paper in the deed-box, c.1390: "Keep asking. Keep the land. See to the pig." Found 1541, hidden beneath the box lining, in the hand of a woman who knew she was writing to the future.',
+    branch:'side'
+  },
+  {
+    id:'john_hale_1', x:MX, y:1320,
+    name:'John Hale', dates:'1376–c.1440',
+    era:'Late Medieval', eraColor:'#7A5818', link:'era-III.html', key:false,
+    desc:'Thomas\'s youngest son, named for Eleanor\'s brother John Claines. Held the Hale through the Wars of the Roses without disturbance. Married twice: first Isabel (died 1408, no issue); then Margaret (died 1421), who gave him three children. Held the Hale for forty-four years.',
+    branch:'main'
+  },
+  {
+    id:'tudor_comp', x:MX, y:1480,
+    name:'The Lancastrian & Tudor Hales', dates:'c.1420–c.1490',
+    era:'Era III · Tudor', eraColor:'#7A5818', link:'era-III.html', key:false,
+    desc:'William Hale (inherited 1440), Robert Hale (1478), Thomas Hale III (1503): three generations who held the Hale quietly through the dynastic wars. Robert Hale\'s inventory of 1490 lists the deed of freehold, dated 1214, as [priceless]. The deed-box — unmolested through plague, famine, and rising — is the only item he marks beyond price.',
+    branch:'main', compressed:true
+  },
+  {
+    id:'john_tudor', x:MX, y:1640,
+    name:'John Hale', dates:'1498–1558',
+    era:'Era III · Tudor', eraColor:'#7A1C1C', link:'era-III.html', key:true,
+    desc:'Son of Thomas III. The Letters of John Hale (1532–1549) are the archive\'s most candid documents. Signed the Act of Supremacy (1534): "I have signed. I keep my land. I say my prayers in the same church I was christened in." Watched the Dissolution (1538): "Our family has taken its troubles there since before there was writing to record it." Father of William (1522).',
+    branch:'main'
+  },
+  {
+    id:'william_mon', x:MX, y:1800,
+    name:'William Hale', dates:'1522–c.1585',
+    era:'Era III · Tudor', eraColor:'#7A1C1C', link:'era-III.html', key:false,
+    desc:'Son of John. Educated partly by Brother Anselm, a displaced Benedictine monk who lodged at the Hale three months. In 1545, aged twenty-three, purchased twelve acres of former priory land for four pounds — the first Hale to buy land from a commercial transaction rather than a feudal lord. His father: "You have done either a very clever thing or a very foolish one, and I cannot tell which."',
+    branch:'main'
+  },
+  {
+    id:'civil_war', x:MX, y:1960,
+    name:'The Civil War Hales', dates:'1595–1689',
+    era:'Era IV · Civil War', eraColor:'#1C2E4A', link:'era-IV.html', key:false,
+    desc:'Robert Hale (father) prepared the deed-box. Three sons: John (Parliament), Thomas, and William the youngest. Family strategy: sign what requires signing, hold what you hold. The two sons who fought came home. "The King is dead. Both my sons came home." The missing year, 1381, is the most eloquent document in the family archive.',
+    branch:'main', compressed:true
+  },
+  {
+    id:'nathaniel', x:MX, y:2120,
+    name:'Sir Nathaniel Hale', dates:'1671–1744',
+    era:'Era V · Restoration', eraColor:'#6A5818', link:'era-V.html', key:false,
+    desc:'Left Worcestershire. Made himself in London. Purchased a baronetcy. Lost a considerable portion in the South Sea Bubble (1720). His wife Dorothea: "Then we have sufficient to begin again." The first Hale to acquire a title; not the first to demonstrate that Hale resilience is more durable than social elevation.',
+    branch:'main'
+  },
+  {
+    id:'augusta', x:MX-160, y:2260,
+    name:'Augusta Hale', dates:'1771–1858',
+    era:'Era VI · Regency', eraColor:'#5C1828', link:'era-VI.html', key:true,
+    desc:'Managed the Hale estate for thirty-seven years under an entail that prevented her inheriting it in her own name. Married at fifty-seven to Henry Alderton, who proposed: "I find I am looking forward to it rather more than timber rights warrant." A woman of considerable force who ran the estate without title or compensation for nearly four decades. Her letters are the archive\'s sharpest pleasure.',
+    branch:'main'
+  },
+  {
+    id:'edmund_reg', x:MX+140, y:2260,
+    name:'Edmund Hale', dates:'c.1774–1842',
+    era:'Era VI · Regency', eraColor:'#4A3820', link:'era-VI.html', key:false,
+    desc:"Augusta's brother. Inherited the baronetcy. Held the estate, maintained the deed-box. Described in Augusta's correspondence as competent and uninspiring — which, given the alternatives the family archive presents, is not entirely without honour.",
+    branch:'main'
+  },
+  {
+    id:'edmund_vict', x:MX, y:2410,
+    name:'Edmund Hale II', dates:'1841–1882',
+    era:'Era VII · Victorian', eraColor:'#3A0A18', link:'era-VII.html', key:true,
+    desc:'The performance. The locked escritoire. The confession never made publicly. Two words on a folded paper in the deepest compartment: "I know." He sealed the escritoire in Shropshire in 1882, aged forty-one. What he knew, and whether the knowing was relief or weight, the archive cannot say. He is forty-one. The door is locked.',
+    branch:'main'
+  },
+  {
+    id:'thomas_mh', x:MX, y:2560,
+    name:'Thomas Marsh-Hale', dates:'1873–1951',
+    era:'Era VIII · Edwardian / WWI', eraColor:'#7A6A40', link:'era-VIII.html', key:true,
+    desc:'Illegitimate son who claimed the hyphenated name, combining both lines of his descent. Journalist, soldier, archivist. Carried Clara\'s ledger arithmetic in his head all his life. Witnessed the First World War. The archive\'s most persistent instruction, passed to him: "Keep asking."',
+    branch:'main'
+  },
+  {
+    id:'edmund_mh', x:MX, y:2710,
+    name:'Edmund Marsh-Hale', dates:'1910–1978',
+    era:'Era IX · WWII', eraColor:'#1A2E48', link:'era-IX.html', key:false,
+    desc:'Structural engineer. Ministry of Supply, 1939–1945. Added the names to bridges the specification did not require him to name. His wife Dorothy, when asked: "Specification does not call for it. Physics does." Kept the family papers. Passed them intact.',
+    branch:'main'
+  },
+  {
+    id:'james', x:MX, y:2860,
+    name:'James Marsh-Hale', dates:'1945–',
+    era:'Era X · Contemporary', eraColor:'#C8A83C', link:'era-X.html', key:true,
+    james:true,
+    desc:'Professor of Medieval Land History (retired). Has been reading this archive since he was nine. Compiled it. In February 2024, after Eleanor Voss recovered Matilda\'s letter, he added two sentences to his finding aid: "She was writing to Eleanor. She always was." The custodian of nine centuries.',
+    branch:'main'
+  },
+
+  // ── VOSS BRANCH ─────────────────────────────────────────────────────────
+  {
+    id:'margery', x:VX, y:1160,
+    name:'Margery Hale + Thomas Voss', dates:'c.1352–?  ·  c.1350–c.1402',
+    era:'Voss Branch Begins · 1373', eraColor:'#3A5820', link:'era-II.html', key:false,
+    desc:'Margery: daughter of Thomas Hale, the plague survivor. Married Thomas Voss of Pershore, 1373, and left Halecroft. Matilda the beekeeper tracked her departure. Thomas Voss: from Pershore, origins unrecorded. His descendants would hold in Pershore for six centuries, unaware that the name Voss was grafted onto a Hale root in 1373.',
+    branch:'voss'
+  },
+  {
+    id:'alice_voss', x:VX, y:1320,
+    name:'Alice Voss', dates:'c.1378–c.1445',
+    era:'Voss · Late Medieval', eraColor:'#3A5820', link:null, key:false,
+    desc:"Daughter of Margery Hale and Thomas Voss. Matilda's recovered letter, 2024: 'Has her grandmother Aelswith\'s eyes.' Married Robert Carpenter, 1399. Held in Pershore.",
+    branch:'voss'
+  },
+  {
+    id:'voss_early', x:VX, y:1480,
+    name:'Thomas · Margaret · William · Anne Voss', dates:'c.1400–1568',
+    era:'Voss · Tudor', eraColor:'#3A5820', link:null, key:false,
+    desc:'Four generations in Pershore through the same religious upheavals as the Hales. William Voss became a draper — literate, a man of standing. The line held quietly in Pershore as the Hales held quietly in Halecroft, thirty miles east, asking the same question in a different register.',
+    branch:'voss', compressed:true
+  },
+  {
+    id:'john_fletcher', x:VX, y:1640,
+    name:'John Fletcher-Voss', dates:'c.1522–c.1625',
+    era:'Voss · Jacobean', eraColor:'#3A5820', link:null, key:false,
+    desc:'Schoolmaster who kept the Voss name through marriage. His son held Pershore through the Civil War: neutral. The same strategy as the Hales, thirty miles west. The parallel goes unremarked for another four centuries.',
+    branch:'voss'
+  },
+  {
+    id:'mary_voss', x:VX, y:1800,
+    name:'Mary Voss', dates:'c.1592–c.1685',
+    era:'Voss · Restoration', eraColor:'#3A5820', link:null, key:false,
+    desc:"Acquitted at Worcester assizes, 1623 — the charge and nature of the case are unrecorded, which is either a mercy or a testimony. Her son Samuel took her name: Samuel Partridge-Voss. The Voss line holds in Pershore.",
+    branch:'voss'
+  },
+  {
+    id:'george_voss', x:VX, y:1960,
+    name:'George Voss', dates:'c.1648–c.1720',
+    era:'Voss · Restoration', eraColor:'#3A5820', link:null, key:false,
+    desc:'Held in Pershore through the Restoration and Glorious Revolution. The Voss family\'s strategy was the same as the Hales\': survive the politics, tend the land.',
+    branch:'voss'
+  },
+  {
+    id:'hannah_voss', x:VX, y:2120,
+    name:'Hannah Voss', dates:'c.1820–c.1890',
+    era:'Voss · Victorian', eraColor:'#3A5820', link:null, key:false,
+    desc:"Schoolmistress at Pershore National School, 1847–1883. Inspector's report: 'makes the children feel that the past was not past but continuous.' The most Hale-like sentence written by anyone in the Voss line.",
+    branch:'voss'
+  },
+  {
+    id:'edmund_voss_p', x:VX, y:2260,
+    name:'Edmund Voss', dates:'1852–1921',
+    era:'Voss · Victorian', eraColor:'#3A5820', link:null, key:false,
+    desc:"Solicitor's clerk, Worcester. His diary, January 1888: 'I have been thinking about where the name comes from. I should look into this.' He did not look into it. The archive treats this with a gentle irony it does not permit itself in many places.",
+    branch:'voss'
+  },
+  {
+    id:'harold_voss', x:VX, y:2410,
+    name:'Harold Voss', dates:'1891–1967',
+    era:'Voss · Edwardian / WWI', eraColor:'#3A5820', link:null, key:false,
+    desc:'Served in the First World War, 1914–1918. Came home. Grew dahlias. Developed a sweet pea variety over thirty years of careful crossing — each year slightly different, the final form never declared finished. The Hale instinct under different conditions.',
+    branch:'voss'
+  },
+  {
+    id:'david_voss', x:VX, y:2560,
+    name:'David Voss', dates:'1941–2019',
+    era:'Voss · Contemporary', eraColor:'#3A5820', link:null, key:false,
+    desc:"History teacher, Harrogate. Assembled the shoebox of family papers. Wrote 'Property: keep' on the Post-it note. Did not know why it needed keeping. Kept it anyway. Left the shoebox to Eleanor.",
+    branch:'voss'
+  },
+  {
+    id:'eleanor_voss', x:VX, y:2710,
+    name:'Eleanor Voss', dates:'1983–',
+    era:'Era X · Contemporary', eraColor:'#C8A83C', link:'era-X.html', key:true, eleanor:true,
+    desc:"Medievalist, Bodleian Library, Oxford. Recovered Matilda's letter from the Hale archive in January 2024. Reconstructed the Voss genealogy from Margery's departure in 1373 to her own arrival at the Bodleian in 2018. The letter was addressed to her. It always was.",
+    branch:'voss'
+  },
+];
+
+// ── CONNECTIONS ───────────────────────────────────────────────────────────
+const CONNECTIONS = [
+  // Ranulf + Aelswith → Leofric (spouse connection then descent)
+  { from:'ranulf', to:'aelswith', style:'spouse' },
+  { from:'ranulf', to:'leofric', style:'line' },
+  // Leofric line descent
+  { from:'leofric', to:'robert_hale', style:'line' },
+  { from:'robert_hale', to:'william_elder', style:'line' },
+  { from:'william_elder', to:'edmund_med', style:'line' },
+  { from:'edmund_med', to:'william_younger', style:'line' },
+  { from:'william_younger', to:'richard_plague', style:'line' },
+  { from:'richard_plague', to:'thomas_survivor', style:'line' },
+  // Matilda connection (advocacy)
+  { from:'thomas_survivor', to:'matilda_bk', style:'advocacy' },
+  // Thomas → Voss branch
+  { from:'thomas_survivor', to:'margery', style:'branch' },
+  // Main line continues
+  { from:'thomas_survivor', to:'john_hale_1', style:'line' },
+  { from:'john_hale_1', to:'tudor_comp', style:'line' },
+  { from:'tudor_comp', to:'john_tudor', style:'line' },
+  { from:'john_tudor', to:'william_mon', style:'line' },
+  { from:'william_mon', to:'civil_war', style:'line' },
+  { from:'civil_war', to:'nathaniel', style:'line' },
+  { from:'nathaniel', to:'augusta', style:'line' },
+  { from:'nathaniel', to:'edmund_reg', style:'line' },
+  { from:'edmund_reg', to:'edmund_vict', style:'line' },
+  { from:'edmund_vict', to:'thomas_mh', style:'line' },
+  { from:'thomas_mh', to:'edmund_mh', style:'line' },
+  { from:'edmund_mh', to:'james', style:'line' },
+  // Voss descent
+  { from:'margery', to:'alice_voss', style:'voss' },
+  { from:'alice_voss', to:'voss_early', style:'voss' },
+  { from:'voss_early', to:'john_fletcher', style:'voss' },
+  { from:'john_fletcher', to:'mary_voss', style:'voss' },
+  { from:'mary_voss', to:'george_voss', style:'voss' },
+  { from:'george_voss', to:'hannah_voss', style:'voss' },
+  { from:'hannah_voss', to:'edmund_voss_p', style:'voss' },
+  { from:'edmund_voss_p', to:'harold_voss', style:'voss' },
+  { from:'harold_voss', to:'david_voss', style:'voss' },
+  { from:'david_voss', to:'eleanor_voss', style:'voss' },
+  // Discovery arc: Eleanor → Margery (the moment the lines re-join)
+  { from:'eleanor_voss', to:'margery', style:'discovery' },
+];
+
+// ── SVG BUILDER ───────────────────────────────────────────────────────────
+const NODE_R = 26;
+const KEY_R  = 34;
+const MAT_R  = 40;
+const SP_R   = 18;
+
+function personById(id) { return PEOPLE.find(p => p.id === id); }
+
+function getR(p) {
+  if (p.matilda) return MAT_R;
+  if (p.spouse)  return SP_R;
+  if (p.key)     return KEY_R;
+  return NODE_R;
+}
+
+function buildTree() {
+  const viewport = document.getElementById('treeViewport');
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.style.display = 'block';
+  svg.style.minWidth = W + 'px';
+
+  // ── DEFS ──
+  const defs = document.createElementNS(svgNS, 'defs');
+
+  // Gold glow for Matilda
+  function makeGlow(id, stdDev, color) {
+    const f = document.createElementNS(svgNS, 'filter');
+    f.setAttribute('id', id);
+    f.setAttribute('x','-50%'); f.setAttribute('y','-50%');
+    f.setAttribute('width','200%'); f.setAttribute('height','200%');
+    const blur = document.createElementNS(svgNS, 'feGaussianBlur');
+    blur.setAttribute('stdDeviation', stdDev); blur.setAttribute('result','blur');
+    const colorM = document.createElementNS(svgNS, 'feFlood');
+    colorM.setAttribute('flood-color', color); colorM.setAttribute('result','color');
+    const comp = document.createElementNS(svgNS, 'feComposite');
+    comp.setAttribute('in','color'); comp.setAttribute('in2','blur'); comp.setAttribute('operator','in'); comp.setAttribute('result','colorBlur');
+    const merge = document.createElementNS(svgNS, 'feMerge');
+    const mn1 = document.createElementNS(svgNS, 'feMergeNode'); mn1.setAttribute('in','colorBlur');
+    const mn2 = document.createElementNS(svgNS, 'feMergeNode'); mn2.setAttribute('in','SourceGraphic');
+    merge.appendChild(mn1); merge.appendChild(mn2);
+    f.appendChild(blur); f.appendChild(colorM); f.appendChild(comp); f.appendChild(merge);
+    return f;
+  }
+  defs.appendChild(makeGlow('goldGlow', '7', 'rgba(200,168,60,0.6)'));
+  defs.appendChild(makeGlow('eleanorGlow', '5', 'rgba(200,168,60,0.4)'));
+
+  // Add a sepia filter for portraits
+  const sepiaFilter = document.createElementNS(svgNS, 'filter');
+  sepiaFilter.setAttribute('id', 'portraitSepia');
+  sepiaFilter.setAttribute('color-interpolation-filters', 'sRGB');
+  const cm = document.createElementNS(svgNS, 'feColorMatrix');
+  cm.setAttribute('type', 'matrix');
+  cm.setAttribute('values', '0.40 0.35 0.10 0 0.05  0.28 0.28 0.08 0 0.03  0.10 0.10 0.05 0 0.01  0 0 0 0.85 0');
+  sepiaFilter.appendChild(cm);
+  defs.appendChild(sepiaFilter);
+
+  // Clip paths for portrait nodes
+  PEOPLE.forEach(p => {
+    if (!PORTRAIT_MAP[p.id]) return;
+    const r = getR(p);
+    const clip = document.createElementNS(svgNS, 'clipPath');
+    clip.setAttribute('id', 'clip-' + p.id);
+    const cc = document.createElementNS(svgNS, 'circle');
+    cc.setAttribute('r', String(r - 2));
+    clip.appendChild(cc);
+    defs.appendChild(clip);
+  });
+
+  svg.appendChild(defs);
+
+  // ── BACKGROUND ──
+  const bg = document.createElementNS(svgNS, 'rect');
+  bg.setAttribute('width', W); bg.setAttribute('height', H); bg.setAttribute('fill', '#080604');
+  svg.appendChild(bg);
+
+  // Push all content below the fixed header (nav ~40px + tree-header ~160px)
+  const contentG = document.createElementNS(svgNS, 'g');
+  contentG.setAttribute('transform', 'translate(0, 200)');
+  svg.appendChild(contentG);
+
+  // Era section dividers (subtle horizontal lines)
+  const ERAS = [
+    { y:170, label:'NORMAN · 1066–1150', color:'#C8A83C' },
+    { y:670, label:'EARLY MEDIEVAL · 1150–1300', color:'#7A5818' },
+    { y:920, label:'FAMINE ERA · 1300–1348', color:'#8A6820' },
+    { y:1080, label:'ERA II · THE PESTILENCE · 1348', color:'#6B1212' },
+    { y:1295, label:'ERA III · TUDOR · 1400–1560', color:'#7A1C1C' },
+    { y:1930, label:'ERA IV · CIVIL WAR · 1640–1660', color:'#1C2E4A' },
+    { y:2080, label:'ERA V · RESTORATION', color:'#6A5818' },
+    { y:2230, label:'ERA VI · REGENCY', color:'#5C1828' },
+    { y:2380, label:'ERA VII · VICTORIAN', color:'#3A0A18' },
+    { y:2530, label:'ERA VIII–IX · THE WORLD WARS', color:'#1A2E48' },
+    { y:2820, label:'ERA X · CONTEMPORARY · 2024–2026', color:'#C8A83C' },
+  ];
+  ERAS.forEach(era => {
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', '30'); line.setAttribute('x2', W - 30);
+    line.setAttribute('y1', era.y); line.setAttribute('y2', era.y);
+    line.setAttribute('stroke', era.color.replace(')', ',0.08)').replace('rgb','rgba').replace('#', '').replace(/^/,'rgba(').replace(/^rgba\(([0-9a-f]{6})/i, (m,h) => {
+      const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+      return `rgba(${r},${g},${b}`;
+    }) );
+    // Simple approach: just hardcode stroke color
+    line.setAttribute('stroke', 'rgba(200,168,60,0.05)');
+    line.setAttribute('stroke-width', '1');
+    contentG.appendChild(line);
+    // Era label
+    const et = document.createElementNS(svgNS, 'text');
+    et.setAttribute('x', W - 32); et.setAttribute('y', era.y - 5);
+    et.setAttribute('text-anchor', 'end');
+    et.setAttribute('font-family', "'Courier New', monospace");
+    et.setAttribute('font-size', '7.5');
+    et.setAttribute('fill', 'rgba(200,168,60,0.2)');
+    et.setAttribute('letter-spacing', '1.5');
+    et.textContent = era.label;
+    contentG.appendChild(et);
+  });
+
+  // Column headers
+  function addText(x, y, txt, opts={}) {
+    const t = document.createElementNS(svgNS, 'text');
+    t.setAttribute('x', x); t.setAttribute('y', y);
+    t.setAttribute('text-anchor', opts.anchor || 'middle');
+    t.setAttribute('font-family', opts.font || 'Georgia, serif');
+    t.setAttribute('font-size', opts.size || '11');
+    t.setAttribute('fill', opts.fill || '#4A3A20');
+    t.setAttribute('letter-spacing', opts.ls || '2');
+    if (opts.style) t.setAttribute('font-style', opts.style);
+    if (opts.weight) t.setAttribute('font-weight', opts.weight);
+    t.textContent = txt;
+    return t;
+  }
+  contentG.appendChild(addText(MX, 48, 'THE HALE LINE', { font:"'Cinzel', Georgia, serif", size:'12', fill:'rgba(200,168,60,0.4)', weight:'600', ls:'3' }));
+  contentG.appendChild(addText(VX, 48, 'VOSS BRANCH', { font:"'Cinzel', Georgia, serif", size:'10', fill:'rgba(58,88,32,0.6)', weight:'600', ls:'3' }));
+  contentG.appendChild(addText(VX, 1100, 'DISCOVERED 2024', { font:"'Courier New', monospace", size:'7', fill:'rgba(58,88,32,0.35)', ls:'2' }));
+
+  // Guide lines
+  [[MX, 60, H-20, '#1A1610'], [VX, 1120, H-20, '#141A0E']].forEach(([x, y1, y2, stroke]) => {
+    const gl = document.createElementNS(svgNS, 'line');
+    gl.setAttribute('x1', x); gl.setAttribute('y1', y1);
+    gl.setAttribute('x2', x); gl.setAttribute('y2', y2);
+    gl.setAttribute('stroke', stroke); gl.setAttribute('stroke-width', '1');
+    gl.setAttribute('stroke-dasharray', '3,9');
+    contentG.appendChild(gl);
+  });
+
+  // ── CONNECTIONS ──
+  CONNECTIONS.forEach(conn => {
+    const a = personById(conn.from);
+    const b = personById(conn.to);
+    if (!a || !b) return;
+
+    const ra = getR(a), rb = getR(b);
+    const x1 = a.x, y1 = a.y, x2 = b.x, y2 = b.y;
+
+    if (conn.style === 'discovery') {
+      // Dramatic arc from Eleanor Voss back up to Margery (where branch started)
+      const path = document.createElementNS(svgNS, 'path');
+      path.setAttribute('id', 'discoveryPath');
+      const cp1x = x1 + 100, cp1y = (y1 + y2) / 2 + 100;
+      const cp2x = x2 + 100, cp2y = (y1 + y2) / 2 - 100;
+      path.setAttribute('d', `M ${x1} ${y1 - rb} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2 + rb}`);
+      path.setAttribute('stroke', 'rgba(200,168,60,0.4)');
+      path.setAttribute('stroke-width', '1.5');
+      path.setAttribute('stroke-dasharray', '5,5');
+      path.setAttribute('fill', 'none');
+      contentG.appendChild(path);
+
+      const arcLabel = document.createElementNS(svgNS, 'text');
+      arcLabel.setAttribute('font-family', 'Georgia, serif');
+      arcLabel.setAttribute('font-size', '9');
+      arcLabel.setAttribute('fill', 'rgba(200,168,60,0.45)');
+      arcLabel.setAttribute('font-style', 'italic');
+      arcLabel.setAttribute('letter-spacing', '1');
+      const tp = document.createElementNS(svgNS, 'textPath');
+      tp.setAttribute('href', '#discoveryPath');
+      tp.setAttribute('startOffset', '40%');
+      tp.setAttribute('text-anchor', 'middle');
+      tp.textContent = 'Discovered 2024';
+      arcLabel.appendChild(tp);
+      contentG.appendChild(arcLabel);
+      return;
+    }
+
+    if (conn.style === 'spouse') {
+      // Horizontal spouse link
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', x1 + ra); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2 - rb); line.setAttribute('y2', y2);
+      line.setAttribute('stroke', 'rgba(200,168,60,0.15)');
+      line.setAttribute('stroke-width', '1');
+      contentG.appendChild(line);
+      return;
+    }
+
+    if (conn.style === 'advocacy') {
+      // Dotted advocacy line from Thomas to Matilda
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', x1 - ra); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2 + rb); line.setAttribute('y2', y2);
+      line.setAttribute('stroke', 'rgba(200,168,60,0.2)');
+      line.setAttribute('stroke-width', '1');
+      line.setAttribute('stroke-dasharray', '3,5');
+      contentG.appendChild(line);
+      return;
+    }
+
+    const mid = (y1 + y2) / 2;
+    const path = document.createElementNS(svgNS, 'path');
+    const startY = y1 + ra;
+    const endY = y2 - rb;
+    const d = `M ${x1} ${startY} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${endY}`;
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+
+    if (conn.style === 'voss') {
+      path.setAttribute('stroke', '#1A2E10'); path.setAttribute('stroke-width', '1.2');
+    } else if (conn.style === 'branch') {
+      path.setAttribute('stroke', 'rgba(58,88,32,0.5)'); path.setAttribute('stroke-width', '1.2');
+      path.setAttribute('stroke-dasharray', '4,4');
+    } else {
+      path.setAttribute('stroke', '#2A2010'); path.setAttribute('stroke-width', '1.5');
+    }
+    contentG.appendChild(path);
+  });
+
+  // ── NODES ──
+  PEOPLE.forEach(person => {
+    const r = getR(person);
+    const g = document.createElementNS(svgNS, 'g');
+    g.setAttribute('transform', `translate(${person.x}, ${person.y})`);
+    g.style.cursor = person.link ? 'pointer' : 'default';
+
+    // Glow for key characters
+    if (person.matilda) {
+      const glow = document.createElementNS(svgNS, 'circle');
+      glow.setAttribute('r', r + 12);
+      glow.setAttribute('fill', 'rgba(200,168,60,0.06)');
+      glow.setAttribute('stroke', 'rgba(200,168,60,0.12)');
+      glow.setAttribute('stroke-width', '1');
+      g.appendChild(glow);
+    }
+    if (person.eleanor || person.james) {
+      const glow = document.createElementNS(svgNS, 'circle');
+      glow.setAttribute('r', r + 8);
+      glow.setAttribute('fill', 'rgba(200,168,60,0.04)');
+      glow.setAttribute('stroke', 'rgba(200,168,60,0.1)');
+      glow.setAttribute('stroke-width', '1');
+      g.appendChild(glow);
+    }
+
+    // Node circle
+    const circle = document.createElementNS(svgNS, 'circle');
+    circle.setAttribute('r', r);
+
+    if (person.plague) {
+      circle.setAttribute('fill', '#10070A');
+      circle.setAttribute('stroke', '#6B1212');
+      circle.setAttribute('stroke-width', '1.5');
+    } else if (person.matilda) {
+      circle.setAttribute('fill', '#1A1408');
+      circle.setAttribute('stroke', '#C8A83C');
+      circle.setAttribute('stroke-width', '2.5');
+      circle.setAttribute('filter', 'url(#goldGlow)');
+    } else if (person.eleanor) {
+      circle.setAttribute('fill', '#0E1010');
+      circle.setAttribute('stroke', '#C8A83C');
+      circle.setAttribute('stroke-width', '2');
+      circle.setAttribute('filter', 'url(#eleanorGlow)');
+    } else if (person.key) {
+      circle.setAttribute('fill', '#141008');
+      circle.setAttribute('stroke', '#C8A83C');
+      circle.setAttribute('stroke-width', '2');
+    } else if (person.spouse) {
+      circle.setAttribute('fill', '#100E08');
+      circle.setAttribute('stroke', 'rgba(200,168,60,0.4)');
+      circle.setAttribute('stroke-width', '1');
+      circle.setAttribute('stroke-dasharray', '2,2');
+    } else if (person.branch === 'voss') {
+      circle.setAttribute('fill', '#090D09');
+      circle.setAttribute('stroke', '#2A4018');
+      circle.setAttribute('stroke-width', '1.5');
+    } else if (person.compressed) {
+      circle.setAttribute('fill', '#0E0C08');
+      circle.setAttribute('stroke', '#2A2010');
+      circle.setAttribute('stroke-width', '1');
+      circle.setAttribute('stroke-dasharray', '2,3');
+    } else {
+      circle.setAttribute('fill', '#0E0C08');
+      circle.setAttribute('stroke', '#2A2010');
+      circle.setAttribute('stroke-width', '1.5');
+    }
+    g.appendChild(circle);
+
+    // Portrait image (for key characters that have one)
+    if (PORTRAIT_MAP[person.id]) {
+      const img = document.createElementNS(svgNS, 'image');
+      img.setAttribute('href', PORTRAIT_MAP[person.id]);
+      img.setAttribute('x', String(-(r - 2)));
+      img.setAttribute('y', String(-(r - 2)));
+      img.setAttribute('width', String((r - 2) * 2));
+      img.setAttribute('height', String((r - 2) * 2));
+      img.setAttribute('clip-path', `url(#clip-${person.id})`);
+      img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+      img.setAttribute('filter', 'url(#portraitSepia)');
+      img.setAttribute('opacity', '0.75');
+      g.appendChild(img);
+    }
+
+    // Inner ring for key figures
+    if (person.key && !person.spouse) {
+      const inner = document.createElementNS(svgNS, 'circle');
+      inner.setAttribute('r', r - 7);
+      inner.setAttribute('fill', 'none');
+      inner.setAttribute('stroke', person.matilda ? 'rgba(200,168,60,0.22)' : 'rgba(200,168,60,0.12)');
+      inner.setAttribute('stroke-width', '1');
+      g.appendChild(inner);
+    }
+
+    // Era colour dot
+    const dot = document.createElementNS(svgNS, 'circle');
+    dot.setAttribute('r', '3.5');
+    dot.setAttribute('cy', String(-r + 7));
+    dot.setAttribute('fill', person.eraColor);
+    g.appendChild(dot);
+
+    // Name text
+    const nameColor = person.matilda ? '#E8C84C'
+      : person.eleanor ? '#E8C84C'
+      : person.james ? '#D4A840'
+      : person.key ? '#C8A83C'
+      : person.plague ? '#8A3A3A'
+      : person.branch === 'voss' ? '#5A7840'
+      : person.spouse ? '#8A7240'
+      : '#7A6A4A';
+
+    const fontSize = person.matilda ? '10.5' : person.key ? '10' : person.spouse ? '8.5' : '9';
+    const fontWeight = person.key ? '600' : '400';
+
+    const nameParts = person.name.split(' ');
+    // For compressed nodes, show shorter version
+    const displayName = person.compressed ? (person.name.length > 22 ? person.name.substring(0,22) + '…' : person.name) : person.name;
+    const displayParts = displayName.split(' ');
+
+    if (displayParts.length <= 2 || displayName.length < 16) {
+      const t = document.createElementNS(svgNS, 'text');
+      t.setAttribute('y', '4'); t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('font-family', "'Cinzel', Georgia, serif");
+      t.setAttribute('font-size', fontSize); t.setAttribute('fill', nameColor);
+      t.setAttribute('font-weight', fontWeight);
+      t.textContent = displayName;
+      g.appendChild(t);
+    } else {
+      const half = Math.ceil(displayParts.length / 2);
+      const line1 = displayParts.slice(0, half).join(' ');
+      const line2 = displayParts.slice(half).join(' ');
+      [line1, line2].forEach((line, i) => {
+        const t = document.createElementNS(svgNS, 'text');
+        t.setAttribute('y', String(-5 + i * 13)); t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-family', "'Cinzel', Georgia, serif");
+        t.setAttribute('font-size', String(parseFloat(fontSize) - 0.5));
+        t.setAttribute('fill', nameColor); t.setAttribute('font-weight', fontWeight);
+        t.textContent = line;
+        g.appendChild(t);
+      });
+    }
+
+    // Dates
+    const dt = document.createElementNS(svgNS, 'text');
+    dt.setAttribute('y', String(r + 13)); dt.setAttribute('text-anchor', 'middle');
+    dt.setAttribute('font-family', 'Georgia, serif'); dt.setAttribute('font-size', '8');
+    dt.setAttribute('fill', '#2E2610'); dt.setAttribute('font-style', 'italic');
+    dt.textContent = person.dates;
+    g.appendChild(dt);
+
+    // Events
+    if (person.link) g.addEventListener('click', () => { window.location.href = person.link; });
+    g.addEventListener('mouseenter', (e) => showTooltip(e, person));
+    g.addEventListener('mouseleave', hideTooltip);
+
+    // Store reference for search
+    svgNodeMap[person.id] = g;
+
+    contentG.appendChild(g);
+  });
+
+  viewport.appendChild(svg);
+
+  // Scroll to show the Norman era at top (with header offset)
+  viewport.scrollTop = 0;
+  viewport.scrollLeft = Math.max(0, MX - viewport.clientWidth / 2);
+}
+
+// ── TOOLTIP ───────────────────────────────────────────────────────────────
+const tooltip    = document.getElementById('tooltip');
+const ttName     = document.getElementById('tt-name');
+const ttEra      = document.getElementById('tt-era');
+const ttDesc     = document.getElementById('tt-desc');
+const ttLink     = document.getElementById('tt-link');
+const ttPortrait = document.getElementById('tt-portrait');
+
+function showTooltip(e, p) {
+  ttName.textContent  = p.name;
+  ttEra.textContent   = p.dates + ' · ' + p.era;
+  ttDesc.textContent  = p.desc;
+  ttLink.textContent  = p.link ? '→ Open era page' : '';
+  const portraitSrc = PORTRAIT_MAP[p.id];
+  if (portraitSrc) {
+    ttPortrait.src = portraitSrc;
+    ttPortrait.alt = p.name;
+    ttPortrait.classList.add('visible');
+    tooltip.style.width = '290px';
+  } else {
+    ttPortrait.src = '';
+    ttPortrait.classList.remove('visible');
+    tooltip.style.width = '270px';
+  }
+  tooltip.classList.add('visible');
+  moveTooltip(e);
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+document.addEventListener('mousemove', e => { if (tooltip.classList.contains('visible')) moveTooltip(e); });
+function moveTooltip(e) {
+  const x = e.clientX + 18, y = e.clientY + 12;
+  const tw = 270, th = 150;
+  tooltip.style.left = (x + tw > window.innerWidth ? x - tw - 36 : x) + 'px';
+  tooltip.style.top  = (y + th > window.innerHeight ? y - th - 24 : y) + 'px';
+}
+
+// ── KEYBOARD NAV ──────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  const vp = document.getElementById('treeViewport');
+  const step = 140;
+  if (e.key === 'ArrowDown')  { vp.scrollTop  += step; e.preventDefault(); }
+  if (e.key === 'ArrowUp')    { vp.scrollTop  -= step; e.preventDefault(); }
+  if (e.key === 'ArrowLeft')  { vp.scrollLeft -= step; e.preventDefault(); }
+  if (e.key === 'ArrowRight') { vp.scrollLeft += step; e.preventDefault(); }
+});
+
+// ── MATILDA LINK (when archive complete) ──────────────────────────────────
+function tryMatildaLink() {
+  try {
+    if (localStorage.getItem('hale_complete') === 'true') {
+      const link = document.getElementById('secret-inner-link');
+      if (link) link.style.display = '';
+    }
+  } catch(e) {}
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
+const svgNodeMap = {};
+
+function matchesPerson(p, q) {
+  if (!q) return true;
+  const hay = (p.name + ' ' + p.dates + ' ' + p.era + ' ' + (p.desc || '')).toLowerCase();
+  return hay.includes(q.toLowerCase());
+}
+
+function applyTreeSearch(q) {
+  const isActive = q && q.length > 0;
+  PEOPLE.forEach(p => {
+    const g = svgNodeMap[p.id];
+    if (!g) return;
+    if (!isActive) {
+      g.style.opacity = '';
+      g.style.transition = 'opacity 0.3s';
+    } else if (matchesPerson(p, q)) {
+      g.style.opacity = '1';
+      g.style.transition = 'opacity 0.3s';
+    } else {
+      g.style.opacity = '0.07';
+      g.style.transition = 'opacity 0.3s';
+    }
+  });
+}
+
+function applyListSearch(q) {
+  const container = document.getElementById('list-view');
+  if (!container) return;
+  const persons = container.querySelectorAll('.lv-person');
+  persons.forEach(el => {
+    const personId = el.dataset.personId;
+    const p = personId ? personById(personId) : null;
+    if (!q || !q.length) {
+      el.style.opacity = '';
+    } else if (p && matchesPerson(p, q)) {
+      el.style.opacity = '1';
+    } else {
+      el.style.opacity = '0.12';
+    }
+  });
+}
+
+const treeSearchInput = document.getElementById('tree-search');
+const treeSearchClear = document.getElementById('tree-search-clear');
+
+treeSearchInput.addEventListener('input', function() {
+  const q = this.value.trim();
+  treeSearchClear.style.display = q ? 'block' : 'none';
+  applyTreeSearch(q);
+  applyListSearch(q);
+});
+
+treeSearchClear.addEventListener('click', function() {
+  treeSearchInput.value = '';
+  this.style.display = 'none';
+  applyTreeSearch('');
+  applyListSearch('');
+  treeSearchInput.focus();
+});
+
+// Prevent search input from triggering scroll when focused
+treeSearchInput.addEventListener('keydown', e => { e.stopPropagation(); });
+
+// ── LIST VIEW ─────────────────────────────────────────────────────────────
+const ERA_GROUPS = [
+  { label:'Era I · Norman · 1066–1150',         ids:['ranulf','aelswith','leofric'] },
+  { label:'Era II · Early Medieval & Plague',    ids:['robert_hale','william_elder','edmund_med','william_younger','richard_plague','thomas_survivor','matilda_bk'] },
+  { label:'Era III · Tudor · 1400–1560',         ids:['john_hale_1','tudor_comp','john_tudor','william_mon'] },
+  { label:'Era IV · Civil War · 1640–1689',      ids:['civil_war'] },
+  { label:'Era V · Restoration & Georgian',      ids:['nathaniel'] },
+  { label:'Era VI · Regency · 1771–1842',        ids:['augusta','edmund_reg'] },
+  { label:'Era VII · Victorian',                  ids:['edmund_vict'] },
+  { label:'Era VIII · Edwardian & WWI',          ids:['thomas_mh'] },
+  { label:'Era IX · WWII',                       ids:['edmund_mh'] },
+  { label:'Era X · Contemporary',                ids:['james','eleanor_voss'] },
+  { label:'Voss Branch · 1373–2026',             ids:['margery','alice_voss','voss_early','john_fletcher','mary_voss','george_voss','hannah_voss','edmund_voss_p','harold_voss','david_voss'] },
+];
+
+function buildListView() {
+  const container = document.getElementById('list-view');
+  container.innerHTML = '';
+  ERA_GROUPS.forEach(function(group) {
+    const block = document.createElement('div');
+    block.className = 'lv-era-block';
+    const heading = document.createElement('div');
+    heading.className = 'lv-era-heading';
+    heading.textContent = group.label;
+    block.appendChild(heading);
+    group.ids.forEach(function(id) {
+      const p = personById(id);
+      if (!p) return;
+      const el = p.link ? document.createElement('a') : document.createElement('div');
+      el.className = 'lv-person';
+      el.dataset.personId = p.id;
+      if (p.link) { el.href = p.link; }
+      // Portrait or dot
+      const portraitSrc = PORTRAIT_MAP[p.id];
+      if (portraitSrc) {
+        const wrap = document.createElement('div');
+        wrap.className = 'lv-portrait';
+        const img = document.createElement('img');
+        img.src = portraitSrc; img.alt = p.name;
+        img.loading = 'lazy';
+        wrap.appendChild(img);
+        el.appendChild(wrap);
+      } else {
+        const dot = document.createElement('div');
+        dot.className = 'lv-dot';
+        const inner = document.createElement('div');
+        inner.className = 'lv-dot-inner';
+        inner.style.background = p.eraColor || '#3A3020';
+        dot.appendChild(inner);
+        el.appendChild(dot);
+      }
+      // Text
+      const text = document.createElement('div');
+      text.className = 'lv-text';
+      const name = document.createElement('div');
+      name.className = 'lv-name' + (p.key ? ' lv-key' : '');
+      name.textContent = p.name;
+      const dates = document.createElement('div');
+      dates.className = 'lv-dates';
+      dates.textContent = p.dates + ' · ' + p.era;
+      text.appendChild(name);
+      text.appendChild(dates);
+      el.appendChild(text);
+      if (p.link) {
+        const arr = document.createElement('div');
+        arr.className = 'lv-arrow';
+        arr.textContent = '→';
+        el.appendChild(arr);
+      }
+      block.appendChild(el);
+    });
+    container.appendChild(block);
+  });
+}
+
+let listViewBuilt = false;
+document.getElementById('view-toggle').addEventListener('click', function() {
+  const lv = document.getElementById('list-view');
+  const vp = document.getElementById('treeViewport');
+  const hint = document.getElementById('scrollHint');
+  const isVisible = lv.classList.contains('visible');
+  if (isVisible) {
+    lv.classList.remove('visible');
+    vp.style.display = '';
+    if (hint) hint.style.display = '';
+    this.textContent = '☰ List View';
+  } else {
+    if (!listViewBuilt) { buildListView(); listViewBuilt = true; applyListSearch(treeSearchInput.value.trim()); }
+    lv.classList.add('visible');
+    vp.style.display = 'none';
+    if (hint) hint.style.display = 'none';
+    this.textContent = '⊞ Tree View';
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  buildTree();
+  tryMatildaLink();
+});
+window.addEventListener('resize', () => {
+  // Rebuild on resize for correct viewport sizing
+  const vp = document.getElementById('treeViewport');
+  vp.innerHTML = '';
+  buildTree();
+});
+</script>
+<script src="inquiry.js"></script>
+</body>
+</html>

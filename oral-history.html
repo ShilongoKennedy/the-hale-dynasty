@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Oral History — MSS. Hale-Marsh Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 17px; }
+    body {
+      background: #1A1008;
+      color: #C8B890;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .era-nav {
+      background: #0A0804;
+      border-bottom: 1px solid rgba(200,168,40,0.15);
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .era-nav a { color: #8A7850; text-decoration: none; }
+    .era-nav a:hover { color: #C8A830; }
+    .era-nav .vol-marker { color: #4A3820; }
+
+    .oral-header {
+      padding: 60px 40px 50px;
+      text-align: center;
+      border-bottom: 1px solid rgba(200,168,40,0.15);
+    }
+    .oral-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.3em;
+      color: #6A5830;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .oral-title {
+      font-family: 'Playfair Display SC', 'Cinzel', Georgia, serif;
+      font-size: clamp(1.6em, 4vw, 2.8em);
+      color: #D8C890;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .oral-subtitle {
+      font-style: italic;
+      color: #7A6840;
+      font-size: 0.88em;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .oral-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 30px 100px;
+    }
+
+    .note {
+      border-left: 2px solid rgba(200,168,40,0.25);
+      padding: 14px 18px;
+      background: rgba(200,168,40,0.04);
+      font-style: italic;
+      font-size: 0.82em;
+      color: #6A5A30;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    /* CASSETTE PLAYER */
+    .player {
+      background: #0F0A06;
+      border: 1px solid rgba(200,168,40,0.2);
+      padding: 32px 36px;
+      margin-bottom: 40px;
+    }
+
+    .era-selector {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 600px) {
+      .era-selector { grid-template-columns: repeat(2, 1fr); }
+    }
+    .era-btn {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.2);
+      color: #7A6840;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .era-btn:hover { border-color: rgba(200,168,40,0.5); color: #C8A830; }
+    .era-btn.active {
+      background: rgba(200,168,40,0.1);
+      border-color: rgba(200,168,40,0.6);
+      color: #C8A830;
+    }
+
+    /* The cassette window */
+    .cassette {
+      background: #080604;
+      border: 1px solid rgba(200,168,40,0.15);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .cassette-era {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #5A4820;
+      margin-bottom: 8px;
+    }
+    .cassette-title {
+      font-family: 'Playfair Display SC', Georgia, serif;
+      font-size: 0.92em;
+      color: #C8B080;
+      margin-bottom: 4px;
+    }
+    .cassette-speaker {
+      font-style: italic;
+      font-size: 0.78em;
+      color: #5A4820;
+    }
+
+    /* Progress / tape reel visual */
+    .tape-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .reel {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid rgba(200,168,40,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .reel-inner {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(200,168,40,0.15);
+      transition: transform 0.1s;
+    }
+    .reel.spinning .reel-inner {
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .tape-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(200,168,40,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .tape-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #8B6820, #C8A830);
+      width: 0%;
+      transition: width 0.3s linear;
+      border-radius: 3px;
+    }
+    .tape-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      color: #5A4820;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      min-width: 38px;
+      text-align: right;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .ctrl-btn {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.3);
+      color: #8B6820;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .ctrl-btn:hover { border-color: rgba(200,168,40,0.7); color: #C8A830; }
+    .ctrl-btn.playing {
+      background: rgba(200,168,40,0.1);
+      border-color: rgba(200,168,40,0.5);
+      color: #C8A830;
+    }
+    .ctrl-btn:disabled { opacity: 0.25; cursor: default; }
+
+    .speed-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .speed-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4A3820;
+    }
+    .speed-btn {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.15);
+      color: #5A4820;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.1em;
+      padding: 3px 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .speed-btn.active { border-color: rgba(200,168,40,0.5); color: #C8A830; }
+    .speed-btn:hover { color: #C8A830; }
+
+    /* Transcript display */
+    .transcript {
+      background: #080604;
+      border: 1px solid rgba(200,168,40,0.1);
+      padding: 24px 28px;
+      min-height: 120px;
+      font-size: 0.88em;
+      color: #A09070;
+      line-height: 2;
+      font-style: italic;
+      position: relative;
+      transition: color 0.4s;
+    }
+    .transcript.playing { color: #C8B890; }
+    .transcript .word { transition: opacity 0.1s; }
+    .transcript .word.spoken { color: #E0D0A8; }
+
+    .transcript-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4A3820;
+      margin-bottom: 12px;
+    }
+
+    .no-synth-notice {
+      display: none;
+      background: rgba(200,168,40,0.06);
+      border: 1px solid rgba(200,168,40,0.2);
+      padding: 14px 18px;
+      font-size: 0.8em;
+      color: #7A6840;
+      font-style: italic;
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .oral-content { padding: 36px 16px 70px; }
+      .player { padding: 22px 18px; }
+      .controls { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="era-nav">
+    <a href="index.html">← The Collection</a>
+    <span class="vol-marker">MSS. Hale-Marsh · Oral History · Ten Passages · Voiced</span>
+    <a href="documents.html">All Documents →</a>
+  </nav>
+
+  <header class="oral-header">
+    <div class="oral-label">The Hale Dynasty · Supplementary Volume · Oral Record</div>
+    <h1 class="oral-title">The Oral History</h1>
+    <p class="oral-subtitle">Ten passages — one from each volume of the MSS. Hale-Marsh Collection — selected by Eleanor Voss for reading aloud. Select an era. Press play. The archive will speak.</p>
+  </header>
+
+  <div class="oral-content">
+
+    <div class="note">
+      What follows is not a recording. The voices you will hear are synthetic — generated by your browser's speech engine, which has no idea what it is saying. The editors chose this deliberately. They did not want to reconstruct real voices. They wanted the distance of the machine. The words are real. The voice is the instrument. You are the listener. That part has always been true.
+    </div>
+
+    <div class="player">
+
+      <!-- Era selector -->
+      <div class="era-selector">
+        <button class="era-btn active" onclick="selectEra(0)">Era I<br><span style="font-size:0.85em;opacity:0.7">Norman</span></button>
+        <button class="era-btn" onclick="selectEra(1)">Era II<br><span style="font-size:0.85em;opacity:0.7">Pestilence</span></button>
+        <button class="era-btn" onclick="selectEra(2)">Era III<br><span style="font-size:0.85em;opacity:0.7">Tudor</span></button>
+        <button class="era-btn" onclick="selectEra(3)">Era IV<br><span style="font-size:0.85em;opacity:0.7">Civil War</span></button>
+        <button class="era-btn" onclick="selectEra(4)">Era V<br><span style="font-size:0.85em;opacity:0.7">Georgian</span></button>
+        <button class="era-btn" onclick="selectEra(5)">Era VI<br><span style="font-size:0.85em;opacity:0.7">Regency</span></button>
+        <button class="era-btn" onclick="selectEra(6)">Era VII<br><span style="font-size:0.85em;opacity:0.7">Victorian</span></button>
+        <button class="era-btn" onclick="selectEra(7)">Era VIII<br><span style="font-size:0.85em;opacity:0.7">Great War</span></button>
+        <button class="era-btn" onclick="selectEra(8)">Era IX<br><span style="font-size:0.85em;opacity:0.7">WWII</span></button>
+        <button class="era-btn" onclick="selectEra(9)">Era X<br><span style="font-size:0.85em;opacity:0.7">Contemporary</span></button>
+      </div>
+
+      <!-- Cassette window -->
+      <div class="cassette">
+        <div class="cassette-era" id="cass-era">Vol. I · Norman · 1072–1150</div>
+        <div class="cassette-title" id="cass-title">The First Holding</div>
+        <div class="cassette-speaker" id="cass-speaker">From the grant notation, c. 1072 · Read by Eleanor Voss, 2024</div>
+      </div>
+
+      <!-- Tape / progress -->
+      <div class="tape-row">
+        <div class="reel" id="reel-l"><div class="reel-inner"></div></div>
+        <div class="tape-bar-wrap"><div class="tape-bar" id="tape-bar"></div></div>
+        <div class="reel" id="reel-r"><div class="reel-inner"></div></div>
+        <div class="tape-time" id="tape-time">0:00</div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="ctrl-btn" id="play-btn" onclick="togglePlay()">▶ Play</button>
+        <button class="ctrl-btn" id="stop-btn" onclick="stopPlay()" disabled>■ Stop</button>
+      </div>
+
+      <div class="speed-row">
+        <span class="speed-label">Rate:</span>
+        <button class="speed-btn active" onclick="setRate(0.85)">Slow</button>
+        <button class="speed-btn" onclick="setRate(1.0)">Normal</button>
+        <button class="speed-btn" onclick="setRate(1.2)">Fast</button>
+      </div>
+
+      <div class="no-synth-notice" id="no-synth-notice">
+        Your browser does not support the Web Speech API. The text of the selected passage is shown below — you are welcome to read it aloud yourself. The editors consider this an acceptable alternative.
+      </div>
+
+    </div><!-- end player -->
+
+    <!-- Transcript -->
+    <div class="transcript-label">Transcript</div>
+    <div class="transcript" id="transcript-display">
+      Select an era above and press Play to begin.
+    </div>
+
+  </div>
+
+  <script>
+  var passages = [
+    {
+      era: 'Vol. I · Norman · 1072–1150',
+      title: 'The First Holding',
+      speaker: 'From the manor records, c. 1072 · Read by Eleanor Voss, 2024',
+      text: 'There is a name at the beginning of the record. It is Aldric. Aldric of the Hale. He held this land before the conquest, and he held it after, though not in the same way, and not by the same right. The grant — if we call it a grant, which is perhaps too generous a word for what happened — records him as the tenant, the holder, the man responsible for the dues and the ditches and the church-scot and the provision of a man-at-arms when required. He provided everything that was asked of him. He received, in return, the right to remain. This is the first record of the family. They remained. That is what the record says. They remained.'
+    },
+    {
+      era: 'Vol. II · The Pestilence · 1348–1382',
+      title: 'What Thomas Hale Wrote to His Son',
+      speaker: 'From the Remembrance of Thomas Hale, 1382',
+      text: 'When thou dost not know what else to do: see to the pig. The world will be confusing and the people thou hast loved will be gone and thou wilt not know what is required of thee. See to the pig. The pig doth not require thee to understand anything. It requireth thee to do the next thing. Do the next thing and then the thing after that, and in this manner the days will pass, and thou wilt still be here when they are done passing, and the land will still be here, and that is enough. We are a family that holds what it is given. Keep asking whether thou hast done enough. A family that keeps asking will keep the land.'
+    },
+    {
+      era: 'Vol. III · Tudor · 1487–1560',
+      title: 'The Account of the New Hall',
+      speaker: 'From the estate accounts of William Hale, 1521',
+      text: 'The hall is begun. William Hale, esquire, of Halecroft in the county of Worcester, caused the old hall — which his grandfather had repaired in the year of Bosworth and which was by this time beyond reasonable repair — to be pulled down, and a new hall of brick and timber to be built in its place. The work was done by men from Worcester and took two years and cost more than William had intended, as building always does. When the hall was finished, William walked through it with his wife Margaret and his son John, who was seven years old. John asked his father if the hall would last. William said: If we keep asking whether we have done enough, it will last. The boy did not appear to find this satisfactory. It was, nonetheless, the correct answer.'
+    },
+    {
+      era: 'Vol. IV · Civil War · 1642–1660',
+      title: 'Eleanor Hale\'s Management',
+      speaker: 'From Eleanor Hale\'s letter to the Trustees, November 1650',
+      text: 'Gentlemen. I write to draw your attention to an error in the calculation of the sequestration fine as submitted by your office. The acreage of the South Field has been assessed at thirty-two acres and three roods. The correct acreage, as recorded in the survey of sixteen-thirty-one and confirmed by my own measurement this past September, is twenty-nine acres and one rood. The difference is material. I would be grateful if you would revise the figure accordingly. I remain your obedient servant. Eleanor Hale. She was right. They revised it. She managed this estate alone for fourteen years, and she never once asked for help, and the estate survived.'
+    },
+    {
+      era: 'Vol. V · Georgian · 1720–1762',
+      title: 'Richard Hale to His Brother',
+      speaker: 'From the letter of Richard Hale, June 1749',
+      text: 'Dear Charles. I write again on the question of the South Field drainage, which I raised in March and in May and which I believe my previous letters have addressed at some length. I am aware that the management of the estate is not among your principal concerns. I do not say this as a reproach but as an observation. The estate will, I believe, support the current arrangements for some further years, provided that the drainage is attended to and the roof of the barn is repaired before the winter. I enclose the estimate for both works. I would be grateful for your instruction, or failing that, your permission to proceed on my own judgment. Your obedient brother, Richard. Charles did not reply to this letter. Richard proceeded on his own judgment. He always did.'
+    },
+    {
+      era: 'Vol. VI · Regency · 1800–1858',
+      title: 'Augusta\'s Account Book',
+      speaker: 'From the household accounts of Augusta Hale, 1840',
+      text: 'Home Close: harvest fair, twelve bushels to the acre. Better than last year. The Great Meadow: cattle doing well, twelve head, sold three at Martimas, retained nine for winter. The orchard: apples good, pears indifferent, the Halecroft damson excellent, sold to the Pershore preserve-maker at three shillings the bushel, fourteen bushels. The old apple tree by the wall — I believe it was here before my time and before my mother\'s time. It still bears. The marsh ground: drainage attempted this year, partial success only. The engineer was honest about what could be done. I regret the money but not the attempt. The wood: I sold timber last year and I regret it still. The wood is worth more standing.'
+    },
+    {
+      era: 'Vol. VII · Victorian · 1870–1882',
+      title: 'The Death Notice',
+      speaker: 'From the Worcestershire Advertiser, August 1882',
+      text: 'Deaths. Hale. On the fourteenth of August, at Whitmore Park, Shropshire, Edmund Hale, Esquire, of Harton Hall, Worcestershire, in the forty-first year of his age. The last of his line in the main branch. A man of considerable attainment and wide acquaintance in the county. The estate passes to the trustees. The funeral was held privately, at the family\'s request. The burial is at Saint Wulfstan\'s, Halecroft, where the Hale family has been baptised, married, and buried since the year ten sixty-seven. The stone is plain. The inscription records his name and dates and nothing else. It is consistent with his wishes as recorded.'
+    },
+    {
+      era: 'Vol. VIII · Great War · 1914–1919',
+      title: 'Dorothy\'s Letter',
+      speaker: 'From the letter of Dorothy Marsh to her sister, September 1916',
+      text: 'Dear Elsie. I cannot write much. Henry\'s things came back last week and I have put them in his room and I have not been able to go in since. I keep thinking I should do something with them but I cannot think what the something would be. Arthur is all right, he says he is all right, I believe he is not all right. I do not know what to do about Arthur. The garden is still there. The runner beans came on very well this year, which seems wrong but I suppose it isn\'t. Henry liked runner beans. I will write more when I can. Your loving sister, Dorothy.'
+    },
+    {
+      era: 'Vol. IX · WWII · 1940–1960',
+      title: 'Violet\'s Account',
+      speaker: 'From the recorded interview with Violet Marsh, Harlow, 1978',
+      text: 'I came home in the morning. Night shift. I came round the corner and the street was changed. I stood there for I don\'t know how long before I understood what I was looking at. You couldn\'t not understand it, really — it was perfectly clear what had happened — but you stand there anyway. The photographs were in the house. My mother\'s wedding ring was in the box on the mantelpiece. There was a letter I hadn\'t answered and now I never could. And there was the cat. George. He was ginger. I never got another one. The house in Harlow was perfectly adequate. I want to be clear about that. It was perfectly adequate.'
+    },
+    {
+      era: 'Vol. X · Contemporary · 1990–2024',
+      title: 'Eleanor Voss Opens the Box',
+      speaker: 'From the research journal of Eleanor Voss, January 2024',
+      text: 'The deed-box was smaller than I expected. Oak, or something close to it — dark, very old, the lock stiff but functional. Inside: forty-seven items, more or less as the eighteen eighty-four catalogue described. And then, at the bottom, beneath everything, a sealed outer sheet with a red wafer. No imprint in the wax. I cut it. Two letters, folded together. Unaddressed. Unsent. The second one had been burned along one edge and then kept. I sat with them for a long time. Someone had sealed these letters and put them in the box and left them there, and they had been there for one hundred and forty-two years, and I was the person who found them, and I did not know what to do with that. I still don\'t. I wrote it down. That is what I know how to do.'
+    }
+  ];
+
+  var currentEra = 0;
+  var utterance = null;
+  var isPlaying = false;
+  var rate = 0.85;
+  var startTime = null;
+  var elapsed = 0;
+  var timerInterval = null;
+  var hasSynth = 'speechSynthesis' in window;
+
+  function selectEra(idx) {
+    stopPlay();
+    currentEra = idx;
+    var p = passages[idx];
+    document.getElementById('cass-era').textContent = p.era;
+    document.getElementById('cass-title').textContent = p.title;
+    document.getElementById('cass-speaker').textContent = p.speaker;
+    document.getElementById('transcript-display').textContent = p.text;
+    document.getElementById('tape-bar').style.width = '0%';
+    document.getElementById('tape-time').textContent = '0:00';
+    elapsed = 0;
+
+    // Update era buttons
+    var btns = document.querySelectorAll('.era-btn');
+    btns.forEach(function(b, i) { b.classList.toggle('active', i === idx); });
+  }
+
+  function togglePlay() {
+    if (isPlaying) {
+      pausePlay();
+    } else {
+      startPlay();
+    }
+  }
+
+  function startPlay() {
+    if (!hasSynth) {
+      document.getElementById('no-synth-notice').style.display = 'block';
+      return;
+    }
+    window.speechSynthesis.cancel();
+    var p = passages[currentEra];
+    utterance = new SpeechSynthesisUtterance(p.text);
+    utterance.rate = rate;
+    utterance.pitch = 0.92;
+    utterance.lang = 'en-GB';
+
+    // Try to pick a UK voice
+    var voices = window.speechSynthesis.getVoices();
+    var preferred = voices.find(function(v) { return v.lang === 'en-GB' && v.name.indexOf('Female') > -1; })
+      || voices.find(function(v) { return v.lang === 'en-GB'; })
+      || voices.find(function(v) { return v.lang.startsWith('en'); });
+    if (preferred) utterance.voice = preferred;
+
+    // Estimate duration: ~120 words/min at rate 0.85 = ~102 wpm
+    var wordCount = p.text.split(/\s+/).length;
+    var estSeconds = Math.ceil(wordCount / (rate * 115));
+
+    utterance.onstart = function() {
+      isPlaying = true;
+      document.getElementById('play-btn').textContent = '⏸ Pause';
+      document.getElementById('play-btn').classList.add('playing');
+      document.getElementById('stop-btn').disabled = false;
+      document.getElementById('reel-l').classList.add('spinning');
+      document.getElementById('reel-r').classList.add('spinning');
+      document.getElementById('transcript-display').classList.add('playing');
+      startTime = Date.now() - (elapsed * 1000);
+      timerInterval = setInterval(function() {
+        elapsed = (Date.now() - startTime) / 1000;
+        var pct = Math.min(100, (elapsed / estSeconds) * 100);
+        document.getElementById('tape-bar').style.width = pct + '%';
+        var m = Math.floor(elapsed / 60);
+        var s = Math.floor(elapsed % 60);
+        document.getElementById('tape-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      }, 250);
+    };
+    utterance.onend = function() { endPlay(); };
+    utterance.onerror = function() { endPlay(); };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function pausePlay() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+    }
+    isPlaying = false;
+    clearInterval(timerInterval);
+    document.getElementById('play-btn').textContent = '▶ Play';
+    document.getElementById('play-btn').classList.remove('playing');
+    document.getElementById('reel-l').classList.remove('spinning');
+    document.getElementById('reel-r').classList.remove('spinning');
+  }
+
+  function stopPlay() {
+    window.speechSynthesis && window.speechSynthesis.cancel();
+    isPlaying = false;
+    clearInterval(timerInterval);
+    elapsed = 0;
+    document.getElementById('play-btn').textContent = '▶ Play';
+    document.getElementById('play-btn').classList.remove('playing');
+    document.getElementById('stop-btn').disabled = true;
+    document.getElementById('reel-l').classList.remove('spinning');
+    document.getElementById('reel-r').classList.remove('spinning');
+    document.getElementById('tape-bar').style.width = '0%';
+    document.getElementById('tape-time').textContent = '0:00';
+    document.getElementById('transcript-display').classList.remove('playing');
+  }
+
+  function endPlay() {
+    isPlaying = false;
+    clearInterval(timerInterval);
+    document.getElementById('play-btn').textContent = '▶ Play';
+    document.getElementById('play-btn').classList.remove('playing');
+    document.getElementById('stop-btn').disabled = true;
+    document.getElementById('reel-l').classList.remove('spinning');
+    document.getElementById('reel-r').classList.remove('spinning');
+    document.getElementById('tape-bar').style.width = '100%';
+    document.getElementById('transcript-display').classList.remove('playing');
+  }
+
+  function setRate(r) {
+    rate = r;
+    document.querySelectorAll('.speed-btn').forEach(function(b) { b.classList.remove('active'); });
+    event.target.classList.add('active');
+    if (isPlaying) { stopPlay(); startPlay(); }
+  }
+
+  // Show notice if no synth
+  if (!hasSynth) {
+    document.getElementById('no-synth-notice').style.display = 'block';
+    document.getElementById('play-btn').disabled = true;
+  }
+
+  // Voices may load asynchronously
+  if (window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = function() { /* voices loaded */ };
+  }
+
+  // Init first passage
+  selectEra(0);
+  </script>
+
+  <script src="transitions.js"></script>
+  <script src="features.js"></script>
+
+<script src="inquiry.js"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Worcester Gazette — 21 October 1916</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    html { font-size: 16px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #2A1A08;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: #1A1008;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .page-wrapper {
+      max-width: 920px;
+      margin: 0 auto;
+      background: #F5F0E0;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .page-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 200px 100px at 15% 20%, rgba(139,90,30,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 150px 200px at 85% 60%, rgba(100,60,20,0.03) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 80px at 50% 95%, rgba(120,80,30,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── MASTHEAD ─────────────────────────────── */
+    .masthead {
+      border-bottom: 3px double #1A1008;
+      padding: 18px 24px 14px;
+      text-align: center;
+      position: relative;
+    }
+    .masthead-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-size: 0.72em;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      color: #3A2010;
+    }
+    .masthead-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2em, 6vw, 3.8em);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      margin-bottom: 4px;
+      color: #0E0804;
+    }
+    .masthead-sub {
+      font-size: 0.78em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #3A2010;
+      margin-bottom: 6px;
+    }
+    .masthead-rule { border: none; border-top: 1px solid #1A1008; margin: 6px 0; }
+    .masthead-bottom {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7em;
+      letter-spacing: 0.04em;
+      color: #3A2010;
+      padding-top: 4px;
+    }
+
+    /* ── MAIN HEADLINE AREA ───────────────────── */
+    .headline-band {
+      border-bottom: 2px solid #1A1008;
+      padding: 10px 24px;
+      text-align: center;
+    }
+    .main-hed {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.2em, 3vw, 1.9em);
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .main-dek {
+      font-size: 0.85em;
+      font-style: italic;
+      color: #3A2010;
+      margin-top: 4px;
+    }
+
+    /* ── COLUMN GRID ──────────────────────────── */
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      padding: 0 12px;
+    }
+    .col {
+      padding: 14px 12px;
+      border-right: 1px solid rgba(26,16,8,0.25);
+      font-size: 0.82em;
+      line-height: 1.65;
+    }
+    .col:last-child { border-right: none; }
+    .col-wide {
+      grid-column: span 2;
+    }
+
+    .col-hed {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.05em;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid #1A1008;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .col-subhed {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.88em;
+      font-weight: 600;
+      margin: 10px 0 5px;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+    .col p { margin-bottom: 0.6em; text-align: justify; }
+    .col p:first-of-type::first-letter {
+      font-size: 2.4em;
+      float: left;
+      line-height: 0.85;
+      margin-right: 4px;
+      font-family: 'Cinzel', Georgia, serif;
+      color: #0E0804;
+    }
+
+    /* ── ROLL OF HONOUR ───────────────────────── */
+    .roll-of-honour {
+      border: 1px solid #1A1008;
+      padding: 10px 14px;
+      margin: 10px 0;
+      background: rgba(26,16,8,0.04);
+    }
+    .roh-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.92em;
+      letter-spacing: 0.12em;
+      text-align: center;
+      border-bottom: 1px solid #1A1008;
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .roh-subtitle {
+      text-align: center;
+      font-style: italic;
+      font-size: 0.78em;
+      color: #3A2010;
+      margin-bottom: 8px;
+    }
+    .roh-list {
+      font-size: 0.78em;
+      line-height: 1.7;
+      columns: 2;
+      column-gap: 14px;
+    }
+    .roh-name { display: block; }
+    .roh-name.thomas {
+      font-weight: bold;
+      color: #0E0804;
+      position: relative;
+    }
+    .roh-name.thomas::before {
+      content: '† ';
+      color: #8B1A1A;
+    }
+
+    /* ── ADVERTISEMENT ────────────────────────── */
+    .advert {
+      border: 2px solid #1A1008;
+      padding: 10px;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .advert-hed {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.9em;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .advert p { font-size: 0.75em; margin-bottom: 3px; text-align: center; }
+    .advert-small { font-size: 0.68em !important; font-style: italic; color: #5A3A18; }
+
+    /* ── DIVIDER RULE ─────────────────────────── */
+    .col-rule { border: none; border-top: 1px solid rgba(26,16,8,0.2); margin: 8px 0; }
+
+    /* ── BOTTOM BAND ──────────────────────────── */
+    .bottom-band {
+      border-top: 2px solid #1A1008;
+      padding: 8px 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68em;
+      letter-spacing: 0.06em;
+      color: #3A2010;
+    }
+
+    /* ── RETURN LINK ──────────────────────────── */
+    .return-link {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7A5820;
+      text-decoration: none;
+      border-top: 1px solid rgba(26,16,8,0.2);
+      transition: color 0.2s;
+      background: rgba(26,16,8,0.03);
+    }
+    .return-link:hover { color: #C8A028; }
+
+    /* ── FLOATING HOME ────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page-wrapper { box-shadow: none; }
+      .return-link, .home-float { display: none; }
+    }
+      .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+</head>
+<body>
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="page-wrapper">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="masthead-top">
+      <span>No. 2,847</span>
+      <span>Printed and Published by Wm. Corbett &amp; Sons, Worcester</span>
+      <span>Established 1843</span>
+    </div>
+    <hr class="masthead-rule">
+    <div class="masthead-title">The Worcester Gazette</div>
+    <div class="masthead-sub">County News · Agricultural Markets · War Despatches</div>
+    <hr class="masthead-rule">
+    <div class="masthead-bottom">
+      <span>Saturday, 21st October 1916</span>
+      <span><em>Registered at the General Post Office as a Newspaper</em></span>
+      <span>Price: One Penny</span>
+    </div>
+  </div>
+
+  <!-- MAIN HEADLINE -->
+  <div class="headline-band">
+    <div class="main-hed">GREAT ADVANCE ON THE SOMME · FURTHER GAINS REPORTED</div>
+    <div class="main-dek">Official Despatch Confirms Consolidation of Positions Near Thiepval · Spirited Defence by the Enemy</div>
+  </div>
+
+  <!-- COLUMNS -->
+  <div class="columns">
+
+    <!-- COLUMN 1: War news -->
+    <div class="col">
+      <div class="col-hed">From Our War Correspondent</div>
+      <p>The operations upon the Somme front continue to yield results which, while they may appear modest upon the map, represent an expenditure of effort and courage which it would be difficult to overstate. Our men have now secured positions which, six weeks ago, were held to be impregnable.</p>
+      <p>The village of Thiepval, which fell to British forces on the 26th of September after weeks of intense fighting, has now been consolidated, and the adjacent network of trenches, known to the men as the "Stuff Redoubt," has been cleared of the enemy.</p>
+      <div class="col-subhed">PRISONERS AND MATERIEL</div>
+      <p>During the past fortnight's operations, more than eight hundred prisoners have been taken and brought to the cages behind the line. Among the captured materiel are seventeen heavy guns, numerous trench mortars, and quantities of ammunition which indicate that the enemy's supply difficulties are becoming acute.</p>
+      <p>The weather has turned against us these past several days, and the ground, churned by months of bombardment, has become a serious obstacle to the movement of men and transport. The men bear this, as they bear much else, with a patience and good humour which fills the observer with a feeling not easily named.</p>
+      <hr class="col-rule">
+      <div class="col-subhed">NOTES FROM THE FRONT</div>
+      <p>A correspondent writes: "We have come to know the countryside here with a familiarity that peace would never have taught us. The broken church tower at — serves as a landmark. The men have given everything a name. They are, in this at least, indestructible."</p>
+    </div>
+
+    <!-- COLUMN 2: Roll of Honour + local news -->
+    <div class="col">
+      <div class="roll-of-honour">
+        <div class="roh-title">Roll of Honour</div>
+        <div class="roh-subtitle">Worcestershire Men Fallen in Action · Week Ending 18th October 1916</div>
+        <div class="roh-list">
+          <span class="roh-name">Pte. Albert Biggs, 8th Worcs.</span>
+          <span class="roh-name">Pte. W. Cartwright, 4th Worcs.</span>
+          <span class="roh-name">Cpl. F. J. Davies, 7th Worcs.</span>
+          <span class="roh-name">Pte. E. Dyson, 10th Worcs.</span>
+          <span class="roh-name">L/Cpl. H. Farmer, 8th Worcs.</span>
+          <span class="roh-name">Pte. George Griffiths, 4th Worcs.</span>
+          <span class="roh-name thomas">Pte. T. Hale, 13th Worcs.</span>
+          <span class="roh-name">Pte. R. Hands, 8th Worcs.</span>
+          <span class="roh-name">Sgt. F. A. Hardwick, 7th Worcs.</span>
+          <span class="roh-name">Pte. C. Hopkins, 10th Worcs.</span>
+          <span class="roh-name">2Lt. N. Hubbard, 4th Worcs.</span>
+          <span class="roh-name">Pte. S. Ingram, 13th Worcs.</span>
+          <span class="roh-name">L/Sgt. J. T. Lowe, 7th Worcs.</span>
+          <span class="roh-name">Pte. H. Mason, 8th Worcs.</span>
+          <span class="roh-name">Cpl. W. Meredith, 4th Worcs.</span>
+          <span class="roh-name">Pte. Percy Nash, 10th Worcs.</span>
+          <span class="roh-name">Pte. H. Onions, 13th Worcs.</span>
+          <span class="roh-name">Pte. T. Pardoe, 7th Worcs.</span>
+          <span class="roh-name">Cpl. A. Rowley, 8th Worcs.</span>
+          <span class="roh-name">Pte. W. Salt, 4th Worcs.</span>
+          <span class="roh-name">Pte. E. Sharpe, 10th Worcs.</span>
+          <span class="roh-name">Pte. H. Stephens, 7th Worcs.</span>
+          <span class="roh-name">Pte. J. Tanner, 13th Worcs.</span>
+          <span class="roh-name">Pte. S. Watkins, 8th Worcs.</span>
+          <span class="roh-name">Sgt. F. Webb, 4th Worcs.</span>
+          <span class="roh-name">Pte. N. Whitmore, 10th Worcs.</span>
+        </div>
+      </div>
+
+      <div class="col-subhed">COUNTY COURT — WORCESTER</div>
+      <p>The County Court sat on Wednesday last before His Honour Judge Markham. In the matter of Halcroft &amp; Sons vs. Pemberton Iron Company, judgment was given for the plaintiff in the sum of fourteen pounds, seven shillings, with costs. The defendant's application for leave to appeal was refused.</p>
+
+      <div class="advert">
+        <div class="advert-hed">BOVRIL</div>
+        <p>Prevents that Sinking Feeling</p>
+        <p>Sustains our Boys at the Front</p>
+        <p class="advert-small">Available at all good grocers · 1/- and 2/- jars</p>
+      </div>
+    </div>
+
+    <!-- COLUMN 3: Agricultural / local -->
+    <div class="col">
+      <div class="col-hed">County Markets</div>
+      <p>The Michaelmas cattle fair at Pershore drew a good attendance on Thursday, notwithstanding the competing demands of harvest work. Fat cattle sold at prices somewhat below those of last year, which dealers attribute to the difficulty of obtaining feed, though the quality of the beasts shown was generally commended.</p>
+      <p>Hop prices have remained firm at between thirty-five and forty shillings the hundredweight for the best qualities of the Worcestershire crop. The harvest, completed earlier than usual on account of the favourable September weather, is reported to be of satisfactory character, though somewhat below average in weight.</p>
+
+      <hr class="col-rule">
+      <div class="col-subhed">LETTERS TO THE EDITOR</div>
+      <p><em>Sir — I write to draw attention to a matter which I believe should concern all inhabitants of this county.</em> The number of men employed upon essential food production has fallen, in my own district, to a figure which threatens the security of next year's harvest. I do not quarrel with those who have gone to serve. I quarrel with a system which has not foreseen what their departure must mean for those who remain. — A Worcestershire Farmer.</p>
+      <hr class="col-rule">
+      <div class="col-subhed">THE ABSENT VOTER</div>
+      <p>Readers are reminded that men serving with His Majesty's Forces who are registered electors in this county may apply, through their regimental paymaster, to exercise their franchise by proxy at the forthcoming by-election for the Droitwich Division.</p>
+
+      <div class="advert">
+        <div class="advert-hed">WILLS'S CIGARETTES</div>
+        <p><em>"The soldier's comfort"</em></p>
+        <p>Gold Flake · Passing Cloud · Woodbine</p>
+        <p class="advert-small">Supplied to H.M. Forces at reduced prices</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM BAND -->
+  <div class="bottom-band">
+    <span>Printed by Wm. Corbett &amp; Sons, 14 Friar Street, Worcester</span>
+    <span><em>Next issue: Saturday, 28th October 1916</em></span>
+    <span>All rights reserved</span>
+  </div>
+
+  <a href="era-VIII.html" class="return-link">← Return to the Archive · Vol. VIII · Thomas</a>
+
+</div>
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+<script>
+(function() {
+  document.querySelectorAll('a[href]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('http')) return;
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var overlay = document.getElementById('pageOverlay');
+      overlay.classList.add('fade-out');
+      setTimeout(function() { window.location.href = href; }, 480);
+    });
+  });
+})();
+</script>
+
+  <script src="transitions.js"></script>
+
+</body>
+</html>

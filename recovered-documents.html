@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recovered Documents — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #E8DFC8; color: #3B2A1A; font-family: Georgia, serif; min-height: 100vh; line-height: 1.7; }
+    .era-nav { background: #3B2A1A; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.15em; text-transform: uppercase; }
+    .era-nav a { color: #C8A050; text-decoration: none; }
+    .era-nav a:hover { color: #E8C060; }
+    .era-nav .vol-marker { color: #7A5A28; }
+    .page-header { background: #F5EDD6; border-bottom: 3px solid #5C3A1E; padding: 50px 40px 40px; text-align: center; }
+    .page-label { font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.3em; color: #8B1A1A; text-transform: uppercase; margin-bottom: 14px; }
+    .page-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.6em,4vw,2.6em); color: #3B2A1A; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .page-subtitle { font-style: italic; color: #7A5C1E; font-size: 0.98em; }
+    .page-content { max-width: 900px; margin: 0 auto; padding: 50px 30px 80px; }
+    .editorial-note { border-left: 3px solid #8B1A1A; padding: 16px 20px; background: #F0E8D0; font-style: italic; font-size: 0.93em; color: #5C3A1E; margin-bottom: 40px; line-height: 1.75; }
+    /* Volume selector tabs */
+    .vol-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 40px; }
+    .vol-tab { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 14px; border: 1px solid rgba(139,100,40,0.3); background: transparent; color: #5C3A1E; cursor: pointer; transition: all 0.2s; }
+    .vol-tab:hover, .vol-tab.active { background: #3B2A1A; color: #C8A050; border-color: #3B2A1A; }
+    /* Volume section */
+    .vol-section { display: none; }
+    .vol-section.visible { display: block; }
+    .vol-head { font-family: 'Cinzel', Georgia, serif; font-size: 1.3em; color: #3B2A1A; margin-bottom: 6px; }
+    .vol-dates { font-family: 'Courier New', monospace; font-size: 0.8em; letter-spacing: 0.18em; color: #8B1A1A; margin-bottom: 30px; }
+    /* Document card in list */
+    .doc-card { border: 1px solid rgba(168,144,112,0.4); background: #F5EDD6; padding: 20px 24px; margin-bottom: 16px; cursor: pointer; transition: background 0.2s; }
+    .doc-card:hover { background: #EDE0C4; }
+    .doc-card-ref { font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: #8B1A1A; margin-bottom: 5px; }
+    .doc-card-title { font-size: 1em; font-weight: bold; color: #3B2A1A; margin-bottom: 4px; }
+    .doc-card-meta { font-style: italic; font-size: 0.88em; color: #5C3A1E; margin-bottom: 8px; }
+    .doc-card-opener { font-size: 0.88em; color: #4A3A20; }
+    /* Full document viewer */
+    .doc-viewer { display: none; position: fixed; inset: 0; background: rgba(30,18,8,0.82); z-index: 500; overflow-y: auto; padding: 40px 20px; }
+    .doc-viewer.open { display: flex; align-items: flex-start; justify-content: center; }
+    .doc-viewer-inner { max-width: 720px; width: 100%; position: relative; }
+    .doc-viewer-close { position: sticky; top: 0; text-align: right; margin-bottom: 12px; z-index: 10; }
+    .doc-viewer-close button { font-family: 'Courier New', monospace; font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; background: #3B2A1A; color: #C8A050; border: 1px solid rgba(200,168,60,0.3); padding: 8px 16px; cursor: pointer; }
+    .doc-viewer-close button:hover { background: #5C3A1E; }
+    /* Parchment in viewer */
+    .viewer-parchment { background-color: #EBD8B7; background-image: radial-gradient(ellipse 70px 50px at 12% 18%, rgba(139,90,30,0.09) 0%, transparent 70%), radial-gradient(ellipse 40px 30px at 88% 72%, rgba(100,60,20,0.08) 0%, transparent 70%); border: 1px solid #A88F5B; padding: 40px 44px; line-height: 1.85; font-size: 1em; }
+    .viewer-parchment::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(139,100,40,0.12); pointer-events: none; }
+    .viewer-parchment p { margin-bottom: 1em; }
+    .viewer-parchment p:last-child { margin-bottom: 0; }
+    .viewer-ref { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: #8B1A1A; margin-bottom: 6px; }
+    .viewer-archival { background: rgba(139,26,26,0.05); border-left: 3px solid rgba(139,26,26,0.3); padding: 12px 16px; font-style: italic; font-size: 0.88em; color: #5C3A1E; line-height: 1.7; margin-bottom: 18px; }
+    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; box-shadow: 0 3px 14px rgba(0,0,0,0.6); }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .page-footer { background: #3B2A1A; padding: 24px 30px; text-align: center; font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(200,168,60,0.4); text-transform: uppercase; }
+    .page-footer a { color: rgba(200,168,60,0.5); text-decoration: none; margin: 0 12px; }
+    .page-footer a:hover { color: #C8A83C; }
+    @media (max-width:600px) { .vol-tab { font-size: 0.65em; padding: 6px 10px; } .page-content { padding: 30px 16px 60px; } .viewer-parchment { padding: 24px 20px; } }
+  </style>
+</head>
+<body data-vol="">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+<nav class="era-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="vol-marker">Recovered Documents</span>
+  <a href="family-tree.html">Family Tree →</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-label">The Hale Dynasty · Supplementary Archive</div>
+  <h1 class="page-title">Recovered Documents</h1>
+  <p class="page-subtitle">Twenty letters found after the chronicle was complete · One for each gap the archive identified and did not close</p>
+</header>
+
+<div class="page-content">
+
+  <div class="editorial-note">
+    The twenty documents gathered here do not exist in the main chronicle. They are new documents — letters, court records, account book entries, diary pages — written in the exact period voice of each volume, as if discovered after the ten-volume chronicle was complete. Each one fills a specific gap. Gaston's letter exists because the chronicle tells us he was there for thirty years and then disappears; the letter gives him back his voice. The 1891 letter exists because two volumes of the archive have been moving toward it; the letter is what they were moving toward. Select a volume below.
+    <br><br>
+    <em>— James Marsh-Hale and Eleanor Voss, Oxford, 2026</em>
+  </div>
+
+  <div class="vol-tabs" role="tablist">
+    <button class="vol-tab active" onclick="showVol('I')" role="tab">Vol. I · 1066</button>
+    <button class="vol-tab" onclick="showVol('II')" role="tab">Vol. II · Plague</button>
+    <button class="vol-tab" onclick="showVol('III')" role="tab">Vol. III · Tudor</button>
+    <button class="vol-tab" onclick="showVol('IV')" role="tab">Vol. IV · Civil War</button>
+    <button class="vol-tab" onclick="showVol('V')" role="tab">Vol. V · Nathaniel</button>
+    <button class="vol-tab" onclick="showVol('VI')" role="tab">Vol. VI · Augusta</button>
+    <button class="vol-tab" onclick="showVol('VII')" role="tab">Vol. VII · Edmund</button>
+    <button class="vol-tab" onclick="showVol('VIII')" role="tab">Vol. VIII · Thomas</button>
+    <button class="vol-tab" onclick="showVol('IX')" role="tab">Vol. IX · The Name</button>
+    <button class="vol-tab" onclick="showVol('X')" role="tab">Vol. X · Hale</button>
+  </div>
+
+  <!-- VOL I -->
+  <div class="vol-section visible" id="vol-I">
+    <div class="vol-head">Vol. I · The Chronicle of de la Hale</div>
+    <div class="vol-dates">1066 – 1121 · Three recovered documents</div>
+    <div class="doc-card" onclick="openDoc('gaston')">
+      <div class="doc-card-ref">MSS. Hale-Marsh I, item 24a · Private Letter · c.1085</div>
+      <div class="doc-card-title">Gaston to Arnulf de Boissy, Hereford</div>
+      <div class="doc-card-meta">Norman French, translated · The only surviving document in Gaston's hand</div>
+      <div class="doc-card-opener">Your friend who has been here longer than he intended…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('beekeeper')">
+      <div class="doc-card-ref">MSS. Hale-Marsh I, item 8b · Priory Annals · Winter 1073</div>
+      <div class="doc-card-title">Worcester Priory Annals — Marginal Entry · Brother Aldric</div>
+      <div class="doc-card-meta">In the hand of Brother Aldric, Infirmarian · Added privately beside the formal burial record</div>
+      <div class="doc-card-opener">She knew the bees before the Conquest…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('aelswith')">
+      <div class="doc-card-ref">MSS. Hale-Marsh I, item 24c · Marginal Annotation · c.1092</div>
+      <div class="doc-card-title">Aelswith's Marginal Note · Worcester Cathedral Priory Ledger</div>
+      <div class="doc-card-meta">In a female hand identified as Aelswith's · Beside Ranulf's gift of the candlesticks</div>
+      <div class="doc-card-opener">He was a man who bought things before he knew their purpose…</div>
+    </div>
+  </div>
+
+  <!-- VOL II -->
+  <div class="vol-section" id="vol-II">
+    <div class="vol-head">Vol. II · The House of Hale</div>
+    <div class="vol-dates">1121 – 1400 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('thomas-elspeth')">
+      <div class="doc-card-ref">MSS. Hale-Marsh II, item 19a · Letter · Summer 1350</div>
+      <div class="doc-card-title">Thomas Hale to his Aunt Elspeth of Pershore</div>
+      <div class="doc-card-meta">Middle English · Thomas aged twelve · The earliest document in his hand</div>
+      <div class="doc-card-opener">I just want to knowe where it is…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('psalter')">
+      <div class="doc-card-ref">MSS. Hale-Marsh II, item 23 · Single Page · c.1381</div>
+      <div class="doc-card-title">Page Found Inside a Worcester Priory Psalter · Unsigned</div>
+      <div class="doc-card-meta">Identified by Eleanor Voss, January 2024 · Written for safekeeping</div>
+      <div class="doc-card-opener">He should not be named to the sheriff. This is set down so that the truth is somewhere…</div>
+    </div>
+  </div>
+
+  <!-- VOL III -->
+  <div class="vol-section" id="vol-III">
+    <div class="vol-head">Vol. III · The Hale Inheritance</div>
+    <div class="vol-dates">1485 – 1560 · One recovered document</div>
+    <div class="doc-card" onclick="openDoc('william-journal')">
+      <div class="doc-card-ref">MSS. Hale-Marsh III, item 17a · Private Journal · Midsummer Eve, 1555</div>
+      <div class="doc-card-title">William Hale's Journal — The Full Entry</div>
+      <div class="doc-card-meta">Written the night before his examination by the bishop's visitors · Previously unpublished in full</div>
+      <div class="doc-card-opener">God save also those of us who have watched England change its religion foure times and who are still standinge…</div>
+    </div>
+  </div>
+
+  <!-- VOL IV -->
+  <div class="vol-section" id="vol-IV">
+    <div class="vol-head">Vol. IV · The Divided House</div>
+    <div class="vol-dates">1620 – 1665 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('william-youngest')">
+      <div class="doc-card-ref">MSS. Hale-Marsh IV, item 31 · Account Book · 1642–1651</div>
+      <div class="doc-card-title">William Hale the Youngest — His Account Book</div>
+      <div class="doc-card-meta">Nine annual entries · Copied by his son Robert c.1700 · The only record of his interior life during the war</div>
+      <div class="doc-card-opener">John and Thomas are both alive. This is sufficient…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('robert-page')">
+      <div class="doc-card-ref">MSS. Hale-Marsh IV, item 33 · Account Book · January 1649</div>
+      <div class="doc-card-title">Robert Hale's Account Book — The January Page in Full</div>
+      <div class="doc-card-meta">Worcestershire Record Office · The entry set apart by blank space · Reproduced in context for the first time</div>
+      <div class="doc-card-opener">The King is dead. January 1649. God have mercy on us all…</div>
+    </div>
+  </div>
+
+  <!-- VOL V -->
+  <div class="vol-section" id="vol-V">
+    <div class="vol-head">Vol. V · The Memoirs of Sir Nathaniel Hale</div>
+    <div class="vol-dates">1671 – 1744 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('dorothea-catherine')">
+      <div class="doc-card-ref">MSS. Hale-Marsh V, item 44 · Private Letter · November 1721</div>
+      <div class="doc-card-title">Dorothea Hale to her Sister Lady Catherine Pemberton</div>
+      <div class="doc-card-meta">Written privately · Catherine asked to burn it · Catherine did not</div>
+      <div class="doc-card-opener">The performance was accomplished, but it was also tiring to watch…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('crump-notes')">
+      <div class="doc-card-ref">MSS. Hale-Marsh V, item 51 · Reconstructed Fragment · Winter 1743–44</div>
+      <div class="doc-card-title">Nathaniel's Burned Chapter — Reconstructed from Crump's Shorthand</div>
+      <div class="doc-card-meta">Crump's note: He told me to burn the copy. He did not say anything about the notes.</div>
+      <div class="doc-card-opener">The performance, conducted with sufficient conviction across sufficient time, does not conceal a self but constitutes one…</div>
+    </div>
+  </div>
+
+  <!-- VOL VI -->
+  <div class="vol-section" id="vol-VI">
+    <div class="vol-head">Vol. VI · The Hale Entail</div>
+    <div class="vol-dates">1795 – 1835 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('augusta-unsent')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VI, item 27a · Draft Letter — Unsent · March 1806</div>
+      <div class="doc-card-title">Augusta Hale to her Brother Charles — The Draft</div>
+      <div class="doc-card-meta">Folder labelled in her hand: Not sent · The version sent was kinder · This one is what she actually meant</div>
+      <div class="doc-card-opener">I will write you the proper letter tomorrow. But this one is what I actually mean…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('henry-alderton')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VI, item 39 · Private Letter · December 1829</div>
+      <div class="doc-card-title">Henry Alderton to his Father — Trying to Explain Augusta</div>
+      <div class="doc-card-meta">Shrewsbury · A solicitor trying to account for why he keeps thinking about an estate account</div>
+      <div class="doc-card-opener">I find I am looking forward to it rather more than timber rights warrant…</div>
+    </div>
+  </div>
+
+  <!-- VOL VII -->
+  <div class="vol-section" id="vol-VII">
+    <div class="vol-head">Vol. VII · The Correspondence of Mr Edmund Hale</div>
+    <div class="vol-dates">1868 – 1882 · Three recovered documents</div>
+    <div class="doc-card" onclick="openDoc('edmund-clara')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VII, item 6b · Private Letter · January 1870</div>
+      <div class="doc-card-title">Edmund Hale to Clara Marsh — The Termination Letter in Full</div>
+      <div class="doc-card-meta">Not previously published in full · Clara kept it for forty-four years</div>
+      <div class="doc-card-opener">Each time I read it it means the same thing, which is that he has decided I am not a person but a circumstance… — Clara's journal</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('adelaide-diary')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VII, item 52 · Private Diary · August–September 1882</div>
+      <div class="doc-card-title">Adelaide Hale — Three Diary Entries</div>
+      <div class="doc-card-meta">The week Fairweather told her everything · Donated to the Bodleian by her descendants, 1967</div>
+      <div class="doc-card-opener">He tried to be better than he was, and the trying was real, and it was not sufficient, and I loved him for the trying, which is the worst of it…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('rathbone-thomas')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VIII, item 3 · Private Letter · October 1891</div>
+      <div class="doc-card-title">E. Rathbone (Edmund Hale) to Thomas Marsh-Hale</div>
+      <div class="doc-card-meta">The only surviving letter from Edmund Hale to his son · Thomas was eighteen · He kept it for sixty years</div>
+      <div class="doc-card-opener">Keep asking…</div>
+    </div>
+  </div>
+
+  <!-- VOL VIII -->
+  <div class="vol-section" id="vol-VIII">
+    <div class="vol-head">Vol. VIII · Thomas</div>
+    <div class="vol-dates">1873 – 1919 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('daniel-father')">
+      <div class="doc-card-ref">MSS. Okafor (British Library Add. MS. 89217), letter 3 · Private Letter · March 1890</div>
+      <div class="doc-card-title">Daniel Okafor to his Father in Lagos</div>
+      <div class="doc-card-meta">London, 1890 · Daniel aged nineteen at the Inns of Court · Translation by Dr Adaeze Okafor, 2025</div>
+      <div class="doc-card-opener">I am learning to read which kind of room I am entering before I say anything…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('clara-ledger')">
+      <div class="doc-card-ref">MSS. Hale-Marsh VIII, item 1a · Household Ledger · Week of 14 March 1876</div>
+      <div class="doc-card-title">Clara Marsh's Household Account — One Week</div>
+      <div class="doc-card-meta">11 Camberwell New Road · Thomas was three years old · We are cold.</div>
+      <div class="doc-card-opener">Note on the coal: half sack is not sufficient for this weather. We are cold…</div>
+    </div>
+  </div>
+
+  <!-- VOL IX -->
+  <div class="vol-section" id="vol-IX">
+    <div class="vol-head">Vol. IX · The Name</div>
+    <div class="vol-dates">1933 – 1960 · One recovered document</div>
+    <div class="doc-card" onclick="openDoc('dorothy-notebook')">
+      <div class="doc-card-ref">MSS. Hale-Marsh IX, item 12 · Technical Notebook · October 1942</div>
+      <div class="doc-card-title">Dorothy Price — Technical Notebook Double-Page</div>
+      <div class="doc-card-meta">Ministry of Aircraft Production · Personal observations left · Technical specification right · Same vocabulary for both</div>
+      <div class="doc-card-opener">Specification does not call for it. Physics does…</div>
+    </div>
+  </div>
+
+  <!-- VOL X -->
+  <div class="vol-section" id="vol-X">
+    <div class="vol-head">Vol. X · Hale</div>
+    <div class="vol-dates">1979 – 2026 · Two recovered documents</div>
+    <div class="doc-card" onclick="openDoc('eleanor-email')">
+      <div class="doc-card-ref">MSS. Hale-Marsh X, item 7 · Email · June 2019</div>
+      <div class="doc-card-title">Eleanor Voss to her Father — Subject: The Shoebox</div>
+      <div class="doc-card-meta">Sent to his address six weeks after his death · The address no longer received messages · She sent it anyway</div>
+      <div class="doc-card-opener">I think the shoebox wants me to apply…</div>
+    </div>
+    <div class="doc-card" onclick="openDoc('james-finding-aid')">
+      <div class="doc-card-ref">MSS. Hale-Marsh Finding Aid, item 3 · Annotated Finding Aid · 2001–2024</div>
+      <div class="doc-card-title">James Marsh-Hale's Finding Aid — With Final Annotations</div>
+      <div class="doc-card-meta">Submitted to the Bodleian, March 2001 · Two final sentences added February 2024 · Written slowly · In recent ink</div>
+      <div class="doc-card-opener">She was writing to Eleanor. She always was…</div>
+    </div>
+  </div>
+
+</div><!-- page-content -->
+
+<!-- Document viewer overlay — populated by JS -->
+<div class="doc-viewer" id="doc-viewer" onclick="closeDocViewer(event)">
+  <div class="doc-viewer-inner">
+    <div class="doc-viewer-close">
+      <button onclick="closeDocViewer(null,true)">✕ &nbsp; Close — Return to the Archive</button>
+    </div>
+    <div id="doc-viewer-content"></div>
+  </div>
+</div>
+
+<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<footer class="page-footer">
+  <a href="index.html">Archive Home</a>
+  <a href="family-tree.html">Family Tree</a>
+  <a href="about.html">About</a>
+  <span id="secret-nav-link"><a href="the-email.html">✦ A letter found</a></span>
+  <br><br>The Hale Dynasty · Recovered Documents · Twenty Letters Found After the Chronicle Was Complete
+</footer>
+
+<script src="features.js"></script>
+<script>
+function showVol(vol) {
+  document.querySelectorAll('.vol-section').forEach(function(s){ s.classList.remove('visible'); });
+  document.querySelectorAll('.vol-tab').forEach(function(t){ t.classList.remove('active'); });
+  var sec = document.getElementById('vol-' + vol);
+  if (sec) sec.classList.add('visible');
+  event.target.classList.add('active');
+}
+
+// Document content map — keys match openDoc() calls
+var DOCS = {
+  'gaston': { ref: 'MSS. Hale-Marsh I, item 24a · Norman French, translated · c.1085', title: 'Gaston to Arnulf de Boissy', archival: 'This letter was discovered in the de Boissy family papers donated to the Hereford Cathedral Archive in 1923. It is the only surviving document in Gaston\'s hand.', text: '<p>Arnulf, my friend, you ask how I find myself in England after twenty years, and I shall tell you plainly, because you are the only man in this country who was at the crossing with me and who therefore understands what it means to have stayed.</p><p>I live in Worcestershire, on the estate of Ranulf de la Hale, who was at the crossing with us both and who received land here by the King\'s grant and who has held it now these eighteen years.</p><p>He has changed. He came here a man of appetite — you remember him, the third son, the one who would not wait — and he is still that man, but the appetite has found its object and settled. The land is what he wanted. He has the land.</p><p>The wife. She was an English widow when he married her, and she has been the making of this household. Her name is Aelswith. She speaks our French better than most of the Normans in this county and she knows everything about this estate — the fields, the tenants, the disputes, the mill — and she has given Ranulf the knowledge as though it were a gift rather than a transaction.</p><p>Their children speak both languages without choosing between them.</p><p>I am well. I am old. I did not expect to be old in England but I did not expect most of what has happened to me, and England is a better place than the crossing suggested.</p><p><em>Your friend who has been here longer than he intended. Gaston. Written at Halecroft.</em></p>' },
+  'beekeeper': { ref: 'MSS. Hale-Marsh I, item 8b · Worcester Priory Annals · Winter 1073', title: 'Brother Aldric — Marginal Entry', archival: 'The formal entry records only the burial. The marginal note, in a different hand, is what follows.', text: '<p>She knew the bees before the Conquest. She knew the bees before Leofric, who held the land before the Norman came.</p><p>She did not speak much in the last years. She spoke to the bees. This is the practice of beekeepers: you tell the hives what happens in the village, the births and the deaths and the changes of lord, so that they know what world they are sustaining. She told them about the Norman. She told them everything, and the bees listened, and the honey was good.</p><p><em>Ranulf de la Hale attended the burial. He stood at the back of the church and did not speak to anyone and left before the earth was filled. I do not know what that means. I have been thinking about it since.</em></p><p style="font-size:0.88em;color:#5C3A1E;">— Brother Aldric, this winter, in the year of Our Lord 1073.</p>' },
+  'aelswith': { ref: 'MSS. Hale-Marsh I, item 24c · Marginal Annotation · c.1092', title: 'Aelswith\'s Marginal Note', archival: 'The formal entry records Ranulf\'s gift of two silver candlesticks to the priory, given in memory of his wife Aelswith, died 1079. The annotation below, in a different hand, appears to have been written before her death, not after. She wrote it while she could still see him from where she sat.', text: '<p>These candlesticks were his finest things. He said so to me the winter before we married. I asked him why he had bought them if he did not know what they were for. He said: I knew they were for something. I did not know what. I find this is true of most of the things worth having.</p><p>He was a man who bought things before he knew their purpose, which is a kind of faith. He bought the land before he knew how to hold it. He married me before he knew how to ask for what he needed.</p><p>He was a good man. He was not a good man at the beginning, and he was always trying, which is better than many. He is still trying. I can see him from here.</p><p><em>Written by the hand of one who was his wife. Halecroft. The year of Our Lord 1092.</em></p>' },
+  'thomas-elspeth': { ref: 'MSS. Hale-Marsh II, item 19a · Letter · Summer 1350', title: 'Thomas Hale to his Aunt Elspeth', archival: 'The letter was found folded inside a Pershore household account book acquired by the Worcester Record Office in 1961. This is the earliest surviving document in Thomas Hale\'s own hand. He was approximately twelve years old.', text: '<p>Dere Auntie Elspeth, I do wryte to thanke you for kepinge me these monthes and for the bred you dide give me the morning I dide goe and also for not creyinge until I was past the gate, which I dide notise and which I think was kinde.</p><p>I am home now. The howse is stondinge and the beestes are well and old Matilda who keepes the bees dide bringe me a pot of honney yesterday without sayinge anythinge which is her manner.</p><p>I do have a question which is: mother dide have two cookinge pottes. I cannot finde the other one, which was the smaller one with the cracke in the handele that she used for the porridge in the morning. I do not need it for cookinge as I have the one. I just want to knowe where it is.</p><p><em>Your lovinge nevew Thomas Hale. God save you. Written at Halecroft this summer.</em></p><p style="font-size:0.85em;font-style:italic;color:#5C3A1E;margin-top:14px;">No reply from Elspeth survives. The cooking pot Thomas carried appears in his 1395 probate inventory as one iron pot with leather-wrapped handle, value four pence. He kept it for forty-six years.</p>' },
+  'psalter': { ref: 'MSS. Hale-Marsh II, item 23 · Single Page · c.1381', title: 'Page Found Inside a Worcester Priory Psalter', archival: 'Identified by Eleanor Voss, January 2024. The page was tucked inside the binding deliberately. No attribution is given. Written for safekeeping.', text: '<p>Thomas Hale of the Hale was at the march on the castle on the fourteenth of June in this year of Our Lord 1381. He rode from Halecroft before dawn and he marched with the men from the parishes and he carried a billhook which was what he had, being a farming man.</p><p>He did not use the billhook. He stood in the street with the other men for two hours and then put the billhook on the ground and walked back toward the south gate and went home. He was back at the Hale before vespers. He told no one and no one has named him to the sheriff.</p><p><em>He should not be named to the sheriff. He will not be named to the sheriff. This is set down so that the truth is somewhere, which is what the truth requires.</em></p><p style="font-size:0.88em;color:#5C3A1E;">— Unsigned. Worcester, the month following the march, 1381.</p>' },
+  'william-journal': { ref: 'MSS. Hale-Marsh III, item 17a · Private Journal · Midsummer Eve 1555', title: 'William Hale\'s Journal — The Full Entry', archival: 'Written the night before his examination by the bishop\'s visitors. Found folded inside the back cover of a psalter. The full text is reproduced here for the first time.', text: '<p>I appeer before the bisshop\'s visitors in the morninge. I have been tolde what they wishe to knowe and I have been thinking, these past two wekes, about how to answere it. I am now goinge to wryte it downe, because writinge it downe is how I knowe whether I believe it.</p><p>I signed the oath in 1534 because the alternative was not an alternative I examined too closely. I purchased the priorie land in 1545 because it was lawfullie for sale and I had the monie and it was good land. I have attended my church through three religions now — the old, the new, and the new againe.</p><p>The indenture is in the deed-box. The deed-box is locked. I have the key on the chain with my father\'s key and his father\'s key. There is something in the weighte of three keys on a chain that is its own kind of answer to the question of sufficiency. I do not know quite what it is. I find I do not need to know.</p><p>God save the Queene. God save also those of us who have watched England change its religion foure times in one lifetime and who are still standinge.</p><p><em>William Hale, his marke. Halecroft, Midsummer Eve, 1555.</em></p>' },
+  'william-youngest': { ref: 'MSS. Hale-Marsh IV, item 31 · Account Book · 1642–1651', title: 'William the Youngest — His War in Nine Entries', archival: 'Copied by his son Robert c.1700 with the note: my father\'s war, in his words. This is the only record of William\'s interior life during the nine years his brothers were at war.', text: '<p><strong>1642.</strong> Cold spring. John rode to Gloucester the seventh of August. Thomas rode to Worcester the same week in the other direction. Father sat with the deed-box. I brought him bread.</p><p><strong>1645.</strong> Thomas came home in July from Oxford. He is thin. He did not speak much for a month. He saw to the east field without being asked. This was worth noting.</p><p><strong>1646.</strong> John came home in the autumn. He and Thomas sat up all night and I do not know what was said. In the morning they wrote a letter together about the mill stream. This was also worth noting.</p><p><strong>1649.</strong> The King is dead. I wrote this down and then sat with it for a while. The land is here. The mill is turning. I do not know what England is now.</p><p><em><strong>1651.</strong> John and Thomas are both alive. This is sufficient.</em></p>' },
+  'robert-page': { ref: 'MSS. Hale-Marsh IV, item 33 · Account Book · January 1649', title: 'Robert Hale\'s Account Book — The January Page in Full', archival: 'The editors reproduce the surrounding entries because the context changes the meaning of the famous line considerably. Robert Hale set the January entry apart by blank space. The February entry resumes the normal format as if nothing has changed.', text: '<p style="font-size:0.9em;color:#5C4A20;"><em>December 1648.</em> Paid to Matthew the carpenter for work on the north barn door, four shillings. John returned from the army the fourteenth. He is well but changed. He ate three dinners the first evening without appearing to notice.</p><p style="text-align:center;font-size:1.05em;font-weight:bold;letter-spacing:0.04em;margin:24px 0;">January 1649. The King is dead. January 1649. God have mercy on us all.</p><p style="font-size:0.9em;color:#5C4A20;"><em>February 1649.</em> Thomas came in the second week and sat with John for an afternoon. They were quiet. I did not ask. The ewes are in good health. The east field will want attention before ploughing.</p>' },
+  'dorothea-catherine': { ref: 'MSS. Hale-Marsh V, item 44 · Private Letter · November 1721', title: 'Dorothea Hale to her Sister Lady Catherine Pemberton', archival: 'Dorothea asks Catherine to burn this. Catherine did not. The letter was found among the Pemberton family papers donated to the Cumbria Archive in 1978.', text: '<p>Catherine, I write privately and ask you to burn this when you have read it, which I know you will not do because you never burn anything.</p><p>The money is substantially gone. Not entirely — Nathaniel did not mortgage the land, which is the single act of financial discipline in his life for which I am unreservedly grateful.</p><p>He is not a bad man. He is a man who made himself, by effort of will, into the man the situation required, and who is rather more tired than he will ever say. When I found him in the morning room with the accounts he looked, for the first time in twenty years, like what he actually is: a man of considerable intelligence and genuine feeling who has been performing competence since he was fourteen years old.</p><p>I said: then we have sufficient to begin again. I meant it entirely. What I did not say: I am rather looking forward to the beginning again. The performance was accomplished, but it was also tiring to watch.</p><p><em>Your loving sister, Dorothea. Hale Court, November 1721.</em></p>' },
+  'crump-notes': { ref: 'MSS. Hale-Marsh V, item 51 · Reconstructed · Winter 1743–44', title: 'Nathaniel\'s Burned Chapter', archival: 'Crump burned the fair copy but retained his shorthand notes. His note on the retention: He told me to burn the copy. He did not say anything about the notes. I kept the notes.', text: '<p>I have spent sixty years being unable to find the fixed essence beneath my performance, and I have found nothing but further performance, each layer removed revealing another layer, until I arrived at the conclusion that there is no layer beneath — that the performance, conducted with sufficient conviction across sufficient time, does not conceal a self but constitutes one.</p><p>I made myself. The making was effortful and not always honest and produced, in the end, something that Francis inhabits as if it were natural — as if he were born to it — which, in a sense, he was.</p><p><em>That is what I burned for. Not for my own vindication, which I am past needing, but for his. So that what he is would not have to account for how it was made.</em></p>' },
+  'augusta-unsent': { ref: 'MSS. Hale-Marsh VI, item 27a · Draft Letter · March 1806', title: 'Augusta Hale to her Brother Charles — The Unsent Draft', archival: 'Found among Augusta\'s papers at her death, in a folder labelled in her hand: Not sent. The version sent was kinder. Augusta kept both.', text: '<p>Charles. I am going to be direct because the situation requires it and because you are my brother and the only person in this family I can be direct with without consequences.</p><p>You will not be able to manage this estate. I say this not to be cruel but because it is true and you know it and I know it and the only question is whether we say it plainly before we spend six months negotiating around it or whether we say it plainly after. I am choosing before.</p><p>I have managed this estate for eleven years. Without pay, without legal authority, without acknowledgment from anyone except Eleanor Caldwell, who has the sense to notice things. I have saved the estate approximately four hundred pounds in that time through corrections alone.</p><p>I will write you the proper letter tomorrow. It will be kinder than this one. But this one is what I actually mean.</p><p><em>Augusta.</em></p>' },
+  'henry-alderton': { ref: 'MSS. Hale-Marsh VI, item 39 · Private Letter · December 1829', title: 'Henry Alderton to his Father', archival: 'Retained in the Alderton family papers, donated to Shrewsbury Library in 1952. Identified by Eleanor Voss, 2024.', text: '<p>Father, you ask how the Harton Hall account progresses and I shall tell you, though the account is not quite what I want to write about.</p><p>The estate is in better order than the documentation suggested. The reason for this is a woman named Augusta Hale, Sir George\'s sister, who has been managing the accounts since 1795 without formal authority or compensation and who has done so with a thoroughness I have encountered in perhaps three other people in my professional life, none of them unpaid.</p><p>I find myself, in these letters, writing rather better than I usually do. I am trying to be precise rather than merely adequate, which is a different effort.</p><p>I am going to Harton Hall again in January on a question of timber rights. I find I am looking forward to it rather more than timber rights warrant.</p><p><em>Your respectful and somewhat confused son, Henry Alderton. Shrewsbury, December 1829.</em></p>' },
+  'edmund-clara': { ref: 'MSS. Hale-Marsh VII, item 6b · Letter · January 1870', title: 'Edmund Hale to Clara Marsh — The Termination Letter', archival: 'Not previously published in full. Clara\'s journal that week: I have read it four times. Each time it means the same thing, which is that he has decided I am not a person but a circumstance.', text: '<p>Miss Marsh, I write to you in the full awareness of the inadequacy of any written communication to the weight of the present circumstances.</p><p>The exigencies of my professional situation make it impossible for me to continue the present arrangement with any prospect of the certainty and stability that you deserve. I do not think it necessary to enumerate the specific pressures, as you are a woman of considerable intelligence and will, I believe, understand them without enumeration.</p><p>The enclosed sum — one hundred pounds — represents my sincere attempt to discharge the obligations of the past three years. I have arranged for a further payment of forty pounds per annum, payable quarterly, through the firm of Alderton and Co. of Shrewsbury.</p><p><em>I am, Miss Marsh, with the deepest regret and the sincerest assurance of my continued good wishes for your welfare, your obedient servant, Edmund Rathbone Hale.</em></p>' },
+  'adelaide-diary': { ref: 'MSS. Hale-Marsh VII, item 52 · Diary · August–September 1882', title: 'Adelaide Hale — Three Diary Entries', archival: 'The week in which Fairweather told her everything. She kept the diaries. They are in the Bodleian now.', text: '<p><em><strong>Thursday.</strong></em> Fairweather came. He told me everything. It took two hours. He was uncomfortable throughout in the way of men who are performing an obligation they did not choose and who are doing so more honestly than the obligation strictly requires.</p><p><em><strong>Friday.</strong></em> I slept. I woke in the night once and thought: there is a nine-year-old boy in Camberwell who does not know that the woman lying awake in Derbyshire is his father\'s wife.</p><p><em><strong>Saturday.</strong></em> He tried to be better than he was, and the trying was real, and it was not sufficient, and I loved him for the trying, which is the worst of it.</p>' },
+  'rathbone-thomas': { ref: 'MSS. Hale-Marsh VIII, item 3 · Letter · October 1891', title: 'E. Rathbone to Thomas Marsh-Hale', archival: 'The only surviving letter from Edmund Hale to his son. Thomas was eighteen. He kept it for sixty years without annotation. James Marsh-Hale has read it every year since 1969.', text: '<p>Thomas, I do not know if you will read this. I am going to write it as if you will.</p><p>What I want to say — and I have been trying to find the right form for this for nine years, which is why it has taken nine years — is this: you are not the consequence of a mistake. You are the consequence of something real that I handled badly. The real thing was real.</p><p>The name you carry — Marsh-Hale — is the accurate name. You are both things. You are more Hale than I was, which your mother told me and which I believe.</p><p>They have been keeping land in Worcestershire since 1067 and they have been asking, for all of that time, whether what they have done is sufficient. None of them have answered it cleanly. All of them have kept asking. This is, apparently, what the family does.</p><p>Keep asking.</p><p><em>E. Rathbone. Bristol, October 1891.</em></p>' },
+  'daniel-father': { ref: 'MSS. Okafor (British Library), letter 3 · Letter · March 1890', title: 'Daniel Okafor to his Father in Lagos', archival: 'Daniel Okafor\'s papers at the British Library contain forty-three letters from Thomas Marsh-Hale. This letter, one of the earliest from his London period, has not been published in connection with the Hale archive. Translation by Dr Adaeze Okafor, 2025.', text: '<p>Dear Father, I am writing from my rooms at Gray\'s Inn Road which are cold in the way that English rooms are cold — a persistent damp cold that comes through the walls as though the walls were not quite closed against the outside.</p><p>I am the only person who looks like me in every room I enter. This is not a complaint; it is a description. Some rooms are kind about it and some rooms are less kind and some rooms are indifferent in the way of rooms that have decided what you are before you arrive. I am learning to read which kind of room I am entering before I say anything.</p><p>I have made one friend. His name is Thomas Marsh-Hale and he understands something about being in a room where the room has already decided what you are. We argued about John Locke last Sunday for two hours and neither of us changed our position and both of us found this satisfying, which I think is what friendship is.</p><p>I am eating. The food is not good but there is enough of it.</p><p><em>Your son, Daniel. London, March 1890.</em></p>' },
+  'clara-ledger': { ref: 'MSS. Hale-Marsh VIII, item 1a · Ledger · Week of 14 March 1876', title: 'Clara Marsh\'s Household Account', archival: 'The ledger Thomas described when he wrote that his mother knew the arithmetic before he did. Thomas was three years old in the week recorded here. The forty-pound annual payment from Edmund had been running for six years.', text: '<p style="font-family:\'Courier New\',monospace;font-size:0.85em;color:#3B2A1A;"><strong>Week of 14 March 1876</strong></p><p>Income this week: Quarterly payment received from Alderton &amp; Co. — £10 0s 0d</p><p>Expenditure: Rent £0 12s · Coal (half sack) £0 1s 6d · Bread, 3 loaves £0 0s 9d · Milk £0 0s 7d · Meat £0 1s 4d · Candles £0 0s 4d · Thread £0 0s 3d · Thomas — boot soles £0 1s 0d · Soap £0 0s 2d · Savings £0 10s 0d</p><p><strong>Total expenditure: £1 8s 11d. Balance carried: £2 15s 4d.</strong></p><p style="font-style:italic;font-size:0.88em;color:#5C3A1E;margin-top:14px;"><em>Note on the coal: half sack is not sufficient for this weather. Full sack when the quarter payment comes. We are cold.</em></p>' },
+  'dorothy-notebook': { ref: 'MSS. Hale-Marsh IX, item 12 · Technical Notebook · October 1942', title: 'Dorothy Price — Technical Notebook', archival: 'Ministry of Aircraft Production. Dorothy used both sides of each page: technical drawings on the right, personal observations on the left. Edmund Marsh-Hale called her into his office the following day about the gusset plate. His note: The gusset plate is correct. She said: I know.', text: '<p><strong>Left page — Personal observations:</strong></p><p>I have been thinking about the gap between designed capacity and actual capacity. I think this is true of people also. We are specified for one thing and life requires another, and most of us are carrying loads we were not designed for and managing it, and nobody is measuring the gap.</p><p>The deflection is manageable. I note it here because deflection is only manageable when it is measured.</p><p><em>Edmund asked me what I thought about something today and wrote down the answer. He has done this twice now. I find this notable and am noting it.</em></p><p style="margin-top:18px;"><strong>Right page — Technical specification:</strong></p><p>Structural note: the original specification would produce a stress concentration at the NE corner of the main bearing wall under the revised loading. Added gusset plate detail to distribute the stress. This was not in the original brief.</p><p><strong><em>Specification does not call for it. Physics does.</em></strong></p>' },
+  'eleanor-email': { ref: 'MSS. Hale-Marsh X, item 7 · Email · June 2019', title: 'Eleanor Voss to her Father — Subject: The Shoebox', archival: 'Written six weeks after David Voss\'s death. Sent to his address, which no longer received messages. Eleanor: I needed to write it as if he could read it. I knew he couldn\'t. I sent it anyway.', text: '<p>Dad, I found the shoebox. Nike box, size 10. I don\'t know whose shoes those were.</p><p>At the bottom of the conveyance, there\'s a note in a different hand from the 1640s. You knew it was there. You wrote Property: keep. Did you know what it said? Did you know about Halecroft?</p><p>The job at the Bodleian is still open. I\'ve been not-applying for it for three months because Oxford seems like a statement and I\'m not sure I\'m ready to make it. But I think I\'m going to apply.</p><p>I think you would have liked me to apply. I think the shoebox wants me to apply.</p><p>I miss you. The house smells like your books and your tea and I keep expecting to hear you coming downstairs.</p><p><em>Eleanor</em></p>' },
+  'james-finding-aid': { ref: 'MSS. Hale-Marsh Finding Aid, item 3 · Annotated · 2001–2024', title: 'James Marsh-Hale\'s Finding Aid — With Final Annotations', archival: 'James\'s personal annotated copy, found among his papers donated to the Bodleian in 2023. The final two sentences were added in February 2024, three weeks after the imaging results. Written slowly. In recent ink.', text: '<p><strong>Matilda\'s letter.</strong> Single document, mounted between glass plates. The text is in late Middle English, consistent with a date of c.1390. Central section (lines 9–23) is damaged by water and not currently legible.</p><p><strong>Recommendation:</strong> multispectral imaging of the central section is strongly advised when resources permit. The damaged portion may be recoverable and the significance of the document warrants the effort.</p><p style="font-style:italic;color:#5C4A30;border-left:2px solid rgba(139,100,40,0.3);padding-left:12px;margin:12px 0;">— James Marsh-Hale, March 2001.</p><p style="font-style:italic;color:#5C4A30;border-left:2px solid rgba(139,100,40,0.4);padding-left:12px;margin:8px 0;">[Annotation, added later: I waited twenty-three years. I should have pressed harder. E.V. found it in 2024.]</p><p style="font-size:1em;font-style:italic;color:#3B2A1A;border-left:3px solid #8B6914;padding-left:14px;margin-top:16px;line-height:1.9;">She was writing to Eleanor. She always was.</p>' }
+};
+
+function openDoc(key) {
+  var doc = DOCS[key]; if (!doc) return;
+  var html = '<div class="viewer-ref">' + doc.ref + '</div>' +
+    '<div class="viewer-parchment" style="position:relative;">' +
+    '<p style="font-family:\'Cinzel\',Georgia,serif;font-size:1.15em;color:#3B2A1A;margin-bottom:6px;">' + doc.title + '</p><hr style="border:none;border-top:1px solid rgba(139,100,40,0.3);margin:12px 0 16px;">' +
+    (doc.archival ? '<div class="viewer-archival">' + doc.archival + '</div>' : '') +
+    doc.text + '</div>';
+  document.getElementById('doc-viewer-content').innerHTML = html;
+  document.getElementById('doc-viewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDocViewer(e, force) {
+  if (force || (e && e.target === document.getElementById('doc-viewer'))) {
+    document.getElementById('doc-viewer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeDocViewer(null,true); });
+</script>
+</body>
+</html>

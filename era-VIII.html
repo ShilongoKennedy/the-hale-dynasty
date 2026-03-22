@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. VIII — Thomas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#EAE4D8; color:#2A1A0A; font-family:'Lora', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#3A3020; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#C8B888; text-decoration:none; } .era-nav a:hover { color:#E8D8A8; }
+    .era-nav .vol-marker { color:#7A6A50; }
+
+    .era-header {
+      background:#E8E0D0; border-bottom:3px solid #7A6A40; border-top:1px solid #C0A880;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#7A6A40; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'Libre Baskerville','Cinzel',Georgia,serif; font-size:clamp(1.8em,5vw,3.2em); color:#2A1A0A; letter-spacing:0.08em; margin-bottom:8px; font-weight:700; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#7A6A40; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
+
+    .editorial-note {
+      border-left:3px solid #7A6A40; padding:16px 20px; background:#E0D8C0;
+      font-style:italic; font-size:0.85em; color:#5A4A28; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#7A6A40; text-transform:uppercase; margin-bottom:6px; }
+    .register-note { font-family:'Courier New',monospace; font-size: 0.78em; color:#7A6A50; letter-spacing:0.12em; margin-bottom:8px; padding:8px 12px; background:#D8D0B8; border-left:3px solid #9A8A60; }
+
+    /* REGISTER 1: Late Victorian — rich, elaborate */
+    .letter-r1 {
+      background:#F4EED8; border:1px solid #C0A870; padding:36px 44px;
+    }
+    .letter-r1-head { font-variant:small-caps; letter-spacing:0.1em; color:#5A4020; font-size:0.82em; border-bottom:1px solid #C0A870; padding-bottom:10px; margin-bottom:18px; line-height:1.5; }
+    .letter-r1 p { font-size:0.92em; line-height:2; margin-bottom:0.9em; }
+    .letter-r1 p:last-child { margin-bottom:0; }
+    .letter-r1-sig { text-align:right; margin-top:16px; font-style:italic; color:#4A3010; font-size:0.88em; }
+
+    /* REGISTER 2: Edwardian — cleaner, loosening */
+    .letter-r2 {
+      background:#F0EAD4; border-left:4px solid #7A6A40; border:1px solid #B8A870; border-left-width:4px; padding:32px 40px;
+    }
+    .letter-r2-head { color:#5A4A28; font-size:0.8em; border-bottom:1px solid #B0A070; padding-bottom:8px; margin-bottom:16px; line-height:1.5; }
+    .letter-r2 p { font-size:0.92em; line-height:1.9; margin-bottom:0.85em; }
+    .letter-r2 p:last-child { margin-bottom:0; }
+    .letter-r2-sig { text-align:right; margin-top:14px; font-style:italic; color:#4A3A20; font-size:0.88em; }
+
+    /* REGISTER 3: War — stripped, direct */
+    .letter-r3 {
+      background:#E8E0D0;
+      border:1px solid #8A8068; border-left:4px solid #2A3A50; border-left-width:4px;
+      padding:28px 36px;
+      position:relative;
+    }
+    .letter-r3::before {
+      content:'FIELD STATIONERY'; position:absolute; top:10px; right:14px;
+      font-family:'Courier New',monospace; font-size:0.6em; color:#9A8A70; letter-spacing:0.15em;
+    }
+    .letter-r3-head { font-family:'Courier New',monospace; color:#2A3A50; font-size:0.72em; letter-spacing:0.1em; border-bottom:1px solid #8A8068; padding-bottom:8px; margin-bottom:14px; text-transform:uppercase; }
+    .letter-r3 p { font-size:0.9em; line-height:1.85; margin-bottom:0.8em; color:#2A2010; }
+    .letter-r3 p:last-child { margin-bottom:0; }
+    .letter-r3-sig { margin-top:12px; font-size:0.88em; color:#3A3020; }
+
+    /* ATTESTATION PAPER */
+    .attestation {
+      background:#F0EAD4; border:2px solid #3A3020; padding:32px 40px;
+    }
+    .att-header { text-align:center; font-family:'Courier New',monospace; font-size:0.8em; letter-spacing:0.1em; text-transform:uppercase; color:#1A1A0A; border-bottom:2px solid #3A3020; padding-bottom:12px; margin-bottom:18px; }
+    .att-field { display:flex; gap:10px; margin-bottom:8px; font-size:0.85em; line-height:1.5; }
+    .att-label { font-family:'Courier New',monospace; color:#5A4A28; min-width:130px; font-size:0.9em; }
+    .att-line { flex:1; border-bottom:1px solid #8A7A50; padding-bottom:1px; }
+    .att-declaration { margin-top:18px; font-size:0.85em; line-height:1.8; border-top:1px solid #8A7A50; padding-top:14px; }
+    .att-sig-line { display:flex; justify-content:space-between; margin-top:16px; font-size:0.82em; }
+
+    /* ── THE TELEGRAM ─────────────────────────────────────── */
+    .telegram-wrapper {
+      max-width: 560px;
+      margin: 0 auto 56px;
+      padding: 0 20px;
+    }
+    .telegram {
+      background: #F4EDD8;
+      border: 1px solid #C4B080;
+      padding: 28px 32px 32px;
+      position: relative;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 0 40px rgba(180,160,100,0.08);
+      font-family: 'Courier New', monospace;
+    }
+    .telegram::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(100,80,40,0.06) 23px, rgba(100,80,40,0.06) 24px);
+      pointer-events: none;
+    }
+    .telegram-header {
+      text-align: center;
+      border-bottom: 1px solid #C4B080;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .telegram-service {
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      color: #2A1A08;
+      text-transform: uppercase;
+    }
+    .telegram-meta {
+      font-size: 0.74em;
+      color: #6A5020;
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+    }
+    .telegram-body {
+      font-size: 0.82em;
+      color: #1A1008;
+      line-height: 1.7;
+      letter-spacing: 0.05em;
+      min-height: 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .telegram-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: #1A1008;
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .telegram-stamp {
+      margin-top: 16px;
+      text-align: right;
+      font-size: 0.74em;
+      color: #8A6020;
+      letter-spacing: 0.06em;
+      font-style: italic;
+    }
+
+    /* ARCHIVE DISCOVERY — 1919 */
+    .archive-discovery {
+      background:#F4EED8; border:1px solid #C0A870; border-top:3px solid #7A6A40; padding:32px 40px;
+    }
+    .ad-head { font-variant:small-caps; letter-spacing:0.1em; color:#5A4020; font-size:0.8em; border-bottom:1px solid #C0A870; padding-bottom:8px; margin-bottom:16px; }
+    .archive-discovery p { font-size:0.9em; line-height:1.9; margin-bottom:0.9em; }
+    .archive-discovery p:last-child { margin-bottom:0; }
+
+    
+
+    @media (max-width:600px) {
+      .letter-r1,.letter-r2,.letter-r3,.attestation,.archive-discovery { padding:20px 16px; }
+      .telegram-wrapper { padding:28px 18px; }
+      .era-content { padding:30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── PORTRAIT ───────────────────────────────────────── */
+    .portrait-frame {
+      float: right;
+      margin: 0 0 32px 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .portrait-svg { display: block; }
+    .portrait-img-viii {
+      display: block;
+      width: 220px;
+      height: auto;
+      border: 6px solid #2A1E0E;
+      outline: 1px solid #6A5030;
+      outline-offset: -9px;
+      filter: sepia(0.25) contrast(1.08) brightness(0.96);
+      box-shadow: 4px 4px 0 #1A1008, 8px 8px 24px rgba(0,0,0,0.85);
+    }
+    .portrait-caption {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      color: #4A3A20;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .portrait-frame { float: none; margin: 0 auto 28px; display: block; }
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    .voice-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 14px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.88em; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.2s; margin-left: 10px;
+    }
+    .voice-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .voice-btn.speaking { color: #C8A840; border-color: rgba(200,168,40,0.6); animation: voicePulse 1.2s ease infinite; }
+    @keyframes voicePulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    /* ── RAIN STREAKS ───────────────────────────────── */
+    #rainCanvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 50;
+      opacity: 0; transition: opacity 3s ease;
+    }
+    #rainCanvas.active { opacity: 1; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: sepia(0.5) contrast(1.15) brightness(0.85);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,10,5,0.55);
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+
+    /* ── ERA VIII VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-viii {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 10px;
+    }
+    .evp-viii-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.12em;
+      color: #7A5820;
+      text-transform: uppercase;
+    }
+    .evp-viii-play {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.3);
+      color: #7A5820;
+      padding: 4px 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.86em;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .evp-viii-play:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+    .evp-viii-progress {
+      background: rgba(200,168,40,0.1);
+      height: 3px;
+      width: 70px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    .evp-viii-bar {
+      background: #7A5820;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .evp-viii-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      color: #7A5820;
+      min-width: 24px;
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="viii" data-vol="VIII">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-VIII.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar" style="background: #3A3020; border-bottom: 1px solid #4A4030; padding: 8px 30px; display: flex; align-items: center; justify-content: space-between; font-family: 'Courier New', monospace; font-size: 0.62em; letter-spacing: 0.14em;">
+    <span style="color: #7A6A50; text-transform: uppercase;">The Somme, October 1916 · Ambient</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <button id="soundToggle" onclick="toggleSound()" style="background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820; padding: 5px 16px; cursor: pointer; font-family: 'Courier New', monospace; font-size: 0.95em; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s;">♪ Hear the front</button>
+      <button class="voice-btn" id="voiceBtnVIII" onclick="speakThomas()" style="display: none;">♪ Hear Thomas</button>
+      <div class="era-voice-player-viii" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/thomas.mp3" preload="none"></audio>
+        <button class="evp-viii-play" id="evpPlay">▶ Play</button>
+        <div class="evp-viii-progress">
+          <div class="evp-viii-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-viii-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-VII.html">← Vol. VII</a>
+    <span class="vol-marker">VOL. VIII OF X &nbsp;·&nbsp; 1873–1919</span>
+    <a href="era-IX.html">Vol. IX →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraVIII.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume VIII</div>
+    <h1 class="era-main-title">Thomas</h1>
+    <p class="hd-quill" style="font-style:italic; color:#5A4A28; font-size:0.88em; margin:10px 0; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being the Letters of Thomas Marsh-Hale, Journalist, Illegitimate Son. Three Registers: Before the War, During the War, After the War. The Archive Found.
+    </p>
+    <div class="era-dates">1873 — 1919</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/thomas.png" class="portrait-img-viii" alt="Thomas Hale — studio photograph, 1916">
+      <div class="portrait-caption">Thomas Marsh-Hale · 1873–1916<br><em>13th Worcestershire Regiment · Imagined from the record</em></div>
+      <div style="text-align:center; margin-top:10px;">
+        <a href="gazette.html" style="font-family:'Courier New',monospace; font-size:0.65em; letter-spacing:0.15em; color:#7A6A40; text-transform:uppercase; text-decoration:none; border-bottom:1px solid rgba(200,168,60,0.3); padding-bottom:2px; transition:color 0.2s;" onmouseover="this.style.color='#C8A028'" onmouseout="this.style.color='#7A6A40'">Read the Worcester Gazette · Oct. 1916 →</a>
+      </div>
+    </div>
+
+    <div class="editorial-note">
+      Thomas Marsh-Hale (1873–1951) was the son of Edmund Hale and Clara Marsh. He was told about his father at the age of sixteen, when Miss Ruth Hale came to Brixton to explain the situation. He became a journalist. He found the family archive in a reading room in Oxford in 1919, shortly after the armistice. He spent the rest of his life thinking about what he had found. His prose — observe the letters below — changes register three times across his life. The war stripped something out of it and it never quite grew back. This is not a complaint. The stripped prose is better.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— J.M-H., <em>London, 1984</em></div>
+    </div>
+
+    <!-- Letter 1895 — Register 1 -->
+    <div class="document">
+      <div class="doc-label">Letter I · Thomas Marsh-Hale to Daniel Okafor · London · November 1895</div>
+      <div class="register-note">✦ REGISTER ONE · 1895–1907 · LATE VICTORIAN · ELABORATE · PERFORMING ITS OWN INTELLIGENCE</div>
+      <div class="letter-r1">
+        <div class="letter-r1-head">From Thomas Marsh-Hale, Journalist · London · 14 November 1895 · To Daniel Okafor, Esq., Lincoln's Inn</div>
+        <p>My dear Daniel — I write to you from the somewhat dispiriting surroundings of the Press Gallery, where I have spent the better part of this week in the service of reporting upon proceedings which, if recorded with perfect accuracy, would not only bore the readership into a condition of mild unconsciousness but would also, I suspect, bore several of the participants in the proceedings themselves, were they to encounter the record.</p>
+        <p>The parliamentary debate upon which I am reporting concerns, in its nominal aspect, a question of colonial administration, and in its actual aspect, a question of whether the several gentlemen making speeches wish to be understood as thinking the thing they are saying or as wishing to be seen to think it, the distinction between which I have found, in four years of parliamentary reporting, to be the only distinction that requires careful attending to, all other distinctions being matters of grammar and party affiliation and therefore essentially decorative.</p>
+        <p>I dined last Tuesday with a man who claims to have known my father, which is to say the man who was my father in the biological sense and who was, in the various other senses, a considerable question mark. He told me that Edmund Hale was a man of considerable intelligence and very little self-knowledge, which is either a kindness or an accurate description and possibly both. I find I am more interested in the family he came from than in the man himself, which is either a failure of filial imagination on my part or a reasonable instinct about where the substance of the matter lies.</p>
+        <div class="letter-r1-sig">Your dear friend and occasional correspondent,<br><strong>Thomas Marsh-Hale.</strong> London, November 1895.</div>
+      </div>
+    </div>
+
+    <!-- Letter 1909 — Register 2 -->
+    <div class="document">
+      <div class="doc-label">Letter II · Thomas Marsh-Hale to Daniel Okafor · Paris · March 1909</div>
+      <div class="register-note">✦ REGISTER TWO · 1908–1913 · EDWARDIAN · LOOSENING · THE PERFORMANCE WEARING THIN</div>
+      <div class="letter-r2">
+        <div class="letter-r2-head">Thomas Marsh-Hale · Paris, March 1909 · To Daniel Okafor, Esq.</div>
+        <p>Daniel — Paris in March is the cliché that the cliché was invented to describe. I will not describe it further on the grounds that anything I say will sound borrowed. I am here covering the colonial conference, which is less interesting than it sounds and sounds less interesting than anything I have covered in the past twelve months, which has included two elections, one flood, and a trial that lasted three weeks and ended in a verdict that satisfied no one, including the jury. Good journalism.</p>
+        <p>I have been thinking about the family again. Found a letter at my mother's that I hadn't read — from my grandfather Edmund to my mother, from 1880, when I was seven. He never sent it. She found it among some papers after he died and kept it without telling me, which I understand. The letter is about me. It is a man who knows what he should do and cannot do it. Watching it from the outside, from thirty years later, I find I feel more sorry for him than angry. He was not a courageous man. He had a courageous intelligence that he never attached to anything real. That is a particular kind of waste.</p>
+        <p>I think I understand the question now — the family question, is what I have done sufficient — in a way I did not when I was younger. The answer isn't a destination. It's a practice. Rachel says so too, which means she understood it before I did, which is also a practice.</p>
+        <div class="letter-r2-sig">Yours, Thomas.</div>
+      </div>
+    </div>
+
+    <!-- Attestation Paper 1914 -->
+    <div class="document">
+      <div class="doc-label">Document III · Attestation Paper · Daniel Okafor · August 1914</div>
+      <div class="attestation">
+        <div class="att-header">Short Service Attestation · His Majesty's Army · August 1914</div>
+        <div class="att-field"><span class="att-label">Surname:</span><span class="att-line">OKAFOR</span></div>
+        <div class="att-field"><span class="att-label">Christian Names:</span><span class="att-line">Daniel Emmanuel</span></div>
+        <div class="att-field"><span class="att-label">Age:</span><span class="att-line">44 years, 3 months</span></div>
+        <div class="att-field"><span class="att-label">Trade or Calling:</span><span class="att-line">Barrister-at-Law, Lincoln's Inn</span></div>
+        <div class="att-field"><span class="att-label">Next of Kin:</span><span class="att-line">Mrs. Adaeze Okafor (wife), 14 Bloomsbury Square, London</span></div>
+        <div class="att-field"><span class="att-label">Corps Applied For:</span><span class="att-line">3rd Battalion, West India Regiment</span></div>
+        <div class="att-declaration">
+          I, Daniel Emmanuel Okafor, swear by Almighty God that I will be faithful and bear true Allegiance to His Majesty King George the Fifth, His Heirs and Successors, and that I will, as in duty bound, honestly and faithfully defend His Majesty, His Heirs and Successors, in Person, Crown and Dignity against all enemies, and will observe and obey all orders of His Majesty, His Heirs and Successors, and of the Generals and Officers set over me.
+          <p style="margin-top:10px; font-style:italic; font-size:0.85em; color:#5A4A28;">Annotation in Thomas Marsh-Hale's hand: <em>Daniel was 44 years old and they took him. He said he had as much right to fight for this country as any man born in Worcestershire, and more right than most since he'd spent twenty years defending it in the courts. The recruiting officer looked at his papers for a long time and then stamped them. I saw Daniel on the steps after. He said: well. I said: well indeed. Neither of us said anything else. We went for a drink.</em></p>
+        </div>
+        <div class="att-sig-line">
+          <span>Signature: <em>D.E. Okafor</em></span>
+          <span>Date: <em>7 August 1914</em></span>
+          <span>Witnessed: <em>T. Marsh-Hale</em></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE TELEGRAM -->
+    <div class="document">
+      <div class="doc-label">Document IV · War Office Telegram · October 1916</div>
+      <div class="telegram-wrapper">
+        <div class="telegram">
+          <div class="telegram-header">
+            <div class="telegram-service">War Office Telegram</div>
+            <div class="telegram-meta">OHMS &nbsp;·&nbsp; 14 October 1916 &nbsp;·&nbsp; Received 09:42</div>
+          </div>
+          <div class="telegram-body" id="telegram-text"></div>
+          <div class="telegram-stamp">War Office, Whitehall</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Letter 1916 — Register 3 (war-stripped) -->
+    <div class="document">
+      <div class="doc-label">Letter V · Thomas Marsh-Hale to Rachel Simons · France · November 1916</div>
+      <div class="register-note">✦ REGISTER THREE · 1914–1919 · WAR · STRIPPED · THE PERFORMANCE GONE</div>
+      <div class="letter-r3">
+        <div class="letter-r3-head">T. Marsh-Hale · War Correspondent · Field Post · France · November 1916</div>
+        <p>Rachel — I am writing this from a farmhouse twelve miles behind the line. There is a fire. The farmer's wife is making something that smells like soup. The cat is asleep on the press bag. If I describe this too carefully it will sound like I am making it into something it isn't, so I will not describe it further.</p>
+        <p>Daniel is going to be all right. I had a letter from Adaeze on Monday. He is walking again, badly, and says he expects to walk well enough eventually. I believe him. He has always managed to do what he said he would do.</p>
+        <div class="hd-marginal-wrap"><p>I have been thinking about the question. You know the one. I asked it at the front last week — the actual front, which I am not meant to go to but did because there are things you cannot see from twelve miles back. I asked it standing in a hole in the ground in the rain. Whether what I had done was sufficient. I did not have an answer. I do not think there is one. I think my grandmother was right that the asking is the thing and the not-stopping-asking is the other thing.</p>
+        <div class="hd-marginal">Six hundred years of the same question. Still no answer. Still asking. — E.V.</div></div>
+        <p>Come home. See to the pig. <span class="hd-pig" data-era="VIII" title="🐷">🐷</span> I will be back in February.</p>
+        <div class="letter-r3-sig">Thomas.</div>
+      </div>
+    </div>
+
+    <!-- The Archive Found 1919 -->
+    <div class="document">
+      <div class="doc-label">Document VI · Thomas Marsh-Hale · Personal Account · Oxford · 1919</div>
+      <div class="archive-discovery">
+        <div class="ad-head">From the notes of Thomas Marsh-Hale · Oxford, March 1919</div>
+        <p>I found the archive in a reading room in Oxford on a Tuesday in March, three months after the armistice. I was there to cover a conference. I had an hour to spare. I went to the Bodleian because I had not been before and it seemed like the kind of place a journalist should have been. A librarian, finding that my name was Marsh-Hale, asked me if I was connected to the family whose papers had been deposited there by a Miss Ruth Hale in 1912. I said I did not know. He showed me.</p>
+        <p>I spent four hours in that reading room. I read everything — or tried to, since much of it was Latin and much of the rest was in English I could only partly read, but I had some of the Latin from school and the feeling of the thing carried me past the parts I could not read. A family from 1066 to the present day, in their own words, in the language of each century. A question asked at the beginning and asked again in every generation.</p>
+        <p>I walked out into the High Street at seven in the evening and stood in the cold for a while. Then I went back to the hotel and wrote to Rachel. The letter was three sentences long. I told her what I had found. I told her I was all right. I told her the question was still open, which was either a comfort or a problem, and I had not decided which.</p>
+        <p>She wrote back: both. It is always both. Come home.</p>
+        <p>She was right about everything, as a general principle. She was right about this in particular. I went home.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #1A1408;">
+    <a href="era-VII.html">← Vol. VII: Mr Edmund Hale</a>
+    <span class="vol-marker">END OF VOLUME VIII</span>
+    <a href="era-IX.html">Vol. IX: The Name →</a>
+  </nav>
+
+  <script>
+  /* ── TELEGRAM TYPEWRITER ───────────────────────────────────── */
+  (function() {
+    var el = document.getElementById('telegram-text');
+    if (!el) return;
+    var msg = 'DEEPLY REGRET TO INFORM YOU THAT PTE THOMAS HALE 13TH WORCS REGT WAS KILLED IN ACTION ON THE 14TH OCTOBER 1916 STOP THE ARMY COUNCIL EXPRESS THEIR SYMPATHY STOP';
+    var cursor = document.createElement('span');
+    cursor.className = 'telegram-cursor';
+    el.appendChild(cursor);
+    var i = 0;
+    var started = false;
+    function type() {
+      if (i >= msg.length) {
+        cursor.remove();
+        return;
+      }
+      var node = document.createTextNode(msg[i]);
+      el.insertBefore(node, cursor);
+      i++;
+      var delay = msg[i-1] === ' ' ? 60 : (msg[i-1] === 'P' && msg.substr(i-4,4) === 'STOP' ? 280 : 32 + Math.random() * 18);
+      setTimeout(type, delay);
+    }
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !started) {
+        started = true;
+        setTimeout(type, 1200);
+      }
+    }, { threshold: 0.5 });
+    obs.observe(el.closest('.telegram-wrapper'));
+  })();
+
+  // ── Scroll-reveal for all documents on this page ──────────────────────
+  (function() {
+    var style = document.createElement('style');
+    style.textContent = '.doc-reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}';
+    document.head.appendChild(style);
+
+    var items = document.querySelectorAll('.document');
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('doc-in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+
+    items.forEach(function(el) {
+      el.classList.add('doc-reveal');
+      obs.observe(el);
+    });
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. VIII INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- RECOVERED DOCUMENT 1: Daniel Okafor to his father in Lagos, March 1890 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Okafor (British Library Add. MS. 89217), letter 3 · Private Letter · March 1890</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">Daniel Okafor, Gray's Inn Road, London, to Mr Samuel Okafor, Lagos</p>
+    <p class="parchment-subtitle">March 1890 · Daniel was nineteen, in his second year at the Inns of Court · Translated from the Yoruba greeting and closing by Dr Adaeze Okafor, 2025</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: Daniel Okafor's papers at the British Library contain forty-three letters from Thomas Marsh-Hale and one hundred and twelve letters from Daniel to his family in Lagos. This letter, one of the earliest from his London period, has not been published in connection with the Hale archive. The editors are grateful to Dr Adaeze Okafor for her assistance with the translation and for her permission to reproduce it here.</div>
+    <p><span class="hd-dropcap">D</span>ear Father, I am writing from my rooms at Gray's Inn Road where I have been living since the autumn and which are cold in the way that English rooms are cold — not dramatic cold, not the cold of the harmattan, but a persistent damp cold that comes through the walls as though the walls were not quite closed against the outside, which in some cases they are not.</p>
+    <p>I am well. The law is difficult and interesting and I am managing it. The difficulty is not the subject, which I can follow, but the texture of it — the English law has been accumulating specific cases and precedents for six hundred years and the cases refer to each other in a way that requires you to hold a very great deal in your head simultaneously, which I am practising. I am getting better at it.</p>
+    <p>I want to tell you about the situation here, and I want to tell you accurately, because I think you understand accuracy and I do not want to perform contentment for you when contentment is not quite the word.</p>
+    <p>I am the only person who looks like me in every room I enter. This is not a complaint; it is a description. Some rooms are kind about it and some rooms are less kind and some rooms are indifferent in the way of rooms that have decided what you are before you arrive and are waiting for you to confirm it. I am learning to read which kind of room I am entering before I say anything, which is a skill I did not know I needed and which is useful in ways that go beyond this particular country.</p>
+    <p>I have made one friend. His name is Thomas Marsh-Hale and he is the son of a barrister who chose not to acknowledge him, which means he is in a different kind of difficulty from mine but a difficulty nonetheless, and he understands something about being in a room where the room has already decided what you are. We argued about John Locke last Sunday for two hours and neither of us changed our position and both of us found this satisfying, which I think is what friendship is.</p>
+    <p>London is extraordinary and exhausting and I do not think I will ever feel fully at home in it, which is not a problem — I did not come here to feel at home. I came here to learn the law, and I am learning it, and when I know it well enough I will use it, and the use I have in mind is not quite the use they are training me for, but that is a conversation for another letter.</p>
+    <p>Give my love to mother and to Taiwo. I am eating. The food is not good but there is enough of it.</p>
+    <p><em>Your son, Daniel. London, March 1890.</em></p>
+  </div>
+</div>
+
+<!-- RECOVERED DOCUMENT 2: Clara Marsh's ledger page, week of 14 March 1876 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh VIII, item 1a · Household Account Ledger · Week of 14 March 1876</div>
+  <div class="ledger" style="background:#F2EAD5; border:1px solid #A88F5B; padding:32px 36px; font-size:0.92em;">
+    <p style="font-family:'Cinzel',Georgia,serif; font-size:1.05em; color:#3B2A1A; margin-bottom:4px;">Clara Marsh — Household Account Ledger</p>
+    <p style="font-family:'Courier New',monospace; font-size:0.72em; letter-spacing:0.2em; color:#8B1A1A; text-transform:uppercase; margin-bottom:20px;">11 Camberwell New Road · London · Week of 14–20 March 1876</p>
+    <div class="recovered-archival" style="margin-bottom:18px;">Archival note: This is the ledger Thomas described when he wrote, in 1919, that his mother knew the arithmetic before he did. Thomas was three years old in the week recorded here. The forty-pound annual payment from Edmund had been running for six years. Over twelve years, this arithmetic funded Thomas's grammar school uniform, his scholarship application fees, and the three-week trip to Paris in 1893.</div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(139,100,40,0.2); padding:6px 0; font-style:italic; color:#5C3A1E;">
+      <span>Income this week</span><span></span>
+    </div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:5px 0 5px 16px; border-bottom:1px solid rgba(139,100,40,0.1);">
+      <span>Quarterly payment received from solicitor (Alderton &amp; Co.)</span><span>£10 0s 0d</span>
+    </div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(139,100,40,0.2); padding:6px 0; font-style:italic; color:#5C3A1E; margin-top:8px;">
+      <span>Expenditure this week</span><span></span>
+    </div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Rent to Mrs Pearce, week's portion of monthly</span><span>£0 12s 0d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Coal, half sack</span><span>£0 1s 6d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Bread, 3 loaves</span><span>£0 0s 9d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Milk, week</span><span>£0 0s 7d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Meat, Sunday and Tuesday</span><span>£0 1s 4d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Candles</span><span>£0 0s 4d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Thread (for the Mayfair work)</span><span>£0 0s 3d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Thomas — new boot soles repaired</span><span>£0 1s 0d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.1);"><span>Soap</span><span>£0 0s 2d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:4px 0 4px 16px; border-bottom:1px solid rgba(139,100,40,0.2); font-weight:bold;"><span>Contribution to savings (Post Office)</span><span>£0 10s 0d</span></div>
+    <div class="ledger-row" style="display:flex; justify-content:space-between; padding:8px 0 4px; font-weight:bold; color:#3B2A1A;"><span>Total expenditure</span><span>£1 8s 11d</span></div>
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(139,100,40,0.3);">
+      <div class="ledger-row" style="display:flex; justify-content:space-between; padding:3px 0;"><span>Quarterly payment received:</span><span>£10</span></div>
+      <div class="ledger-row" style="display:flex; justify-content:space-between; padding:3px 0;"><span>Less expenditure to date this quarter:</span><span>£7 4s 8d</span></div>
+      <div class="ledger-row" style="display:flex; justify-content:space-between; padding:3px 0; font-weight:bold;"><span>Balance carried:</span><span>£2 15s 4d</span></div>
+    </div>
+    <div style="margin-top:18px; font-style:italic; font-size:0.88em; color:#5C3A1E; line-height:1.7;">
+      <p><em>Note on the boot soles: Thomas will outgrow these boots before the soles wear again. Next size up required by autumn. Begin saving for this in April.</em></p>
+      <p style="margin-top:8px;"><em>Note on the coal: half sack is not sufficient for this weather. Full sack when the quarter payment comes. We are cold.</em></p>
+    </div>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Cooking Pot -->
+<div class="obj-header">Archive Object · Vol. VIII · Halecroft, 1349 — Camberwell, 1895</div>
+<div class="interactive-obj document" id="obj-VIII">
+  <div class="obj-lid" id="obj-lid-VIII" onclick="toggleObj('VIII')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="26" viewBox="0 0 28 26" fill="none">
+        <ellipse cx="14" cy="16" rx="12" ry="8" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M2 16 Q14 10 26 16" stroke="#C8A83C" stroke-width="1" fill="rgba(200,168,60,0.06)"/>
+        <path d="M22 16 Q24 12 26 10" stroke="#8B6914" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M22.5 10 Q24 9 26 10" stroke="#6A4A20" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Cooking Pot
+      <span>Cast iron · leather-wrapped handle · blackened from centuries of use · How heavy is it?</span>
+    </div>
+    <svg id="obj-chevron-VIII" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-VIII">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A cast iron cooking pot, approximately 25cm diameter, with a single handle wrapped in cracked, very old leather binding. The pot is dark with age and use, blackened at the base from centuries of fire. The leather wrapping on the handle is original — it has not been replaced in its lifetime, and its age is evident. The pot sits on a plain wooden surface.</p>
+        <p style="font-family:'Courier New',monospace; font-size:0.88em; letter-spacing:0.1em; color:#5C3A1E; margin-top:16px;">Weight: approximately 4.5 kilograms, empty.</p>
+      </div>
+      <div class="obj-note">
+        Thomas Hale carried this pot from Pershore to Halecroft in April 1349. Six miles. He was eleven years old. He carried it because he needed something to cook in when he got home. There was no one there when he arrived. He put the pot on the fire and began.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>He kept it for forty-six years. His 1395 probate inventory lists it as: <em>one iron pot with leather-wrapped handle, value four pence.</em> He replaced every other pot in the kitchen as they wore out. He kept this one.</p>
+          <p>The pot appears in the 1876 Camberwell ledger as the object Thomas wrote to his aunt about in 1350. Clara kept it on the shelf above the range. Thomas took it with him when he married Rachel in 1903. It is in the Bodleian now, donated by James Marsh-Hale in 2001 with the note: <em>this was always the most important thing in the archive.</em></p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">Underside of the pot · Scratched into the iron · Very old</span>
+          <em>T H</em>
+          <br><br>
+          Thomas Hale's initials. Not in any document. Not in any inventory. Not mentioned anywhere in the archive until Eleanor Voss turned the pot over in the Bodleian storage room in March 2024 and said, out loud, to no one: <em>there you are.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-VII.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VII · The Victorian</div>
+        <div class="hd-xref-card-name">Edmund Hale II</div>
+        <div class="hd-xref-card-reason">Thomas is Edmund's son — the one who took the name regardless. The locked escritoire is part of his inheritance. "Keep asking" was the answer Edmund chose not to give.</div>
+      </a>
+      <a href="era-II.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume II · The Pestilence</div>
+        <div class="hd-xref-card-name">"Keep asking"</div>
+        <div class="hd-xref-card-reason">Matilda's instruction from c.1390 — "Keep asking. Keep the land." — reaches Thomas across five centuries as the archive's oldest living instruction.</div>
+      </a>
+      <a href="era-IX.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume IX · The Wartime Engineer</div>
+        <div class="hd-xref-card-name">Edmund Marsh-Hale</div>
+        <div class="hd-xref-card-reason">Thomas's son. He carried his father's archive into the Second World War and out the other side. The papers survived. So did Edmund.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      Thomas Marsh-Hale returned from France in February 1919, as promised. He married Rachel, moved to Worcestershire, and had two sons — Edmund and James. He covered the Paris Peace Conference, found the terms impractical, said so in print, and was proved correct within twenty years. He died in 1938, the year before the second war began, which was perhaps fortunate. His son Edmund was twenty-two at the outbreak and worked in signals intelligence, which is to say he kept records of things that could not be recorded. He kept them anyway. Continue with <a href="era-IX.html">Vol. IX: The Wartime Engineer →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-VII.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. VII · Victorian</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-IX.html" class="esn-next">
+      <span class="esn-label">Vol. IX · Blitz</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+// ── ERA VIII AMBIENT SOUND ─────────────────────────────────────
+var eraAudio = null, soundEnabled = false;
+function initSound() {
+  if (!eraAudio) {
+    eraAudio = new Audio('sounds/era-VIII-ambient.mp3');
+    eraAudio.loop = true; eraAudio.volume = 0.35;
+  }
+}
+function toggleSound() {
+  var btn = document.getElementById('soundToggle');
+  if (!soundEnabled) {
+    initSound(); eraAudio.play(); soundEnabled = true;
+    btn.textContent = '♪ Silence the front';
+    btn.classList.add('on');
+  } else {
+    if (eraAudio) eraAudio.pause(); soundEnabled = false;
+    btn.textContent = '♪ Hear the front';
+    btn.classList.remove('on');
+  }
+}
+  </script>
+
+  <script>
+// Era VIII voice player
+(function() {
+  var audio = document.getElementById('voiceAudio');
+  var btn = document.getElementById('evpPlay');
+  var bar = document.getElementById('evpBar');
+  var timeEl = document.getElementById('evpTime');
+
+  btn.onclick = function(e) {
+    e.preventDefault();
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚ Playing...';
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Play';
+    }
+  };
+
+  audio.addEventListener('timeupdate', function() {
+    if (audio.duration) {
+      var pct = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = pct + '%';
+      var m = Math.floor(audio.currentTime / 60);
+      var s = Math.floor(audio.currentTime % 60);
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    btn.textContent = '▶ Again';
+    bar.style.width = '100%';
+  });
+})();
+
+function speakThomas() {} // deprecated - now using HTML5 audio
+if (window.speechSynthesis) { window.speechSynthesis.onvoiceschanged = window.speechSynthesis.onvoiceschanged || function(){}; }
+  </script>
+
+  <canvas id="rainCanvas"></canvas>
+  <script>
+  (function(){
+    var canvas = document.getElementById('rainCanvas');
+    var ctx = canvas.getContext('2d');
+    var drops = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createDrop() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        len: Math.random() * 18 + 6,
+        speed: Math.random() * 2.5 + 1.2,
+        opacity: Math.random() * 0.12 + 0.03,
+        width: Math.random() * 0.8 + 0.2
+      };
+    }
+
+    for (var i = 0; i < 80; i++) drops.push(createDrop());
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(180,200,220,1)';
+      for (var i = 0; i < drops.length; i++) {
+        var d = drops[i];
+        d.y += d.speed;
+        if (d.y > canvas.height + d.len) {
+          d.y = -d.len;
+          d.x = Math.random() * canvas.width;
+        }
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x - 0.5, d.y + d.len);
+        ctx.lineWidth = d.width;
+        ctx.globalAlpha = d.opacity;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+
+    // Auto-start after 4 seconds (subtle, reinforces WWI rain ambience)
+    setTimeout(function() {
+      canvas.classList.add('active');
+      draw();
+    }, 4000);
+  })();
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:100px;right:50px" title=""><span class="hd-cipher">U</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>

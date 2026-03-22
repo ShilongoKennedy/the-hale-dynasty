@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sound Downloader — The Hale Dynasty</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0D0B08;
+      color: #C8B890;
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 1.1em;
+      letter-spacing: 0.3em;
+      color: rgba(200,168,60,0.9);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .sub {
+      font-size: 0.65em;
+      letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.35);
+      margin-bottom: 36px;
+    }
+    .instructions {
+      background: rgba(200,168,60,0.06);
+      border: 1px solid rgba(200,168,60,0.18);
+      padding: 20px 28px;
+      max-width: 580px;
+      width: 100%;
+      margin-bottom: 28px;
+      font-size: 0.72em;
+      line-height: 1.9;
+      color: rgba(200,168,60,0.55);
+    }
+    .instructions strong { color: rgba(200,168,60,0.85); }
+    .btn {
+      background: rgba(200,168,60,0.12);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: rgba(200,168,60,0.9);
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 32px;
+    }
+    .btn:hover:not(:disabled) { background: rgba(200,168,60,0.22); border-color: rgba(200,168,60,0.7); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .progress-wrap {
+      max-width: 580px;
+      width: 100%;
+    }
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(200,168,60,0.07);
+      font-size: 0.68em;
+    }
+    .file-status {
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(200,168,60,0.25);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+    }
+    .file-status.pending   { }
+    .file-status.fetching  { border-color: rgba(200,168,60,0.6); animation: spin 1s linear infinite; }
+    .file-status.done      { background: rgba(60,160,60,0.2); border-color: rgba(60,200,60,0.5); color: rgba(60,200,60,0.9); }
+    .file-status.error     { background: rgba(200,60,60,0.2); border-color: rgba(200,60,60,0.5); color: rgba(200,60,60,0.9); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .file-name { color: rgba(200,168,60,0.7); flex: 1; }
+    .file-source { color: rgba(200,168,60,0.3); font-size: 0.85em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+    .summary {
+      margin-top: 24px;
+      font-size: 0.68em;
+      color: rgba(200,168,60,0.4);
+      text-align: center;
+      line-height: 1.8;
+    }
+    .summary.success { color: rgba(60,200,60,0.65); }
+    .no-api-warning {
+      background: rgba(200,100,60,0.1);
+      border: 1px solid rgba(200,100,60,0.3);
+      padding: 14px 20px;
+      font-size: 0.68em;
+      color: rgba(200,140,60,0.75);
+      max-width: 580px;
+      width: 100%;
+      margin-bottom: 20px;
+      line-height: 1.7;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sound Downloader</h1>
+  <p class="sub">The Hale Dynasty · Ambient Audio · All 13 Files</p>
+
+  <div class="instructions">
+    <strong>How this works:</strong><br>
+    Click the button below. When the folder picker opens, navigate to<br>
+    <strong>The_Hale_Dynasty → sounds</strong> and select that folder.<br><br>
+    All 13 ambient audio files will be fetched from the Freesound CDN<br>
+    and written directly into that folder — no manual moving needed.<br><br>
+    This uses the browser's File System Access API (Chrome only).
+  </div>
+
+  <div class="no-api-warning" id="noApiWarn">
+    ⚠ Your browser doesn't support the File System Access API.<br>
+    Files will download to your default Downloads folder instead.
+  </div>
+
+  <button class="btn" id="startBtn" onclick="startDownload()">
+    ⚜ Pick Folder &amp; Download All Sounds
+  </button>
+
+  <div class="progress-wrap" id="progressWrap"></div>
+  <div class="summary" id="summary"></div>
+
+  <script>
+  /* ── Sound manifest ── */
+  const SOUNDS = [
+    {
+      filename: 'era-I-ambient.mp3',
+      label: 'Era I — Norman (medieval village)',
+      url: 'https://cdn.freesound.org/previews/578/578072_5020041-hq.mp3'
+    },
+    {
+      filename: 'era-II-ambient.mp3',
+      label: 'Era II — Pestilence (wind, empty fields)',
+      url: 'https://cdn.freesound.org/previews/462/462026_9497060-hq.mp3'
+    },
+    {
+      filename: 'era-III-ambient.mp3',
+      label: 'Era III — Tudor (fireplace, hall)',
+      url: 'https://cdn.freesound.org/previews/105/105797_1537960-hq.mp3'
+    },
+    {
+      filename: 'era-IV-ambient.mp3',
+      label: 'Era IV — Civil War (rain on canvas)',
+      url: 'https://cdn.freesound.org/previews/346/346695_5121236-hq.mp3'
+    },
+    {
+      filename: 'era-V-ambient.mp3',
+      label: 'Era V — Georgian (drawing room fire)',
+      url: 'https://cdn.freesound.org/previews/151/151132_2398403-hq.mp3'
+    },
+    {
+      filename: 'era-VI-ambient.mp3',
+      label: 'Era VI — Regency (country morning, birds)',
+      url: 'https://cdn.freesound.org/previews/397/397354_7107682-hq.mp3'
+    },
+    {
+      filename: 'era-VII-ambient.mp3',
+      label: 'Era VII — Victorian (clock ticking, study)',
+      url: 'https://cdn.freesound.org/previews/463/463284_9487232-hq.mp3'
+    },
+    {
+      filename: 'era-VIII-ambient.mp3',
+      label: 'Era VIII — WWI (distant artillery)',
+      url: 'https://cdn.freesound.org/previews/352/352099_6127669-hq.mp3'
+    },
+    {
+      filename: 'era-IX-ambient.mp3',
+      label: 'Era IX — Blitz (air raid distant)',
+      url: 'https://cdn.freesound.org/previews/256/256852_4486188-hq.mp3'
+    },
+    {
+      filename: 'era-X-ambient.mp3',
+      label: 'Era X — Contemporary (library quiet)',
+      url: 'https://cdn.freesound.org/previews/130/130236_2400859-hq.mp3'
+    },
+    {
+      filename: 'church-bell-toll.mp3',
+      label: 'Church bell — single deep toll',
+      url: 'https://cdn.freesound.org/previews/161/161864_2854665-hq.mp3'
+    },
+    {
+      filename: 'church-bells-peal.mp3',
+      label: 'Church bells — English peal',
+      url: 'https://cdn.freesound.org/previews/333/333292_5260872-hq.mp3'
+    },
+    {
+      filename: 'bees-hive.mp3',
+      label: 'Beehive — bees ambient, close',
+      url: 'https://cdn.freesound.org/previews/416/416530_5121236-hq.mp3'
+    }
+  ];
+
+  let rows = [];
+
+  function buildRows() {
+    const wrap = document.getElementById('progressWrap');
+    wrap.innerHTML = '';
+    rows = [];
+    SOUNDS.forEach((s, i) => {
+      const row = document.createElement('div');
+      row.className = 'file-row';
+      row.innerHTML = `
+        <div class="file-status pending" id="status-${i}">·</div>
+        <div class="file-name">${s.filename}</div>
+        <div class="file-source">${s.label}</div>
+      `;
+      wrap.appendChild(row);
+      rows.push(row);
+    });
+  }
+
+  function setStatus(i, state, symbol) {
+    const el = document.getElementById('status-' + i);
+    if (!el) return;
+    el.className = 'file-status ' + state;
+    el.textContent = symbol;
+  }
+
+  async function writeToFolder(dirHandle, filename, arrayBuffer) {
+    const fileHandle = await dirHandle.getFileHandle(filename, { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write(arrayBuffer);
+    await writable.close();
+  }
+
+  async function fallbackDownload(filename, arrayBuffer) {
+    const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  }
+
+  async function startDownload() {
+    const btn = document.getElementById('startBtn');
+    btn.disabled = true;
+    buildRows();
+
+    let dirHandle = null;
+    const hasAPI = 'showDirectoryPicker' in window;
+
+    if (!hasAPI) {
+      document.getElementById('noApiWarn').style.display = 'block';
+    } else {
+      try {
+        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite', startIn: 'downloads' });
+      } catch (e) {
+        document.getElementById('summary').textContent = 'Folder selection cancelled.';
+        btn.disabled = false;
+        return;
+      }
+    }
+
+    let done = 0, errors = 0;
+
+    for (let i = 0; i < SOUNDS.length; i++) {
+      const s = SOUNDS[i];
+      setStatus(i, 'fetching', '↻');
+      try {
+        const resp = await fetch(s.url);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const buf = await resp.arrayBuffer();
+        if (dirHandle) {
+          await writeToFolder(dirHandle, s.filename, buf);
+        } else {
+          await fallbackDownload(s.filename, buf);
+        }
+        setStatus(i, 'done', '✓');
+        done++;
+      } catch (e) {
+        setStatus(i, 'error', '✗');
+        errors++;
+        console.error(s.filename, e);
+      }
+      // Small pause between requests
+      await new Promise(r => setTimeout(r, 300));
+    }
+
+    const summary = document.getElementById('summary');
+    if (errors === 0) {
+      summary.className = 'summary success';
+      summary.textContent = `✓ All ${done} sounds saved successfully. You can close this tab.`;
+    } else {
+      summary.className = 'summary';
+      summary.textContent = `${done} saved · ${errors} failed. Reload and try again for failed files.`;
+    }
+    btn.disabled = false;
+    btn.textContent = 'Download Complete';
+  }
+  </script>
+</body>
+</html>

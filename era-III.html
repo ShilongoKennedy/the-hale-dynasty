@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vol. III — The Hale Inheritance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+DW+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>html { font-size: 18px; }
+
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:#F2EAD4; color:#3B2A1A; font-family:'IM Fell English', Georgia, serif;
+      line-height: 1.7;
+    }
+
+    .era-nav {
+      background:#5C3A1E; padding:10px 30px;
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Courier New',monospace; font-size: 0.78em; letter-spacing:0.15em; text-transform:uppercase;
+    }
+    .era-nav a { color:#E8C060; text-decoration:none; } .era-nav a:hover { color:#FCD870; }
+    .era-nav .vol-marker { color:#B8904A; }
+
+    .era-header {
+      background:#F8F0DC; border-bottom:4px solid #7A1C1C; border-top:1px solid #C8A060;
+      padding:50px 40px 40px; text-align:center;
+    }
+    .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#7A1C1C; text-transform:uppercase; margin-bottom:14px; }
+    .era-main-title { font-family:'IM Fell DW Pica','Cinzel',Georgia,serif; font-size:clamp(1.6em,4vw,2.8em); color:#3B2A1A; letter-spacing:0.04em; margin-bottom:8px; }
+    .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#7A1C1C; letter-spacing:0.2em; margin-top:12px; }
+
+    .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
+
+    .portrait-frame { float:right; margin:0 0 32px 40px; text-align:center; position:relative; z-index:2; }
+    .portrait-img-iii {
+      display:block; width:200px; height:auto;
+      border:5px solid #7A1C1C;
+      outline:2px solid #C8A060; outline-offset:-9px;
+      box-shadow:0 0 0 1px #5C1A1A, 5px 5px 20px rgba(0,0,0,0.65);
+    }
+    .portrait-caption { font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.1em; color:#5C3A1E; margin-top:8px; line-height:1.5; }
+    @media (max-width:600px) { .portrait-frame { float:none; margin:0 auto 28px; display:block; } }
+
+    .editorial-note {
+      border-left:3px solid #7A1C1C; padding:16px 20px; background:#F0E8D0;
+      font-style:italic; font-size:0.85em; color:#5C3A1E; margin-bottom:50px; line-height:1.7;
+    }
+    .document { margin-bottom:60px; }
+    .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#7A1C1C; text-transform:uppercase; margin-bottom:6px; }
+    .nota-bene { background:#EDE0B8; border-left:4px solid #C8A050; padding:12px 18px; font-style:italic; font-size:0.82em; color:#5C4020; margin-bottom:8px; }
+    .nota-bene strong { font-style:normal; }
+
+    /* TUDOR LETTER + WAX SEAL */
+    .tudor-letter {
+      background:#F8F0DC;
+      border-left: 5px solid #7A1C1C;
+      border-top:1px solid #C8A060; border-right:1px solid #C8A060; border-bottom:1px solid #C8A060;
+      padding:36px 44px 72px;
+      position:relative;
+    }
+    /* Crimson Tudor wax seal — W·H */
+    .tudor-seal {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: radial-gradient(circle at 38% 30%, #B82A2A 0%, #7A0E0E 55%, #540808 100%);
+      box-shadow: 0 3px 9px rgba(0,0,0,0.38), inset 0 1px 2px rgba(255,170,100,0.18);
+      position: absolute; bottom: 26px; right: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tudor-seal::before {
+      content: '';
+      position: absolute; inset: 3px; border-radius: 50%;
+      border: 1px solid rgba(255,200,130,0.22);
+    }
+    .tudor-seal::after {
+      content: 'W·H';
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.78em; font-weight: 600;
+      color: rgba(255,210,145,0.70);
+      letter-spacing: 0.06em;
+    }
+    .tudor-letter-head {
+      font-variant:small-caps; letter-spacing:0.12em; color:#7A1C1C;
+      font-size:0.8em; border-bottom:1px solid #C8A060; padding-bottom:12px; margin-bottom:18px;
+    }
+    .tudor-letter p { font-size:0.92em; line-height:1.9; margin-bottom:0.9em; }
+    .tudor-letter p:last-child { margin-bottom:0; }
+    .tudor-sig { text-align:right; margin-top:16px; font-style:italic; color:#5C3A1E; font-size:0.88em; }
+
+    /* INVENTORY */
+    .inventory {
+      background:#F8F0DC;
+      border:2px solid #2A4A2A;
+      padding:32px 40px;
+    }
+    .inventory-header { font-size:0.82em; font-variant:small-caps; letter-spacing:0.1em; color:#2A4A2A; border-bottom:1px solid #4A8A4A; padding-bottom:10px; margin-bottom:18px; }
+    .inventory-section { margin-bottom:16px; }
+    .inventory-category { font-weight:bold; color:#2A4A2A; font-size:0.85em; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.08em; font-family:'Courier New',monospace; }
+    .inventory-item { font-size:0.85em; line-height:1.75; padding:4px 0 4px 16px; border-left:1px solid rgba(42,74,42,0.2); margin-bottom:2px; }
+    .inventory-item .value { float:right; color:#2A4A2A; font-family:'Courier New',monospace; }
+
+    /* EXAMINATION */
+    .examination {
+      background:#F5EDD6;
+      border:2px solid #3B2A1A;
+      padding:34px 40px;
+    }
+    .exam-header { text-align:center; font-variant:small-caps; letter-spacing:0.12em; color:#3B2A1A; font-size:0.88em; border-bottom:1px solid #9A8060; padding-bottom:12px; margin-bottom:18px; }
+    .exam-q { color:#7A1C1C; font-weight:bold; font-size:0.88em; margin-top:14px; margin-bottom:4px; }
+    .exam-a { font-size:0.9em; line-height:1.85; padding-left:16px; margin-bottom:8px; }
+
+    /* ── ERA BANNER ──────────────────────────────────────── */
+    
+
+    /* PAMPHLET — woodblock print, slightly askew */
+    .pamphlet {
+      background:#F0E8D4;
+      border:3px solid #1A1A1A;
+      padding:30px 36px;
+      position:relative;
+      transform: rotate(0.3deg);
+      box-shadow: 2px 3px 12px rgba(0,0,0,0.18);
+    }
+    .pamphlet::before {
+      content:''; position:absolute; inset:5px; border:1px solid #1A1A1A; pointer-events:none; opacity:0.55;
+    }
+    .pamphlet-ornament {
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      color: #2A2A2A;
+      font-size: 0.78em;
+      letter-spacing: 0.35em;
+      margin-bottom: 16px;
+      margin-top: 4px;
+      opacity: 0.55;
+    }
+    .pamphlet-title { font-family:'Courier New',monospace; font-size:0.85em; text-align:center; color:#1A1A1A; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; font-weight:bold; }
+    .pamphlet p { font-size:0.85em; line-height:1.8; margin-bottom:0.8em; font-family:'Courier New',monospace; color:#2A2A2A; }
+    .pamphlet-footer { font-size:0.72em; text-align:center; color:#4A3A2A; font-family:'Courier New',monospace; margin-top:14px; border-top:1px solid #3A3A3A; padding-top:10px; }
+
+    @keyframes burnEdge {
+      0% { box-shadow: 0 0 0px rgba(200,80,10,0); }
+      30% { box-shadow: 0 0 8px rgba(200,80,10,0.2), inset 0 0 12px rgba(180,60,8,0.08); }
+      60% { box-shadow: 0 0 20px rgba(200,80,10,0.35), 0 0 40px rgba(160,40,6,0.15), inset 0 0 20px rgba(180,60,8,0.12); }
+      80% { box-shadow: 0 0 12px rgba(200,80,10,0.22), inset 0 0 8px rgba(180,60,8,0.06); }
+      100% { box-shadow: 0 0 0px rgba(200,80,10,0); }
+    }
+    .pamphlet-burning {
+      animation: burnEdge 4s ease-in-out infinite;
+      position: relative;
+    }
+    .pamphlet-burning::after {
+      content: 'CONDEMNED BY ROYAL DECREE · 1553';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.2em;
+      color: rgba(160,30,10,0.45);
+      border: 2px solid rgba(160,30,10,0.3);
+      padding: 6px 14px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .royal-proclamation {
+      background: linear-gradient(180deg, #1A0606 0%, #0E0404 100%);
+      border-top: 2px solid #7A1C1C;
+      border-bottom: 2px solid #7A1C1C;
+      padding: 32px 40px;
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .royal-proclamation::before {
+      content: '✦';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0E0404;
+      padding: 0 12px;
+      color: #7A1C1C;
+      font-size: 1.2em;
+    }
+    .proclamation-text {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(0.9em, 2vw, 1.15em);
+      color: #C8A83C;
+      line-height: 1.7;
+      letter-spacing: 0.06em;
+      font-style: italic;
+    }
+    .proclamation-attr {
+      font-size: 0.78em;
+      color: #4A2010;
+      letter-spacing: 0.15em;
+      margin-top: 14px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width:600px) {
+      .tudor-letter,.inventory,.examination,.pamphlet { padding:20px 16px; }
+      .era-content { padding:30px 16px 60px; }
+    }
+
+    /* ── ERA SEQUENCE NAV ─────────────────────────────── */
+    .era-seq-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.06);
+      margin-top: 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .era-seq-nav a { text-decoration: none; transition: opacity 0.2s; opacity: 0.85; color: #3A3A3A; }
+    .era-seq-nav a:hover { opacity: 1; }
+    .esn-prev, .esn-next { display: flex; align-items: center; gap: 8px; }
+    .esn-arrow { font-size: 1.2em; }
+    .esn-home { opacity: 0.6 !important; font-size: 0.88em; }
+    .esn-home:hover { opacity: 0.7 !important; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── SOUND BAR ──────────────────────────────────────── */
+    .era-sound-bar {
+      background: #1A1008; border-bottom: 1px solid #2A1808;
+      padding: 8px 30px; display: flex; align-items: center;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.74em; letter-spacing: 0.14em;
+    }
+    .esb-label { color: #3A2408; text-transform: uppercase; }
+    .esb-btn {
+      background: none; border: 1px solid rgba(200,168,40,0.3); color: #7A5820;
+      padding: 5px 16px; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.95em; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s;
+    }
+    .esb-btn:hover { border-color: #C8A828; color: #C8A840; }
+    .esb-btn.on { color: #C8A840; border-color: rgba(200,168,40,0.6); }
+
+    /* ── ERA III VOICE PLAYER ─────────────────────────────────── */
+    .era-voice-player-iii {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 10px;
+    }
+    .evp-iii-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.12em;
+      color: #7A5820;
+      text-transform: uppercase;
+    }
+    .evp-iii-play {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.3);
+      color: #7A5820;
+      padding: 5px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88em;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .evp-iii-play:hover {
+      border-color: #C8A828;
+      color: #C8A840;
+    }
+    .evp-iii-progress {
+      background: rgba(200,168,40,0.1);
+      height: 4px;
+      width: 80px;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    .evp-iii-bar {
+      background: #7A5820;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .evp-iii-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      color: #7A5820;
+      min-width: 28px;
+    }
+
+    /* ── FLOATING HOME CREST ─────────────────────────────── */
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; z-index: 400; transition: all 0.22s;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float svg { width: 22px; height: 22px; }
+
+    /* ── EMBER SPARKS ───────────────────────────────── */
+    #emberCanvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 50;
+      opacity: 0; transition: opacity 2s ease;
+    }
+    #emberCanvas.active { opacity: 1; }
+
+    /* ── DOCUMENT ZOOM ───────────────────────────────────── */
+    .parchment, .latin-writ, .manorial-rolls, .parchment-marginal,
+    .victorian-letter, .victorian-diary, .regency-letter, .tudor-letter,
+    .plague-register, .broadside, .solicitor, .memoir-page,
+    .blitz, .memo, .email-block {
+      cursor: zoom-in;
+      transition: box-shadow 0.2s;
+    }
+    .parchment:hover, .latin-writ:hover, .manorial-rolls:hover,
+    .parchment-marginal:hover, .victorian-letter:hover,
+    .victorian-diary:hover, .regency-letter:hover,
+    .tudor-letter:hover, .plague-register:hover, .broadside:hover,
+    .solicitor:hover, .memoir-page:hover, .blitz:hover,
+    .memo:hover, .email-block:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .doc-zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 700;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 20px;
+      overflow-y: auto;
+      cursor: zoom-out;
+    }
+    .doc-zoom-overlay.open { display: flex; }
+    .doc-zoom-inner {
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.93) translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .doc-zoom-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background: rgba(10,6,2,0.9);
+      border: 1px solid rgba(200,168,60,0.4);
+      color: #C8A028;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .doc-zoom-close:hover { background: rgba(30,18,6,0.95); }
+    .doc-zoom-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.4);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @media print {
+      @page { margin: 1.4cm 2cm; }
+      .era-nav, .era-seq-nav, .access-header, .era-banner, .mystery-box, .brothers-divide,
+      .death-toll, .telegram-wrapper, .royal-proclamation, .memo-stamp, .matilda-mystery,
+      nav, button { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .era-header { background: white !important; border: none !important; padding: 20pt 0 14pt; }
+      .era-main-title { font-size: 22pt !important; color: black !important; }
+      .era-content { max-width: none !important; padding: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+      .victorian-letter, .parchment, .memoir-page, .regency-letter,
+      .tudor-letter, .broadside, .pamphlet, .plague-register,
+      .solicitor, .victorian-diary, .blitz, .memo {
+        background: white !important;
+        box-shadow: none !important;
+        border-color: #AAA !important;
+        transform: none !important;
+      }
+      .confession-wrapper { background: white !important; }
+      body::after {
+        content: 'The Hale Family Papers · Bodleian Library, Oxford · MSS. Hale-Marsh';
+        display: block;
+        text-align: center;
+        font-size: 8pt;
+        color: #666;
+        margin-top: 30pt;
+        border-top: 0.5pt solid #AAA;
+        padding-top: 8pt;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+      }
+    }
+      .era-banner {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1A1008;
+    }
+    .era-banner img.banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: sepia(0.4) contrast(1.15);
+      display: block;
+    }
+    .era-banner .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,8,0,0.55);
+    }
+
+        .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .page-transition-overlay.fade-out {
+      opacity: 1;
+      pointer-events: all;
+    }
+      to { opacity: 1; }
+    }
+    body {
+    }
+    </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body data-era="iii" data-vol="III">
+<div class="page-transition-overlay" id="pageOverlay"></div>
+
+    <div class="era-banner">
+    <img class="banner-img" src="banners/era-III.jpg" alt="" aria-hidden="true">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="era-sound-bar">
+    <span class="esb-label">The pamphlet burns · Ambient</span>
+    <div style="display:flex;gap:0;align-items:center;">
+      <button class="esb-btn" id="eraSoundBtn" onclick="toggleEraSound()">♪ Hear the flames</button>
+      <div class="era-voice-player-iii" id="voicePlayer">
+        <audio id="voiceAudio" src="audio/william.mp3" preload="none"></audio>
+        <button class="evp-iii-play" id="evpPlay">⚜ Play</button>
+        <div class="evp-iii-progress">
+          <div class="evp-iii-bar" id="evpBar"></div>
+        </div>
+        <div class="evp-iii-time" id="evpTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="era-nav">
+    <a href="era-II.html">← Vol. II</a>
+    <span class="vol-marker">VOL. III OF X &nbsp;·&nbsp; 1485–1560</span>
+    <a href="era-IV.html">Vol. IV →</a>
+  </nav>
+
+  <header class="era-header">
+    <div class="era-crest-wrap"><img src="crests/EraIII.png" class="era-crest-img" alt="Hale Family Crest"></div>
+    <div class="era-label">The Hale Dynasty · Volume III</div>
+    <h1 class="era-main-title">The Hale Inheritance</h1>
+    <p class="hd-quill" style="font-style:italic; color:#5C3A1E; font-size:0.88em; margin:10px 0; max-width:600px; margin-left:auto; margin-right:auto;">
+      Being the Letters, Inventories, and Examinations of the Hale Family of Halecroft in the County of Worcester during the Reigns of Henry VIII, Edward VI, and Mary I.
+    </p>
+    <div class="era-dates">1485 — 1560</div>
+  </header>
+
+  <div class="era-content">
+
+    <div class="portrait-frame">
+      <img src="portraits/william.png" class="portrait-img-iii" alt="William Hale — Tudor portrait, c.1545">
+      <div class="portrait-caption">William Hale · 1522–1580<br><em>Imagined from the record</em></div>
+    </div>
+
+    <div class="royal-proclamation">
+      <div class="proclamation-text">"We will not endure any manner of speaking or writing contrary to our royal dignity."</div>
+      <div class="proclamation-attr">— Henry VIII · Proclamation against heretical books · 1529</div>
+    </div>
+
+    <div class="editorial-note">
+      The Tudor period sees the Hale family transformed — from the modest freeholders of the medieval record into something considerably more substantial. William Hale (1522–1580) purchased the priory lands in 1545 in the great dispersal following the dissolution, and with them the mill and the eastern wood. This decision made the family's fortune. It also brought the bishop's visitors to Halecroft in 1555, when the question of how exactly William had come to own former Church property required a careful answer. He gave one. The spelling in these documents is William's own throughout.
+      <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
+    </div>
+
+    <!-- Doc 1: William's Letter 1534 -->
+    <div class="document">
+      <div class="doc-label">Document I · Private Letter · William Hale to his Father John · 1534</div>
+      <div class="tudor-letter">
+        <div class="tudor-letter-head">A Letter from William Hale to His Father John Hale of Halecroft — Being the Feast of St. Bartholomew, 1534</div>
+        <p>Dere Father — I wryte to yow from Worcestre in grete hastye, for the matter of the pryorie landes requireth answere before the sessyons do meete. The agente of the Lorde Cromwelle hathe been agayne at the countie assize inquyringe whiche landes might be disposed of shoulde the Kynges neede require itte, and I do thinke that neede is not farre distant.</p>
+        <p>I have spoken with Master Alderton who is of good counsaile and who sayth plaine that anie man of substance in this countie who doth not enquire of the priorie landes when they come to sale will regret itte after. The landes at the easte mill and the upper woode are those which touch our own holdinges, and you will recalle Father that Grandfather saide to us both that if those landes ever came to privathe handes they shoulde be our handes, for they were ours by use these fortie yeres and more.</p>
+        <p>I woulde knowe your mynde. I have twelve poundes of mine own, which is not sufficient, but Master Alderton saythe there are men in this citie who will lend at reasonable use to a freeholder of good credit. I am told I am such a man. I confesse I did not knowe it till he sayde so.</p>
+        <p>Tell my Mother I am in health. Tell her also the inne here is tolerable but the bread is not as good as hers and I shall be gladde to come home.</p>
+        <div class="tudor-sig">
+          Your loving son, William Hale. Written at Worcestre this Tuesday.<br>
+          <span style="color:#7A1C1C;">God save the Kynge.</span>
+        </div>
+        <div class="tudor-seal" title="Wax seal: W·H"></div>
+      </div>
+    </div>
+
+    <!-- Doc 2: Household Inventory 1545 -->
+    <div class="document">
+      <div class="doc-label">Document II · Household Inventory · Halecroft · Anno Domini 1545</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> This inventory was compiled following the death of John Hale in 1545 and the formal transfer of the estate to William Hale. It is the most complete record of the family's material circumstances at the height of their Tudor prosperity.
+      </div>
+      <div class="inventory">
+        <div class="inventory-header">
+          An Inventorie of the Goodes and Chattelles of John Hale late of Halecroft in the Countie of Worcester, Deceased, taken the Sixth Day of September in the Year of Our Lord 1545<br>
+          <span style="color:#5C4020; font-style:italic; font-weight:normal;">Appraised by William Hale his son, John Alderton gentleman, and Thomas Fletcher reeve</span>
+        </div>
+        <div class="inventory-section">
+          <div class="inventory-category">In the Hall:</div>
+          <div class="inventory-item">Item, one longe table of oke with foure formes. <span class="value">xij s.</span></div>
+          <div class="inventory-item">Item, one iron grate with fire irons. <span class="value">ij s. vj d.</span></div>
+          <div class="inventory-item">Item, the oake cheste with locke and key, in which are kepte the deedes and writinges of the estate. <span class="value">Not valued, being of the lawe and not the purse.</span></div>
+        </div>
+        <div class="inventory-section">
+          <div class="inventory-category">In the Farm:</div>
+          <div class="inventory-item">Item, sixe milche kine. <span class="value">iij li.</span></div>
+          <div class="inventory-item">Item, two plough beastes. <span class="value">xxviij s.</span></div>
+          <div class="hd-marginal-wrap"><div class="inventory-item">Item, the swine in the upper wood, being by count twelve. <span class="value">xviij s.</span> <span class="hd-pig" data-era="III" title="🐷">🐷</span></div>
+          <div class="hd-marginal">Thomas Hale's pig, still counted, still there. Two centuries later. — E.V.</div></div>
+          <div class="inventory-item">Item, the greyne in the barne, being rye, wheate, and barlye by estimacion foure score bushelles. <span class="value">xl s.</span></div>
+        </div>
+        <div class="inventory-section">
+          <div class="inventory-category">Newly Purchased Lands (1545):</div>
+          <div class="inventory-item">Item, the Mill Meade and the upper woode, lately the propertie of the dissolved Priorie of St. Wulfstan, purchased by William Hale this yere of the Kynges Commissioner for the sum of seaventene poundes sixe shillinges and eightpence. The title deedes are in the oake cheste aforesayd. <span class="value">xvii li. vj s. viij d. purchase price</span></div>
+        </div>
+        <div style="border-top:1px solid #4A8A4A; padding-top:10px; margin-top:10px; font-style:italic; font-size:0.82em; color:#2A4A2A;">
+          Total of the inventorie: xxxii li. xiiij s. ij d. · Seal of William Hale. This 6 September 1545.
+        </div>
+      </div>
+    </div>
+
+    <!-- Doc 3: Examination before Bishops -->
+    <div class="document">
+      <div class="doc-label">Document III · Record of Examination before the Bishop's Visitors · 1555</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> In 1555, during the reign of Queen Mary, commissioners were sent into the counties to examine the circumstances by which former church lands had passed into private hands. William Hale was called before them. What follows is the official record of his examination.
+      </div>
+      <div class="examination">
+        <div class="exam-header">
+          Examination of William Hale, Freeholder, of Halecroft, Worcestershire<br>
+          Before the Visitors of the Lord Bishop of Worcester<br>
+          <span style="font-style:italic; font-weight:normal; color:#5C4020;">Touching the matter of certain priory lands at Halecroft, formerly belonging to the dissolved house of St. Wulfstan</span><br>
+          October, Anno Domini 1555
+        </div>
+
+        <div class="exam-q">Visitors: By what right do you hold the lands called the Mill Meade and the upper wood, formerly belonging to the Priory of St. Wulfstan?</div>
+        <div class="exam-a">William Hale: By purchase, from the King's Commissioner in the year 1545. I have the deed in my house, and I have it here, and I will show it to any man who asks. I paid seventeen pounds six shillings and eightpence, which was the price named, and I paid it in full, and I have the receipt.</div>
+
+        <div class="exam-q">Visitors: Were you aware, at the time of purchase, that these were Church lands?</div>
+        <div class="exam-a">William Hale: I was aware that they had been. At the time I purchased them they were the King's lands, which the King had made so by an Act of Parliament. I am a loyal subject of the Crown and I obeyed the law. The law was the law of England at the time, made by the King in Parliament assembled. If the law has since changed, I am prepared to obey that law also. I await instruction.</div>
+
+        <div class="exam-q">Visitors: You show no remorse for the acquisition of sacred property?</div>
+        <div class="exam-a">William Hale: I show what remorse is appropriate for a man who paid a fair price for what the law allowed him to buy. The priory was dissolved by Act of Parliament. I did not dissolve it. I bought land. I have farmed that land for ten years. I have paid tithes on it. I have maintained the drainage. If the Church requires something more of me I am prepared to hear what that is. I do not know in advance what it might be, which is why I am here rather than having sent a servant.</div>
+
+        <p style="margin-top:16px; font-style:italic; font-size:0.85em; color:#5C4020; border-top:1px solid #9A8060; padding-top:12px;">
+          The Visitors noted that William Hale gave accurate testimony. His title to the lands was not challenged. He was cautioned to attend divine service regularly, to which he replied that he had done so every week of his life and intended to continue. He was dismissed. The Visitors noted in their record: <em>a careful man and an honest one. Not the kind of honest that is a performance. The actual kind.</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- Doc 4: Reformation Pamphlet -->
+    <div class="document">
+      <div class="doc-label">Document IV · Reformation Pamphlet · Printed at London · c. 1547</div>
+      <div class="nota-bene">
+        <strong>✦ Nota Bene —</strong> This pamphlet was found folded inside the deed-box. It is not known how it came to be there, nor who brought it to Halecroft. It is printed, not handwritten, and is of the kind distributed widely during the reign of Edward VI. Someone thought it worth keeping.
+      </div>
+      <div class="pamphlet pamphlet-burning">
+        <div class="pamphlet-title">A Plain Declaration Touching the True Religion of England, and the Errors of the Bishop of Rome</div>
+        <div class="pamphlet-ornament">✦ · · · · · · ✦ · · · · · · ✦</div>
+        <p>THE MATTER IS PLAYNE. The Scriptures are in Englishe now and every man that can read may read them. What then shall hinder any Englishman from knowing what God hath said? Only this: that men of learning have for so longe told men of no learning what to thinke, that the habit of thinking for oneself seemeth strange and perhapps dangerous.</p>
+        <p>But God did not speak Latin when He spoke to the heart. He did not speak in the tongue of Rome when He walked upon the water. He spoke as men speak: plainly, meaning what He said, to those who were prepared to listen.</p>
+        <p>The man who reads his Bible in the English tongue and acts upon what he reads therein — this man, though he hold but five acres, is nearer to God than the cardinal in his palace who hath never read the text but only heard it interpreted by those with an interest in the interpretation.</p>
+        <div class="pamphlet-footer">
+          Printed at London. No printer's name given. Circulated in the county of Worcester, c. 1547–1549.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="era-nav" style="border-top:1px solid #3A2010;">
+    <a href="era-II.html">← Vol. II: The House of Hale</a>
+    <span class="vol-marker">END OF VOLUME III</span>
+    <a href="era-IV.html">Vol. IV: The Divided House →</a>
+  </nav>
+
+  <script>
+  (function(){
+    var s=document.createElement("style");
+    s.textContent=".doc-reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}.doc-reveal.doc-in{opacity:1;transform:none}";
+    document.head.appendChild(s);
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("doc-in");o.unobserve(e.target);}});},{threshold:0.07});
+    document.querySelectorAll(".document").forEach(function(el){el.classList.add("doc-reveal");o.observe(el);});
+  })();
+  </script>
+
+  <script>
+(function() {
+  // Scroll reveal for documents
+  var revealEls = document.querySelectorAll(
+    '.document, .editorial-note, .victorian-letter, .victorian-diary, ' +
+    '.solicitor, .confession-wrapper, .vic-newspaper, .parchment, ' +
+    '.memoir-page, .broadside, .pamphlet, .plague-register, ' +
+    '.regency-letter, .tudor-letter, .puritan, .brothers-divide, ' +
+    '.mystery-box, .telegram-wrapper, .blitz, .memo, .email-block, ' +
+    '.closing-section, .nota-bene, .royal-proclamation'
+  );
+  revealEls.forEach(function(el) { el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+})();
+</script>
+
+<!-- VOL. III INJECTION — insert before era-seq-nav -->
+
+<div class="hd-section-rule">❁ &nbsp; ✚ &nbsp; ❁</div>
+
+<!-- RECOVERED DOCUMENT: William Hale's full journal entry, Midsummer Eve 1555 -->
+<div class="recovered-doc document">
+  <div class="recovered-label">Recovered Document · MSS. Hale-Marsh III, item 17a · Private Journal · Midsummer Eve, 1555</div>
+  <div class="parchment">
+    <p class="parchment-title rubricated">William Hale of Halecroft — His Journal</p>
+    <p class="parchment-subtitle">Written the night before his examination by the bishop's visitors · The full entry · Found folded inside the back cover of a psalter in English, acquired at auction 1883</p>
+    <hr class="parchment-rule">
+    <div class="recovered-archival">Archival note: The main chronicle reproduces a portion of this entry. The full text is reproduced here for the first time. William writes: <em>writinge it downe is how I knowe whether I believe it.</em> He wrote for longer than the chronicle excerpt suggests.</div>
+    <p><span class="hd-dropcap">W</span>illiam Hale, his journal — being an account I do not intend to keepe but finde I must set down, this Midsummer Eve, the second yere of the reigne of Queene Marie.</p>
+    <p>I appeer before the bisshop's visitors in the morninge. I have been tolde what they wishe to knowe and I have been thinking, these past two wekes, about how to answere it. I am now goinge to wryte it downe, because writinge it downe is how I knowe whether I believe it, which is a thing my son William tells me is my manner and which I suppoze is true.</p>
+    <p>The question they will aske is whether I did purchase the priorie land properlie. The answere is: yes. I haue the indenture. I will shewe it them.</p>
+    <p>The question behinde that question is whether I profited improperlie from the dissolution of a religious howse. The answere to this question I have been turninge over for a fortnighte.</p>
+    <p>The priorie was there before my father was born and his father. My grandfather's grandfather was in wardschipe there after the pestilence and the prior kept him and taught him his letters and gave him back his landes. That is a debt of the kinde that cannot be repaid with monie. It can only be repaid by acknowledginge that it existed, which is what I am doinge now, privately, in this journal, the night before I stand before men who do not know it existed and who are not interested in it.</p>
+    <p>I signed the oath in 1534 because the alternative was not an alternative I examined too closely, there being a man in More's position to instructe me about alternatives. I purchased the priorie land in 1545 because it was lawfullie for sale and I had the monie and it was good land. I have attended my church through three religions now — the old, the new, and the new againe — and I have received the sacrament as it was offered to me in each, which is to say I have been fed with the same feede in three different vessels and I believe God understands the difference between the vessel and the feede even if the bisshop's visitors do not.</p>
+    <p>What I think, privatlie, which is the only place I thinke such thinges: I think the Kinge was rong in his theologie and right in his practise. I think a church governed from Rome is a church that serves itself before it serves its people. I also think a kinge who kills men for agreeinge with him is a kinge who should be watched.</p>
+    <p>But these are thinges for a man's own head and not for a letter or a deposition or a journal that his son mighte find one day. I shall stoppe.</p>
+    <p>The indenture is in the deed-box. The deed-box is locked. I have the key. The key is on the chain with my father's key and his father's key, which I have worn since I was twentie-two yeeres old when my father died and which I will weare until I die and then my son will weare them. There is something in the weighte of three keys on a chain that is its own kind of answer to the question of sufficiency. I do not know quite what it is. I find I do not need to know.</p>
+    <p>God save the Queene. God save also those of us who have watched England change its religion foure times in one lifetime and who are still standinge.</p>
+    <p><em>William Hale, his marke. Halecroft, Midsummer Eve, 1555.</em></p>
+  </div>
+</div>
+
+<div class="hd-section-rule">— &nbsp; — &nbsp; —</div>
+
+<!-- INTERACTIVE OBJECT: The Priory Lease Indenture -->
+<div class="obj-header">Archive Object · Vol. III · 1545</div>
+<div class="interactive-obj document" id="obj-III">
+  <div class="obj-lid" id="obj-lid-III" onclick="toggleObj('III')">
+    <div class="obj-lid-icon">
+      <svg width="28" height="26" viewBox="0 0 28 26" fill="none">
+        <rect x="2" y="4" width="24" height="20" rx="1" stroke="#C8A83C" stroke-width="1.2" fill="none"/>
+        <path d="M2 4 Q14 0 26 4" stroke="#C8A83C" stroke-width="1" fill="rgba(200,168,60,0.06)"/>
+        <path d="M2 9 Q7 6 14 9 Q21 12 26 9" stroke="#8B6914" stroke-width="0.8" fill="none"/>
+        <circle cx="8" cy="20" r="2.5" stroke="#8B6914" stroke-width="1" fill="rgba(139,105,20,0.15)"/>
+        <circle cx="20" cy="20" r="2.5" stroke="#8B6914" stroke-width="1" fill="rgba(139,105,20,0.15)"/>
+      </svg>
+    </div>
+    <div class="obj-lid-text">
+      The Priory Lease Indenture
+      <span>Vellum · indented cut along the top edge · two wax seal remnants · 1545 · Unfold to read</span>
+    </div>
+    <svg id="obj-chevron-III" class="obj-chevron" width="14" height="14" viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4" fill="none" stroke="#8A7A5A" stroke-width="1.5"/></svg>
+  </div>
+  <div class="obj-content" id="obj-content-III">
+    <div class="obj-inner">
+      <div class="obj-doc">
+        <p>A legal document on cream vellum, folded twice, with an indented — jagged — cut along the top edge. This is the characteristic feature of an indenture: one half kept by each party, the irregular cut proving the two halves match. This is William Hale's half.</p>
+        <p>The vellum is slightly stained at the fold lines. At the bottom, two wax seal remnants — one has lost its impression entirely; one retains a faint merchant's mark. The document is approximately 40cm × 25cm when unfolded. The text is in dense legal Latin, the hand of a professional scribe: <em>lawful lease, lawful owner, lawful price.</em> Twelve acres of former priory land for four pounds.</p>
+      </div>
+      <div class="obj-note">
+        William Hale used those three words — lawful lease, lawful owner, lawful price — before the bishop's visitors in 1555. He had been preparing them since 1545. He did not need to prepare long. The answer was true.
+      </div>
+
+      <div class="obj-layer2">
+        <div class="obj-layer2-label">Further examination · For readers who have completed the archive</div>
+        <div class="obj-doc">
+          <p>Beside William Hale's half, a second document — smaller, in a different hand. The bishop's visitors' record of their examination of William Hale, 22 June 1555. Their conclusion, in the formal Latin of ecclesiastical process:</p>
+          <p><em>Examinatus est Willielmus Hale de Halecroft super acquisitione terrarum prioratus — nos invenimus causam non esse procedendam.</em></p>
+          <p>We find no cause for further proceeding. The same three words did two different jobs ten years apart: the indenture used them to close a purchase; the examiner's record used them to close an inquiry.</p>
+        </div>
+        <div class="obj-egg">
+          <span class="obj-egg-label">Beneath the legal text · A note in William's hand · Added after the examination</span>
+          <em>They went away. The land remained. This is sufficient.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Elsewhere in the Archive -->
+  <div class="hd-xref">
+    <div class="hd-xref-heading">Elsewhere in the Archive</div>
+    <div class="hd-xref-grid">
+      <a href="era-II.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume II · The Pestilence</div>
+        <div class="hd-xref-card-name">The deed-box, 1214</div>
+        <div class="hd-xref-card-reason">The deed of freehold that William presents at the 1555 examination was first purchased from the lord of the manor in 1214 — and kept through plague.</div>
+      </a>
+      <a href="era-IV.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume IV · The Civil War</div>
+        <div class="hd-xref-card-name">John Hale, Parliament</div>
+        <div class="hd-xref-card-reason">William's written tradition — candid letters home from difficult places — directly shapes John's correspondence with his royalist brother Thomas.</div>
+      </a>
+      <a href="era-VI.html" class="hd-xref-card">
+        <div class="hd-xref-card-vol">Volume VI · The Regency</div>
+        <div class="hd-xref-card-name">Augusta Hale</div>
+        <div class="hd-xref-card-reason">The estate William built through the Dissolution is the same estate Augusta manages without title two centuries later.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- What Happened Next -->
+  <div class="hd-whathappened">
+    <div class="hd-whn-heading">What Happened Next</div>
+    <div class="hd-whn-body">
+      William Hale's purchase of the dissolved priory lands was confirmed by the Crown. He died in 1561, leaving the enlarged estate to his son John. The Tudor religious settlements — Protestant under Edward VI, Catholic under Mary, Protestant again under Elizabeth — required families like the Hales to navigate each reversal without losing land or liberty. The Hales managed this by keeping their heads down and their accounts correct, which was, as it turned out, the correct strategy. The twelve swine in the upper wood appear again in the 1598 inventory, still counted, still there. Continue with <a href="era-IV.html">Vol. IV: The Civil War →</a>
+    </div>
+  </div>
+
+
+  <nav class="era-seq-nav">
+    <a href="era-II.html" class="esn-prev">
+      <span class="esn-arrow">←</span>
+      <span class="esn-label">Vol. II · Plague</span>
+    </a>
+    <a href="index.html" class="esn-home">Archive Index</a>
+    <a href="era-IV.html" class="esn-next">
+      <span class="esn-label">Vol. IV · Civil War</span>
+      <span class="esn-arrow">→</span>
+    </a>
+  </nav>
+
+  <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+var eraAudio = null, eraOn = false;
+function initEraSound() {
+  if (!eraAudio) {
+    eraAudio = new Audio('sounds/era-III-ambient.mp3');
+    eraAudio.loop = true; eraAudio.volume = 0.35;
+  }
+}
+function toggleEraSound() {
+  var btn = document.getElementById('eraSoundBtn');
+  if (!eraOn) {
+    initEraSound(); eraAudio.play(); eraOn = true;
+    btn.textContent = '♪ Silence the flames'; btn.classList.add('on');
+  } else {
+    if (eraAudio) eraAudio.pause(); eraOn = false;
+    btn.textContent = '♪ Hear the flames'; btn.classList.remove('on');
+  }
+}
+
+// Era III voice player
+(function() {
+  var audio = document.getElementById('voiceAudio');
+  var btn = document.getElementById('evpPlay');
+  var bar = document.getElementById('evpBar');
+  var timeEl = document.getElementById('evpTime');
+
+  btn.onclick = function(e) {
+    e.preventDefault();
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚ Playing...';
+    } else {
+      audio.pause();
+      btn.textContent = '⚜ Play';
+    }
+  };
+
+  audio.addEventListener('timeupdate', function() {
+    if (audio.duration) {
+      var pct = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = pct + '%';
+      var m = Math.floor(audio.currentTime / 60);
+      var s = Math.floor(audio.currentTime % 60);
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    btn.textContent = '⚜ Again';
+    bar.style.width = '100%';
+  });
+})();
+  </script>
+
+  <canvas id="emberCanvas"></canvas>
+  <script>
+  (function(){
+    var canvas = document.getElementById('emberCanvas');
+    var ctx = canvas.getContext('2d');
+    var embers = [];
+    var running = true;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createEmber() {
+      var x = canvas.width * 0.3 + Math.random() * canvas.width * 0.4;
+      return {
+        x: x,
+        y: canvas.height + 10,
+        r: Math.random() * 2 + 0.8,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: -(Math.random() * 1.2 + 0.5),
+        life: 1.0,
+        decay: Math.random() * 0.006 + 0.003,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.04 + 0.02,
+        color: Math.random() > 0.6 ? 'rgba(255,160,20,' : 'rgba(255,80,10,'
+      };
+    }
+
+    // Sparse — only 18 embers at a time
+    for (var i = 0; i < 18; i++) {
+      var e = createEmber();
+      e.y = Math.random() * canvas.height; // start scattered
+      e.life = Math.random();
+      embers.push(e);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Randomly spawn new embers
+      if (Math.random() < 0.04 && embers.length < 25) embers.push(createEmber());
+
+      for (var i = embers.length - 1; i >= 0; i--) {
+        var em = embers[i];
+        em.wobble += em.wobbleSpeed;
+        em.x += em.vx + Math.sin(em.wobble) * 0.3;
+        em.y += em.vy;
+        em.life -= em.decay;
+
+        if (em.life <= 0 || em.y < -10) {
+          embers.splice(i, 1);
+          continue;
+        }
+
+        var alpha = em.life * 0.7;
+        ctx.beginPath();
+        ctx.arc(em.x, em.y, em.r * em.life, 0, Math.PI * 2);
+        ctx.fillStyle = em.color + alpha + ')';
+        ctx.fill();
+        // Tiny glow
+        if (em.r > 1.5) {
+          ctx.beginPath();
+          ctx.arc(em.x, em.y, em.r * em.life * 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = em.color + (alpha * 0.15) + ')';
+          ctx.fill();
+        }
+      }
+      if (running) requestAnimationFrame(draw);
+    }
+
+    setTimeout(function() {
+      canvas.classList.add('active');
+      draw();
+    }, 1500);
+  })();
+  </script>
+
+  <!-- DOCUMENT ZOOM OVERLAY -->
+  <div id="docZoomOverlay" class="doc-zoom-overlay" onclick="closeDocZoom(event)">
+    <div class="doc-zoom-inner" id="docZoomInner"></div>
+    <button class="doc-zoom-close" onclick="closeDocZoom(null,true)" aria-label="Close">✕</button>
+    <span class="doc-zoom-hint">Press Escape or click outside to close</span>
+  </div>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('docZoomOverlay');
+    var inner = document.getElementById('docZoomInner');
+    var zoomTargets = document.querySelectorAll(
+      '.parchment, .latin-writ, .manorial-rolls, .parchment-marginal, ' +
+      '.victorian-letter, .victorian-diary, .regency-letter, .tudor-letter, ' +
+      '.plague-register, .broadside, .solicitor, .memoir-page, ' +
+      '.blitz, .memo, .email-block'
+    );
+    zoomTargets.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Don't trigger if clicking a link/button inside
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+            e.target.closest('a') || e.target.closest('button') ||
+            e.target.closest('.fingerprint-wrap')) return;
+        inner.innerHTML = '';
+        var clone = el.cloneNode(true);
+        clone.style.cursor = 'default';
+        inner.appendChild(clone);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Re-run any click handlers on cloned elements
+        clone.querySelectorAll('.redacted').forEach(function(r) {
+          r.addEventListener('click', function() { this.classList.toggle('revealed'); });
+        });
+      });
+    });
+    window.closeDocZoom = function(e, force) {
+      if (force || (e && e.target === overlay)) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() { inner.innerHTML = ''; }, 300);
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDocZoom(null, true);
+    });
+  })();
+  </script>
+
+  <script src="transitions.js"></script>
+
+<script src="features.js"></script>
+
+  <div class="hd-cipher-wrap" style="bottom:120px;right:45px" title=""><span class="hd-cipher">R</span></div>
+
+  <div style="text-align:center;margin-top:30px;font-family:'Courier New',monospace;font-size:0.7em;letter-spacing:0.25em;">
+    <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
+  </div>
+<script src="inquiry.js"></script>
+</body>
+</html>
