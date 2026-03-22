@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Record Not Found — MSS. Hale-Marsh Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C8A83C;
+      --gold-dim: #9A7A28;
+      --bg: #0E0C0A;
+      --bg-mid: #1A1612;
+      --text-dim: #6A5A48;
+      --text-mid: #8A7A62;
+      --text-light: #B8A888;
+    }
+
+    html { font-size: 18px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-light);
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      opacity: 0;
+      animation: pageIn 1.2s ease 0.3s forwards;
+      text-align: center;
+    }
+
+    @keyframes pageIn { to { opacity: 1; } }
+
+    /* top bar */
+    .access-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      border-bottom: 1px solid #1E1A12;
+      padding: 9px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      color: var(--text-dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .access-bar a { color: var(--text-dim); text-decoration: none; }
+    .access-bar a:hover { color: var(--gold); }
+
+    /* ornament */
+    .ornament {
+      color: var(--gold);
+      font-size: 1.1em;
+      letter-spacing: 0.4em;
+      opacity: 0.4;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    /* error code */
+    .error-code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.35em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    /* main heading */
+    .main-heading {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.5em, 3vw, 2.4em);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      text-shadow: 0 0 60px rgba(200,168,60,0.1);
+    }
+
+    .divider {
+      width: 40px; height: 1px;
+      background: var(--gold-dim);
+      margin: 0 auto 28px;
+      opacity: 0.35;
+    }
+
+    /* archival note */
+    .archival-note {
+      max-width: 520px;
+      font-size: 0.88em;
+      color: var(--text-mid);
+      line-height: 1.85;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .archival-note em {
+      color: var(--text-light);
+      font-style: normal;
+    }
+
+    /* ref stamp */
+    .ref-stamp {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 50px;
+      opacity: 0.7;
+    }
+
+    /* nav links */
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-link {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .nav-link:hover {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+    .nav-link.primary {
+      color: var(--gold-dim);
+      border-color: var(--gold-dim);
+    }
+    .nav-link.primary:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .nav-sep {
+      color: var(--text-dim);
+      opacity: 0.35;
+      font-size: 0.8em;
+    }
+
+    /* watermark number */
+    .watermark-num {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(4em, 12vw, 9em);
+      font-weight: 700;
+      color: rgba(200,168,60,0.04);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @media (max-width: 600px) {
+      .access-bar { padding: 8px 18px; font-size: 0.65em; }
+      .watermark-num { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="access-bar">
+    <a href="index.html">← The Collection</a>
+    <span>MSS. Hale-Marsh · Bodleian Libraries · Reference Error</span>
+    <a href="documents.html">All Documents →</a>
+  </div>
+
+  <span class="ornament">— ✦ —</span>
+
+  <div class="error-code">MSS. Hale-Marsh · Error 404 · Record Not Located</div>
+
+  <h1 class="main-heading">This Record Is Not<br>Held in the Collection</h1>
+
+  <div class="divider"></div>
+
+  <p class="archival-note">
+    The document you have requested does not appear in the catalogue of
+    the <em>MSS. Hale-Marsh Collection</em> as currently held. It is possible that the
+    record was never accessioned, that it was removed prior to the digitisation
+    of the archive, or — as is the case with a number of items in this collection —
+    that it existed and has since been lost. The editors regret that they cannot
+    account for every absence.
+  </p>
+
+  <p class="archival-note" style="margin-bottom: 40px;">
+    If you arrived here from within the archive, please return to the main
+    collection using the links below. If you believe a record should exist
+    and does not, the editors note that this, too, is a form of evidence.
+  </p>
+
+  <div class="ref-stamp">Ref. HM/404 · Not accessioned · See also: grief.html</div>
+
+  <div class="nav-links">
+    <a href="index.html" class="nav-link primary">Return to the Archive</a>
+    <span class="nav-sep">·</span>
+    <a href="documents.html" class="nav-link">All Documents</a>
+    <span class="nav-sep">·</span>
+    <a href="persons.html" class="nav-link">Persons</a>
+    <span class="nav-sep">·</span>
+    <a href="family-tree.html" class="nav-link">Family Tree</a>
+  </div>
+
+  <div class="watermark-num">404</div>
+
+</body>
+</html>

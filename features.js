@@ -33,16 +33,117 @@
     var done = ALL_VOLS.every(function(v){ return visited.indexOf(v) !== -1; });
     if (done) {
       try { localStorage.setItem('hale_complete', 'true'); } catch(e){}
-      activateLayer2();
+      var firstTime = localStorage.getItem('hale_layer2_seen') !== 'true';
+      activateLayer2(firstTime);
+      if (firstTime) {
+        try { localStorage.setItem('hale_layer2_seen', 'true'); } catch(e){}
+      }
     }
   }
 
-  function activateLayer2() {
+  function activateLayer2(showReveal) {
     document.querySelectorAll('.obj-layer2').forEach(function(el){
       el.classList.add('obj-layer2-active');
     });
     var secretLink = document.getElementById('secret-nav-link');
     if (secretLink) secretLink.style.display = 'inline';
+
+    if (showReveal) {
+      showLayer2Reveal();
+    }
+  }
+
+  function showLayer2Reveal() {
+    // Brief pause so the page content is visible first
+    setTimeout(function() {
+      var overlay = document.createElement('div');
+      overlay.id = 'hd-layer2-reveal';
+      overlay.style.cssText = [
+        'position:fixed',
+        'inset:0',
+        'background:rgba(8,6,4,0.97)',
+        'z-index:99999',
+        'display:flex',
+        'align-items:center',
+        'justify-content:center',
+        'opacity:0',
+        'transition:opacity 1.2s ease',
+        'cursor:pointer',
+        'padding:30px',
+      ].join(';');
+
+      overlay.innerHTML = [
+        '<div style="max-width:540px;text-align:center;font-family:Georgia,serif;color:#B8A878;">',
+
+        '<div style="font-family:\'Courier New\',monospace;font-size:0.65em;letter-spacing:0.35em;',
+        'text-transform:uppercase;color:#5A4A28;margin-bottom:28px;">',
+        'MSS. Hale-Marsh Collection &nbsp;·&nbsp; Bodleian Libraries',
+        '</div>',
+
+        '<div style="color:#C8A83C;font-size:1.5em;letter-spacing:0.3em;opacity:0.4;margin-bottom:24px;">✦</div>',
+
+        '<div style="font-family:\'Courier New\',monospace;font-size:0.68em;letter-spacing:0.22em;',
+        'text-transform:uppercase;color:#7A6030;margin-bottom:18px;">',
+        'Access Level Revised &nbsp;·&nbsp; All Ten Volumes Read',
+        '</div>',
+
+        '<h2 style="font-size:clamp(1.3em,3vw,2em);color:#C8A83C;letter-spacing:0.08em;',
+        'line-height:1.3;margin-bottom:22px;font-weight:normal;">',
+        'The Archive Has Noted<br>Your Attention',
+        '</h2>',
+
+        '<div style="width:30px;height:1px;background:#6A5020;margin:0 auto 24px;opacity:0.5;"></div>',
+
+        '<p style="font-style:italic;line-height:1.9;font-size:0.92em;color:#9A8A6A;margin-bottom:18px;">',
+        'Nine centuries. Ten volumes. One family. You have read all of it — ',
+        'or at least, all of it that the editors were permitted to show you.',
+        '</p>',
+
+        '<p style="font-style:italic;line-height:1.9;font-size:0.92em;color:#9A8A6A;margin-bottom:18px;">',
+        'There are things in this archive that do not appear in the catalogue. ',
+        'Some of them are very old. Some of them were placed there deliberately, ',
+        'by people who wanted them found — but only by the right reader.',
+        '</p>',
+
+        '<p style="font-style:italic;line-height:1.9;font-size:0.92em;color:#9A8A6A;margin-bottom:30px;">',
+        'The editors wish to note, for the record, that we are still looking for Thomas Marsh. ',
+        'He was born approximately 1873. He would have been fifty-one when Eleanor first',
+        ' opened this deed-box. We do not know what became of him.',
+        ' If you find anything, please let us know.',
+        '</p>',
+
+        '<div style="font-family:\'Courier New\',monospace;font-size:0.65em;letter-spacing:0.2em;',
+        'text-transform:uppercase;color:#5A4A28;margin-bottom:32px;">',
+        '— A.F. &amp; E.V., London &amp; Oxford, 2024',
+        '</div>',
+
+        '<div style="font-family:\'Courier New\',monospace;font-size:0.63em;letter-spacing:0.15em;',
+        'text-transform:uppercase;color:#3A2A18;margin-top:10px;">',
+        'Click anywhere to continue',
+        '</div>',
+
+        '</div>',
+      ].join('');
+
+      document.body.appendChild(overlay);
+
+      // Fade in
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          overlay.style.opacity = '1';
+        });
+      });
+
+      // Click to dismiss
+      overlay.addEventListener('click', function() {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(function() {
+          overlay.remove();
+        }, 1200);
+      });
+
+    }, 600);
   }
 
   function getObjState(vol) {
@@ -70,7 +171,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var vol = document.body.getAttribute('data-vol');
     if (vol) markVisited(vol);
-    if (isComplete()) activateLayer2();
+    if (isComplete()) activateLayer2(false);
     ALL_VOLS.forEach(function(v) {
       if (getObjState(v)) {
         var content = document.getElementById('obj-content-' + v);

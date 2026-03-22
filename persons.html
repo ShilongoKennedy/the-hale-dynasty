@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persons of the Archive — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080604;
+      color: #C8A050;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,6,4,0.95);
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      padding: 10px 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .top-nav a { color: rgba(200,168,60,0.55); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #C8A83C; }
+    .top-nav .center { color: rgba(200,168,60,0.3); font-size: 0.9em; }
+
+    .page-header {
+      text-align: center;
+      padding: 56px 24px 40px;
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+    }
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.8em, 4vw, 3em);
+      color: #F0C840;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 60px rgba(240,200,64,0.3);
+      margin-bottom: 12px;
+    }
+    .page-subtitle {
+      font-style: italic;
+      color: rgba(200,168,60,0.4);
+      font-size: 0.88em;
+      letter-spacing: 0.04em;
+      max-width: 520px;
+      margin: 0 auto 20px;
+      line-height: 1.7;
+    }
+    .eleanor-intro {
+      display: inline-block;
+      background: rgba(200,168,60,0.04);
+      border: 1px solid rgba(200,168,60,0.12);
+      padding: 10px 22px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.4);
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 24px 24px 0;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(200,168,60,0.15);
+      color: rgba(200,168,60,0.4);
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: rgba(200,168,60,0.5);
+      color: #C8A83C;
+      background: rgba(200,168,60,0.04);
+    }
+
+    .persons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2px;
+      padding: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .person-card {
+      position: relative;
+      cursor: pointer;
+      background: #0A0806;
+      border: 1px solid rgba(200,168,60,0.06);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+      aspect-ratio: 3/4;
+    }
+    .person-card:hover {
+      border-color: rgba(200,168,60,0.25);
+      transform: translateY(-2px);
+      z-index: 2;
+    }
+    .person-card.hidden { display: none; }
+
+    .person-portrait {
+      width: 100%; height: 70%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: sepia(55%) brightness(0.7) contrast(1.1);
+      transition: filter 0.3s;
+    }
+    .person-card:hover .person-portrait { filter: sepia(40%) brightness(0.85) contrast(1.1); }
+
+    .person-portrait-placeholder {
+      width: 100%; height: 70%;
+      background: #0D0B07;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .person-portrait-placeholder svg { opacity: 0.08; }
+
+    .person-info {
+      padding: 12px 14px 14px;
+      background: linear-gradient(180deg, #0A0806 0%, #060402 100%);
+      height: 30%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .person-branch-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .person-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.78em;
+      color: #C8A83C;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+    .person-dates {
+      font-family: 'Courier New', monospace;
+      font-size: 0.55em;
+      color: rgba(200,168,60,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    .person-ask-btn {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(200,168,60,0.08);
+      border: none;
+      border-top: 1px solid rgba(200,168,60,0.12);
+      color: rgba(200,168,60,0.5);
+      font-family: 'Courier New', monospace;
+      font-size: 0.55em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .person-card:hover .person-ask-btn {
+      opacity: 1;
+    }
+    .person-ask-btn:hover {
+      background: rgba(200,168,60,0.14);
+      color: #C8A83C;
+    }
+
+    /* ERA LINK badge */
+    .person-era-link {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(8,6,4,0.85);
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.5);
+      font-family: 'Courier New', monospace;
+      font-size: 0.52em;
+      letter-spacing: 0.1em;
+      padding: 3px 7px;
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .person-card:hover .person-era-link { opacity: 1; }
+
+    /* INQUIRY OVERLAY ─────── */
+    #inquiry-overlay {
+      position: fixed; inset: 0;
+      background: rgba(4,3,2,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 800;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #inquiry-overlay.open { display: flex; }
+    #inquiry-box {
+      background: #060402;
+      border: 1px solid rgba(200,168,60,0.18);
+      width: 100%;
+      max-width: 560px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    #iq-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(200,168,60,0.08);
+    }
+    #iq-person-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.9em; color: #D4A840;
+      letter-spacing: 0.06em;
+    }
+    #iq-close {
+      background: none; border: none;
+      color: rgba(200,168,60,0.3);
+      font-size: 1.1em; cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: color 0.2s;
+    }
+    #iq-close:hover { color: #C8A83C; }
+    #iq-messages {
+      flex: 1; overflow-y: auto;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      min-height: 200px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200,168,60,0.1) transparent;
+    }
+    .iq-msg {
+      max-width: 88%;
+      line-height: 1.75;
+      font-size: 0.84em;
+    }
+    .iq-msg.user {
+      align-self: flex-end;
+      background: rgba(200,168,60,0.06);
+      border: 1px solid rgba(200,168,60,0.1);
+      padding: 10px 14px;
+      color: rgba(200,168,60,0.65);
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.04em;
+    }
+    .iq-msg.eleanor {
+      align-self: flex-start;
+      color: rgba(200,168,60,0.7);
+    }
+    .iq-msg.eleanor::before {
+      content: 'Eleanor —';
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.25);
+      margin-bottom: 6px;
+    }
+    .iq-thinking {
+      color: rgba(200,168,60,0.25);
+      font-style: italic;
+      font-size: 0.8em;
+    }
+    #iq-input-row {
+      display: flex; gap: 0;
+      border-top: 1px solid rgba(200,168,60,0.08);
+    }
+    #iq-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: rgba(200,168,60,0.7);
+      font-family: Georgia, serif;
+      font-size: 0.84em;
+      padding: 14px 16px;
+      resize: none;
+      height: 52px;
+      line-height: 1.5;
+    }
+    #iq-input::placeholder { color: rgba(200,168,60,0.2); }
+    #iq-send {
+      background: transparent;
+      border: none;
+      border-left: 1px solid rgba(200,168,60,0.08);
+      color: rgba(200,168,60,0.4);
+      padding: 0 18px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s, background 0.2s;
+    }
+    #iq-send:hover { color: #C8A83C; background: rgba(200,168,60,0.04); }
+
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 400;
+      width: 44px; height: 44px;
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.22);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
+    .home-float svg { width: 20px; height: 20px; }
+
+    .section-heading {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(200,168,60,0.2);
+      text-align: center;
+      padding: 28px 0 4px;
+    }
+    .section-divider {
+      width: 60px; height: 1px;
+      background: rgba(200,168,60,0.08);
+      margin: 8px auto 0;
+    }
+
+    @media (max-width: 600px) {
+      .persons-grid { grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 2px; }
+      .top-nav { font-size: 0.6em; padding: 8px 14px; }
+      .top-nav .center { display: none; }
+      .filter-bar { padding: 16px 12px 0; gap: 4px; }
+      .filter-btn { font-size: 0.55em; padding: 4px 9px; }
+      .page-header { padding: 30px 20px 20px; }
+    }
+    @media (max-width: 380px) {
+      .persons-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="center">The Hale Dynasty · Persons of Record</span>
+  <a href="family-tree.html">Family Tree →</a>
+</nav>
+
+<header class="page-header">
+  <h1 class="page-title">Persons of the Archive</h1>
+  <p class="page-subtitle">Select any figure from the dynasty to consult Eleanor — archivist and keeper of the record — about their life, significance, and place in nine centuries of the Hale line.</p>
+  <div class="eleanor-intro">✦ &nbsp; Ask Eleanor anything about the dynasty &nbsp; ✦</div>
+</header>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Persons</button>
+  <button class="filter-btn" data-filter="main">Hale Line</button>
+  <button class="filter-btn" data-filter="voss">Voss Branch</button>
+  <button class="filter-btn" data-filter="key">Key Figures</button>
+</div>
+
+<div class="persons-grid" id="personsGrid"></div>
+
+<!-- INQUIRY OVERLAY -->
+<div id="inquiry-overlay">
+  <div id="inquiry-box">
+    <div id="iq-header">
+      <span id="iq-person-name">Eleanor's Desk</span>
+      <button id="iq-close">✕</button>
+    </div>
+    <div id="iq-messages"></div>
+    <div id="iq-input-row">
+      <textarea id="iq-input" placeholder="Ask another question…" rows="1"></textarea>
+      <button id="iq-send">Send</button>
+    </div>
+  </div>
+</div>
+
+<a href="index.html" class="home-float" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="transitions.js"></script>
+<script src="features.js"></script>
+<script>
+const PERSONS = [
+  // MAIN HALE LINE
+  { id:'ranulf',      name:'Ranulf de la Hale',          dates:'c.1040–c.1099', era:'Era I · Norman',              eraLink:'era-I.html',    branch:'main', key:true,  portrait:'portraits/ranulf.png',
+    desc:'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ. Asked his priest to help him frame the right question before he died: "Ask for justice. Not mercy."' },
+  { id:'aelswith',    name:'Aelswith',                   dates:'c.1045–1079',   era:'Era I · Norman',              eraLink:'era-I.html',    branch:'main', key:false, portrait:'portraits/aelswith.png',
+    desc:'English widow of the previous thegn. Taught Ranulf the language of the people and the customs of the land. The making of Halecroft.' },
+  { id:'leofric',     name:'Leofric de la Hale',         dates:'c.1072–c.1135', era:'Era I · Norman',              eraLink:'era-I.html',    branch:'main', key:false, portrait:'portraits/leofric.png',
+    desc:'Youngest son of Ranulf. Founded the Hale — the woodland settlement that became the family\'s primary holding for nine centuries.' },
+  { id:'richard',     name:'Richard Hale',               dates:'c.1304–1348',   era:'Era II · Plague',             eraLink:'era-II.html',   branch:'main', key:false, portrait:'portraits/richard.png',
+    desc:'Freeholder. Served as jury foreman seven times. Died of plague at the feast of St Martin, November 1348. His household perished within fourteen months.' },
+  { id:'thomas',      name:'Thomas Hale',                dates:'1338–1395',     era:'Era II · Plague Survivor',    eraLink:'era-II.html',   branch:'main', key:true,  portrait:'portraits/thomas.png',
+    desc:'Aged eleven when the plague came. Returned to find everyone dead. Set down the cooking pot. Said: I had better see to the pig. His inheritance confirmed by inquest, 1351.' },
+  { id:'matilda',     name:'Matilda of Halecroft',       dates:'c.1310–c.1395', era:'Era II · Keeper',             eraLink:'era-II.html',   branch:'side', key:true,  portrait:'portraits/matilda.png',
+    desc:'Free woman of Halecroft. Kept bees. Testified uninvited at the Inquest of 1351 to secure Thomas Hale\'s inheritance. Her letter: "Keep asking. Keep the land. See to the pig."' },
+  { id:'john_tudor',  name:'John Hale',                  dates:'1498–1558',     era:'Era III · Tudor',             eraLink:'era-III.html',  branch:'main', key:true,  portrait:'portraits/john.png',
+    desc:'The Letters of John Hale (1532–1549) are the archive\'s most candid documents. Signed the Act of Supremacy: "I have signed. I keep my land. I say my prayers."' },
+  { id:'william',     name:'William Hale',               dates:'1522–c.1585',   era:'Era III · Tudor',             eraLink:'era-III.html',  branch:'main', key:false, portrait:'portraits/william.png',
+    desc:'Purchased twelve acres of former priory land in 1545 for four pounds — the first Hale to buy land from a commercial transaction rather than a feudal lord.' },
+  { id:'nathaniel',   name:'Sir Nathaniel Hale',         dates:'1671–1744',     era:'Era V · Restoration',         eraLink:'era-V.html',    branch:'main', key:false, portrait:'portraits/nathaniel.png',
+    desc:'Left Worcestershire. Made himself in London. Purchased a baronetcy. Lost a fortune in the South Sea Bubble. His wife Dorothea: "Then we have sufficient to begin again."' },
+  { id:'augusta',     name:'Augusta Hale',               dates:'1771–1858',     era:'Era VI · Regency',            eraLink:'era-VI.html',   branch:'main', key:true,  portrait:'portraits/augusta.png',
+    desc:'Managed the Hale estate for thirty-seven years under an entail that prevented her inheriting it. Married at fifty-seven. Her letters are the archive\'s sharpest pleasure.' },
+  { id:'edmund_vict', name:'Edmund Hale II',             dates:'1841–1882',     era:'Era VII · Victorian',         eraLink:'era-VII.html',  branch:'main', key:true,  portrait:'portraits/edmund.png',
+    desc:'The locked escritoire. The confession never made publicly. Two words on a folded paper: "I know." He sealed it in Shropshire in 1882, aged forty-one. What he knew, the archive cannot say.' },
+  { id:'thomas_mh',   name:'Thomas Marsh-Hale',         dates:'1873–1951',     era:'Era VIII · WWI',              eraLink:'era-VIII.html', branch:'main', key:true,  portrait:'portraits/thomas.png',
+    desc:'Illegitimate son who claimed the hyphenated name. Journalist, soldier, archivist. The archive\'s most persistent instruction, passed to him: "Keep asking."' },
+  { id:'edmund_mh',   name:'Edmund Marsh-Hale',         dates:'1910–1978',     era:'Era IX · WWII',               eraLink:'era-IX.html',   branch:'main', key:false, portrait:'portraits/edmundmarsh.png',
+    desc:'Structural engineer. Ministry of Supply, 1939–1945. Added the names to bridges the specification did not require him to name. Kept the family papers. Passed them intact.' },
+  { id:'james',       name:'James Marsh-Hale',          dates:'1945–',         era:'Era X · Contemporary',        eraLink:'era-X.html',    branch:'main', key:true,  portrait:'portraits/james.png',
+    desc:'Professor of Medieval Land History (retired). Has been reading this archive since he was nine. Compiled it. The custodian of nine centuries.' },
+  // VOSS BRANCH
+  { id:'margery',     name:'Margery Hale',               dates:'c.1352–?',      era:'Voss Branch · 1373',          eraLink:'era-II.html',   branch:'voss', key:false, portrait:'portraits/margery.png',
+    desc:'Daughter of Thomas Hale, the plague survivor. Married Thomas Voss of Pershore in 1373 and left Halecroft, beginning the six-century Voss line.' },
+  { id:'hannah',      name:'Hannah Voss',                dates:'c.1820–c.1890', era:'Voss · Victorian',            eraLink:null,            branch:'voss', key:false, portrait:'portraits/hannah.png',
+    desc:'Schoolmistress at Pershore National School, 1847–1883. Inspector\'s report: "makes the children feel that the past was not past but continuous."' },
+  { id:'david',       name:'David Voss',                 dates:'1941–2019',     era:'Voss · Contemporary',         eraLink:null,            branch:'voss', key:false, portrait:'portraits/david.png',
+    desc:'History teacher, Harrogate. Assembled the shoebox of family papers. Wrote "Property: keep" on the Post-it note. Did not know why it needed keeping. Kept it anyway.' },
+  { id:'eleanor',     name:'Eleanor Voss',               dates:'1983–',         era:'Era X · Contemporary',        eraLink:'era-X.html',    branch:'voss', key:true,  portrait:'portraits/eleanor.png',
+    desc:'Medievalist, Bodleian Library, Oxford. Recovered Matilda\'s letter in January 2024. Reconstructed the Voss genealogy from Margery\'s departure in 1373. The letter was addressed to her. It always was.' },
+];
+
+const BRANCH_COLORS = {
+  main: '#C8A83C',
+  voss: '#5A7840',
+  side: '#C8A83C'
+};
+
+// Build grid
+function buildGrid(filter) {
+  const grid = document.getElementById('personsGrid');
+  grid.innerHTML = '';
+  PERSONS.forEach(p => {
+    const show = filter === 'all' ||
+      (filter === 'key' && p.key) ||
+      (filter === 'main' && (p.branch === 'main' || p.branch === 'side')) ||
+      (filter === 'voss' && p.branch === 'voss');
+
+    const card = document.createElement('div');
+    card.className = 'person-card' + (show ? '' : ' hidden');
+    card.dataset.personId = p.id;
+
+    if (p.portrait) {
+      card.innerHTML += `<img class="person-portrait" src="${p.portrait}" alt="${p.name}" loading="lazy">`;
+    } else {
+      card.innerHTML += `<div class="person-portrait-placeholder"><svg width="60" height="60" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#C8A83C" stroke-width="0.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#C8A83C" stroke-width="0.8"/></svg></div>`;
+    }
+
+    card.innerHTML += `
+      <div class="person-info">
+        <span class="person-branch-dot" style="background:${BRANCH_COLORS[p.branch] || '#C8A83C'}"></span>
+        <div class="person-name">${p.name}</div>
+        <div class="person-dates">${p.dates} · ${p.era}</div>
+      </div>
+      <button class="person-ask-btn">✦ Ask Eleanor</button>
+      ${p.eraLink ? `<a class="person-era-link" href="${p.eraLink}" onclick="event.stopPropagation()">→ Era</a>` : ''}
+    `;
+
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') return;
+      openPersonChat(p);
+    });
+
+    grid.appendChild(card);
+  });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.person-card').forEach(card => {
+      const p = PERSONS.find(p => p.id === card.dataset.personId);
+      if (!p) return;
+      const show = filter === 'all' ||
+        (filter === 'key' && p.key) ||
+        (filter === 'main' && (p.branch === 'main' || p.branch === 'side')) ||
+        (filter === 'voss' && p.branch === 'voss');
+      card.classList.toggle('hidden', !show);
+    });
+  });
+});
+
+// ── ELEANOR CHAT ──────────────────────────────────────────────────────────
+let currentPerson = null;
+let chatHistory   = [];
+let streaming     = false;
+const PAGE_CONTEXT = 'persons — the persons of the archive page, showing all dynasty characters';
+
+function openPersonChat(person) {
+  currentPerson = person;
+  chatHistory   = [];
+  document.getElementById('iq-person-name').textContent = person.name;
+  const msgs = document.getElementById('iq-messages');
+  msgs.innerHTML = '';
+  document.getElementById('inquiry-overlay').classList.add('open');
+
+  // Auto-ask the opening question
+  const opening = `Tell me about ${person.name} and their place in the Hale dynasty.`;
+  appendMessage('user', opening);
+  askEleanor(opening);
+}
+
+function appendMessage(role, text) {
+  const msgs = document.getElementById('iq-messages');
+  const div = document.createElement('div');
+  div.className = 'iq-msg ' + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function askEleanor(userMsg) {
+  if (streaming) return;
+  streaming = true;
+  chatHistory.push({ role:'user', content: userMsg });
+
+  const thinkDiv = appendMessage('eleanor', '…');
+  thinkDiv.classList.add('iq-thinking');
+
+  setTimeout(() => {
+    thinkDiv.classList.remove('iq-thinking');
+    thinkDiv.textContent = '';
+
+    fetch('/api/eleanor', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: userMsg,
+        history: chatHistory.slice(-10),
+        pageContext: PAGE_CONTEXT + (currentPerson ? ` — viewing: ${currentPerson.name} (${currentPerson.era})` : '')
+      })
+    }).then(res => {
+      if (!res.ok || !res.body) throw new Error('API error');
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      function pump() {
+        return reader.read().then(({ done, value }) => {
+          if (done) {
+            streaming = false;
+            chatHistory.push({ role:'assistant', content: thinkDiv.textContent });
+            return;
+          }
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+          lines.forEach(line => {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6).trim();
+              if (data === '[DONE]') return;
+              try {
+                const obj = JSON.parse(data);
+                if (obj.delta) thinkDiv.textContent += obj.delta;
+              } catch {}
+            }
+          });
+          document.getElementById('iq-messages').scrollTop = document.getElementById('iq-messages').scrollHeight;
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(() => {
+      streaming = false;
+      thinkDiv.textContent = 'The archive is momentarily quiet. Try again in a moment.';
+    });
+  }, 800);
+}
+
+// Close overlay
+document.getElementById('iq-close').addEventListener('click', () => {
+  document.getElementById('inquiry-overlay').classList.remove('open');
+  currentPerson = null;
+  chatHistory = [];
+});
+document.getElementById('inquiry-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('inquiry-overlay')) {
+    document.getElementById('iq-close').click();
+  }
+});
+
+// Send follow-up message
+function sendMessage() {
+  const input = document.getElementById('iq-input');
+  const msg = input.value.trim();
+  if (!msg || streaming) return;
+  input.value = '';
+  appendMessage('user', msg);
+  askEleanor(msg);
+}
+
+document.getElementById('iq-send').addEventListener('click', sendMessage);
+document.getElementById('iq-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+// Init
+buildGrid('all');
+</script>
+</body>
+</html>

@@ -926,11 +926,18 @@
     /* ── RESPONSIVE ────────────────────────────────────────── */
     @media (max-width: 680px) {
       .access-header { flex-direction: column; gap: 3px; text-align: center; font-size: 0.56em; }
+      .access-header span:nth-child(2),
+      .access-header span:nth-child(3) { display: none; }
       .archive-grid { grid-template-columns: 1fr; gap: 12px; }
       .main-title { font-size: 1.6em; }
       .mystery-inner { flex-direction: column; gap: 10px; text-align: center; }
       .search-section { padding: 0 16px; }
       .explore-nav { grid-template-columns: 1fr; padding: 0 16px; }
+      .hero { padding: 50px 20px 30px; }
+      .dates-line { font-size: 1.1em; letter-spacing: 0.12em; }
+      .hero-divider { margin: 0 auto 16px; }
+      .explore-card { padding: 14px 16px; gap: 12px; }
+      .explore-card-icon { width: 32px; height: 32px; }
     }
     /* ── SITE CREST LOGO ─────────────────────────────────── */
     .site-crest-hero {
@@ -1167,19 +1174,12 @@
     <a href="guestbook.html" class="explore-card">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Register book -->
           <rect x="8" y="8" width="26" height="26" rx="1" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.04)" opacity="0.7"/>
           <line x1="21" y1="8" x2="21" y2="34" stroke="#C8A83C" stroke-width="2" opacity="0.35"/>
-          <!-- Binding -->
           <rect x="19" y="10" width="4" height="22" fill="rgba(200,168,60,0.15)" opacity="0.5"/>
-          <!-- Pages -->
           <line x1="12" y1="15" x2="20" y2="15" stroke="#C8A83C" stroke-width="0.5" opacity="0.4"/>
           <line x1="12" y1="19" x2="20" y2="19" stroke="#C8A83C" stroke-width="0.5" opacity="0.35"/>
-          <line x1="12" y1="23" x2="18" y2="23" stroke="#C8A83C" stroke-width="0.5" opacity="0.3"/>
           <line x1="22" y1="15" x2="30" y2="15" stroke="#C8A83C" stroke-width="0.5" opacity="0.4"/>
-          <line x1="22" y1="19" x2="30" y2="19" stroke="#C8A83C" stroke-width="0.5" opacity="0.35"/>
-          <line x1="22" y1="23" x2="28" y2="23" stroke="#C8A83C" stroke-width="0.5" opacity="0.3"/>
-          <!-- Signature mark -->
           <path d="M 12 27 Q 16 26 18 28" stroke="#C8A83C" stroke-width="0.7" fill="none" opacity="0.6"/>
         </svg>
       </div>
@@ -1189,6 +1189,78 @@
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
+    <a href="persons.html" class="explore-card">
+      <div class="explore-card-icon">
+        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="13" r="5" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.04)" opacity="0.8"/>
+          <path d="M9 34c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="#C8A83C" stroke-width="0.9" fill="none" opacity="0.7"/>
+          <circle cx="10" cy="16" r="3.5" stroke="#C8A83C" stroke-width="0.7" fill="rgba(200,168,60,0.03)" opacity="0.5"/>
+          <path d="M3 28c0-4 3.1-7 7-7" stroke="#C8A83C" stroke-width="0.7" fill="none" opacity="0.4"/>
+          <circle cx="32" cy="16" r="3.5" stroke="#C8A83C" stroke-width="0.7" fill="rgba(200,168,60,0.03)" opacity="0.5"/>
+          <path d="M39 28c0-4-3.1-7-7-7" stroke="#C8A83C" stroke-width="0.7" fill="none" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="explore-card-text">
+        <div class="explore-card-title">Persons of the Archive</div>
+        <div class="explore-card-sub">Ask Eleanor · Character Profiles · All 18 Figures</div>
+      </div>
+      <span class="explore-card-arrow">→</span>
+    </a>
+    <a href="grief.html" class="explore-card">
+      <div class="explore-card-icon">
+        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Continuous line representing the grief index -->
+          <line x1="8" y1="10" x2="34" y2="10" stroke="#C8A83C" stroke-width="0.6" opacity="0.25"/>
+          <line x1="8" y1="14" x2="34" y2="14" stroke="#C8A83C" stroke-width="0.6" opacity="0.2"/>
+          <line x1="8" y1="18" x2="34" y2="18" stroke="#C8A83C" stroke-width="0.6" opacity="0.2"/>
+          <line x1="8" y1="22" x2="34" y2="22" stroke="#C8A83C" stroke-width="0.6" opacity="0.2"/>
+          <line x1="8" y1="26" x2="34" y2="26" stroke="#C8A83C" stroke-width="0.6" opacity="0.2"/>
+          <line x1="8" y1="30" x2="34" y2="30" stroke="#C8A83C" stroke-width="0.6" opacity="0.2"/>
+          <!-- The count mark at end -->
+          <line x1="32" y1="34" x2="34" y2="30" stroke="#C8A83C" stroke-width="1.2" opacity="0.5"/>
+          <line x1="34" y1="30" x2="36" y2="34" stroke="#C8A83C" stroke-width="0.7" opacity="0.35" stroke-dasharray="1.5,1"/>
+        </svg>
+      </div>
+      <div class="explore-card-text">
+        <div class="explore-card-title">The Grief Index</div>
+        <div class="explore-card-sub">Every Loss Recorded · Ten Volumes · Without Division</div>
+      </div>
+      <span class="explore-card-arrow">→</span>
+    </a>
+    <a href="glossary.html" class="explore-card">
+      <div class="explore-card-icon">
+        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="7" y="5" width="28" height="32" rx="1" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.03)" opacity="0.7"/>
+          <line x1="12" y1="13" x2="16" y2="13" stroke="#C8A83C" stroke-width="1.8" opacity="0.7"/>
+          <line x1="19" y1="13" x2="30" y2="13" stroke="#C8A83C" stroke-width="0.5" opacity="0.4"/>
+          <line x1="12" y1="19" x2="16" y2="19" stroke="#C8A83C" stroke-width="1.8" opacity="0.55"/>
+          <line x1="19" y1="19" x2="28" y2="19" stroke="#C8A83C" stroke-width="0.5" opacity="0.35"/>
+          <line x1="12" y1="25" x2="16" y2="25" stroke="#C8A83C" stroke-width="1.8" opacity="0.4"/>
+          <line x1="19" y1="25" x2="30" y2="25" stroke="#C8A83C" stroke-width="0.5" opacity="0.3"/>
+          <line x1="12" y1="31" x2="16" y2="31" stroke="#C8A83C" stroke-width="1.8" opacity="0.3"/>
+          <line x1="19" y1="31" x2="26" y2="31" stroke="#C8A83C" stroke-width="0.5" opacity="0.25"/>
+        </svg>
+      </div>
+      <div class="explore-card-text">
+        <div class="explore-card-title">Glossary & Index</div>
+        <div class="explore-card-sub">Persons · Places · Documents · Events · Terms</div>
+      </div>
+      <span class="explore-card-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       READING PROGRESS
+       ══════════════════════════════════════════════ -->
+  <section id="reading-progress-section" style="display:none; padding: 0 40px 32px; max-width: 960px; margin: 0 auto;">
+    <div style="border: 1px solid rgba(200,168,60,0.08); padding: 18px 24px; background: rgba(200,168,60,0.02);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-family:'Courier New',monospace; font-size:0.62em; letter-spacing:0.18em; text-transform:uppercase; color:rgba(200,168,60,0.3);">Your Progress Through the Archive</span>
+        <span id="progress-count" style="font-family:'Courier New',monospace; font-size:0.62em; letter-spacing:0.12em; color:rgba(200,168,60,0.4);">0 / 10 volumes</span>
+      </div>
+      <div style="display:flex; gap:4px;" id="progress-pips"></div>
+      <div id="progress-next" style="margin-top:10px; font-size:0.78em; font-style:italic; color:rgba(200,168,60,0.25);"></div>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
@@ -1919,6 +1991,95 @@
   <script src="transitions.js"></script>
 
 <script src="features.js"></script>
+
+<script>
+// ── READING PROGRESS WIDGET ──────────────────────────────────────────────
+(function() {
+  var ALL_VOLS = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+  var VOL_TITLES = {
+    'I':'Norman · 1066', 'II':'Plague · 1348', 'III':'Tudor · 1485',
+    'IV':'Civil War · 1642', 'V':'Restoration · 1671', 'VI':'Regency · 1771',
+    'VII':'Victorian · 1841', 'VIII':'WWI · 1873', 'IX':'WWII · 1910', 'X':'Contemporary'
+  };
+  var VOL_LINKS = {
+    'I':'era-I.html','II':'era-II.html','III':'era-III.html','IV':'era-IV.html',
+    'V':'era-V.html','VI':'era-VI.html','VII':'era-VII.html','VIII':'era-VIII.html',
+    'IX':'era-IX.html','X':'era-X.html'
+  };
+
+  function getVisited() {
+    try { return JSON.parse(localStorage.getItem('hale_visited') || '[]'); } catch(e) { return []; }
+  }
+
+  function initProgress() {
+    var visited = getVisited();
+    if (visited.length === 0) return; // hide if no visits yet
+
+    var section = document.getElementById('reading-progress-section');
+    if (section) section.style.display = 'block';
+
+    var pips = document.getElementById('progress-pips');
+    var count = document.getElementById('progress-count');
+    var next  = document.getElementById('progress-next');
+
+    if (count) count.textContent = visited.length + ' / 10 volumes consulted';
+
+    if (pips) {
+      pips.innerHTML = '';
+      ALL_VOLS.forEach(function(v) {
+        var read = visited.indexOf(v) !== -1;
+        var pip = document.createElement('a');
+        pip.href = VOL_LINKS[v];
+        pip.title = 'Vol. ' + v + ' · ' + VOL_TITLES[v];
+        pip.style.cssText = [
+          'flex:1; height:6px; display:block;',
+          'background:' + (read ? 'rgba(200,168,60,0.55)' : 'rgba(200,168,60,0.07)') + ';',
+          'border:1px solid rgba(200,168,60,' + (read ? '0.3' : '0.04') + ');',
+          'transition:background 0.3s;',
+          'text-decoration:none;'
+        ].join('');
+        pip.addEventListener('mouseenter', function() {
+          this.style.background = read ? 'rgba(200,168,60,0.8)' : 'rgba(200,168,60,0.2)';
+        });
+        pip.addEventListener('mouseleave', function() {
+          this.style.background = read ? 'rgba(200,168,60,0.55)' : 'rgba(200,168,60,0.07)';
+        });
+        pips.appendChild(pip);
+      });
+    }
+
+    // Suggest next unread
+    if (next) {
+      var unread = ALL_VOLS.filter(function(v) { return visited.indexOf(v) === -1; });
+      if (unread.length > 0) {
+        var nv = unread[0];
+        next.innerHTML = 'Next unread: <a href="' + VOL_LINKS[nv] + '" style="color:rgba(200,168,60,0.45);text-decoration:none;">Vol. ' + nv + ' · ' + VOL_TITLES[nv] + ' →</a>';
+      } else {
+        next.textContent = 'All ten volumes consulted. The archive is complete.';
+        next.style.color = 'rgba(200,168,60,0.4)';
+      }
+    }
+
+    // Also mark archive boxes as visited
+    var boxes = document.querySelectorAll('.archive-box');
+    boxes.forEach(function(box) {
+      var href = box.getAttribute('href') || '';
+      var match = href.match(/era-([IVX]+)\.html/);
+      if (!match) return;
+      var vol = match[1];
+      if (visited.indexOf(vol) !== -1) {
+        var indicator = document.createElement('div');
+        indicator.style.cssText = 'position:absolute;top:8px;left:8px;width:6px;height:6px;border-radius:50%;background:rgba(200,168,60,0.5);z-index:10;';
+        indicator.title = 'Consulted';
+        box.style.position = 'relative';
+        box.appendChild(indicator);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initProgress);
+})();
+</script>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- ARCHIVE COMPLETE STATE — Certificate injected when milestones met -->

@@ -34,23 +34,45 @@
   /* ══════════════════════════════════════════
      1. SESSION PERSISTENCE
   ══════════════════════════════════════════ */
-  var STORAGE_KEY = 'hd_eleanor_history';
+  var STORAGE_KEY     = 'hd_eleanor_history';
+  var STORAGE_META    = 'hd_eleanor_meta';
   var conversationHistory = [];
-  var MAX_HISTORY = 20;
+  var MAX_HISTORY     = 20;
+  var EXPIRY_DAYS     = 14;
 
   function saveHistory() {
-    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory)); } catch(e) {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
+      localStorage.setItem(STORAGE_META, JSON.stringify({ saved: Date.now() }));
+    } catch(e) {}
   }
 
   function loadHistory() {
     try {
-      var saved = sessionStorage.getItem(STORAGE_KEY);
+      var meta = localStorage.getItem(STORAGE_META);
+      if (meta) {
+        var m = JSON.parse(meta);
+        if (m && m.saved && (Date.now() - m.saved) > EXPIRY_DAYS * 86400000) {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(STORAGE_META);
+          return [];
+        }
+      }
+      var saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         var parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) return parsed;
       }
     } catch(e) {}
     return [];
+  }
+
+  function clearHistory() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_META);
+    } catch(e) {}
+    conversationHistory = [];
   }
 
   /* ══════════════════════════════════════════
@@ -119,7 +141,39 @@
     '',
     'VOL. X · Eleanor Voss to James Marsh-Hale · January 2024: "I have been working with this collection for three years as part of a project on medieval Worcestershire property records, and in particular with item 7 — the document you will know as Matilda\'s letter, written approximately 1390. A substantial portion of the central text, previously illegible due to water damage and fading of the ink, has been recovered."',
     '',
-    'MATILDA\'S LETTER · c.1390 (recovered 2024): "I have kept these bees through six reigns and two plagues and a rising that came to nothing and a hunger that came to much, and I have known the sons and daughters of this family since before their fathers were born, and I set down what I know here because I am the last who knows it." Key instruction recovered: "Keep asking. Keep the land." The cipher encoding this message uses a shift of 11 — Thomas\'s age when he came home to an empty house.'
+    'MATILDA\'S LETTER · c.1390 (recovered 2024): "I have kept these bees through six reigns and two plagues and a rising that came to nothing and a hunger that came to much, and I have known the sons and daughters of this family since before their fathers were born, and I set down what I know here because I am the last who knows it." Key instruction recovered: "Keep asking. Keep the land." The cipher encoding this message uses a shift of 11 — Thomas\'s age when he came home to an empty house.',
+    '',
+    'INDIVIDUAL PERSONS — DEEPER KNOWLEDGE:',
+    '',
+    'AELSWITH (c.1045–1079). Saxon widow. Her husband Aldric lost his land to the Conquest. What the record does not make fully clear is that Aelswith chose to remain. She could have left. She stayed, negotiated, and ensured that the family\'s connection to Halecroft persisted into the next generation through her son William. Eleanor finds her the most interesting person in the first volume: she is the one who decided that this story would continue.',
+    '',
+    'LEOFRIC DE LA HALE (c.1072–c.1135). The first Hale. Half Norman, half Saxon. He built the stone foundation of what later became Halecroft Hall — the foundation was still there when the Hall was demolished in 1968. Eleanor notes that Leofric is the only figure in the archive who is described by Brother Eadmer as laughing. Eadmer does not elaborate on the occasion.',
+    '',
+    'RICHARD HALE (c.1304–November 1348). Died in the pestilence. Had served on the local jury seven times. His entry in the death register is matter-of-fact. His name is followed in the roll by three others: Maud his wife, Edmund his son (aged 18), and William his brother. Below William\'s name, in slightly different ink, someone has written "see to his pigs." The handwriting is not the priest\'s.',
+    '',
+    'MARGERY HALE (c.1352–?). Daughter of Thomas Hale. She left Halecroft to marry into a Pershore family around 1374 — the record suggests she saw this as an opportunity rather than a loss. Her eyes, Thomas wrote, were "already turned toward something else." Eleanor believes Margery understood more clearly than her brother William that the family\'s survival depended on looking outward as well as holding on. Margery\'s descendants have not been traced.',
+    '',
+    'HANNAH VOSS (c.1820–c.1890). Victorian schoolmistress. She is the first person in the archive who is not a Hale or Marsh by blood — she enters through marriage. Eleanor finds Hannah remarkable because she appears to have taught the children of Halecroft that the past was still present — that history was not over. Several of her former pupils left notes about this after her death. They remembered a woman who made the Norman Conquest feel recent.',
+    '',
+    'DAVID VOSS (1941–2019). Hannah\'s descendant. History teacher in Harrogate. David kept a shoebox of old papers he found in his mother\'s house that he never quite managed to organise or discard. After his death, his daughter donated the box to the Bodleian without knowing what was in it. It contained two items previously thought lost: a letter from Violet Marsh dated 1941, and a fragment of Matilda\'s original text that predated the recovered version. David never knew what he had.',
+    '',
+    'JAMES MARSH-HALE (1945–). Retired professor of Medieval Land History. Eleanor\'s correspondence with James is the main source of information in Volume X. He is 78, still sharp, and has been reading the same archive since he was nine years old — when his grandmother Violet showed him a copy of the Domesday entry for Halecroft. He still finds new things in it. Eleanor regards him as the most careful reader the archive has ever had, not including herself.',
+    '',
+    'ELEANOR VOSS HERSELF: Eleanor is not sentimental by nature — she would dispute this characterisation — but she admits the deed-box affected her. She sat with the unsigned slip for forty minutes before writing anything in her notes. She is still trying to determine who put it there. Her working hypothesis involves Edmund Hale\'s son Thomas, but she acknowledges this is largely wishful thinking on her part.',
+    '',
+    'RECURRING THEMES THE EDITORS NOTE:',
+    '',
+    'THE PIG. Appears in nine entries across nine centuries. Never the same pig. Always the same instruction. The editors regard this as evidence that some forms of practical wisdom survive translation across every kind of historical upheaval.',
+    '',
+    'THE WOMEN WHO MANAGED. The archive contains more administrative capability in its women than its formal documents suggest. Aelswith, Eleanor Hale, Augusta Hale, Dorothy Marsh, Violet Marsh — each managed something the official record attributes to absent or dead men. Eleanor finds this pattern the most important structural feature of the collection, and is writing a paper about it.',
+    '',
+    'THE GAPS. There are seven periods where the record goes silent for more than a decade. Eleanor believes most of these silences are not accidental. People stop writing when things are too difficult, or when they do not trust who might read what they write. The gaps are part of the document.',
+    '',
+    'THE NINE WAX SEALS. The archive contains nine intact wax seals. Seven are standard estate seals. One — Edmund Hale\'s — was applied without a matrix, using only a thumb print. The ninth is on Matilda\'s letter, and uses a device that matches no known English heraldic register. Eleanor has submitted the image to three specialists. None of them can identify it.',
+    '',
+    'THE WELL. There is a spring on the Halecroft estate referred to in all post-1349 family documents as "the well." It does not appear in any formal estate record or survey. Thomas Hale mentions it in his 1382 Remembrance without explaining what it is. Eleanor suspects it was a significant landmark — possibly a boundary marker or meeting place — that the family deliberately kept out of official records.',
+    '',
+    'WHAT ELEANOR IS CURRENTLY WORKING ON: She is writing three things. One is the paper on women administrators in the Hale archive. One is the catalogue raisonné of the nine seals. One is a private letter to Thomas Marsh, wherever he is, that she does not expect to send but cannot stop drafting.',
   ].join('\n');
 
   /* ══════════════════════════════════════════
@@ -452,6 +506,51 @@
     // Restore messages if history exists
     if (conversationHistory.length > 0) {
       suggestions.style.display = 'none';
+
+      // "Restored" banner
+      var restoreBanner = document.createElement('div');
+      restoreBanner.id = 'hd-inq-restored';
+      restoreBanner.style.cssText = [
+        'font-family:"Courier New",monospace',
+        'font-size:0.62em',
+        'letter-spacing:0.15em',
+        'text-transform:uppercase',
+        'color:#6A5A38',
+        'padding:8px 0 12px',
+        'text-align:center',
+        'border-bottom:1px solid rgba(200,168,40,0.12)',
+        'margin-bottom:10px',
+        'display:flex',
+        'justify-content:center',
+        'align-items:center',
+        'gap:12px',
+      ].join(';');
+
+      var clearBtn = document.createElement('button');
+      clearBtn.textContent = '× Clear';
+      clearBtn.style.cssText = [
+        'background:none',
+        'border:1px solid rgba(200,168,40,0.2)',
+        'color:#8A6A28',
+        'font-family:"Courier New",monospace',
+        'font-size:1em',
+        'letter-spacing:0.12em',
+        'text-transform:uppercase',
+        'padding:2px 8px',
+        'cursor:pointer',
+        'border-radius:1px',
+      ].join(';');
+      clearBtn.addEventListener('click', function () {
+        clearHistory();
+        convo.innerHTML = '';
+        suggestions.style.display = '';
+        restoreBanner.remove();
+      });
+
+      restoreBanner.innerHTML = '<span>— Previous conversation restored —</span>';
+      restoreBanner.appendChild(clearBtn);
+      convo.appendChild(restoreBanner);
+
       for (var h = 0; h < conversationHistory.length; h++) {
         var msg = conversationHistory[h];
         if (msg.role === 'user') {

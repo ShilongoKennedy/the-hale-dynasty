@@ -96,6 +96,10 @@
     .detail-desc { font-size:0.77em; line-height:1.8; color:rgba(210,195,158,0.78); font-style:italic; }
     .detail-link { display:inline-block; margin-top:14px; font-family:'Cinzel',serif; font-size:0.6em; letter-spacing:0.15em; color:rgba(200,168,60,0.55); text-decoration:none; border-bottom:1px solid rgba(200,168,60,0.2); padding-bottom:1px; transition:color 0.2s,border-color 0.2s; }
     .detail-link:hover { color:rgba(200,168,60,0.9); border-color:rgba(200,168,60,0.6); }
+    .detail-persons { margin-top:14px; padding-top:12px; border-top:1px solid rgba(200,168,60,0.1); }
+    .detail-persons-label { font-family:'Courier New',monospace; font-size:0.52em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(200,168,60,0.35); margin-bottom:7px; }
+    .detail-person-link { display:inline-block; font-family:'Cinzel',serif; font-size:0.58em; letter-spacing:0.1em; color:rgba(200,168,60,0.55); text-decoration:none; border:1px solid rgba(200,168,60,0.18); padding:3px 9px; margin:0 4px 4px 0; transition:all 0.2s; background:rgba(200,168,60,0.04); }
+    .detail-person-link:hover { color:rgba(200,168,60,0.9); border-color:rgba(200,168,60,0.5); background:rgba(200,168,60,0.09); }
 
     /* ── DUST PARTICLES ── */
     .dust { position:absolute; border-radius:50%; pointer-events:none; z-index:5; }
@@ -337,6 +341,10 @@
       <div class="detail-tags" id="detailTags"></div>
       <p class="detail-desc" id="detailDesc"></p>
       <a class="detail-link" href="#" id="detailLink"></a>
+      <div class="detail-persons" id="detailPersons" style="display:none">
+        <div class="detail-persons-label">Connected persons</div>
+        <div id="detailPersonLinks"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -360,19 +368,32 @@
 'use strict';
 
 var PINS = {
-  halecroft:  { name:'Halecroft, Worcestershire', eras:['all'], badge:'All Eras', desc:'The family seat. Held continuously since 1067. The heart of the Hale Dynasty \u2014 where generations have been born, married, and laid to rest. Every volume of the saga returns here.', link:'index.html', linkText:'View the Archive' },
-  worcester:  { name:'Worcester', eras:['i','ii','iii','iv','v','vi','vii'], badge:'Era I \u2013 VII', desc:'Where William Hale sought legal counsel in 1534. Where Edmund Hale was buried in 1882 after his mysterious death at Whitmore Park. Cathedral city of triumph and tragedy.', link:'era-I.html' },
-  winchester: { name:'Winchester', eras:['i'], badge:'Era I \u00b7 Norman', desc:"Ranulf de la Hale first set foot on English soil here in the autumn of 1066. Winchester was then the capital of England \u2014 and it was here the Normans consolidated their conquest. Here the dynasty begins.", link:'era-I.html' },
-  pershore:   { name:'Pershore', eras:['ii','x'], badge:'Era II & X', desc:'Thomas Hale sheltered here before the plague in 1348. Margery Hale married Thomas Voss here in 1373 \u2014 beginning the Voss line that would shape centuries of Hale fortune.', link:'era-II.html' },
-  gloucester: { name:'Gloucester', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"Captain John Hale (Parliament) was stationed here in 1642. His first letter to his Royalist brother Thomas in Oxford marks the family's terrible division. Neither would forgive the other in their lifetimes.", link:'era-IV.html' },
-  edgehill:   { name:'Edgehill \u00b7 Battle Site', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"The first great pitched battle of the Civil War, October 23rd 1642. Captain John Hale fought here under Essex. His brother Thomas watched from the Royalist lines across the field. Neither spoke of it afterwards. Neither forgot.", link:'era-IV.html' },
-  oxford:     { name:'Oxford', eras:['iv','x'], badge:'Era IV & X', desc:"Ensign Thomas Hale (Royalist) served here with Lord Wilmot's Horse in 1643. Four centuries later, James Marsh-Hale would research the family archives at the Bodleian Library, reading letters his ancestors wrote to each other across battle lines.", link:'era-IV.html' },
-  shropshire: { name:'Shropshire \u00b7 Whitmore Park', eras:['vii'], badge:'Era VII \u00b7 Victorian', desc:"Edmund Hale died in a locked study here on the 14th of August, 1882. The authorities called it natural causes. His widow Eleanor knew better. The locked room would haunt the family for generations. No one has lived in that wing since.", link:'era-VII.html' },
-  bath:       { name:'Bath', eras:['vi'], badge:'Era VI \u00b7 Regency', desc:"Lady Charlotte Vane-Hale took the waters here in the summer of 1813. The Pump Room was where she first encountered the man who would destroy her family's fortune. She described him in a letter as \u2018charming, and therefore dangerous.'", link:'era-VI.html' },
-  london:     { name:'London', eras:['v','vii','viii','ix','x'], badge:'Era V \u2013 X', desc:"Sir Nathaniel Hale arrived in 1698 and made his fortune in the City. Edmund Marsh-Hale surveyed its bomb damage in 1941. London witnessed the Hales at the height of their power, and watched them fall. It kept no secrets.", link:'era-V.html' },
-  brixton:    { name:'London \u00b7 Brixton', eras:['vii','viii','ix'], badge:'Era VII \u2013 IX', desc:"Home of Clara Marsh and her son Thomas, the illegitimate son of Edmund Hale, born 1873. His grandmother\u2019s house on Coldharbour Lane was destroyed in a German bombing raid, December 1941. The family\u2019s papers were lost with it.", link:'era-VII.html' },
-  harlow:     { name:'Harlow, Essex', eras:['ix'], badge:'Era IX \u00b7 Post-War', desc:"Edmund Marsh-Hale designed this new town from 1947 onward. \u2018Making places habitable is about the corners,\u2019 he would say. His post-war vision shaped a generation \u2014 and represented, for him, a private form of reparation for what his family had done.", link:'era-IX.html' },
-  normandy:   { name:'Normandy, France', eras:['i'], badge:'Era I \u00b7 Norman Origin', desc:"Home of Ranulf de la Hale before 1066. He crossed the Channel with William's fleet on the 14th of October. He was twenty-three. He carried a sword, a letter from the Bishop of Bayeux, and nothing else. He never returned.", link:'era-I.html' },
+  halecroft:  { name:'Halecroft, Worcestershire', eras:['all'], badge:'All Eras', desc:'The family seat. Held continuously since 1067. The heart of the Hale Dynasty \u2014 where generations have been born, married, and laid to rest. Every volume of the saga returns here.', link:'index.html', linkText:'View the Archive',
+    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'},{name:'Leofric de la Hale',id:'leofric'},{name:'Richard Hale',id:'richard'},{name:'Thomas Hale',id:'thomas'},{name:'Matilda of Halecroft',id:'matilda'},{name:'Augusta Hale',id:'augusta'}] },
+  worcester:  { name:'Worcester', eras:['i','ii','iii','iv','v','vi','vii'], badge:'Era I \u2013 VII', desc:'Where William Hale sought legal counsel in 1534. Where Edmund Hale was buried in 1882 after his mysterious death at Whitmore Park. Cathedral city of triumph and tragedy.', link:'era-I.html',
+    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Edmund Hale II',id:'edmund_vict'},{name:'John Hale',id:'john_tudor'}] },
+  winchester: { name:'Winchester', eras:['i'], badge:'Era I \u00b7 Norman', desc:"Ranulf de la Hale first set foot on English soil here in the autumn of 1066. Winchester was then the capital of England \u2014 and it was here the Normans consolidated their conquest. Here the dynasty begins.", link:'era-I.html',
+    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'}] },
+  pershore:   { name:'Pershore', eras:['ii','x'], badge:'Era II & X', desc:'Thomas Hale sheltered here before the plague in 1348. Margery Hale married Thomas Voss here in 1373 \u2014 beginning the Voss line that would shape centuries of Hale fortune.', link:'era-II.html',
+    persons:[{name:'Thomas Hale',id:'thomas'},{name:'Margery Hale',id:'margery'},{name:'James Marsh-Hale',id:'james'}] },
+  gloucester: { name:'Gloucester', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"Captain John Hale (Parliament) was stationed here in 1642. His first letter to his Royalist brother Thomas in Oxford marks the family's terrible division. Neither would forgive the other in their lifetimes.", link:'era-IV.html',
+    persons:[{name:'John Hale',id:'john_tudor'}] },
+  edgehill:   { name:'Edgehill \u00b7 Battle Site', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"The first great pitched battle of the Civil War, October 23rd 1642. Captain John Hale fought here under Essex. His brother Thomas watched from the Royalist lines across the field. Neither spoke of it afterwards. Neither forgot.", link:'era-IV.html',
+    persons:[{name:'John Hale',id:'john_tudor'}] },
+  oxford:     { name:'Oxford', eras:['iv','x'], badge:'Era IV & X', desc:"Ensign Thomas Hale (Royalist) served here with Lord Wilmot's Horse in 1643. Four centuries later, James Marsh-Hale would research the family archives at the Bodleian Library, reading letters his ancestors wrote to each other across battle lines.", link:'era-IV.html',
+    persons:[{name:'James Marsh-Hale',id:'james'},{name:'Eleanor Voss',id:'eleanor'}] },
+  shropshire: { name:'Shropshire \u00b7 Whitmore Park', eras:['vii'], badge:'Era VII \u00b7 Victorian', desc:"Edmund Hale died in a locked study here on the 14th of August, 1882. The authorities called it natural causes. His widow Eleanor knew better. The locked room would haunt the family for generations. No one has lived in that wing since.", link:'era-VII.html',
+    persons:[{name:'Edmund Hale II',id:'edmund_vict'}] },
+  bath:       { name:'Bath', eras:['vi'], badge:'Era VI \u00b7 Regency', desc:"Lady Charlotte Vane-Hale took the waters here in the summer of 1813. The Pump Room was where she first encountered the man who would destroy her family's fortune. She described him in a letter as \u2018charming, and therefore dangerous.'", link:'era-VI.html',
+    persons:[{name:'Augusta Hale',id:'augusta'}] },
+  london:     { name:'London', eras:['v','vii','viii','ix','x'], badge:'Era V \u2013 X', desc:"Sir Nathaniel Hale arrived in 1698 and made his fortune in the City. Edmund Marsh-Hale surveyed its bomb damage in 1941. London witnessed the Hales at the height of their power, and watched them fall. It kept no secrets.", link:'era-V.html',
+    persons:[{name:'Sir Nathaniel Hale',id:'nathaniel'},{name:'Edmund Marsh-Hale',id:'edmund_mh'},{name:'Eleanor Voss',id:'eleanor'}] },
+  brixton:    { name:'London \u00b7 Brixton', eras:['vii','viii','ix'], badge:'Era VII \u2013 IX', desc:"Home of Clara Marsh and her son Thomas, the illegitimate son of Edmund Hale, born 1873. His grandmother\u2019s house on Coldharbour Lane was destroyed in a German bombing raid, December 1941. The family\u2019s papers were lost with it.", link:'era-VII.html',
+    persons:[{name:'Edmund Hale II',id:'edmund_vict'},{name:'Thomas Marsh-Hale',id:'thomas_mh'}] },
+  harlow:     { name:'Harlow, Essex', eras:['ix'], badge:'Era IX \u00b7 Post-War', desc:"Edmund Marsh-Hale designed this new town from 1947 onward. \u2018Making places habitable is about the corners,\u2019 he would say. His post-war vision shaped a generation \u2014 and represented, for him, a private form of reparation for what his family had done.", link:'era-IX.html',
+    persons:[{name:'Edmund Marsh-Hale',id:'edmund_mh'}] },
+  normandy:   { name:'Normandy, France', eras:['i'], badge:'Era I \u00b7 Norman Origin', desc:"Home of Ranulf de la Hale before 1066. He crossed the Channel with William's fleet on the 14th of October. He was twenty-three. He carried a sword, a letter from the Bishop of Bayeux, and nothing else. He never returned.", link:'era-I.html',
+    persons:[{name:'Ranulf de la Hale',id:'ranulf'}] },
   blackstone: { name:'? Blackstone Moor', eras:['all'], badge:'\u2014', desc:"Referenced once in the Hale family papers of 1743 as \u2018the place where it happened.\u2019 Location unspecified. The following page has been removed from the ledger. No other mention exists in any record.\n\n\u2014 Archivist\u2019s note: query unresolved." }
 };
 
@@ -450,6 +471,22 @@ function openPanel(key, pin){
   var lk=document.getElementById('detailLink');
   if(loc.link){ lk.href=loc.link; lk.textContent=(loc.linkText||'Open era record')+' \u2192'; lk.style.display=''; }
   else lk.style.display='none';
+  // Person links
+  var personsSection=document.getElementById('detailPersons');
+  var personsContainer=document.getElementById('detailPersonLinks');
+  personsContainer.innerHTML='';
+  if(loc.persons && loc.persons.length){
+    loc.persons.forEach(function(p){
+      var a=document.createElement('a');
+      a.className='detail-person-link';
+      a.href='persons.html#'+p.id;
+      a.textContent=p.name;
+      personsContainer.appendChild(a);
+    });
+    personsSection.style.display='';
+  } else {
+    personsSection.style.display='none';
+  }
   panel.classList.add('open');
 }
 function closePanel(){

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary & Index — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080604;
+      color: #C8A050;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,6,4,0.95);
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      padding: 10px 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .top-nav a { color: rgba(200,168,60,0.55); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #C8A83C; }
+    .top-nav .center { color: rgba(200,168,60,0.3); font-size: 0.9em; }
+
+    .page-header {
+      text-align: center;
+      padding: 56px 24px 40px;
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+    }
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.8em, 4vw, 3em);
+      color: #F0C840;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 60px rgba(240,200,64,0.3);
+      margin-bottom: 10px;
+    }
+    .page-subtitle {
+      font-style: italic;
+      color: rgba(200,168,60,0.4);
+      font-size: 0.88em;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* SEARCH BAR */
+    .gloss-search-wrap {
+      max-width: 600px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+      position: relative;
+    }
+    .gloss-search {
+      width: 100%;
+      background: rgba(8,6,4,0.8);
+      border: 1px solid rgba(200,168,60,0.18);
+      color: rgba(200,168,60,0.75);
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.06em;
+      padding: 11px 40px 11px 14px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .gloss-search::placeholder { color: rgba(200,168,60,0.2); }
+    .gloss-search:focus { border-color: rgba(200,168,60,0.4); }
+    .gloss-search-icon {
+      position: absolute; right: 36px; top: 50%;
+      transform: translateY(-50%);
+      color: rgba(200,168,60,0.2);
+      font-size: 1.1em;
+      pointer-events: none;
+    }
+
+    /* ALPHABET NAV */
+    .alpha-nav {
+      display: flex; flex-wrap: wrap; gap: 4px;
+      justify-content: center;
+      padding: 20px 24px 0;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .alpha-btn {
+      background: transparent;
+      border: 1px solid rgba(200,168,60,0.1);
+      color: rgba(200,168,60,0.35);
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.06em;
+      width: 30px; height: 28px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .alpha-btn:hover, .alpha-btn.has-entries:hover {
+      border-color: rgba(200,168,60,0.4);
+      color: #C8A83C;
+    }
+    .alpha-btn.has-entries {
+      color: rgba(200,168,60,0.55);
+      border-color: rgba(200,168,60,0.14);
+    }
+    .alpha-btn.dim { opacity: 0.3; pointer-events: none; }
+
+    /* GLOSSARY BODY */
+    .glossary-body {
+      max-width: 860px;
+      margin: 28px auto 80px;
+      padding: 0 24px;
+    }
+
+    .letter-section {
+      margin-bottom: 36px;
+    }
+    .letter-anchor {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.6em;
+      color: rgba(200,168,60,0.15);
+      border-bottom: 1px solid rgba(200,168,60,0.06);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 24px;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(200,168,60,0.03);
+      transition: background 0.15s;
+    }
+    .entry:hover { background: rgba(200,168,60,0.015); }
+    .entry.hidden { display: none; }
+
+    .entry-term {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.82em;
+      color: #C8A83C;
+      letter-spacing: 0.03em;
+      align-self: start;
+      padding-top: 2px;
+    }
+    .entry-term a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .entry-term a:hover { color: #F0C840; }
+    .entry-era {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.3);
+      margin-top: 3px;
+    }
+    .entry-def {
+      font-size: 0.82em;
+      line-height: 1.75;
+      color: rgba(200,168,60,0.5);
+    }
+    .entry-type {
+      font-style: italic;
+      color: rgba(200,168,60,0.25);
+      margin-right: 4px;
+    }
+
+    .no-results {
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.2);
+      padding: 40px 0;
+    }
+
+    .home-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 400;
+      width: 44px; height: 44px;
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(200,168,60,0.22);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
+    .home-float svg { width: 20px; height: 20px; }
+
+    @media (max-width: 600px) {
+      .entry { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="center">The Hale Dynasty · Glossary & Index</span>
+  <a href="persons.html">Persons →</a>
+</nav>
+
+<header class="page-header">
+  <h1 class="page-title">Glossary & Index</h1>
+  <p class="page-subtitle">An alphabetical record of persons, places, documents, and events in the Hale-Marsh archive. Each entry links to the relevant era.</p>
+  <div class="gloss-search-wrap">
+    <input type="search" class="gloss-search" id="glossSearch" placeholder="Search names, places, events…" autocomplete="off" spellcheck="false">
+    <span class="gloss-search-icon">⌕</span>
+  </div>
+</header>
+
+<nav class="alpha-nav" id="alphaNav" aria-label="Jump to letter"></nav>
+
+<div class="glossary-body" id="glossaryBody"></div>
+
+<a href="index.html" class="home-float" aria-label="Return to archive home">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="transitions.js"></script>
+<script src="features.js"></script>
+<script>
+// ── GLOSSARY DATA ──────────────────────────────────────────────────────────
+// type: person | place | document | event | term
+const ENTRIES = [
+  // A
+  { term:'Act of Supremacy', type:'event',    era:'Era III · 1534',        link:'era-III.html', def:'Parliamentary act declaring Henry VIII supreme head of the Church of England. John Hale signed it in 1534: "I have signed. I keep my land."' },
+  { term:'Aelswith',         type:'person',   era:'Era I · c.1045–1079',   link:'era-I.html',   def:'English widow of the Saxon thegn Leofric of Halecroft. Chose to remain on the estate after the Conquest. Taught Ranulf the language and customs of the English people. The making of Halecroft.' },
+  { term:'Augusta Hale',     type:'person',   era:'Era VI · 1771–1858',    link:'era-VI.html',  def:'Managed the Hale estate for thirty-seven years under an entail that prevented her inheriting it in her own name. Married at fifty-seven. Her letters are the archive\'s sharpest pleasure.' },
+  // B
+  { term:'Bodleian Library', type:'place',    era:'Contemporary',          link:'era-X.html',   def:'Oxford University\'s main research library, home of the MSS. Hale-Marsh Collection. Eleanor Voss has been based here since 2018.' },
+  { term:'Brother Eadmer',   type:'person',   era:'Era I · d. c.1125',     link:'era-I.html',   def:'Monk of Worcester Priory. Author of the Chronicle of Halecroft (1121), the archive\'s founding document. Recorded Ranulf\'s question and the beginning of the dynasty.' },
+  // C
+  { term:'Chronicle of Halecroft', type:'document', era:'Era I · 1121',   link:'era-I.html',   def:'MS. Hale I. Written by Brother Eadmer of Worcester Priory. The archive\'s earliest document, recording the Norman arrival at Halecroft and Ranulf\'s founding question.' },
+  { term:'Civil War (English)', type:'event', era:'Era IV · 1642–1651',    link:'era-IV.html',  def:'Robert Hale\'s strategy for his three sons: John (Parliament), Thomas, William the youngest. "Sign what requires signing, hold what you hold." Both sons who fought came home.' },
+  { term:'Clara',            type:'person',   era:'Era VII · Victorian',   link:'era-VII.html', def:'A figure connected to Edmund Hale II and the locked escritoire. Thomas Marsh-Hale carried her ledger arithmetic in his head all his life. Her full identity the archive discloses obliquely.' },
+  // D
+  { term:'David Voss',       type:'person',   era:'Voss · 1941–2019',      link:null,           def:'History teacher from Harrogate. Assembled the shoebox of family papers. Wrote "Property: keep" on a Post-it note. Did not know why it needed keeping. Left the shoebox to Eleanor.' },
+  { term:'Deed of Freehold', type:'document', era:'Era II · 1214',         link:'era-II.html',  def:'The purchase deed by which William Hale the Elder acquired the freehold of the Hale from the lord of the manor. Held in the deed-box. Robert Hale\'s 1490 inventory marks it [priceless].' },
+  { term:'Deed-box',         type:'place',    era:'All eras',              link:'era-I.html',   def:'The Hale family deed-box. The most persistent object in the archive. Contains the 1214 freehold deed, Matilda\'s letter, and other documents spanning nine centuries. Each generation returns to it.' },
+  { term:'Dissolution of the Monasteries', type:'event', era:'Era III · 1536–1541', link:'era-III.html', def:'John Hale witnessed the Dissolution: "Our family has taken its troubles there since before there was writing to record it." William Hale purchased twelve acres of former priory land in 1545 for four pounds.' },
+  { term:'Dorothy Marsh-Hale', type:'person', era:'Era IX · WWII',         link:'era-IX.html',  def:'Wife of Edmund Marsh-Hale. When asked why he added names to bridges the specification did not require: "Specification does not call for it. Physics does."' },
+  // E
+  { term:'Edmund Hale (Regency)', type:'person', era:'Era VI · c.1774–1842', link:'era-VI.html', def:'Augusta\'s brother. Inherited the baronetcy. Described in Augusta\'s letters as competent and uninspiring — which, given the alternatives, is not entirely without honour.' },
+  { term:'Edmund Hale II',   type:'person',   era:'Era VII · 1841–1882',   link:'era-VII.html', def:'The locked escritoire. The confession never made publicly. Two words on a folded paper: "I know." Sealed in Shropshire in 1882. What he knew, the archive cannot say. He is forty-one. The door is locked.' },
+  { term:'Edmund Marsh-Hale', type:'person',  era:'Era IX · 1910–1978',    link:'era-IX.html',  def:'Structural engineer, Ministry of Supply 1939–1945. Added names to bridges the specification did not require him to name. Kept the family papers and passed them intact.' },
+  { term:'Eleanor Voss',     type:'person',   era:'Era X · 1983–',         link:'era-X.html',   def:'Medievalist at the Bodleian Library, Oxford. Recovered Matilda\'s letter in January 2024. Reconstructed the Voss genealogy from Margery\'s departure in 1373. The letter was addressed to her. It always was.' },
+  { term:'Entail',           type:'term',     era:'Legal term',            link:'era-VI.html',  def:'A legal restriction on the inheritance of property, typically limiting succession to male heirs. The entail that governed the Hale estate prevented Augusta from inheriting it in her own name, despite managing it for thirty-seven years.' },
+  { term:'Escritoire',       type:'place',    era:'Era VII · 1882',        link:'era-VII.html', def:'Edmund Hale II\'s locked writing desk, sealed in Shropshire in 1882. Contains a folded paper with two words: "I know." The archive\'s most withheld object.' },
+  // F
+  { term:'Famine (Great)',   type:'event',    era:'Era II · 1315–1322',    link:'era-II.html',  def:'The Great European Famine. William Hale the Younger held the Hale through it without defaulting — his woodland acres were better-drained than the open fields. His wife Margaret gave bread to starving tenants in 1318.' },
+  { term:'Freehold',         type:'term',     era:'Legal term',            link:'era-II.html',  def:'Land held outright by the owner, as distinct from copyhold or leasehold tenure. William Hale the Elder purchased the freehold of the Hale in 1214 — the first Hale to own rather than hold the land.' },
+  // G
+  { term:'Glorious Revolution', type:'event', era:'Era V · 1688',          link:'era-V.html',   def:'The Voss line in Pershore held through it: the same strategy as the Hales thirty miles west — survive the politics, tend the land.' },
+  { term:'Great Plague (Black Death)', type:'event', era:'Era II · 1348',  link:'era-II.html',  def:'The bubonic plague of 1348–1349. Richard Hale died at the feast of St Martin, November 1348. His wife, three sons, and youngest son Walter were all dead by Christmas. The household of the Hale perished in fourteen months.' },
+  // H
+  { term:'Halecroft',        type:'place',    era:'All eras',              link:'era-I.html',   def:'The original Norman manor given to Ranulf de la Hale by royal writ after 1066, in Worcestershire. The founding property of the dynasty. The Hale — the woodland settlement — was established nearby by Leofric c.1100–1103.' },
+  { term:'Hale, The',        type:'place',    era:'All eras',              link:'era-I.html',   def:'The woodland settlement founded by Leofric de la Hale at the spring east of Halecroft, built with his own hands 1100–1103. The family\'s primary holding for nine centuries.' },
+  { term:'Hannah Voss',      type:'person',   era:'Voss · c.1820–c.1890', link:null,           def:'Schoolmistress at Pershore National School, 1847–1883. Inspector\'s report: "makes the children feel that the past was not past but continuous." The most Hale-like sentence written by anyone in the Voss line.' },
+  { term:'Harold Voss',      type:'person',   era:'Voss · 1891–1967',      link:null,           def:'Served in the First World War. Came home. Grew dahlias. Developed a sweet pea variety over thirty years of careful crossing — each year slightly different, the final form never declared finished.' },
+  { term:'Henry Alderton',   type:'person',   era:'Era VI · Victorian',    link:'era-VI.html',  def:'Proposed to Augusta Hale at fifty-seven: "I find I am looking forward to it rather more than timber rights warrant." They married. He was a man of considerable sense.' },
+  // I
+  { term:'Inquest of 1351',  type:'event',    era:'Era II · 1351',         link:'era-II.html',  def:'The legal inquest confirming Thomas Hale\'s inheritance of the Hale after the plague had killed his family. Matilda of Halecroft testified uninvited: "Give him his land. He is eleven years old and he came home and he saw to the pig."' },
+  // J
+  { term:'James Marsh-Hale', type:'person',   era:'Era X · 1945–',         link:'era-X.html',   def:'Professor of Medieval Land History (retired). Has been reading this archive since he was nine. Compiled it. In February 2024, added two sentences: "She was writing to Eleanor. She always was."' },
+  { term:'John Hale',        type:'person',   era:'Era III · 1498–1558',   link:'era-III.html', def:'The Letters of John Hale (1532–1549) are the archive\'s most candid documents. Signed the Act of Supremacy in 1534. "I have signed. I keep my land. I say my prayers in the same church I was christened in."' },
+  // L
+  { term:'Leofric de la Hale', type:'person', era:'Era I · c.1072–c.1135', link:'era-I.html',   def:'Youngest son of Ranulf and Aelswith. Founded the Hale — the woodland settlement that became the family\'s primary holding. Named for the English thegn Leofric, his mother\'s first husband.' },
+  { term:'Letters of John Hale', type:'document', era:'Era III · 1532–1549', link:'era-III.html', def:'MS. Hale III. The archive\'s most candid documents. Written 1532–1549. Cover the Act of Supremacy, the Dissolution, and the daily life of a Tudor Worcestershire estate.' },
+  // M
+  { term:'Margery Hale',     type:'person',   era:'Voss Branch · c.1352–?', link:'era-II.html', def:'Daughter of Thomas Hale, the plague survivor. Married Thomas Voss of Pershore in 1373 and left Halecroft, beginning the six-century Voss line. Matilda the beekeeper tracked her departure.' },
+  { term:'Mary Voss',        type:'person',   era:'Voss · c.1592–c.1685',  link:null,           def:'Acquitted at Worcester assizes, 1623. The charge is unrecorded. Her son Samuel took her name: Samuel Partridge-Voss. The archive notes this without further comment.' },
+  { term:'Matilda of Halecroft', type:'person', era:'Era II · c.1310–c.1395', link:'era-II.html', def:'Free woman of Halecroft. Kept bees. Testified at the Inquest of 1351 to secure Thomas Hale\'s inheritance. Left a letter in the deed-box c.1390: "Keep asking. Keep the land. See to the pig." Found by Eleanor Voss in 2024.' },
+  { term:'Matilda\'s Letter', type:'document', era:'Era II · c.1390',      link:'era-II.html',  def:'A paper left in the deed-box by Matilda of Halecroft around 1390. Hidden beneath the box lining. Recovered by Eleanor Voss at the Bodleian Library in January 2024. Addressed, as James Marsh-Hale later wrote, to Eleanor. "She was writing to Eleanor. She always was."' },
+  { term:'MSS. Hale-Marsh Collection', type:'document', era:'All eras',   link:'era-I.html',   def:'The complete family archive, held at the Bodleian Library, Oxford. Ten volumes plus supplementary materials. Compiled by James Marsh-Hale and catalogued by Eleanor Voss.' },
+  // N
+  { term:'Nathaniel Hale (Sir)', type:'person', era:'Era V · 1671–1744',  link:'era-V.html',   def:'Left Worcestershire. Made himself in London. Purchased a baronetcy (1713). Lost a considerable portion in the South Sea Bubble (1720). His wife Dorothea: "Then we have sufficient to begin again."' },
+  // P
+  { term:'Pershore',         type:'place',    era:'All eras (Voss branch)', link:'era-II.html', def:'Market town in Worcestershire. Home of the Voss family line from 1373. Thirty miles east of Halecroft. The Voss and Hale families held their respective properties here for six centuries, unaware of their shared descent from Margery Hale.' },
+  { term:'Pig, The',         type:'term',     era:'Dynasty-wide',          link:'era-II.html',  def:'The pig Thomas Hale saw to in April 1349, returning from his aunt\'s house to find his family dead of plague. "I had better see to the pig." The phrase becomes the dynasty\'s most durable instruction for survival: tend to what is in front of you. See also: Matilda\'s Letter.' },
+  { term:'Portraits (Character)', type:'document', era:'Contemporary',    link:'persons.html', def:'Ten portraits of key dynasty figures, held in the archive\'s Character Images collection. Created to accompany the digital archive.' },
+  // R
+  { term:'Ranulf de la Hale', type:'person',  era:'Era I · c.1040–c.1099', link:'era-I.html',  def:'Norman soldier. Crossed with William the Conqueror in 1066. Given Halecroft by royal writ. Asked his priest to help him frame the right question before he died: "Ask for justice. Not mercy." The dynasty\'s founder.' },
+  { term:'Richard Hale',     type:'person',   era:'Era II · c.1304–1348',  link:'era-II.html', def:'Freeholder of the Hale. Served as jury foreman seven times. Died of plague at the feast of St Martin, November 1348, aged approximately forty-four. His household perished within fourteen months.' },
+  { term:'Robert Hale (Civil War)', type:'person', era:'Era IV · c.1595–?', link:'era-IV.html', def:'Father of three sons during the Civil War: John (Parliament), Thomas, and William the youngest. Prepared the deed-box. Strategy: sign what requires signing, hold what you hold. "The King is dead. Both my sons came home."' },
+  // S
+  { term:'South Sea Bubble', type:'event',    era:'Era V · 1720',          link:'era-V.html',  def:'Financial disaster of 1720. Sir Nathaniel Hale lost a considerable portion of his fortune. His wife Dorothea\'s response became one of the archive\'s characteristic sentences: "Then we have sufficient to begin again."' },
+  { term:'Suit of Court',    type:'term',     era:'Medieval legal term',   link:'era-II.html', def:'The obligation of a tenant to attend the lord\'s court twice yearly. Robert Hale "owed suit of court twice yearly and a hen at Christmas" — the archetypal description of the early free tenant.' },
+  // T
+  { term:'Thomas Hale (plague survivor)', type:'person', era:'Era II · 1338–1395', link:'era-II.html', def:'Son of William, grandson of Richard. Aged eleven when the plague came. Had been sent to stay with his aunt. Returned in April 1349 to find everyone dead. Set down the cooking pot. "I had better see to the pig." His inheritance confirmed by inquest, 1351.' },
+  { term:'Thomas Marsh-Hale', type:'person',  era:'Era VIII · 1873–1951',  link:'era-VIII.html', def:'Illegitimate son who claimed the hyphenated name combining both lines of his descent. Journalist, soldier, archivist. Witnessed the First World War. The archive\'s most persistent instruction, passed to him: "Keep asking."' },
+  // V
+  { term:'Voss Branch',      type:'term',     era:'1373–2026',             link:'era-II.html', def:'The branch of the family tree descending from Margery Hale (daughter of Thomas, the plague survivor), who married Thomas Voss of Pershore in 1373. The Voss family held in Pershore for six centuries, unaware of their Hale descent until Eleanor Voss\'s research in 2024.' },
+  // W
+  { term:'William Hale (Tudor)', type:'person', era:'Era III · 1522–c.1585', link:'era-III.html', def:'Son of John. In 1545, aged twenty-three, purchased twelve acres of former priory land for four pounds — the first Hale to buy land from a commercial transaction rather than a feudal lord. His father: "You have done either a very clever thing or a very foolish one, and I cannot tell which."' },
+  { term:'William Hale the Elder', type:'person', era:'Era II · c.1165–c.1248', link:'era-II.html', def:'Purchased the freehold of the Hale from the lord of the manor in 1214 — the first Hale to own rather than hold the land. Served on the manorial jury. Built a second barn. Sent his son Edmund to Worcester Priory school.' },
+  { term:'Worcester',        type:'place',    era:'All eras',              link:'era-I.html',   def:'City in Worcestershire, England. The nearest significant urban centre to Halecroft. Worcester Cathedral Priory schooled Edmund Hale in the thirteenth century. The Hale family\'s legal, ecclesiastical, and commercial connections ran through Worcester for nine centuries.' },
+  // Z / Other
+  { term:'"Keep asking"',    type:'term',     era:'Dynasty-wide',          link:'era-II.html', def:'The dynasty\'s most persistent instruction, first recorded in Matilda of Halecroft\'s letter (c.1390): "Keep asking. Keep the land. See to the pig." Passed through the archive. The question Ranulf de la Hale was trying to frame before he died. The question Eleanor Voss answers in 2024.' },
+];
+
+// Build alphabet nav and body
+function getLetterFromTerm(term) {
+  const t = term.replace(/^"/, '').replace(/^\(/, '');
+  return t[0].toUpperCase();
+}
+
+function buildGlossary(filter) {
+  // Group by letter
+  const grouped = {};
+  ENTRIES.forEach(e => {
+    if (filter && !e.term.toLowerCase().includes(filter) &&
+        !e.def.toLowerCase().includes(filter) &&
+        !e.era.toLowerCase().includes(filter)) return;
+    const letter = getLetterFromTerm(e.term);
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(e);
+  });
+
+  const body = document.getElementById('glossaryBody');
+  body.innerHTML = '';
+
+  const letters = Object.keys(grouped).sort();
+  if (letters.length === 0) {
+    body.innerHTML = '<div class="no-results">No entries found for "' + filter + '"</div>';
+    return;
+  }
+
+  letters.forEach(letter => {
+    const section = document.createElement('div');
+    section.className = 'letter-section';
+    section.id = 'letter-' + letter;
+    section.innerHTML = `<div class="letter-anchor">${letter}</div>`;
+    grouped[letter].sort((a,b) => a.term.localeCompare(b.term)).forEach(e => {
+      const row = document.createElement('div');
+      row.className = 'entry';
+      row.innerHTML = `
+        <div class="entry-term">
+          ${e.link ? `<a href="${e.link}">${e.term}</a>` : e.term}
+          <span class="entry-era">${e.type} · ${e.era}</span>
+        </div>
+        <div class="entry-def"><span class="entry-type">${e.type === 'person' ? '' : e.type + '. '}</span>${e.def}</div>
+      `;
+      section.appendChild(row);
+    });
+    body.appendChild(section);
+  });
+}
+
+function buildAlphaNav() {
+  const nav = document.getElementById('alphaNav');
+  const allLetters = new Set(ENTRIES.map(e => getLetterFromTerm(e.term)));
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l => {
+    const btn = document.createElement('button');
+    btn.className = 'alpha-btn' + (allLetters.has(l) ? ' has-entries' : ' dim');
+    btn.textContent = l;
+    if (allLetters.has(l)) {
+      btn.addEventListener('click', () => {
+        const section = document.getElementById('letter-' + l);
+        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+    nav.appendChild(btn);
+  });
+}
+
+// Search
+document.getElementById('glossSearch').addEventListener('input', function() {
+  buildGlossary(this.value.trim().toLowerCase());
+});
+
+buildAlphaNav();
+buildGlossary('');
+</script>
+</body>
+</html>
