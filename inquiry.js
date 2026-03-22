@@ -6,7 +6,55 @@
   'use strict';
 
   /* ══════════════════════════════════════════
-     1. ELEANOR'S COMPLETE CHARACTER & KNOWLEDGE
+     0. PAGE CONTEXT DETECTION
+  ══════════════════════════════════════════ */
+  var PAGE_CONTEXT = (function() {
+    var path = window.location.pathname;
+    if (path === '/' || path === '/index.html' || path === '') return null;
+    var eraMatch = path.match(/era-([\w]+)/i);
+    if (eraMatch) {
+      var eraMap = {
+        'I': 'Vol. I – The Chronicle of de la Hale (1066–1121)',
+        'II': 'Vol. II – The House of Hale (1121–1400)',
+        'III': 'Vol. III – The Hale Inheritance (1485–1560)',
+        'IV': 'Vol. IV – The Divided House (1620–1665)',
+        'V': 'Vol. V – The Memoirs of Sir Nathaniel Hale (1671–1744)',
+        'VI': 'Vol. VI – The Hale Entail (1795–1835)',
+        'VII': 'Vol. VII – The Correspondence of Mr Edmund Hale (1868–1882)',
+        'VIII': 'Vol. VIII – Thomas (1873–1919)',
+        'IX': 'Vol. IX – The Name (1933–1960)',
+        'X': 'Vol. X – The Archive in Full (1979–2026)'
+      };
+      var era = eraMatch[1].toUpperCase();
+      return eraMap[era] || ('Era ' + era);
+    }
+    return document.title.split('—')[0].trim() || null;
+  })();
+
+  /* ══════════════════════════════════════════
+     1. SESSION PERSISTENCE
+  ══════════════════════════════════════════ */
+  var STORAGE_KEY = 'hd_eleanor_history';
+  var conversationHistory = [];
+  var MAX_HISTORY = 20;
+
+  function saveHistory() {
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory)); } catch(e) {}
+  }
+
+  function loadHistory() {
+    try {
+      var saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch(e) {}
+    return [];
+  }
+
+  /* ══════════════════════════════════════════
+     2. ELEANOR'S COMPLETE CHARACTER & KNOWLEDGE
   ══════════════════════════════════════════ */
   var SYSTEM_PROMPT = [
     'You are Eleanor Voss, research fellow at the Bodleian Libraries, Oxford. You speak through the Inquiry Desk of the MSS. Hale-Marsh Collection — a fictional private archive of the Hale family of Worcestershire, England, spanning 1066 to 2026.',
@@ -27,7 +75,7 @@
     '',
     'VOLUME V: THE MEMOIRS OF SIR NATHANIEL HALE (1671–1744). Early Georgian. Sir Nathaniel writes extensive memoirs — self-aggrandising, detailed, and occasionally revealing. His brother Richard closes every letter "Your obedient brother, R." — the word obedient doing considerable work in that sentence. Correspondence with brothers Charles and Richard. Georgian household records.',
     '',
-    'VOLUME VI: THE HALE ENTAIL (1795–1835). The Regency. Augusta Hale manages the estate alone with extraordinary practical intelligence. Key quotes: "The wood is worth more standing" (she was right; it is still standing). "He was the only one I could talk to" (note found folded inside her brother\'s death letter; she never referred to it again). "The old apple tree by the wall — I believe it was here before my time and before my mother\'s time. It still bears." 1839. Household accounts, personal letters, entail papers.',
+    'VOLUME VI: THE HALE ENTAIL (1795–1835). The Regency. Augusta Hale manages the estate alone with extraordinary practical intelligence. Key quotes: "The wood is worth more standing" (she was right; it is still standing). "He was the only one I could talk to" (note found inside her brother\'s death letter; she never referred to it again). "The old apple tree by the wall — I believe it was here before my time and before my mother\'s time. It still bears." 1839. Household accounts, personal letters, entail papers.',
     '',
     'VOLUME VII: THE CORRESPONDENCE OF MR EDMUND HALE (1868–1882). High Victorian. Edmund Hale writes two letters he never sends — one to a woman named Catherine, one to his brother. The burned, unsent letters are among the most significant documents in the collection. Eleanor reconstructed one partially using multispectral imaging. Edmund sealed his letters with plain wax, no matrix, no imprint — a seal that says: this exists, but I cannot decide what kind of existing it is. The phrase "practicable and sufficient are not the same thing" appears three times in the archive, across three centuries, spoken by three different women. Also: the declassification request system for restricted passages.',
     '',
@@ -75,13 +123,13 @@
   ].join('\n');
 
   /* ══════════════════════════════════════════
-     2. ORACLE FALLBACK (used when API unavailable)
+     3. ORACLE FALLBACK (used when API unavailable)
   ══════════════════════════════════════════ */
   var ORACLE = [
     { label: 'Vol. I · 1072', text: '"Aldric of the Hale. He held this land before the Conquest, and he held it after, though not in the same way, and not by the same right."' },
     { label: 'Vol. II · 1349', text: '"He went straight to the house and then to the field and he worked it. He was eleven years old. I do not know what else to say." — Hugh the Miller, sworn testimony, 1351' },
     { label: 'Vol. II · 1382', text: '"When thou dost not know what else to do: see to the pig." — Thomas Hale, Remembrance, 1382' },
-    { label: 'Vol. II · 1382', text: '"We are a familie that holds what it is given. Keep asking whether thou hast done enough." — Thomas Hale, Remembrance, 1382' },
+    { label: 'Vol. II · 1382', text: '"We are a famille that holds what it is given. Keep asking whether thou hast done enough." — Thomas Hale, Remembrance, 1382' },
     { label: 'Vol. IV · 1650', text: '"I would be grateful if you would revise the figure accordingly." — Eleanor Hale, to the Parliamentary sequestration committee, November 1650. She was right. They revised it.' },
     { label: 'Vol. IV · 1642', text: 'The seal was found in two pieces in the deed-box. It was broken and then kept. These are not the same action.' },
     { label: 'Vol. V · 1749', text: '"Your obedient brother, R." — Richard Hale, closing every letter to his brother Charles. The word "obedient" does a great deal of work in that sentence.' },
@@ -94,11 +142,73 @@
   ];
 
   /* ══════════════════════════════════════════
-     3. API  (proxied via /api/eleanor — no key needed by visitors)
+     4. STREAMING API
   ══════════════════════════════════════════ */
-  var conversationHistory = [];
-  var MAX_HISTORY = 20;
+  function callEleanorStream(userMessage, onChunk, onDone, onError) {
+    var messages = conversationHistory.slice(-(MAX_HISTORY * 2)).concat([
+      { role: 'user', content: userMessage }
+    ]);
 
+    var fullText = '';
+    var decoder = new TextDecoder();
+    var buffer = '';
+
+    fetch('/api/eleanor', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: messages,
+        stream: true,
+        pageContext: PAGE_CONTEXT
+      })
+    })
+    .then(function (res) {
+      if (res.status === 429) { onError('rate_limit'); return null; }
+      if (!res.ok) { onError('api_error'); return null; }
+      return res.body.getReader();
+    })
+    .then(function (reader) {
+      if (!reader) return;
+
+      function readChunk() {
+        reader.read().then(function (result) {
+          if (result.done) {
+            conversationHistory.push({ role: 'user', content: userMessage });
+            conversationHistory.push({ role: 'assistant', content: fullText });
+            saveHistory();
+            onDone(fullText);
+            return;
+          }
+
+          buffer += decoder.decode(result.value, { stream: true });
+          var lines = buffer.split('\n');
+          buffer = lines.pop();
+
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (!line.startsWith('data: ')) continue;
+            var data = line.slice(6).trim();
+            try {
+              var parsed = JSON.parse(data);
+              if (parsed.type === 'content_block_delta' && parsed.delta && parsed.delta.type === 'text_delta') {
+                fullText += parsed.delta.text;
+                onChunk(parsed.delta.text, fullText);
+              }
+            } catch(e) {}
+          }
+
+          readChunk();
+        }).catch(function () { onError('api_error'); });
+      }
+
+      readChunk();
+    })
+    .catch(function () { onError('api_error'); });
+  }
+
+  /* ══════════════════════════════════════════
+     5. FALLBACK (non-streaming) API
+  ══════════════════════════════════════════ */
   function callEleanor(userMessage, onSuccess, onError) {
     var messages = conversationHistory.slice(-(MAX_HISTORY * 2)).concat([
       { role: 'user', content: userMessage }
@@ -107,7 +217,10 @@
     fetch('/api/eleanor', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: messages })
+      body: JSON.stringify({
+        messages: messages,
+        pageContext: PAGE_CONTEXT
+      })
     })
     .then(function (res) {
       if (res.status === 429) { onError('rate_limit'); return null; }
@@ -120,13 +233,14 @@
       if (!text) { onError('api_error'); return; }
       conversationHistory.push({ role: 'user',      content: userMessage });
       conversationHistory.push({ role: 'assistant', content: text });
+      saveHistory();
       onSuccess(text);
     })
     .catch(function () { onError('api_error'); });
   }
 
   /* ══════════════════════════════════════════
-     4. CSS
+     6. CSS
   ══════════════════════════════════════════ */
   var CSS = [
     '#hd-inq-fab{',
@@ -249,10 +363,14 @@
     '.hd-inq-btn:disabled{opacity:0.25;cursor:default;}',
     '#hd-inq-oracle-btn{border-color:rgba(200,168,40,0.35);color:#C8A830;}',
     '#hd-inq-oracle-btn:hover{background:rgba(200,168,40,0.08);}',
+    '#hd-inq-suggestions{padding:4px 14px 10px;display:flex;flex-direction:column;gap:6px;}',
+    '.hd-sug-label{font-family:"Courier New",monospace;font-size:0.58em;letter-spacing:0.15em;text-transform:uppercase;color:#3A2A14;margin-bottom:2px;}',
+    '.hd-sug-btn{background:none;border:1px solid rgba(200,168,40,0.15);color:#7A6040;font-family:"Libre Baskerville",Georgia,serif;font-size:0.75em;text-align:left;padding:7px 11px;cursor:pointer;border-radius:2px;transition:all 0.2s;font-style:italic;}',
+    '.hd-sug-btn:hover{border-color:rgba(200,168,40,0.4);color:#C8A830;background:rgba(200,168,40,0.03);}',
   ].join('');
 
   /* ══════════════════════════════════════════
-     5. INIT
+     7. INIT
   ══════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', function () {
 
@@ -293,6 +411,12 @@
           '<div class="hd-msg-lbl">Eleanor Voss &middot; Archivist</div>',
           'Good day. Ask me anything about the Hale family, the documents, or the archive &mdash; or press <em>Ask the Archive</em> to retrieve something from the collection.',
         '</div>',
+        '<div id="hd-inq-suggestions">',
+          '<div class="hd-sug-label">suggested inquiries</div>',
+          '<button class="hd-sug-btn">Who was Matilda, and what did she know?</button>',
+          '<button class="hd-sug-btn">What was found at the bottom of the deed-box?</button>',
+          '<button class="hd-sug-btn">Tell me about the pig.</button>',
+        '</div>',
         '<div id="hd-inq-typing">',
           '<span class="hd-type-dot">&bull;</span>',
           '<span class="hd-type-dot">&bull;</span>',
@@ -311,14 +435,32 @@
     ].join('');
     document.body.appendChild(panel);
 
-    var convo     = panel.querySelector('#hd-inq-convo');
-    var typing    = panel.querySelector('#hd-inq-typing');
-    var input     = panel.querySelector('#hd-inq-input');
-    var submitBtn = panel.querySelector('#hd-inq-submit-btn');
-    var oracleBtn = panel.querySelector('#hd-inq-oracle-btn');
-    var closeBtn  = panel.querySelector('#hd-inq-close');
-    var isOpen = false;
-    var isBusy = false;
+    var convo           = panel.querySelector('#hd-inq-convo');
+    var suggestions     = panel.querySelector('#hd-inq-suggestions');
+    var typing          = panel.querySelector('#hd-inq-typing');
+    var input           = panel.querySelector('#hd-inq-input');
+    var submitBtn       = panel.querySelector('#hd-inq-submit-btn');
+    var oracleBtn       = panel.querySelector('#hd-inq-oracle-btn');
+    var closeBtn        = panel.querySelector('#hd-inq-close');
+    var isOpen          = false;
+    var isBusy          = false;
+    var messageDiv      = null;
+
+    // Load history
+    conversationHistory = loadHistory();
+
+    // Restore messages if history exists
+    if (conversationHistory.length > 0) {
+      suggestions.style.display = 'none';
+      for (var h = 0; h < conversationHistory.length; h++) {
+        var msg = conversationHistory[h];
+        if (msg.role === 'user') {
+          addMsg('hd-msg-user', msg.content);
+        } else {
+          addMsg('hd-msg-eleanor', msg.content, 'Eleanor Voss &middot; Archivist');
+        }
+      }
+    }
 
     /* ── Helpers ───────────────────────── */
     function scrollBottom() {
@@ -335,6 +477,7 @@
         : html;
       convo.insertBefore(div, t || null);
       scrollBottom();
+      return div;
     }
 
     function setBusy(busy) {
@@ -343,6 +486,10 @@
       oracleBtn.disabled = busy;
       typing.classList.toggle('show', busy);
       scrollBottom();
+    }
+
+    function hideSuggestions() {
+      suggestions.style.display = 'none';
     }
 
     /* ── Open / Close ──────────────────── */
@@ -379,22 +526,49 @@
     }
 
     /* ── Submit question ───────────────── */
-    function submitQuestion() {
-      var q = input.value.trim();
-      if (!q || isBusy) return;
+    function submitQuestion(q) {
+      var question = q || input.value.trim();
+      if (!question || isBusy) return;
       input.value = '';
-      addMsg('hd-msg-user', q);
+      hideSuggestions();
+      addMsg('hd-msg-user', question);
+
+      // Create empty Eleanor message
+      messageDiv = addMsg('hd-msg-eleanor', '', 'Eleanor Voss &middot; Archivist');
+
       setBusy(true);
-      callEleanor(q, function (answer) {
-        addMsg('hd-msg-eleanor', answer, 'Eleanor Voss &middot; Archivist');
-        setBusy(false);
-      }, handleError);
+
+      // 800ms atmospheric pause
+      setTimeout(function () {
+        callEleanorStream(question,
+          function (chunk, fullText) {
+            messageDiv.innerHTML = '<div class="hd-msg-lbl">Eleanor Voss &middot; Archivist</div>' + fullText;
+            scrollBottom();
+          },
+          function (fullText) {
+            messageDiv.innerHTML = '<div class="hd-msg-lbl">Eleanor Voss &middot; Archivist</div>' + fullText;
+            setBusy(false);
+          },
+          handleError
+        );
+      }, 800);
     }
 
-    submitBtn.addEventListener('click', submitQuestion);
+    submitBtn.addEventListener('click', function () {
+      submitQuestion();
+    });
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitQuestion(); }
     });
+    input.addEventListener('input', hideSuggestions);
+
+    /* ── Suggested questions ───────────── */
+    var sugBtns = panel.querySelectorAll('.hd-sug-btn');
+    for (var i = 0; i < sugBtns.length; i++) {
+      sugBtns[i].addEventListener('click', function (e) {
+        submitQuestion(e.target.textContent);
+      });
+    }
 
     /* ── Oracle ────────────────────────── */
     oracleBtn.addEventListener('click', function () {
@@ -402,7 +576,6 @@
       setBusy(true);
 
       var prompt = 'Retrieve one small, precise archival moment from the Hale-Marsh Collection — a fragment, a quote, an object, an observation. Present it as you would pull a document from the deed-box and hold it up to the light. Include the source (volume, date). One short paragraph only. Do not use markdown.';
-      // Preserve history length — oracle prompts do not become part of the ongoing conversation
       var prevLen = conversationHistory.length;
       callEleanor(prompt, function (answer) {
         conversationHistory.length = prevLen;

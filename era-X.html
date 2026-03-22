@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Vol. X — The Archive in Full">
+  <meta property="og:description" content="1979–2026. The deed-box is opened. 'If you find this, please know that it was not all unhappiness.'">
+  <meta property="og:image" content="https://the-hale-dynasty.vercel.app/crests/EraX.png">
+  <meta property="og:url" content="https://the-hale-dynasty.vercel.app/era-X.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vol. X — The Archive in Full">
+  <meta name="twitter:description" content="1979–2026. The deed-box is opened. 'If you find this, please know that it was not all unhappiness.'">
+  <meta name="twitter:image" content="https://the-hale-dynasty.vercel.app/crests/EraX.png">
   <title>Vol. X — The Archive in Full</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -1916,6 +1925,22 @@
 
   <div class="hd-cipher-wrap" style="bottom:70px;right:35px" title=""><span class="hd-cipher">A</span></div>
 <script src="inquiry.js"></script>
+<button id="hd-share-btn" onclick="(function(){
+  var url = window.location.href;
+  var title = document.title;
+  if (navigator.share) {
+    navigator.share({ title: title, url: url });
+  } else {
+    navigator.clipboard.writeText(url).then(function(){
+      var btn = document.getElementById('hd-share-btn');
+      var orig = btn.textContent;
+      btn.textContent = 'LINK COPIED';
+      setTimeout(function(){ btn.textContent = orig; }, 2000);
+    }).catch(function(){
+      prompt('Copy this link:', url);
+    });
+  }
+})()" style="position:fixed;bottom:20px;left:60px;background:#1A1008;border:1px solid rgba(200,168,40,0.3);color:#8B6820;font-family:'Courier New',monospace;font-size:0.58em;letter-spacing:0.13em;text-transform:uppercase;padding:7px 13px;cursor:pointer;border-radius:2px;z-index:999;transition:all 0.2s;" onmouseover="this.style.color='#C8A830';this.style.borderColor='rgba(200,168,40,0.6)'" onmouseout="this.style.color='#8B6820';this.style.borderColor='rgba(200,168,40,0.3)'">↑ Share</button>
 </body>
 
 </html>

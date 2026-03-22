@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="The Hale Dynasty — Guest Book">
+  <meta property="og:description" content="Sign the visitor register of the MSS. Hale-Marsh Collection. Nine centuries. Ten volumes. One family.">
+  <meta property="og:image" content="https://the-hale-dynasty.vercel.app/crests/main_family_crest.png">
+  <meta property="og:url" content="https://the-hale-dynasty.vercel.app/guestbook.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Hale Dynasty — Guest Book">
+  <meta name="twitter:description" content="Sign the visitor register of the MSS. Hale-Marsh Collection. Nine centuries. Ten volumes. One family.">
+  <meta name="twitter:image" content="https://the-hale-dynasty.vercel.app/crests/main_family_crest.png">
+  <title>Guest Book — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 18px; }
+
+    body {
+      background: #0E0C0A;
+      color: #B8A888;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.8;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 40px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #8B7A68;
+      text-decoration: none;
+      border: 1px solid rgba(200,168,40,0.25);
+      padding: 6px 12px;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      color: #C8A830;
+      border-color: rgba(200,168,40,0.5);
+      background: rgba(200,168,40,0.03);
+    }
+
+    .page-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.2em;
+      letter-spacing: 0.08em;
+      color: #C8A83C;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .page-subtitle {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6A5A48;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(200,168,40,0.15);
+    }
+
+    .intro-text {
+      font-size: 0.95em;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      color: #A89878;
+      font-style: italic;
+    }
+
+    /* FORM SECTION */
+    .form-section {
+      background: rgba(200,168,40,0.04);
+      border: 1px solid rgba(200,168,40,0.15);
+      padding: 28px;
+      border-radius: 3px;
+      margin-bottom: 50px;
+    }
+
+    .form-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.3em;
+      letter-spacing: 0.05em;
+      color: #C8A83C;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8B7A68;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(200,168,40,0.03);
+      border: 1px solid rgba(200,168,40,0.2);
+      color: #C8B890;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 0.9em;
+      padding: 10px 12px;
+      border-radius: 2px;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(200,168,40,0.4);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #5A4A38;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-size: 0.85em;
+      line-height: 1.5;
+    }
+
+    .char-count {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      color: #6A5A48;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .form-group.location {
+      color: #7A6A58;
+      font-size: 0.85em;
+      font-style: italic;
+    }
+
+    .submit-btn {
+      background: none;
+      border: 1px solid rgba(200,168,40,0.35);
+      color: #C8A830;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      border-color: rgba(200,168,40,0.7);
+      background: rgba(200,168,40,0.08);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .confirmation {
+      display: none;
+      background: rgba(100,180,80,0.15);
+      border: 1px solid rgba(100,180,80,0.3);
+      color: #A8C890;
+      padding: 16px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .confirmation.show {
+      display: block;
+    }
+
+    /* ENTRIES SECTION */
+    .entries-section {
+      margin-top: 60px;
+    }
+
+    .entries-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.6em;
+      letter-spacing: 0.05em;
+      color: #C8A83C;
+      margin-bottom: 30px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(200,168,40,0.2);
+    }
+
+    .entries-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .entry {
+      background: rgba(200,168,40,0.04);
+      border-left: 2px solid rgba(200,168,40,0.25);
+      padding: 16px;
+      border-radius: 0 2px 2px 2px;
+    }
+
+    .entry-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.1em;
+      letter-spacing: 0.05em;
+      color: #C8A83C;
+      margin-bottom: 4px;
+    }
+
+    .entry-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8B7A68;
+    }
+
+    .entry-location {
+      color: #7A6A58;
+      font-style: italic;
+    }
+
+    .entry-note {
+      font-size: 0.9em;
+      line-height: 1.7;
+      color: #B8A888;
+    }
+
+    .no-entries {
+      text-align: center;
+      padding: 40px 20px;
+      color: #6A5A48;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      html { font-size: 16px; }
+      body { padding: 20px 16px; }
+      .page-title { font-size: 1.8em; }
+      .form-section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← back to the archive</a>
+
+    <h1 class="page-title">The Visitor Register</h1>
+    <div class="page-subtitle">MSS. Hale-Marsh Collection — Bodleian Libraries, Oxford</div>
+
+    <p class="intro-text">
+      You have reached the end of the deed-box and found something unexpected. Sign your name here, and your entry will be added to the record — a visitor to the archive, recorded for whatever comes after.
+    </p>
+
+    <div class="form-section">
+      <h2 class="form-title">Sign the Register</h2>
+
+      <div class="confirmation" id="confirmation"></div>
+
+      <form id="guestbook-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" maxlength="60">
+        </div>
+
+        <div class="form-group location">
+          <label for="location">Location (optional)</label>
+          <input type="text" id="location" name="location" placeholder="City, country — or leave blank" maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label for="note">Your entry</label>
+          <textarea id="note" name="note" required placeholder="A thought, a question, a moment. (280 characters max)" maxlength="280"></textarea>
+          <span class="char-count"><span id="char-count">0</span>/280</span>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Add to the Record</button>
+      </form>
+    </div>
+
+    <div class="entries-section">
+      <h2 class="entries-title">Entries in the Register</h2>
+      <div class="entries-list" id="entries-list">
+        <div class="no-entries">Loading entries...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      var form = document.getElementById('guestbook-form');
+      var nameInput = document.getElementById('name');
+      var locationInput = document.getElementById('location');
+      var noteInput = document.getElementById('note');
+      var charCountSpan = document.getElementById('char-count');
+      var submitBtn = document.getElementById('submit-btn');
+      var entriesList = document.getElementById('entries-list');
+      var confirmationDiv = document.getElementById('confirmation');
+
+      // Load entries on page load
+      loadEntries();
+
+      // Update character count
+      noteInput.addEventListener('input', function() {
+        charCountSpan.textContent = noteInput.value.length;
+      });
+
+      // Handle form submission
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var name = nameInput.value.trim();
+        var location = locationInput.value.trim();
+        var note = noteInput.value.trim();
+
+        if (!name || !note) {
+          alert('Please fill in your name and entry.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'saving...';
+
+        fetch('/api/guestbook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            location: location,
+            note: note
+          })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.ok) {
+            showConfirmation('Your name has been added to the record.');
+            form.reset();
+            charCountSpan.textContent = '0';
+            loadEntries();
+            setTimeout(function() {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Add to the Record';
+            }, 2000);
+          } else {
+            alert('Error: ' + (data.error || 'Could not save entry'));
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add to the Record';
+          }
+        })
+        .catch(function(err) {
+          alert('Error saving entry: ' + err.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Add to the Record';
+        });
+      });
+
+      function loadEntries() {
+        fetch('/api/guestbook')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            if (data.entries && data.entries.length > 0) {
+              entriesList.innerHTML = '';
+              for (var i = 0; i < data.entries.length; i++) {
+                var entry = data.entries[i];
+                var entryDiv = document.createElement('div');
+                entryDiv.className = 'entry';
+                entryDiv.innerHTML =
+                  '<div class="entry-name">' + escapeHtml(entry.name) + '</div>' +
+                  '<div class="entry-meta">' +
+                    (entry.location ? '<span class="entry-location">' + escapeHtml(entry.location) + '</span>' : '') +
+                    '<span>' + entry.date + '</span>' +
+                  '</div>' +
+                  '<div class="entry-note">' + escapeHtml(entry.note) + '</div>';
+                entriesList.appendChild(entryDiv);
+              }
+            } else {
+              entriesList.innerHTML = '<div class="no-entries">No entries yet. Be the first to sign the register.</div>';
+            }
+          })
+          .catch(function() {
+            entriesList.innerHTML = '<div class="no-entries">Could not load entries at this time.</div>';
+          });
+      }
+
+      function showConfirmation(message) {
+        confirmationDiv.textContent = message;
+        confirmationDiv.classList.add('show');
+        setTimeout(function() {
+          confirmationDiv.classList.remove('show');
+        }, 3000);
+      }
+
+      function escapeHtml(text) {
+        var map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
+    })();
+  </script>
+
+  <script src="inquiry.js"></script>
+</body>
+</html>

@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Vol. VII — The Correspondence of Mr Edmund Hale">
+  <meta property="og:description" content="High Victorian, 1868–1882. Edmund Hale writes two letters he never sends. What Edmund could not tell his family, he told the archive.">
+  <meta property="og:image" content="https://the-hale-dynasty.vercel.app/crests/EraVII.png">
+  <meta property="og:url" content="https://the-hale-dynasty.vercel.app/era-VII.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vol. VII — The Correspondence of Mr Edmund Hale">
+  <meta name="twitter:description" content="High Victorian, 1868–1882. Edmund Hale writes two letters he never sends. What Edmund could not tell his family, he told the archive.">
+  <meta name="twitter:image" content="https://the-hale-dynasty.vercel.app/crests/EraVII.png">
   <title>Vol. VII — The Correspondence of Mr Edmund Hale</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>html { font-size: 18px; }
@@ -1294,5 +1303,21 @@ function toggleEraSound() {
   </script>
 
 <script src="inquiry.js"></script>
+<button id="hd-share-btn" onclick="(function(){
+  var url = window.location.href;
+  var title = document.title;
+  if (navigator.share) {
+    navigator.share({ title: title, url: url });
+  } else {
+    navigator.clipboard.writeText(url).then(function(){
+      var btn = document.getElementById('hd-share-btn');
+      var orig = btn.textContent;
+      btn.textContent = 'LINK COPIED';
+      setTimeout(function(){ btn.textContent = orig; }, 2000);
+    }).catch(function(){
+      prompt('Copy this link:', url);
+    });
+  }
+})()" style="position:fixed;bottom:20px;left:60px;background:#1A1008;border:1px solid rgba(200,168,40,0.3);color:#8B6820;font-family:'Courier New',monospace;font-size:0.58em;letter-spacing:0.13em;text-transform:uppercase;padding:7px 13px;cursor:pointer;border-radius:2px;z-index:999;transition:all 0.2s;" onmouseover="this.style.color='#C8A830';this.style.borderColor='rgba(200,168,40,0.6)'" onmouseout="this.style.color='#8B6820';this.style.borderColor='rgba(200,168,40,0.3)'">↑ Share</button>
 </body>
 </html>

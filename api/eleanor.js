@@ -102,6 +102,15 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid message format.' });
   }
 
+  // Build system prompt with optional page context
+  var systemPrompt = SYSTEM_PROMPT;
+  if (body.pageContext && typeof body.pageContext === 'string') {
+    systemPrompt = SYSTEM_PROMPT + '\n\nCURRENT CONTEXT: The visitor is currently viewing ' + body.pageContext + '.';
+  }
+
+  // Check if streaming is requested
+  var streaming = body.stream === true;
+
   try {
     var upstream = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -113,13 +122,30 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 500,
-        system: SYSTEM_PROMPT,
-        messages: messages
+        system: systemPrompt,
+        messages: messages,
+        stream: streaming
       })
     });
 
-    var data = await upstream.json();
-    return res.status(upstream.status).json(data);
+    // Handle streaming response
+    if (streaming) {
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+
+      var reader = upstream.body.getReader();
+      while (true) {
+        var result = await reader.read();
+        if (result.done) break;
+        res.write(result.value);
+      }
+      res.end();
+    } else {
+      // Non-streaming: return JSON as before
+      var data = await upstream.json();
+      return res.status(upstream.status).json(data);
+    }
 
   } catch (err) {
     return res.status(500).json({ error: 'Archive connection failed. Please try again.' });

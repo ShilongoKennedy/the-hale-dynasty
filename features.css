@@ -876,3 +876,35 @@ body.hd-marg-on .hd-marginal {
 .era-content {
   padding-top: 32px !important;
 }
+
+/* ── Mobile Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Inquiry panel full width on mobile */
+  #hd-inq-panel {
+    width: 100vw !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: -100vh !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  #hd-inq-panel.open {
+    bottom: 0 !important;
+  }
+  #hd-inq-fab {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+
+  /* Era page navigation */
+  .era-nav, .era-header-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  /* Home float button */
+  .home-float {
+    bottom: 16px !important;
+    left: 16px !important;
+  }
+}

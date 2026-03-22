@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "pdf-parse": "^2.4.5",
-    "puppeteer": "^24.39.1"
+    "puppeteer": "^24.39.1",
+    "redis": "^4.7.0"
   }
 }

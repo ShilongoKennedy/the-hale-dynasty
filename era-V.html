@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Vol. V — The Memoirs of Sir Nathaniel Hale">
+  <meta property="og:description" content="Early Georgian England, 1671–1744. Sir Nathaniel's extensive, self-aggrandising memoirs.">
+  <meta property="og:image" content="https://the-hale-dynasty.vercel.app/crests/EraV.png">
+  <meta property="og:url" content="https://the-hale-dynasty.vercel.app/era-V.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vol. V — The Memoirs of Sir Nathaniel Hale">
+  <meta name="twitter:description" content="Early Georgian England, 1671–1744. Sir Nathaniel's extensive, self-aggrandising memoirs.">
+  <meta name="twitter:image" content="https://the-hale-dynasty.vercel.app/crests/EraV.png">
   <title>Vol. V — The Memoirs of Sir Nathaniel Hale</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>html { font-size: 18px; }
@@ -797,5 +806,21 @@
     <a id="secret-nav-link" href="recovered-documents.html" style="color:#8B1A1A;text-decoration:none;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;" title="All volumes read — the archive unlocks">▸ The Recovered Archive</a>
   </div>
 <script src="inquiry.js"></script>
+<button id="hd-share-btn" onclick="(function(){
+  var url = window.location.href;
+  var title = document.title;
+  if (navigator.share) {
+    navigator.share({ title: title, url: url });
+  } else {
+    navigator.clipboard.writeText(url).then(function(){
+      var btn = document.getElementById('hd-share-btn');
+      var orig = btn.textContent;
+      btn.textContent = 'LINK COPIED';
+      setTimeout(function(){ btn.textContent = orig; }, 2000);
+    }).catch(function(){
+      prompt('Copy this link:', url);
+    });
+  }
+})()" style="position:fixed;bottom:20px;left:60px;background:#1A1008;border:1px solid rgba(200,168,40,0.3);color:#8B6820;font-family:'Courier New',monospace;font-size:0.58em;letter-spacing:0.13em;text-transform:uppercase;padding:7px 13px;cursor:pointer;border-radius:2px;z-index:999;transition:all 0.2s;" onmouseover="this.style.color='#C8A830';this.style.borderColor='rgba(200,168,40,0.6)'" onmouseout="this.style.color='#8B6820';this.style.borderColor='rgba(200,168,40,0.3)'">↑ Share</button>
 </body>
 </html>
