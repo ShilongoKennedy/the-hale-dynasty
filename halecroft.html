@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Halecroft · The Estate · The Hale Dynasty Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C8A83C;
+      --gold-dim: #9A7A28;
+      --gold-bright: #E8C84C;
+      --bg: #0E0C0A;
+      --bg-mid: #1A1612;
+      --bg-box: #1E1A14;
+      --text-dim: #6A5A48;
+      --text-mid: #8A7A62;
+      --text-light: #B8A888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-light);
+      font-family: 'IM Fell English', Georgia, serif;
+      min-height: 100vh;
+      opacity: 0;
+      animation: pageIn 1.2s ease 0.3s forwards;
+    }
+    @keyframes pageIn { to { opacity: 1; } }
+
+    /* ── NAV ── */
+    .hc-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 36px;
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      background: rgba(8,6,4,0.9);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .hc-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      color: rgba(200,168,60,0.5);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .hc-nav a:hover { color: rgba(200,168,60,0.9); }
+    .hc-nav-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72em;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: rgba(200,168,60,0.65);
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hc-hero {
+      text-align: center;
+      padding: 72px 36px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hc-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(200,168,60,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hc-ref {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hc-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8em, 5vw, 3.2em);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hc-subtitle {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 1.05em;
+      font-style: italic;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+    }
+    .hc-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+      margin: 0 auto 28px;
+    }
+    .hc-intro {
+      max-width: 620px;
+      margin: 0 auto;
+      font-size: 0.92em;
+      line-height: 1.95;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .hc-coords {
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+    }
+
+    /* ── TIMELINE WRAPPER ── */
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 24px 80px;
+      position: relative;
+    }
+
+    /* Vertical spine */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(200,168,60,0.18) 8%,
+        rgba(200,168,60,0.18) 92%,
+        transparent 100%);
+    }
+
+    /* ── TIMELINE ENTRY ── */
+    .tl-entry {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      gap: 0;
+      margin-bottom: 72px;
+      position: relative;
+    }
+
+    /* Alternate: odd entries show image left, text right */
+    /* Even entries show text left, image right */
+    .tl-entry:nth-child(odd)  .tl-image { grid-column: 1; grid-row: 1; }
+    .tl-entry:nth-child(odd)  .tl-spine { grid-column: 2; grid-row: 1; }
+    .tl-entry:nth-child(odd)  .tl-text  { grid-column: 3; grid-row: 1; }
+
+    .tl-entry:nth-child(even) .tl-text  { grid-column: 1; grid-row: 1; text-align: right; }
+    .tl-entry:nth-child(even) .tl-spine { grid-column: 2; grid-row: 1; }
+    .tl-entry:nth-child(even) .tl-image { grid-column: 3; grid-row: 1; }
+
+    /* Spine column — dot + connector */
+    .tl-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 28px;
+    }
+    .tl-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--gold-dim);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .tl-entry:hover .tl-dot {
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(200,168,60,0.35);
+    }
+
+    /* Image side */
+    .tl-image {
+      padding: 0 24px;
+    }
+    .tl-img-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--bg-box);
+      border: 1px solid rgba(200,168,60,0.14);
+      overflow: hidden;
+    }
+    .tl-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(20%) brightness(0.88);
+      transition: filter 0.4s, transform 0.5s;
+    }
+    .tl-entry:hover .tl-img-frame img {
+      filter: sepia(10%) brightness(0.96);
+      transform: scale(1.02);
+    }
+    /* Corner ornaments on frame */
+    .tl-img-frame::before, .tl-img-frame::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      border-color: rgba(200,168,60,0.25);
+      border-style: solid;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .tl-img-frame::before { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
+    .tl-img-frame::after  { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+
+    /* Text side */
+    .tl-text {
+      padding: 20px 24px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .tl-era-badge {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.5em;
+      letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.5);
+      border: 1px solid rgba(200,168,60,0.18);
+      padding: 3px 9px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .tl-entry:nth-child(even) .tl-text .tl-era-badge { align-self: flex-end; }
+
+    .tl-year {
+      font-family: 'Cinzel', serif;
+      font-size: 1.55em;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .tl-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.75);
+      margin-bottom: 14px;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+    .tl-divider {
+      width: 32px; height: 1px;
+      background: linear-gradient(to right, var(--gold-dim), transparent);
+      margin-bottom: 14px;
+    }
+    .tl-entry:nth-child(even) .tl-divider {
+      background: linear-gradient(to left, var(--gold-dim), transparent);
+      margin-left: auto;
+    }
+    .tl-desc {
+      font-size: 0.82em;
+      line-height: 1.95;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .tl-change {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-left: 2px solid rgba(200,168,60,0.2);
+      background: rgba(200,168,60,0.03);
+    }
+    .tl-entry:nth-child(even) .tl-change {
+      border-left: none;
+      border-right: 2px solid rgba(200,168,60,0.2);
+    }
+    .tl-change-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.5em;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .tl-change-text {
+      font-size: 0.76em;
+      color: rgba(200,168,60,0.55);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .tl-era-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.54em;
+      letter-spacing: 0.14em;
+      color: rgba(200,168,60,0.45);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,168,60,0.18);
+      padding-bottom: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tl-era-link:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── PRESENT STATE BANNER ── */
+    .hc-present {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    .hc-present-inner {
+      border: 1px solid rgba(200,168,60,0.18);
+      background: rgba(200,168,60,0.03);
+      padding: 36px 40px;
+      text-align: center;
+      position: relative;
+    }
+    .hc-present-inner::before, .hc-present-inner::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: rgba(200,168,60,0.22);
+      border-style: solid;
+    }
+    .hc-present-inner::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+    .hc-present-inner::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+    .hc-present-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.24em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hc-present-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .hc-present-text {
+      font-size: 0.85em;
+      font-style: italic;
+      line-height: 1.9;
+      color: var(--text-light);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .hc-foot-nav {
+      border-top: 1px solid rgba(200,168,60,0.1);
+      padding: 28px 36px max(28px, env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.58em;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hc-foot-nav a {
+      color: rgba(200,168,60,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hc-foot-nav a:hover { color: var(--gold); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+      .hc-nav { padding: 10px 16px; }
+      .hc-nav-title { display: none; }
+      .hc-hero { padding: 48px 20px 40px; }
+      .timeline { padding: 10px 0 60px; }
+      .timeline::before { left: 20px; transform: none; }
+
+      .tl-entry {
+        grid-template-columns: 40px 1fr;
+        grid-template-rows: auto auto;
+        margin-bottom: 52px;
+      }
+      .tl-entry:nth-child(odd)  .tl-image,
+      .tl-entry:nth-child(even) .tl-image { grid-column: 2; grid-row: 2; }
+      .tl-entry:nth-child(odd)  .tl-spine,
+      .tl-entry:nth-child(even) .tl-spine { grid-column: 1; grid-row: 1 / 3; align-items: flex-start; }
+      .tl-entry:nth-child(odd)  .tl-text,
+      .tl-entry:nth-child(even) .tl-text  { grid-column: 2; grid-row: 1; text-align: left; padding: 0 16px 12px; }
+
+      .tl-entry:nth-child(even) .tl-era-badge { align-self: flex-start; }
+      .tl-entry:nth-child(even) .tl-divider { background: linear-gradient(to right, var(--gold-dim), transparent); margin-left: 0; }
+      .tl-entry:nth-child(even) .tl-change { border-left: 2px solid rgba(200,168,60,0.2); border-right: none; }
+
+      .tl-image { padding: 0 16px; }
+      .hc-present { padding: 0 16px; }
+      .hc-present-inner { padding: 24px 20px; }
+      .hc-foot-nav { padding: 20px 16px max(20px, env(safe-area-inset-bottom)); font-size: 0.52em; }
+    }
+  </style>
+  <link rel="stylesheet" href="features.css">
+</head>
+<body>
+<div id="pageOverlay" style="position:fixed;inset:0;background:#000;z-index:9999;opacity:0;pointer-events:none;"></div>
+
+<!-- NAV -->
+<nav class="hc-nav">
+  <a href="index.html">← Archive Home</a>
+  <span class="hc-nav-title">Halecroft · The Estate</span>
+  <a href="map.html">Hale Lands →</a>
+</nav>
+
+<!-- HERO -->
+<header class="hc-hero">
+  <div class="hc-ref">MSS. Hale-Marsh · Estate Record · Halecroft, Worcestershire</div>
+  <h1 class="hc-title">Halecroft</h1>
+  <div class="hc-subtitle">The family seat. Held continuously since 1067.</div>
+  <div class="hc-rule"></div>
+  <p class="hc-intro">
+    Nine centuries in a single place. Every generation of the Hale dynasty has been born, married, and buried within
+    reach of this ground. The buildings have changed with every era — timber to stone, hall to manor, manor to
+    hospital and back again — but the land beneath has never left the family. What follows is the record of those
+    changes, from the first stake driven into Worcestershire soil in the winter of 1067 to the present day.
+  </p>
+  <div class="hc-coords">52°04′N 2°22′W · Worcestershire, England</div>
+</header>
+
+<!-- TIMELINE -->
+<main class="timeline" aria-label="Halecroft through the ages">
+
+  <!-- ERA I · NORMAN -->
+  <article class="tl-entry" id="era-i">
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-i.jpg" alt="Halecroft, 1067 — Norman timber hall">
+      </div>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-text">
+      <span class="tl-era-badge">Era I · Norman</span>
+      <div class="tl-year">1067</div>
+      <div class="tl-heading">The First Hall</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Ranulf de la Hale received the land from William I in the winter following the Conquest. Within the year he had raised a timber hall — three rooms, a great hearth, a storehouse. Not grand. Practical. A statement of arrival.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What was built</div>
+        <div class="tl-change-text">Timber hall, thatched. One storey. A palisade of oak stakes marking the boundary. The well dug by Saxon hands Ranulf had retained. He named the place for the hollow — hale, in the old tongue. The hollow in the hills.</div>
+      </div>
+      <a class="tl-era-link" href="era-I.html">Read Volume I →</a>
+    </div>
+  </article>
+
+  <!-- ERA II · PLAGUE -->
+  <article class="tl-entry" id="era-ii">
+    <div class="tl-text">
+      <span class="tl-era-badge">Era II · Plague</span>
+      <div class="tl-year">1349</div>
+      <div class="tl-heading">The Sealed House</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">When the plague reached Worcestershire in the autumn of 1348, Thomas Hale sealed the gates and posted armed men on every approach. No one was permitted in or out for eleven months. Three of the household died within.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The original timber hall was partially dismantled and a small stone undercroft dug beneath the east end — the first permanent masonry on the site. Used to store food during the siege. It remains, still accessible, beneath the present east wing.</div>
+      </div>
+      <a class="tl-era-link" href="era-II.html">Read Volume II →</a>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-ii.jpg" alt="Halecroft during the plague, 1349">
+      </div>
+    </div>
+  </article>
+
+  <!-- ERA III · TUDOR -->
+  <article class="tl-entry" id="era-iii">
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-iii.jpg" alt="Halecroft Tudor manor, c. 1550">
+      </div>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-text">
+      <span class="tl-era-badge">Era III · Tudor</span>
+      <div class="tl-year">1541</div>
+      <div class="tl-heading">The Stone Expansion</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Sir William Hale, freshly returned from court with a knighthood and a fortune in wool, commissioned a full rebuilding of the estate in stone. The old timber hall was demolished. In its place rose the house that would, in essence, survive to the present day.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What was built</div>
+        <div class="tl-change-text">A substantial H-plan manor in the Midlands vernacular style. Great hall, two parlours, a chapel wing. The stone gateway bearing the Hale motto was cut at this time: Malis Temporibus, Sedemus Firmi. In Evil Times, We Stand Fast.</div>
+      </div>
+      <a class="tl-era-link" href="era-III.html">Read Volume III →</a>
+    </div>
+  </article>
+
+  <!-- ERA IV · CIVIL WAR -->
+  <article class="tl-entry" id="era-iv">
+    <div class="tl-text">
+      <span class="tl-era-badge">Era IV · Civil War</span>
+      <div class="tl-year">1643</div>
+      <div class="tl-heading">The Damaged House</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Thomas Hale garrisoned Royalist troops here in the winter of 1642. In 1645, a Parliamentary detachment occupied the estate for three weeks and burned the chapel wing before withdrawing. Thomas returned to find a third of the house in ruin.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The chapel wing was never rebuilt. In its place Thomas erected a blank stone wall — a deliberate scar, left as memorial. His journal entry for 14th November 1645 reads only: <em>They took the roof off God's room. I will leave it so. Let the family remember what we did to each other.</em></div>
+      </div>
+      <a class="tl-era-link" href="era-IV.html">Read Volume IV →</a>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-iv.jpg" alt="Halecroft with damaged chapel wing, 1645">
+      </div>
+    </div>
+  </article>
+
+  <!-- ERA V · GEORGIAN -->
+  <article class="tl-entry" id="era-v">
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-v.jpg" alt="Halecroft Georgian west wing addition, c. 1750">
+      </div>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-text">
+      <span class="tl-era-badge">Era V · Georgian</span>
+      <div class="tl-year">1748</div>
+      <div class="tl-heading">The West Wing</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Sir Nathaniel Hale's son, flush with his father's City fortune, commissioned the west wing and a redesign of the gardens in the Capability Brown manner. Halecroft entered its period of greatest grandeur. The library was installed at this time — a room of some four thousand volumes.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What was built</div>
+        <div class="tl-change-text">The west wing in Georgian red brick, with a long sash-windowed façade at odds with the older Tudor core. Formal parterre gardens. A walled kitchen garden. The Halecroft library — locked since 1882, its contents uncatalogued.</div>
+      </div>
+      <a class="tl-era-link" href="era-V.html">Read Volume V →</a>
+    </div>
+  </article>
+
+  <!-- ERA VI · REGENCY -->
+  <article class="tl-entry" id="era-vi">
+    <div class="tl-text">
+      <span class="tl-era-badge">Era VI · Regency</span>
+      <div class="tl-year">1813</div>
+      <div class="tl-heading">The Drawing Room</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Lady Charlotte Vane-Hale redecorated the principal rooms in the Regency fashion and made Halecroft briefly fashionable as a summer retreat for her London circle. The drawing room installed in this period survives largely intact.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The drawing room, dining room, and entrance hall were refitted. Plasterwork ceilings, a new staircase. It was the last time the interior was substantially altered before the Victorian era. The drawing room fire has not been lit since Edmund's death in 1882.</div>
+      </div>
+      <a class="tl-era-link" href="era-VI.html">Read Volume VI →</a>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-vi.jpg" alt="Halecroft drawing room, Regency period c. 1813">
+      </div>
+    </div>
+  </article>
+
+  <!-- ERA VII · VICTORIAN -->
+  <article class="tl-entry" id="era-vii">
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-vii.jpg" alt="Halecroft, 1882 — year of Edmund's death">
+      </div>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-text">
+      <span class="tl-era-badge">Era VII · Victorian</span>
+      <div class="tl-year">1882</div>
+      <div class="tl-heading">The Locked Room</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Edmund Hale II was found dead in his locked study on the 14th of August, 1882. The inquest returned natural causes. His widow Eleanor ordered the study sealed. It has not been opened since. The key is believed to remain inside.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The east wing was closed and has remained largely uninhabited. The study door — second floor, east passage — bears a wax seal placed by Eleanor Hale in September 1882. The seal is still intact. No member of the family has given an explanation for why.</div>
+      </div>
+      <a class="tl-era-link" href="era-VII.html">Read Volume VII →</a>
+    </div>
+  </article>
+
+  <!-- ERA VIII · GREAT WAR -->
+  <article class="tl-entry" id="era-viii">
+    <div class="tl-text">
+      <span class="tl-era-badge">Era VIII · Great War</span>
+      <div class="tl-year">1915</div>
+      <div class="tl-heading">The Hospital</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">In January 1915 the family offered Halecroft to the War Office as a convalescent hospital for wounded officers. The house served in this capacity for three years. At its peak, forty-two men were housed in the principal rooms.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The great hall and drawing room were stripped and fitted with iron-framed hospital beds. The formal gardens became a rehabilitation walk. A small cemetery was established in the orchard — twelve graves, all named, all maintained. The hospital register survives in the family archive.</div>
+      </div>
+      <a class="tl-era-link" href="era-VIII.html">Read Volume VIII →</a>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-viii.jpg" alt="Halecroft as a convalescent hospital, 1915">
+      </div>
+    </div>
+  </article>
+
+  <!-- ERA IX · SECOND WAR / POST-WAR -->
+  <article class="tl-entry" id="era-ix">
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-ix.jpg" alt="Halecroft post-war, 1947 — diminished">
+      </div>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-text">
+      <span class="tl-era-badge">Era IX · Post-War</span>
+      <div class="tl-year">1947</div>
+      <div class="tl-heading">The Diminished House</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">Edmund Marsh-Hale returned to Halecroft in the autumn of 1947 to find it half-leased to a land management company, the gardens run to seed, and the west wing showing signs of damp. He wrote to his wife: <em>The house looks as though it has been waiting, and is not sure it was worth it.</em></p>
+      <div class="tl-change">
+        <div class="tl-change-label">What changed</div>
+        <div class="tl-change-text">The formal gardens were not restored. The parterre was grassed over. Three bedrooms in the west wing were permanently closed due to structural damp. The walled kitchen garden was given over to a tenant farmer. Halecroft began its long reduction.</div>
+      </div>
+      <a class="tl-era-link" href="era-IX.html">Read Volume IX →</a>
+    </div>
+  </article>
+
+  <!-- ERA X · PRESENT -->
+  <article class="tl-entry" id="era-x">
+    <div class="tl-text">
+      <span class="tl-era-badge">Era X · Present</span>
+      <div class="tl-year">2024</div>
+      <div class="tl-heading">The Archive Room</div>
+      <div class="tl-divider"></div>
+      <p class="tl-desc">James Marsh-Hale has spent the last decade restoring the south wing and establishing the archive room in what was once the morning room. It is here that the nine wax-sealed ledgers reside, along with the bulk of the family papers.</p>
+      <div class="tl-change">
+        <div class="tl-change-label">Present state</div>
+        <div class="tl-change-text">South wing habitable and restored. North wing partly occupied. The east wing remains closed — the locked study on the second floor undisturbed. The library is catalogued but the door kept locked. The orchard cemetery is tended twice yearly. The stone gateway still bears the motto, legible if you know where to look.</div>
+      </div>
+      <a class="tl-era-link" href="era-X.html">Read Volume X →</a>
+    </div>
+    <div class="tl-spine"><div class="tl-dot"></div></div>
+    <div class="tl-image">
+      <div class="tl-img-frame">
+        <img src="halecroft/era-x.jpg" alt="Halecroft today — the archive room, 2024">
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<!-- PRESENT STATE -->
+<section class="hc-present">
+  <div class="hc-present-inner">
+    <div class="hc-present-label">Archivist's Note · 2026</div>
+    <div class="hc-present-title">The East Wing Remains Sealed</div>
+    <p class="hc-present-text">
+      The study on the second floor of the east wing has not been opened in one hundred and forty-three years.
+      The wax seal placed by Eleanor Hale in September 1882 is intact. James Marsh-Hale has stated, in writing,
+      that he does not intend to open it. His reasons are not recorded in this archive.
+    </p>
+  </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<nav class="hc-foot-nav">
+  <a href="index.html">← Archive Home</a>
+  <span>Halecroft · The Estate · 1067–2026</span>
+  <a href="map.html">Hale Lands Map →</a>
+</nav>
+
+<script src="transitions.js"></script>
+<script src="features.js"></script>
+<script src="inquiry.js"></script>
+</body>
+</html>

@@ -117,9 +117,17 @@
         '— A.F. &amp; E.V., London &amp; Oxford, 2024',
         '</div>',
 
-        '<div style="font-family:\'Courier New\',monospace;font-size:0.63em;letter-spacing:0.15em;',
-        'text-transform:uppercase;color:#3A2A18;margin-top:10px;">',
-        'Click anywhere to continue',
+        '<a href="epilogue.html" onclick="event.stopPropagation();" ',
+        'style="display:inline-block;margin-top:20px;margin-bottom:6px;',
+        'font-family:\'Courier New\',monospace;font-size:0.65em;letter-spacing:0.18em;',
+        'text-transform:uppercase;color:#7A6030;text-decoration:none;',
+        'border-bottom:1px solid rgba(200,168,60,0.2);padding-bottom:2px;transition:color 0.2s;">',
+        'Read the Epilogue →',
+        '</a>',
+
+        '<div style="font-family:\'Courier New\',monospace;font-size:0.56em;letter-spacing:0.12em;',
+        'text-transform:uppercase;color:#2A1A0A;margin-top:14px;">',
+        'Click anywhere else to continue',
         '</div>',
 
         '</div>',
@@ -641,10 +649,10 @@ if(cspans.length){
     var count   = visited.length;
     var complete = localStorage.getItem('hale_complete') === 'true';
 
-    /* Only show counter once at least one volume has been opened */
+    /* Progress counter — show in hero for returning visitors, right below tagline */
     if (count > 0) {
-      var instruction = document.querySelector('.archive-instruction');
-      if (instruction) {
+      var tagline = document.querySelector('.tagline');
+      if (tagline) {
         var counter = document.createElement('div');
         counter.id = 'hd-progress';
 
@@ -664,7 +672,7 @@ if(cspans.length){
 
         counter.appendChild(label);
         counter.appendChild(pips);
-        instruction.insertAdjacentElement('afterend', counter);
+        tagline.insertAdjacentElement('afterend', counter);
       }
     }
 
@@ -1285,4 +1293,67 @@ if(cspans.length){
     div.textContent = desc;
     datesEl.parentNode.insertBefore(div, datesEl.nextSibling);
   });
+})();
+
+/* ── Mobile era sticky nav ─────────────────────────────────────────────
+   Mirrors .era-seq-nav as a fixed bottom bar on mobile (≤640px).
+   Reads prev/next links and current vol from body[data-vol].
+   Only active on era pages (pages with .era-seq-nav). */
+(function () {
+  'use strict';
+
+  function buildMobileEraNav() {
+    var seqNav = document.querySelector('.era-seq-nav');
+    if (!seqNav) return; // not an era page
+
+    var prevAnchor = seqNav.querySelector('.esn-prev');
+    var nextAnchor = seqNav.querySelector('.esn-next');
+    var vol        = document.body.getAttribute('data-vol') || '';
+
+    var bar = document.createElement('nav');
+    bar.className = 'hd-mobile-era-nav';
+    bar.setAttribute('aria-label', 'Volume navigation');
+
+    // ← Prev
+    if (prevAnchor && prevAnchor.getAttribute('href')) {
+      var prevEl = document.createElement('a');
+      prevEl.href = prevAnchor.getAttribute('href');
+      var prevLabel = prevAnchor.querySelector('.esn-label');
+      prevEl.textContent = '← ' + (prevLabel ? prevLabel.textContent : 'Prev');
+      bar.appendChild(prevEl);
+    } else {
+      var prevSpacer = document.createElement('span');
+      prevSpacer.style.cssText = 'width:38%;display:inline-block';
+      bar.appendChild(prevSpacer);
+    }
+
+    // Centre — vol label
+    var centre = document.createElement('span');
+    centre.className = 'men-center';
+    centre.textContent = vol ? 'Vol.\u202f' + vol : '';
+    bar.appendChild(centre);
+
+    // Next →
+    if (nextAnchor && nextAnchor.getAttribute('href')) {
+      var nextEl = document.createElement('a');
+      nextEl.href = nextAnchor.getAttribute('href');
+      var nextLabel = nextAnchor.querySelector('.esn-label');
+      nextEl.textContent = (nextLabel ? nextLabel.textContent : 'Next') + ' →';
+      nextEl.style.textAlign = 'right';
+      bar.appendChild(nextEl);
+    } else {
+      var nextSpacer = document.createElement('span');
+      nextSpacer.style.cssText = 'width:38%;display:inline-block';
+      bar.appendChild(nextSpacer);
+    }
+
+    document.body.appendChild(bar);
+    document.body.classList.add('has-mobile-era-nav');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildMobileEraNav);
+  } else {
+    buildMobileEraNav();
+  }
 })();

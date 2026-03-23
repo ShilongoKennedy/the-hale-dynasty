@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Hale Lineage — Family Tree — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
@@ -401,13 +402,32 @@
     }
     #profile-backdrop.open { display: block; }
     @media (max-width: 600px) {
-      #profile-panel { width: 100%; }
+      /* Profile panel slides from bottom on mobile */
+      #profile-panel {
+        top: auto;
+        right: 0; left: 0; bottom: 0;
+        width: 100%;
+        height: 72vh;
+        transform: translateY(100%);
+        border-left: none;
+        border-top: 1px solid rgba(200,168,60,0.18);
+        border-radius: 16px 16px 0 0;
+      }
+      #profile-panel.open { transform: translateY(0); }
+      #pp-portrait-wrap { height: 180px; }
+      #profile-panel { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+
       .top-nav { padding: 8px 14px; font-size: 0.6em; }
       .top-nav .center { display: none; }
-      .tree-header { padding: 14px 14px 20px; }
-      .tree-title { font-size: 1.8em; }
-      .tree-subtitle { font-size: 0.62em; }
-      .tree-legend { flex-wrap: wrap; gap: 6px; font-size: 0.55em; }
+      .tree-header { padding: 14px 14px 16px; }
+      .tree-title { font-size: 1.6em; }
+      .tree-subtitle { font-size: 0.58em; letter-spacing: 0.04em; }
+      .tree-legend { flex-wrap: wrap; gap: 5px; font-size: 0.52em; padding: 0 10px; }
+
+      /* Viewport gets full screen */
+      #treeViewport { touch-action: pan-x pan-y; }
+      /* Tooltip hidden on touch devices */
+      #tooltip { display: none !important; }
     }
   </style>
 </head>
@@ -429,7 +449,8 @@
     <span class="legend-item"><span class="legend-dot" style="background:#1C2E4A"></span> Civil War</span>
     <span class="legend-item"><span class="legend-dot" style="background:#5C1828"></span> Victorian</span>
     <span class="legend-item"><span class="legend-dot" style="background:#3A5820;border:1px solid #3A5820"></span> Voss branch</span>
-    <span class="legend-item" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open era</span>
+    <span class="legend-item hd-hover-hint" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open</span>
+    <span class="legend-item hd-touch-hint" style="color:rgba(200,168,60,0.2);display:none">Tap any name to open</span>
   </div>
 </div>
 
@@ -443,7 +464,7 @@
   <span id="tt-link"></span>
 </div>
 
-<div class="scroll-hint" id="scrollHint">Scroll to navigate · Click nodes to open era</div>
+<div class="scroll-hint" id="scrollHint">Scroll to navigate · Click nodes to open</div>
 
 <button id="view-toggle" aria-label="Toggle list view">☰ List View</button>
 
@@ -1456,6 +1477,9 @@ function openProfile(person) {
   // Ask Eleanor button
   ppAskEleanor.dataset.personName = person.name;
 
+  // Update URL hash for shareable deep-link
+  if (history.replaceState) history.replaceState(null, '', '#' + person.id);
+
   // Open
   profilePanel.classList.add('open');
   profileBackdrop.classList.add('open');
@@ -1465,6 +1489,7 @@ function openProfile(person) {
 function closeProfile() {
   profilePanel.classList.remove('open');
   profileBackdrop.classList.remove('open');
+  if (history.replaceState) history.replaceState(null, '', window.location.pathname);
 }
 
 document.getElementById('profile-panel-close').addEventListener('click', closeProfile);
@@ -1500,6 +1525,12 @@ document.getElementById('list-view').addEventListener('click', function(e) {
 window.addEventListener('DOMContentLoaded', () => {
   buildTree();
   tryMatildaLink();
+  // Open profile from URL hash on page load
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    const person = personById(hash);
+    if (person) setTimeout(() => openProfile(person), 600);
+  }
 });
 window.addEventListener('resize', () => {
   // Rebuild on resize for correct viewport sizing
@@ -1509,5 +1540,22 @@ window.addEventListener('resize', () => {
 });
 </script>
 <script src="inquiry.js"></script>
+<script>
+// Switch hint text and legend for touch devices
+(function() {
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (isTouch) {
+    var hoverHints = document.querySelectorAll('.hd-hover-hint');
+    var touchHints = document.querySelectorAll('.hd-touch-hint');
+    hoverHints.forEach(function(el) { el.style.display = 'none'; });
+    touchHints.forEach(function(el) { el.style.display = ''; });
+    var hint = document.getElementById('scrollHint');
+    if (hint) hint.textContent = 'Scroll to navigate · Tap names to open';
+    // Ensure viewport allows native touch scrolling
+    var vp = document.getElementById('treeViewport');
+    if (vp) vp.style.touchAction = 'pan-x pan-y';
+  }
+})();
+</script>
 </body>
 </html>

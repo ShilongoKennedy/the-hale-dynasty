@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document Index — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
@@ -135,13 +136,6 @@
     }
     .doc-row:hover { background: rgba(200,168,60,0.02); }
     .doc-row.hidden { display: none; }
-    .doc-row-head {
-      border-bottom: 1px solid rgba(200,168,60,0.12);
-      padding-bottom: 10px;
-      margin-bottom: 0;
-      font-size: 0.58em; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(200,168,60,0.2);
-    }
 
     .doc-col-vol {
       font-size: 0.58em; letter-spacing: 0.12em; text-transform: uppercase;
@@ -185,6 +179,53 @@
     .type-dispatch  { color: rgba(120,80,80,0.35) !important; }
     .type-testimony { color: rgba(200,180,100,0.35) !important; }
     .type-map       { color: rgba(100,160,140,0.35) !important; }
+
+    /* ── ERA GROUP HEADERS ───────────────────────────────────────── */
+    .era-group { margin-bottom: 0; }
+    .era-group + .era-group { margin-top: 4px; }
+    .era-group-header {
+      display: flex; align-items: center; gap: 13px;
+      padding: 30px 0 12px;
+    }
+    .era-group-line {
+      height: 1px; flex: 1;
+      background: linear-gradient(to right, rgba(200,168,60,0.14), transparent);
+    }
+    .era-group-line.right {
+      background: linear-gradient(to left, rgba(200,168,60,0.14), transparent);
+    }
+    .era-group-seal {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid rgba(200,168,60,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.58em; letter-spacing: 0.04em;
+      color: rgba(200,168,60,0.38);
+    }
+    .era-group-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.76em; letter-spacing: 0.2em;
+      color: rgba(200,168,60,0.42);
+      font-weight: 400; white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .era-group-dates {
+      font-size: 0.54em; letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.18);
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+    }
+    .era-group-vol-link {
+      font-size: 0.5em; letter-spacing: 0.14em;
+      color: rgba(200,168,60,0.18); text-decoration: none;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase; white-space: nowrap;
+      transition: color 0.2s;
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      flex-shrink: 0; padding-bottom: 1px;
+    }
+    .era-group-vol-link:hover { color: rgba(200,168,60,0.55); border-color: rgba(200,168,60,0.35); }
 
     /* ── NO RESULTS ───────────────────────────────────────────── */
     #no-results {
@@ -254,12 +295,6 @@
 </div>
 
 <main class="doc-main">
-  <div class="doc-row doc-row-head">
-    <div class="doc-col-vol">Vol.</div>
-    <div class="doc-col-main">Document</div>
-    <div class="doc-col-type" style="padding-left:12px;">Type</div>
-    <div class="doc-col-date" style="padding-left:12px;">Date</div>
-  </div>
   <div id="doc-list"></div>
   <div id="no-results">No documents match that filter.</div>
 </main>
@@ -479,27 +514,70 @@ const docList = document.getElementById('doc-list');
 const noResults = document.getElementById('no-results');
 const countLabel = document.getElementById('doc-count-label');
 
+const ERA_ORDER = ['Norman','Plague','Tudor','Civil War','Georgian','Regency','Victorian','Edwardian','WWII','Contemporary'];
+const ERA_META = {
+  'Norman':       { vol:'I',    dates:'1066–1100',  label:'Norman',               link:'era-I.html'    },
+  'Plague':       { vol:'II',   dates:'1190–1399',  label:'Plague & Black Death', link:'era-II.html'   },
+  'Tudor':        { vol:'III',  dates:'1500–1557',  label:'Tudor',                link:'era-III.html'  },
+  'Civil War':    { vol:'IV',   dates:'1640–1651',  label:'Civil War',            link:'era-IV.html'   },
+  'Georgian':     { vol:'V',    dates:'1702–1744',  label:'Georgian',             link:'era-V.html'    },
+  'Regency':      { vol:'VI',   dates:'1800–1830',  label:'Regency',              link:'era-VI.html'   },
+  'Victorian':    { vol:'VII',  dates:'1840–1882',  label:'Victorian',            link:'era-VII.html'  },
+  'Edwardian':    { vol:'VIII', dates:'1901–1930',  label:'Edwardian & WWI',      link:'era-VIII.html' },
+  'WWII':         { vol:'IX',   dates:'1939–1952',  label:'Second World War',     link:'era-IX.html'   },
+  'Contemporary': { vol:'X',    dates:'1984–2026',  label:'Contemporary',         link:'era-X.html'    },
+};
+
 function renderDocs(docs) {
   docList.innerHTML = '';
-  docs.forEach(function(d) {
-    const a = document.createElement('a');
-    a.className = 'doc-row';
-    a.href = d.link;
-    a.dataset.type = d.type;
-    a.dataset.era  = d.era.toLowerCase();
-    a.innerHTML = `
-      <div class="doc-col-vol">${d.vol}</div>
-      <div class="doc-col-main">
-        <div class="doc-col-title">${d.title}</div>
-        <div class="doc-col-meta">${d.meta}</div>
-      </div>
-      <div class="doc-col-type type-${d.type}">${d.type}</div>
-      <div class="doc-col-date">${d.date}</div>
-    `;
-    docList.appendChild(a);
-  });
   countLabel.textContent = docs.length;
   noResults.style.display = docs.length === 0 ? 'block' : 'none';
+
+  // Group by era, preserving ERA_ORDER
+  const byEra = {};
+  docs.forEach(function(d) {
+    if (!byEra[d.era]) byEra[d.era] = [];
+    byEra[d.era].push(d);
+  });
+
+  ERA_ORDER.forEach(function(era) {
+    if (!byEra[era] || byEra[era].length === 0) return;
+    const meta = ERA_META[era];
+    const group = document.createElement('div');
+    group.className = 'era-group';
+
+    // Era section header
+    const header = document.createElement('div');
+    header.className = 'era-group-header';
+    header.innerHTML =
+      '<div class="era-group-line"></div>' +
+      '<div class="era-group-seal">' + meta.vol + '</div>' +
+      '<div class="era-group-name">' + meta.label + '</div>' +
+      '<div class="era-group-dates">' + meta.dates + '</div>' +
+      '<div class="era-group-line right"></div>' +
+      '<a class="era-group-vol-link" href="' + meta.link + '">Vol. ' + meta.vol + '&thinsp;→</a>';
+    group.appendChild(header);
+
+    // Documents in this era
+    byEra[era].forEach(function(d) {
+      const a = document.createElement('a');
+      a.className = 'doc-row';
+      a.href = d.link;
+      a.dataset.type = d.type;
+      a.dataset.era  = d.era.toLowerCase();
+      a.innerHTML =
+        '<div class="doc-col-vol">' + d.vol + '</div>' +
+        '<div class="doc-col-main">' +
+          '<div class="doc-col-title">' + d.title + '</div>' +
+          '<div class="doc-col-meta">' + d.meta + '</div>' +
+        '</div>' +
+        '<div class="doc-col-type type-' + d.type + '">' + d.type + '</div>' +
+        '<div class="doc-col-date">' + d.date + '</div>';
+      group.appendChild(a);
+    });
+
+    docList.appendChild(group);
+  });
 }
 
 renderDocs(DOCS);

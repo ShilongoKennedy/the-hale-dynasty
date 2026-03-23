@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 80">
+  <!-- Shield background -->
+  <path d="M36 3 L67 15 L67 47 Q67 67 36 77 Q5 67 5 47 L5 15 Z" fill="#0E0C0A"/>
+  <!-- Shield border -->
+  <path d="M36 3 L67 15 L67 47 Q67 67 36 77 Q5 67 5 47 L5 15 Z" fill="none" stroke="#C8A83C" stroke-width="2.5"/>
+  <!-- Inner shield border -->
+  <path d="M36 10 L61 20 L61 47 Q61 63 36 71 Q11 63 11 47 L11 20 Z" fill="none" stroke="#C8A83C" stroke-width="0.9" opacity="0.4"/>
+  <!-- H letterform -->
+  <text x="36" y="52" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#C8A83C" font-weight="bold" letter-spacing="0">H</text>
+  <!-- Corner dots -->
+  <circle cx="24" cy="29" r="2.5" fill="#C8A83C" opacity="0.6"/>
+  <circle cx="48" cy="29" r="2.5" fill="#C8A83C" opacity="0.6"/>
+  <circle cx="36" cy="60" r="2.5" fill="#C8A83C" opacity="0.6"/>
+</svg>

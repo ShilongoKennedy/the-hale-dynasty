@@ -2,360 +2,409 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Hale Lands · Map · The Hale Dynasty Archive</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#090705; color:#D4C4A0; font-family:'IM Fell English',Georgia,serif; min-height:100vh; }
+    html, body { height:100%; background:#0a0806; }
+    body { font-family:'IM Fell English',Georgia,serif; color:#D4C4A0; overflow:hidden; }
 
-    /* ── ACCESS HEADER ── */
-    .access-header { display:flex; justify-content:space-between; align-items:center; padding:8px 24px; background:rgba(0,0,0,0.65); border-bottom:1px solid rgba(200,168,60,0.15); font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.08em; color:rgba(200,168,60,0.45); }
-    .access-status { color:rgba(80,180,80,0.7); }
-    .map-nav { display:flex; justify-content:space-between; align-items:center; padding:10px 28px; background:rgba(0,0,0,0.5); border-bottom:1px solid rgba(200,168,60,0.12); }
-    .map-nav a { font-family:'Cinzel',serif; font-size:0.7em; letter-spacing:0.18em; color:rgba(200,168,60,0.55); text-decoration:none; transition:color 0.3s; }
-    .map-nav a:hover { color:rgba(200,168,60,0.9); }
+    /* ── FULL-SCREEN MAP ── */
+    #map {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+    }
 
-    /* ── HEADING ── */
-    .map-heading { text-align:center; padding:20px 20px 10px; }
-    .map-heading h1 { font-family:'Cinzel',serif; font-size:clamp(1.1em,2.5vw,1.8em); font-weight:600; letter-spacing:0.25em; color:rgba(200,168,60,0.85); text-transform:uppercase; }
-    .map-heading p { margin-top:5px; font-size:0.75em; font-style:italic; color:rgba(200,168,60,0.4); letter-spacing:0.1em; }
+    /* Age + warm the tiles to look like an archive map */
+    .leaflet-tile-pane {
+      filter: sepia(55%) saturate(0.55) brightness(0.62) hue-rotate(8deg);
+    }
+
+    /* Remove Leaflet's default attribution styling conflicts */
+    .leaflet-control-attribution {
+      background: rgba(8,6,4,0.7) !important;
+      color: rgba(200,168,60,0.3) !important;
+      font-family: 'Courier New', monospace !important;
+      font-size: 0.52em !important;
+      letter-spacing: 0.05em !important;
+      border: none !important;
+    }
+    .leaflet-control-attribution a { color: rgba(200,168,60,0.4) !important; }
+    .leaflet-control-zoom {
+      border: 1px solid rgba(200,168,60,0.2) !important;
+      background: transparent !important;
+    }
+    .leaflet-control-zoom a {
+      background: rgba(8,6,4,0.88) !important;
+      color: rgba(200,168,60,0.6) !important;
+      border-bottom: 1px solid rgba(200,168,60,0.15) !important;
+      font-family: 'Cinzel', serif !important;
+      font-size: 14px !important;
+      width: 32px !important; height: 32px !important;
+      line-height: 32px !important;
+      transition: color 0.2s, background 0.2s !important;
+    }
+    .leaflet-control-zoom a:hover {
+      background: rgba(200,168,60,0.08) !important;
+      color: rgba(200,168,60,0.9) !important;
+    }
+    .leaflet-control-zoom-out { border-bottom: none !important; }
+
+    /* ── TOP OVERLAY BAR ── */
+    .map-topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(8,6,4,0.95) 60%, transparent 100%);
+      padding: 0;
+      pointer-events: none;
+    }
+    .map-topbar > * { pointer-events: all; }
+
+    .map-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 24px;
+      border-bottom: 1px solid rgba(200,168,60,0.1);
+      background: rgba(8,6,4,0.7);
+      backdrop-filter: blur(6px);
+    }
+    .map-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65em;
+      letter-spacing: 0.16em;
+      color: rgba(200,168,60,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .map-nav a:hover { color: rgba(200,168,60,0.9); }
+    .map-nav-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: rgba(200,168,60,0.7);
+      text-transform: uppercase;
+    }
 
     /* ── ERA STRIP ── */
-    .era-strip { display:flex; justify-content:center; flex-wrap:wrap; gap:5px; padding:8px 20px 10px; border-bottom:1px solid rgba(200,168,60,0.1); }
-    .era-btn { padding:4px 10px; border:1px solid rgba(200,168,60,0.25); background:rgba(0,0,0,0.3); color:rgba(200,168,60,0.5); font-family:'Cinzel',serif; font-size:0.56em; letter-spacing:0.12em; cursor:pointer; transition:all 0.25s; text-transform:uppercase; }
+    .era-strip-wrap {
+      padding: 8px 16px 0;
+      background: rgba(8,6,4,0.5);
+      backdrop-filter: blur(4px);
+    }
+    .era-strip {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    .era-strip::-webkit-scrollbar { display: none; }
+    .era-btn {
+      flex-shrink: 0;
+      padding: 4px 10px;
+      border: 1px solid rgba(200,168,60,0.22);
+      background: rgba(0,0,0,0.3);
+      color: rgba(200,168,60,0.5);
+      font-family: 'Cinzel', serif;
+      font-size: 0.55em;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.22s;
+      text-transform: uppercase;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
     .era-btn:hover { border-color:rgba(200,168,60,0.6); color:rgba(200,168,60,0.85); }
-    .era-btn.active { background:rgba(200,168,60,0.14); border-color:rgba(200,168,60,0.6); color:rgba(200,168,60,0.95); }
-    .era-desc { text-align:center; padding:6px 24px; font-size:0.67em; font-style:italic; color:rgba(200,168,60,0.38); min-height:24px; }
-    .route-note { text-align:center; padding:0 24px 6px; font-size:0.62em; font-style:italic; color:rgba(200,168,60,0.28); min-height:16px; letter-spacing:0.06em; }
+    .era-btn.active { background:rgba(200,168,60,0.12); border-color:rgba(200,168,60,0.6); color:rgba(200,168,60,0.95); }
+    .era-desc-bar {
+      padding: 5px 16px 8px;
+      font-size: 0.63em;
+      font-style: italic;
+      color: rgba(200,168,60,0.4);
+      min-height: 26px;
+      background: rgba(8,6,4,0.4);
+    }
 
-    /* ── MAP LAYOUT ── */
-    .map-layout { display:flex; gap:0; align-items:flex-start; max-width:1400px; margin:0 auto; padding:18px 20px 40px; }
-    .map-frame { flex:1; min-width:0; }
-    .map-border { padding:6px; background:linear-gradient(135deg,rgba(200,168,60,0.4),rgba(160,120,40,0.2),rgba(200,168,60,0.4)); box-shadow:0 0 50px rgba(0,0,0,0.9),inset 0 0 20px rgba(0,0,0,0.4); }
-    .map-border-inner { padding:3px; border:1px solid rgba(200,168,60,0.15); position:relative; }
-    .map-image-wrap { position:relative; display:block; line-height:0; }
-    .map-bg-img { width:100%; height:auto; display:block; }
+    /* ── CUSTOM LEAFLET MARKERS ── */
+    .hd-marker {
+      cursor: pointer;
+      position: relative;
+    }
+    .hd-marker-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+    }
+    .hd-marker:hover .hd-marker-inner { transform: scale(1.15) translateY(-2px); }
+    .hd-marker-inner svg { display: block; }
+    .hd-marker-label {
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: #1A0E04;
+      background: rgba(238,222,172,0.97);
+      border: 1px solid rgba(139,100,40,0.55);
+      padding: 2px 7px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      z-index: 20;
+    }
+    .hd-marker:hover .hd-marker-label { opacity: 1; }
 
-    /* ── ROUTE SVG LAYER ── */
-    .route-layer { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-    .route-line { fill:none; stroke-linecap:round; stroke-dasharray:2.5 2; animation:routeDash 2s linear infinite; }
-    @keyframes routeDash { to { stroke-dashoffset:-18; } }
-    .route-i   { stroke:rgba(200,168,60,0.65); stroke-width:0.5; display:none; }
-    .route-iv  { stroke:rgba(160,60,60,0.6);   stroke-width:0.45; display:none; }
-    .route-ix  { stroke:rgba(60,120,90,0.6);   stroke-width:0.45; display:none; }
+    /* Halecroft pulsing ring */
+    .hd-pulse {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,60,0.4);
+      animation: hdPulse 2.4s ease-out infinite;
+      pointer-events: none;
+    }
+    @keyframes hdPulse {
+      0%   { width:16px; height:16px; margin:-8px 0 0 -8px; opacity:0.7; }
+      100% { width:50px; height:50px; margin:-25px 0 0 -25px; opacity:0; }
+    }
 
-    /* ── PIN LAYER ── */
-    .pin-layer { position:absolute; inset:0; pointer-events:none; }
-    .map-pin { position:absolute; transform:translate(-50%,-100%); cursor:pointer; pointer-events:all; z-index:10; }
-    .map-pin svg { display:block; overflow:visible; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.55)); transition:filter 0.2s; }
-    .map-pin:hover svg { filter:drop-shadow(0 0 8px rgba(200,168,60,0.8)) drop-shadow(0 2px 5px rgba(0,0,0,0.55)); }
-    .map-pin:hover .pin-label { opacity:1; }
-    .map-pin.selected svg { filter:drop-shadow(0 0 10px rgba(200,168,60,1)) drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
-    .map-pin.faded { opacity:0.08; pointer-events:none; }
+    /* Easter egg markers — faint glinting dots on the water */
+    .hd-ee-marker {
+      cursor: pointer;
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hd-ee-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(200,168,60,0.28);
+      box-shadow: 0 0 7px 2px rgba(200,168,60,0.14);
+      animation: eeGlint 3.5s ease-in-out infinite;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .hd-ee-marker:hover .hd-ee-dot {
+      background: rgba(200,168,60,0.75);
+      box-shadow: 0 0 14px 5px rgba(200,168,60,0.45);
+    }
+    @keyframes eeGlint {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50%       { opacity: 0.85; transform: scale(1.3); }
+    }
 
-    /* Pin label tooltip */
-    .pin-label { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); white-space:nowrap; font-family:'Cinzel',serif; font-size:0.58em; letter-spacing:0.1em; color:#1A0E04; background:rgba(238,222,172,0.97); border:1px solid rgba(139,100,40,0.55); padding:3px 8px; pointer-events:none; opacity:0; transition:opacity 0.2s; box-shadow:0 2px 8px rgba(0,0,0,0.5); }
+    /* ── DETAIL PANEL (right side, desktop) ── */
+    .detail-panel {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 320px;
+      z-index: 20;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none;
+    }
+    .detail-panel.open {
+      transform: translateX(0);
+      pointer-events: all;
+    }
+    .detail-inner {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,7,4,0.97);
+      border-left: 1px solid rgba(200,168,60,0.2);
+      overflow-y: auto;
+      padding: 56px 22px 30px;
+      backdrop-filter: blur(8px);
+    }
+    .detail-inner::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(200,168,60,0.07);
+      pointer-events: none;
+    }
+    .close-panel {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none;
+      color: rgba(200,168,60,0.35); font-size: 1.3em; cursor: pointer;
+      font-family: 'Courier New', monospace; transition: color 0.2s; z-index: 10;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .close-panel:hover { color: #C8A83C; }
+    .detail-era-badge {
+      display: inline-block;
+      font-family: 'Cinzel', serif; font-size: 0.5em; letter-spacing: 0.15em;
+      color: rgba(200,168,60,0.55); border: 1px solid rgba(200,168,60,0.2);
+      padding: 2px 8px; margin-bottom: 8px;
+    }
+    .detail-name {
+      font-family: 'Cinzel', serif; font-size: 1.0em; font-weight: 600;
+      color: rgba(200,168,60,0.9); padding-right: 20px; margin-bottom: 8px; line-height: 1.3;
+    }
+    .detail-divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(to right, rgba(200,168,60,0.5), transparent);
+      margin: 0 0 12px;
+    }
+    .detail-desc {
+      font-size: 0.76em; line-height: 1.85; color: rgba(210,195,158,0.78); font-style: italic;
+      white-space: pre-line;
+    }
+    .detail-link {
+      display: inline-block; margin-top: 14px;
+      font-family: 'Cinzel', serif; font-size: 0.58em; letter-spacing: 0.14em;
+      color: rgba(200,168,60,0.55); text-decoration: none;
+      border-bottom: 1px solid rgba(200,168,60,0.2); padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .detail-link:hover { color: rgba(200,168,60,0.9); border-color: rgba(200,168,60,0.6); }
+    .detail-persons { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(200,168,60,0.1); }
+    .detail-persons-label {
+      font-family: 'Courier New', monospace; font-size: 0.5em; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(200,168,60,0.35); margin-bottom: 7px;
+    }
+    .detail-person-link {
+      display: inline-block;
+      font-family: 'Cinzel', serif; font-size: 0.56em; letter-spacing: 0.09em;
+      color: rgba(200,168,60,0.55); text-decoration: none;
+      border: 1px solid rgba(200,168,60,0.18); padding: 3px 9px; margin: 0 4px 4px 0;
+      transition: all 0.2s; background: rgba(200,168,60,0.04);
+    }
+    .detail-person-link:hover {
+      color: rgba(200,168,60,0.9); border-color: rgba(200,168,60,0.5);
+      background: rgba(200,168,60,0.09);
+    }
 
-    /* Ghost pin (Blackstone Moor) */
-    .map-pin-ghost { position:absolute; transform:translate(-50%,-100%); cursor:pointer; pointer-events:all; z-index:10; animation:ghostPulse 4s ease-in-out infinite; }
-    @keyframes ghostPulse { 0%,100%{opacity:0.15} 50%{opacity:0.35} }
-    .map-pin-ghost:hover { opacity:0.7!important; animation:none; }
+    /* ── EASTER EGG CARD ── */
+    .ee-card {
+      display: none; position: fixed; z-index: 500;
+      background: radial-gradient(ellipse, #1E1408 0%, #120E08 100%);
+      border: 1px solid rgba(200,168,60,0.28);
+      padding: 20px 22px;
+      max-width: 300px; min-width: 220px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.8);
+      animation: eeIn 0.25s ease;
+    }
+    @keyframes eeIn { from { opacity:0; transform:translateY(6px); } }
+    .ee-close {
+      position: absolute; top: 8px; right: 10px;
+      background: none; border: none; color: rgba(200,168,60,0.4);
+      font-size: 1.1em; cursor: pointer; padding: 4px 6px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ee-close:hover { color: #C8A83C; }
+    .ee-seal { display: block; font-size: 1.4em; margin-bottom: 6px; }
+    .ee-title {
+      font-family: 'Cinzel', serif; font-size: 0.72em; letter-spacing: 0.1em;
+      color: rgba(200,168,60,0.85); margin-bottom: 10px; line-height: 1.35; padding-right: 16px;
+    }
+    .ee-body {
+      font-size: 0.72em; line-height: 1.8; color: rgba(200,185,148,0.7);
+      font-style: italic; white-space: pre-line;
+    }
 
-    /* Halecroft star */
-    @keyframes haleGlow { 0%,100%{filter:drop-shadow(0 0 4px rgba(200,168,60,0.55))} 50%{filter:drop-shadow(0 0 14px rgba(200,168,60,1))} }
-    .pin-halecroft svg { animation:haleGlow 2.5s ease-in-out infinite; }
-    .pin-halecroft { transform:translate(-50%,-50%); } /* centered not top-anchored */
 
-    /* ── EASTER EGG ZONES ── */
-    .ee-zone { position:absolute; width:50px; height:50px; cursor:crosshair; pointer-events:all; z-index:12; transform:translate(-50%,-50%); border-radius:50%; }
-    .ee-zone:hover { background:rgba(200,168,60,0.06); }
+    /* ── MOBILE (≤ 700px) ── */
+    @media (max-width: 700px) {
+      .map-nav-title { display: none; }
+      .map-nav { padding: 8px 14px; }
+      .map-nav a { font-size: 0.6em; }
 
-    /* ── EASTER EGG CARD (floating parchment) ── */
-    .ee-card { position:fixed; z-index:9998; min-width:260px; max-width:340px; background:rgba(238,222,168,0.98); border:1px solid rgba(120,88,30,0.55); padding:18px 20px 16px; box-shadow:0 8px 32px rgba(0,0,0,0.7),0 0 0 3px rgba(160,120,40,0.2); pointer-events:all; animation:eeFadeIn 0.3s ease-out; display:none; }
-    @keyframes eeFadeIn { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-    .ee-card::before { content:''; position:absolute; inset:4px; border:1px solid rgba(120,88,30,0.2); pointer-events:none; }
-    .ee-seal { font-size:1.4em; margin-bottom:6px; display:block; }
-    .ee-title { font-family:'Cinzel',serif; font-size:0.82em; font-weight:700; color:#2A1206; letter-spacing:0.08em; margin-bottom:10px; line-height:1.3; }
-    .ee-body { font-family:'IM Fell English',serif; font-size:0.76em; line-height:1.75; color:#3A2410; font-style:italic; }
-    .ee-close { position:absolute; top:8px; right:10px; background:none; border:none; font-size:1.1em; color:rgba(80,50,20,0.5); cursor:pointer; line-height:1; transition:color 0.2s; }
-    .ee-close:hover { color:rgba(80,50,20,0.9); }
-
-    /* ── DETAIL PANEL (dark, archive style) ── */
-    .detail-panel { width:0; overflow:hidden; transition:width 0.4s ease,opacity 0.4s ease; opacity:0; position:sticky; top:24px; align-self:flex-start; flex-shrink:0; }
-    .detail-panel.open { width:300px; opacity:1; padding-left:20px; }
-    .detail-inner { background:rgba(14,9,4,0.97); border:1px solid rgba(200,168,60,0.25); padding:22px 20px 20px; position:relative; min-width:280px; }
-    .detail-inner::before { content:''; position:absolute; inset:4px; border:1px solid rgba(200,168,60,0.09); pointer-events:none; }
-    .close-panel { position:absolute; top:10px; right:12px; background:none; border:none; color:rgba(200,168,60,0.4); font-size:1.2em; cursor:pointer; transition:color 0.2s; }
-    .close-panel:hover { color:rgba(200,168,60,0.9); }
-    .detail-era-badge { display:inline-block; font-family:'Cinzel',serif; font-size:0.52em; letter-spacing:0.15em; color:rgba(200,168,60,0.55); border:1px solid rgba(200,168,60,0.2); padding:2px 8px; margin-bottom:8px; }
-    .detail-name { font-family:'Cinzel',serif; font-size:1.05em; font-weight:600; color:rgba(200,168,60,0.9); padding-right:20px; margin-bottom:8px; line-height:1.3; }
-    .detail-divider { width:40px; height:1px; background:linear-gradient(to right,rgba(200,168,60,0.5),transparent); margin:0 0 12px; }
-    .detail-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px; }
-    .detail-tag { font-family:'Cinzel',serif; font-size:0.53em; letter-spacing:0.1em; padding:3px 8px; border:1px solid rgba(200,168,60,0.18); color:rgba(200,168,60,0.55); background:rgba(200,168,60,0.05); }
-    .detail-desc { font-size:0.77em; line-height:1.8; color:rgba(210,195,158,0.78); font-style:italic; }
-    .detail-link { display:inline-block; margin-top:14px; font-family:'Cinzel',serif; font-size:0.6em; letter-spacing:0.15em; color:rgba(200,168,60,0.55); text-decoration:none; border-bottom:1px solid rgba(200,168,60,0.2); padding-bottom:1px; transition:color 0.2s,border-color 0.2s; }
-    .detail-link:hover { color:rgba(200,168,60,0.9); border-color:rgba(200,168,60,0.6); }
-    .detail-persons { margin-top:14px; padding-top:12px; border-top:1px solid rgba(200,168,60,0.1); }
-    .detail-persons-label { font-family:'Courier New',monospace; font-size:0.52em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(200,168,60,0.35); margin-bottom:7px; }
-    .detail-person-link { display:inline-block; font-family:'Cinzel',serif; font-size:0.58em; letter-spacing:0.1em; color:rgba(200,168,60,0.55); text-decoration:none; border:1px solid rgba(200,168,60,0.18); padding:3px 9px; margin:0 4px 4px 0; transition:all 0.2s; background:rgba(200,168,60,0.04); }
-    .detail-person-link:hover { color:rgba(200,168,60,0.9); border-color:rgba(200,168,60,0.5); background:rgba(200,168,60,0.09); }
-
-    /* ── DUST PARTICLES ── */
-    .dust { position:absolute; border-radius:50%; pointer-events:none; z-index:5; }
-    .d1{width:2px;height:2px;background:rgba(200,168,60,0.2);left:8%;top:15%;animation:drift1 18s ease-in-out infinite}
-    .d2{width:1.5px;height:1.5px;background:rgba(200,168,60,0.15);left:85%;top:20%;animation:drift2 22s ease-in-out infinite}
-    .d3{width:2px;height:2px;background:rgba(200,168,60,0.18);left:15%;top:70%;animation:drift3 20s ease-in-out infinite}
-    .d4{width:1px;height:1px;background:rgba(200,168,60,0.25);left:72%;top:65%;animation:drift1 15s ease-in-out infinite 3s}
-    .d5{width:2px;height:2px;background:rgba(200,168,60,0.12);left:45%;top:10%;animation:drift2 25s ease-in-out infinite 5s}
-    .d6{width:1.5px;height:1.5px;background:rgba(200,168,60,0.2);left:60%;top:80%;animation:drift3 19s ease-in-out infinite 8s}
-    @keyframes drift1{0%,100%{transform:translate(0,0)}30%{transform:translate(12px,-8px)}65%{transform:translate(-6px,14px)}}
-    @keyframes drift2{0%,100%{transform:translate(0,0)}40%{transform:translate(-10px,10px)}70%{transform:translate(8px,-6px)}}
-    @keyframes drift3{0%,100%{transform:translate(0,0)}25%{transform:translate(8px,10px)}60%{transform:translate(-12px,-8px)}}
-
-    /* ── FOOTER ── */
-    .map-footer { text-align:center; padding:14px 20px; border-top:1px solid rgba(200,168,60,0.1); font-size:0.65em; color:rgba(200,168,60,0.3); letter-spacing:0.1em; }
-    .map-footer a { color:rgba(200,168,60,0.45); text-decoration:none; }
-    .map-footer a:hover { color:rgba(200,168,60,0.8); }
-
-    @media(max-width:960px){
-      .map-layout{flex-direction:column;padding:10px;}
-      .detail-panel.open{width:100%;padding-left:0;padding-top:16px;}
-      .detail-inner{min-width:unset;}
-      .access-header span:not(.access-status){display:none;}
+      /* Detail panel becomes bottom sheet */
+      .detail-panel {
+        top: auto;
+        right: 0; left: 0; bottom: 0;
+        width: 100%;
+        transform: translateY(110%);
+        transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
+        max-height: 72vh;
+      }
+      .detail-panel.open { transform: translateY(0); }
+      .detail-inner {
+        position: relative;
+        border-left: none;
+        border-top: 1px solid rgba(200,168,60,0.22);
+        border-radius: 16px 16px 0 0;
+        max-height: 72vh;
+        padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+      }
+      /* Drag handle */
+      .detail-inner::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 10px; left: 50%;
+        transform: translateX(-50%);
+        width: 36px; height: 4px;
+        background: rgba(200,168,60,0.2);
+        border-radius: 2px;
+      }
+      /* Hover labels don't work on touch — hide them */
+      .hd-marker-label { display: none !important; }
     }
   </style>
   <link rel="stylesheet" href="features.css">
 </head>
 <body>
-
 <div id="pageOverlay" style="position:fixed;inset:0;background:#000;z-index:9999;opacity:0;pointer-events:none;"></div>
 
-<header class="access-header">
-  <span>Bodleian Library, Oxford &nbsp;·&nbsp; MSS. Hale-Marsh Collection</span>
-  <span>Cartographic Record · Hale Lands 1066–2026</span>
-  <span class="access-status">● Cartographic view</span>
-</header>
+<!-- INTERACTIVE MAP -->
+<div id="map"></div>
 
-<nav class="map-nav">
-  <a href="index.html">&#8592; Archive Home</a>
-  <a href="family-tree.html">Family Tree &#8594;</a>
-</nav>
-
-<div class="map-heading">
-  <h1>The Hale Lands</h1>
-  <p>An Account of Places Significant to the House of Hale &nbsp;&#183;&nbsp; 1066&#8211;2026</p>
-</div>
-
-<div class="era-strip" id="eraStrip">
-  <button class="era-btn active" data-era="all">All Eras</button>
-  <button class="era-btn" data-era="i">I &middot; Norman</button>
-  <button class="era-btn" data-era="ii">II &middot; Plague</button>
-  <button class="era-btn" data-era="iii">III &middot; Tudor</button>
-  <button class="era-btn" data-era="iv">IV &middot; Civil War</button>
-  <button class="era-btn" data-era="v">V &middot; Georgian</button>
-  <button class="era-btn" data-era="vi">VI &middot; Regency</button>
-  <button class="era-btn" data-era="vii">VII &middot; Victorian</button>
-  <button class="era-btn" data-era="viii">VIII &middot; Great War</button>
-  <button class="era-btn" data-era="ix">IX &middot; Second War</button>
-  <button class="era-btn" data-era="x">X &middot; Present</button>
-</div>
-<div class="era-desc" id="eraDesc">Select an era to illuminate its places upon the map</div>
-<div class="route-note" id="routeNote"></div>
-
-<div class="map-layout">
-  <div class="map-frame">
-    <div class="map-border">
-      <div class="map-border-inner">
-        <div class="map-image-wrap" id="mapWrap">
-
-          <img class="map-bg-img" src="map-bg.jpg" alt="Manuscript map of England and Wales — The Hale Lands">
-
-          <!-- ROUTE SVG OVERLAY (viewBox matches 1408:768 ratio = 100:54.5) -->
-          <svg class="route-layer" viewBox="0 0 100 54.6" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <!-- Era I: Normandy crossing up through the Channel to SE England -->
-            <path class="route-line route-i" d="M 62 91 Q 67 78 71 70 Q 74 64 73 62"/>
-            <!-- Era IV: Gloucester to Oxford (the two brothers facing each other) -->
-            <path class="route-line route-iv" d="M 51 56.5 Q 55 53 60 54 Q 63 54.5 66 55"/>
-            <!-- Era IX: London toward Harlow -->
-            <path class="route-line route-ix" d="M 75 57.5 Q 76 55 77.5 53"/>
-          </svg>
-
-          <div class="pin-layer" id="pinLayer">
-
-            <!-- ★ HALECROFT — pulsing gold star, all eras -->
-            <div class="map-pin pin-halecroft" data-key="halecroft" data-eras="all" style="left:56.5%;top:47.5%">
-              <svg width="36" height="36" viewBox="-18 -18 36 36">
-                <circle r="16" fill="none" stroke="rgba(200,168,60,0.3)" stroke-width="0.8"/>
-                <circle r="12" fill="none" stroke="rgba(200,168,60,0.18)" stroke-width="0.6"/>
-                <polygon points="0,-11 2.6,-3.5 10.5,-3.5 4.2,1.4 6.5,9 0,4.8 -6.5,9 -4.2,1.4 -10.5,-3.5 -2.6,-3.5"
-                  fill="rgba(200,168,60,0.92)" stroke="rgba(140,100,20,0.8)" stroke-width="0.7"/>
-              </svg>
-              <span class="pin-label">Halecroft &middot; The Seat</span>
-            </div>
-
-            <!-- WORCESTER — eras i-vii, gold -->
-            <div class="map-pin" data-key="worcester" data-eras="i,ii,iii,iv,v,vi,vii" style="left:54%;top:44%">
-              <svg width="20" height="28" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(185,148,50,0.88)" stroke="rgba(220,185,80,0.7)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(255,230,120,0.65)"/>
-              </svg>
-              <span class="pin-label">Worcester</span>
-            </div>
-
-            <!-- WINCHESTER — era i, gold (Norman capital) -->
-            <div class="map-pin" data-key="winchester" data-eras="i" style="left:67.5%;top:63%">
-              <svg width="18" height="25" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(200,168,60,0.82)" stroke="rgba(220,190,80,0.7)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(255,235,130,0.6)"/>
-              </svg>
-              <span class="pin-label">Winchester</span>
-            </div>
-
-            <!-- PERSHORE — eras ii, x, dark red -->
-            <div class="map-pin" data-key="pershore" data-eras="ii,x" style="left:57.5%;top:50.5%">
-              <svg width="16" height="22" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(140,40,40,0.85)" stroke="rgba(190,80,80,0.65)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(230,130,130,0.5)"/>
-              </svg>
-              <span class="pin-label">Pershore</span>
-            </div>
-
-            <!-- GLOUCESTER — era iv, civil war red -->
-            <div class="map-pin" data-key="gloucester" data-eras="iv" style="left:50.5%;top:56.5%">
-              <svg width="16" height="22" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(110,35,35,0.88)" stroke="rgba(170,70,70,0.7)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(220,110,110,0.5)"/>
-              </svg>
-              <span class="pin-label">Gloucester</span>
-            </div>
-
-            <!-- EDGEHILL — era iv, battle site (crossed swords pin, civil war) -->
-            <div class="map-pin" data-key="edgehill" data-eras="iv" style="left:58%;top:51%">
-              <svg width="18" height="25" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(90,25,25,0.9)" stroke="rgba(160,60,60,0.7)" stroke-width="0.8"/>
-                <!-- Small cross/swords marker -->
-                <line x1="-3" y1="-3" x2="3" y2="-7" stroke="rgba(255,180,180,0.7)" stroke-width="1"/>
-                <line x1="3" y1="-3" x2="-3" y2="-7" stroke="rgba(255,180,180,0.7)" stroke-width="1"/>
-              </svg>
-              <span class="pin-label">Edgehill &middot; Battle Site</span>
-            </div>
-
-            <!-- OXFORD — eras iv, x, green for academic/archive -->
-            <div class="map-pin" data-key="oxford" data-eras="iv,x" style="left:66%;top:55%">
-              <svg width="18" height="25" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(50,80,45,0.88)" stroke="rgba(100,155,70,0.7)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(130,205,100,0.5)"/>
-              </svg>
-              <span class="pin-label">Oxford &middot; Bodleian</span>
-            </div>
-
-            <!-- SHROPSHIRE / WHITMORE PARK — era vii, charcoal -->
-            <div class="map-pin" data-key="shropshire" data-eras="vii" style="left:49%;top:37%">
-              <svg width="16" height="22" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(50,46,44,0.9)" stroke="rgba(140,130,120,0.65)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(185,175,160,0.5)"/>
-              </svg>
-              <span class="pin-label">Shropshire &middot; Whitmore Park</span>
-            </div>
-
-            <!-- BATH — era vi, mauve/regency -->
-            <div class="map-pin" data-key="bath" data-eras="vi" style="left:47%;top:61%">
-              <svg width="16" height="22" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(130,80,100,0.85)" stroke="rgba(180,120,148,0.65)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(220,160,185,0.5)"/>
-              </svg>
-              <span class="pin-label">Bath</span>
-            </div>
-
-            <!-- LONDON — eras v, vii, viii, ix, x — larger dark pin -->
-            <div class="map-pin" data-key="london" data-eras="v,vii,viii,ix,x" style="left:75%;top:57%">
-              <svg width="22" height="30" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(22,18,14,0.92)" stroke="rgba(185,160,105,0.75)" stroke-width="1"/>
-                <circle cx="0" cy="-3" r="2.8" fill="rgba(205,180,120,0.6)"/>
-              </svg>
-              <span class="pin-label">London</span>
-            </div>
-
-            <!-- BRIXTON — eras vii, viii, ix, slate blue -->
-            <div class="map-pin" data-key="brixton" data-eras="vii,viii,ix" style="left:74%;top:60.5%">
-              <svg width="14" height="20" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(38,58,75,0.88)" stroke="rgba(75,118,152,0.65)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.2" fill="rgba(110,162,200,0.5)"/>
-              </svg>
-              <span class="pin-label">Brixton, London</span>
-            </div>
-
-            <!-- HARLOW — era ix, muted green -->
-            <div class="map-pin" data-key="harlow" data-eras="ix" style="left:77.5%;top:52.5%">
-              <svg width="14" height="20" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(20,60,38,0.88)" stroke="rgba(55,138,75,0.65)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.2" fill="rgba(90,198,115,0.45)"/>
-              </svg>
-              <span class="pin-label">Harlow, Essex</span>
-            </div>
-
-            <!-- NORMANDY — era i, anchored at bottom of Channel -->
-            <div class="map-pin" data-key="normandy" data-eras="i" style="left:62%;top:91%">
-              <svg width="18" height="25" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(115,55,55,0.88)" stroke="rgba(180,100,100,0.7)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2.5" fill="rgba(220,152,152,0.5)"/>
-              </svg>
-              <span class="pin-label">Normandy, France</span>
-            </div>
-
-            <!-- GHOST PIN: Blackstone Moor — barely visible, easter egg -->
-            <div class="map-pin map-pin-ghost" data-key="blackstone" data-eras="all" style="left:53%;top:28%">
-              <svg width="14" height="20" viewBox="-8 -10 16 24">
-                <path d="M0,12 C-1,8 -7,4 -7,-2 A7,7,0,1,1,7,-2 C7,4 1,8 0,12 Z" fill="rgba(160,155,148,0.5)" stroke="rgba(200,195,185,0.4)" stroke-width="0.8"/>
-                <circle cx="0" cy="-3" r="2" fill="rgba(210,205,198,0.4)"/>
-              </svg>
-              <span class="pin-label" style="font-style:italic;color:#3A2A18;">? Unknown Location</span>
-            </div>
-
-            <!-- EASTER EGG ZONES (invisible click areas) -->
-            <div class="ee-zone" data-ee="compass"   style="left:86%;top:73%"></div>
-            <div class="ee-zone" data-ee="ship-west" style="left:17%;top:62%"></div>
-            <div class="ee-zone" data-ee="cartouche"  style="left:24%;top:23%"></div>
-            <div class="ee-zone" data-ee="ship-east"  style="left:80%;top:21%"></div>
-            <div class="ee-zone" data-ee="scotland"   style="left:59%;top:12%"></div>
-            <div class="ee-zone" data-ee="channel"    style="left:52%;top:85%"></div>
-
-            <!-- DUST PARTICLES -->
-            <div class="dust d1"></div><div class="dust d2"></div><div class="dust d3"></div>
-            <div class="dust d4"></div><div class="dust d5"></div><div class="dust d6"></div>
-
-          </div><!-- end .pin-layer -->
-        </div><!-- end .map-image-wrap -->
-      </div>
+<!-- TOP OVERLAY -->
+<div class="map-topbar">
+  <nav class="map-nav">
+    <a href="index.html">&#8592; Archive Home</a>
+    <span class="map-nav-title">The Hale Lands</span>
+    <a href="family-tree.html">Family Tree &#8594;</a>
+  </nav>
+  <div class="era-strip-wrap">
+    <div class="era-strip" id="eraStrip">
+      <button class="era-btn active" data-era="all">All Eras</button>
+      <button class="era-btn" data-era="i">I · Norman</button>
+      <button class="era-btn" data-era="ii">II · Plague</button>
+      <button class="era-btn" data-era="iii">III · Tudor</button>
+      <button class="era-btn" data-era="iv">IV · Civil War</button>
+      <button class="era-btn" data-era="v">V · Georgian</button>
+      <button class="era-btn" data-era="vi">VI · Regency</button>
+      <button class="era-btn" data-era="vii">VII · Victorian</button>
+      <button class="era-btn" data-era="viii">VIII · Great War</button>
+      <button class="era-btn" data-era="ix">IX · Second War</button>
+      <button class="era-btn" data-era="x">X · Present</button>
     </div>
-  </div><!-- end .map-frame -->
+    <div class="era-desc-bar" id="eraDesc">Select an era to illuminate its places upon the map</div>
+  </div>
+</div>
 
-  <!-- DETAIL PANEL -->
-  <div class="detail-panel" id="detailPanel">
-    <div class="detail-inner">
-      <button class="close-panel" id="closeBtn">&times;</button>
-      <div class="detail-era-badge" id="detailBadge"></div>
-      <div class="detail-name" id="detailName">&mdash;</div>
-      <div class="detail-divider"></div>
-      <div class="detail-tags" id="detailTags"></div>
-      <p class="detail-desc" id="detailDesc"></p>
-      <a class="detail-link" href="#" id="detailLink"></a>
-      <div class="detail-persons" id="detailPersons" style="display:none">
-        <div class="detail-persons-label">Connected persons</div>
-        <div id="detailPersonLinks"></div>
-      </div>
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-inner">
+    <button class="close-panel" id="closeBtn">&times;</button>
+    <div class="detail-era-badge" id="detailBadge"></div>
+    <div class="detail-name" id="detailName">&mdash;</div>
+    <div class="detail-divider"></div>
+    <p class="detail-desc" id="detailDesc"></p>
+    <a class="detail-link" href="#" id="detailLink"></a>
+    <div class="detail-persons" id="detailPersons" style="display:none">
+      <div class="detail-persons-label">Connected persons</div>
+      <div id="detailPersonLinks"></div>
     </div>
   </div>
 </div>
 
-<footer class="map-footer">
-  <a href="index.html">&#8592; Archive Home</a>
-  &nbsp;&middot;&nbsp; The Hale Dynasty &middot; Cartographic Record &middot; 1066&#8211;2026 &nbsp;&middot;&nbsp;
-  <a href="family-tree.html">Family Tree &#8594;</a>
-</footer>
-
-<!-- EASTER EGG FLOATING CARD -->
+<!-- EASTER EGG CARD -->
 <div class="ee-card" id="eeCard">
   <button class="ee-close" id="eeClose">&times;</button>
   <span class="ee-seal" id="eeSeal"></span>
@@ -363,180 +412,350 @@
   <div class="ee-body" id="eeBody"></div>
 </div>
 
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
 (function(){
 'use strict';
 
+/* ══════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════ */
+
 var PINS = {
-  halecroft:  { name:'Halecroft, Worcestershire', eras:['all'], badge:'All Eras', desc:'The family seat. Held continuously since 1067. The heart of the Hale Dynasty \u2014 where generations have been born, married, and laid to rest. Every volume of the saga returns here.', link:'index.html', linkText:'View the Archive',
+  halecroft:  { name:'Halecroft, Worcestershire', latlng:[52.08,-2.38], eras:['all'], badge:'All Eras', type:'seat',
+    desc:'The family seat. Held continuously since 1067. The heart of the Hale Dynasty — where generations have been born, married, and laid to rest. Every volume of the saga returns here.', link:'halecroft.html', linkText:'The Estate · 1067–2026',
     persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'},{name:'Leofric de la Hale',id:'leofric'},{name:'Richard Hale',id:'richard'},{name:'Thomas Hale',id:'thomas'},{name:'Matilda of Halecroft',id:'matilda'},{name:'Augusta Hale',id:'augusta'}] },
-  worcester:  { name:'Worcester', eras:['i','ii','iii','iv','v','vi','vii'], badge:'Era I \u2013 VII', desc:'Where William Hale sought legal counsel in 1534. Where Edmund Hale was buried in 1882 after his mysterious death at Whitmore Park. Cathedral city of triumph and tragedy.', link:'era-I.html',
+  worcester:  { name:'Worcester', latlng:[52.19,-2.22], eras:['i','ii','iii','iv','v','vi','vii'], badge:'Era I–VII', type:'main',
+    desc:'Where William Hale sought legal counsel in 1534. Where Edmund Hale was buried in 1882 after his mysterious death at Whitmore Park. Cathedral city of triumph and tragedy.', link:'era-I.html',
     persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Edmund Hale II',id:'edmund_vict'},{name:'John Hale',id:'john_tudor'}] },
-  winchester: { name:'Winchester', eras:['i'], badge:'Era I \u00b7 Norman', desc:"Ranulf de la Hale first set foot on English soil here in the autumn of 1066. Winchester was then the capital of England \u2014 and it was here the Normans consolidated their conquest. Here the dynasty begins.", link:'era-I.html',
+  winchester: { name:'Winchester', latlng:[51.06,-1.31], eras:['i'], badge:'Era I · Norman', type:'main',
+    desc:'Ranulf de la Hale first set foot on English soil here in the autumn of 1066. Winchester was then the capital of England — and it was here the Normans consolidated their conquest. Here the dynasty begins.', link:'era-I.html',
     persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'}] },
-  pershore:   { name:'Pershore', eras:['ii','x'], badge:'Era II & X', desc:'Thomas Hale sheltered here before the plague in 1348. Margery Hale married Thomas Voss here in 1373 \u2014 beginning the Voss line that would shape centuries of Hale fortune.', link:'era-II.html',
+  pershore:   { name:'Pershore', latlng:[52.11,-2.07], eras:['ii','x'], badge:'Era II & X', type:'plague',
+    desc:'Thomas Hale sheltered here before the plague in 1348. Margery Hale married Thomas Voss here in 1373 — beginning the Voss line that would shape centuries of Hale fortune.', link:'era-II.html',
     persons:[{name:'Thomas Hale',id:'thomas'},{name:'Margery Hale',id:'margery'},{name:'James Marsh-Hale',id:'james'}] },
-  gloucester: { name:'Gloucester', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"Captain John Hale (Parliament) was stationed here in 1642. His first letter to his Royalist brother Thomas in Oxford marks the family's terrible division. Neither would forgive the other in their lifetimes.", link:'era-IV.html',
+  gloucester: { name:'Gloucester', latlng:[51.86,-2.24], eras:['iv'], badge:'Era IV · Civil War', type:'war',
+    desc:'Captain John Hale (Parliament) was stationed here in 1642. His first letter to his Royalist brother Thomas in Oxford marks the family\'s terrible division. Neither would forgive the other in their lifetimes.', link:'era-IV.html',
     persons:[{name:'John Hale',id:'john_tudor'}] },
-  edgehill:   { name:'Edgehill \u00b7 Battle Site', eras:['iv'], badge:'Era IV \u00b7 Civil War', desc:"The first great pitched battle of the Civil War, October 23rd 1642. Captain John Hale fought here under Essex. His brother Thomas watched from the Royalist lines across the field. Neither spoke of it afterwards. Neither forgot.", link:'era-IV.html',
+  edgehill:   { name:'Edgehill · Battle Site', latlng:[52.09,-1.49], eras:['iv'], badge:'Era IV · Civil War', type:'war',
+    desc:'The first great pitched battle of the Civil War, October 23rd 1642. Captain John Hale fought here under Essex. His brother Thomas watched from the Royalist lines across the field. Neither spoke of it afterwards. Neither forgot.', link:'era-IV.html',
     persons:[{name:'John Hale',id:'john_tudor'}] },
-  oxford:     { name:'Oxford', eras:['iv','x'], badge:'Era IV & X', desc:"Ensign Thomas Hale (Royalist) served here with Lord Wilmot's Horse in 1643. Four centuries later, James Marsh-Hale would research the family archives at the Bodleian Library, reading letters his ancestors wrote to each other across battle lines.", link:'era-IV.html',
+  oxford:     { name:'Oxford', latlng:[51.75,-1.26], eras:['iv','x'], badge:'Era IV & X', type:'main',
+    desc:'Ensign Thomas Hale (Royalist) served here with Lord Wilmot\'s Horse in 1643. Four centuries later, James Marsh-Hale would research the family archives at the Bodleian Library, reading letters his ancestors wrote to each other across battle lines.', link:'era-IV.html',
     persons:[{name:'James Marsh-Hale',id:'james'},{name:'Eleanor Voss',id:'eleanor'}] },
-  shropshire: { name:'Shropshire \u00b7 Whitmore Park', eras:['vii'], badge:'Era VII \u00b7 Victorian', desc:"Edmund Hale died in a locked study here on the 14th of August, 1882. The authorities called it natural causes. His widow Eleanor knew better. The locked room would haunt the family for generations. No one has lived in that wing since.", link:'era-VII.html',
+  shropshire: { name:'Shropshire · Whitmore Park', latlng:[52.70,-2.75], eras:['vii'], badge:'Era VII · Victorian', type:'main',
+    desc:'Edmund Hale died in a locked study here on the 14th of August, 1882. The authorities called it natural causes. His widow Eleanor knew better. The locked room would haunt the family for generations. No one has lived in that wing since.', link:'era-VII.html',
     persons:[{name:'Edmund Hale II',id:'edmund_vict'}] },
-  bath:       { name:'Bath', eras:['vi'], badge:'Era VI \u00b7 Regency', desc:"Lady Charlotte Vane-Hale took the waters here in the summer of 1813. The Pump Room was where she first encountered the man who would destroy her family's fortune. She described him in a letter as \u2018charming, and therefore dangerous.'", link:'era-VI.html',
+  bath:       { name:'Bath', latlng:[51.38,-2.36], eras:['vi'], badge:'Era VI · Regency', type:'main',
+    desc:'Lady Charlotte Vane-Hale took the waters here in the summer of 1813. The Pump Room was where she first encountered the man who would destroy her family\'s fortune. She described him in a letter as \'charming, and therefore dangerous.\'', link:'era-VI.html',
     persons:[{name:'Augusta Hale',id:'augusta'}] },
-  london:     { name:'London', eras:['v','vii','viii','ix','x'], badge:'Era V \u2013 X', desc:"Sir Nathaniel Hale arrived in 1698 and made his fortune in the City. Edmund Marsh-Hale surveyed its bomb damage in 1941. London witnessed the Hales at the height of their power, and watched them fall. It kept no secrets.", link:'era-V.html',
+  london:     { name:'London', latlng:[51.51,-0.13], eras:['v','vii','viii','ix','x'], badge:'Era V–X', type:'main',
+    desc:'Sir Nathaniel Hale arrived in 1698 and made his fortune in the City. Edmund Marsh-Hale surveyed its bomb damage in 1941. London witnessed the Hales at the height of their power, and watched them fall. It kept no secrets.', link:'era-V.html',
     persons:[{name:'Sir Nathaniel Hale',id:'nathaniel'},{name:'Edmund Marsh-Hale',id:'edmund_mh'},{name:'Eleanor Voss',id:'eleanor'}] },
-  brixton:    { name:'London \u00b7 Brixton', eras:['vii','viii','ix'], badge:'Era VII \u2013 IX', desc:"Home of Clara Marsh and her son Thomas, the illegitimate son of Edmund Hale, born 1873. His grandmother\u2019s house on Coldharbour Lane was destroyed in a German bombing raid, December 1941. The family\u2019s papers were lost with it.", link:'era-VII.html',
+  brixton:    { name:'London · Brixton', latlng:[51.46,-0.11], eras:['vii','viii','ix'], badge:'Era VII–IX', type:'main',
+    desc:'Home of Clara Marsh and her son Thomas, the illegitimate son of Edmund Hale, born 1873. His grandmother\'s house on Coldharbour Lane was destroyed in a German bombing raid, December 1941. The family\'s papers were lost with it.', link:'era-VII.html',
     persons:[{name:'Edmund Hale II',id:'edmund_vict'},{name:'Thomas Marsh-Hale',id:'thomas_mh'}] },
-  harlow:     { name:'Harlow, Essex', eras:['ix'], badge:'Era IX \u00b7 Post-War', desc:"Edmund Marsh-Hale designed this new town from 1947 onward. \u2018Making places habitable is about the corners,\u2019 he would say. His post-war vision shaped a generation \u2014 and represented, for him, a private form of reparation for what his family had done.", link:'era-IX.html',
+  harlow:     { name:'Harlow, Essex', latlng:[51.77,0.09], eras:['ix'], badge:'Era IX · Post-War', type:'main',
+    desc:'Edmund Marsh-Hale designed this new town from 1947 onward. \'Making places habitable is about the corners,\' he would say. His post-war vision shaped a generation — and represented, for him, a private form of reparation for what his family had done.', link:'era-IX.html',
     persons:[{name:'Edmund Marsh-Hale',id:'edmund_mh'}] },
-  normandy:   { name:'Normandy, France', eras:['i'], badge:'Era I \u00b7 Norman Origin', desc:"Home of Ranulf de la Hale before 1066. He crossed the Channel with William's fleet on the 14th of October. He was twenty-three. He carried a sword, a letter from the Bishop of Bayeux, and nothing else. He never returned.", link:'era-I.html',
+  normandy:   { name:'Normandy, France', latlng:[49.18,-0.36], eras:['i'], badge:'Era I · Norman Origin', type:'main',
+    desc:'Home of Ranulf de la Hale before 1066. He crossed the Channel with William\'s fleet on the 14th of October. He was twenty-three. He carried a sword, a letter from the Bishop of Bayeux, and nothing else. He never returned.', link:'era-I.html',
     persons:[{name:'Ranulf de la Hale',id:'ranulf'}] },
-  blackstone: { name:'? Blackstone Moor', eras:['all'], badge:'\u2014', desc:"Referenced once in the Hale family papers of 1743 as \u2018the place where it happened.\u2019 Location unspecified. The following page has been removed from the ledger. No other mention exists in any record.\n\n\u2014 Archivist\u2019s note: query unresolved." }
+  blackstone: { name:'? Blackstone Moor', latlng:[53.82,-1.55], eras:['all'], badge:'—', type:'ghost',
+    desc:'Referenced once in the Hale family papers of 1743 as \'the place where it happened.\' Location unspecified. The following page has been removed from the ledger. No other mention exists in any record.\n\n— Archivist\'s note: query unresolved.' }
 };
 
-var ERA_LABELS = { all:'All Eras', i:'I \u00b7 Norman', ii:'II \u00b7 Plague', iii:'III \u00b7 Tudor', iv:'IV \u00b7 Civil War', v:'V \u00b7 Georgian', vi:'VI \u00b7 Regency', vii:'VII \u00b7 Victorian', viii:'VIII \u00b7 Great War', ix:'IX \u00b7 Second War', x:'X \u00b7 Present' };
+var ERA_LABELS = { all:'All Eras', i:'I · Norman', ii:'II · Plague', iii:'III · Tudor', iv:'IV · Civil War', v:'V · Georgian', vi:'VI · Regency', vii:'VII · Victorian', viii:'VIII · Great War', ix:'IX · Second War', x:'X · Present' };
 
 var ERA_DESCS = {
   all:  'Select an era to illuminate its places upon the map',
-  i:    '1066\u20131150 \u00b7 Ranulf de la Hale crosses from Normandy. Halecroft is established.',
-  ii:   '1348\u20131400 \u00b7 The Black Death. Pershore becomes a refuge. The Voss line begins.',
-  iii:  '1485\u20131603 \u00b7 William Hale rises under the Tudors. Halecroft becomes a seat of power.',
-  iv:   '1642\u20131651 \u00b7 Brother against brother \u2014 John in Gloucester, Thomas in Oxford.',
-  v:    '1714\u20131811 \u00b7 Sir Nathaniel builds a London fortune. The Hales become merchant princes.',
-  vi:   '1811\u20131820 \u00b7 Elegance and danger. The Hales move in circles of power and scandal.',
-  vii:  '1837\u20131901 \u00b7 Edmund dies at Whitmore Park. His illegitimate son begins a new chapter.',
-  viii: '1914\u20131918 \u00b7 The Hales serve in the trenches. Halecroft becomes a hospital.',
-  ix:   '1939\u20131950 \u00b7 Brixton is bombed. Edmund designs Harlow. The family disperses, then gathers.',
-  x:    '1950\u20132026 \u00b7 James Marsh-Hale becomes chronicler of the dynasty. The saga nears its end.'
-};
-
-var ROUTE_NOTES = {
-  i:  'Route shown: Ranulf\u2019s crossing from Normandy, October 1066',
-  iv: 'Route shown: The brothers\u2019 positions \u2014 Gloucester (Parliament) \u00b7 Oxford (Crown)',
-  ix: 'Route shown: Edmund Marsh-Hale\u2019s commission \u2014 London to Harlow, 1947'
+  i:    '1066–1150 · Ranulf de la Hale crosses from Normandy. Halecroft is established.',
+  ii:   '1348–1400 · The Black Death. Pershore becomes a refuge. The Voss line begins.',
+  iii:  '1485–1603 · William Hale rises under the Tudors. Halecroft becomes a seat of power.',
+  iv:   '1642–1651 · Brother against brother — John in Gloucester, Thomas in Oxford.',
+  v:    '1714–1811 · Sir Nathaniel builds a London fortune. The Hales become merchant princes.',
+  vi:   '1811–1820 · Elegance and danger. The Hales move in circles of power and scandal.',
+  vii:  '1837–1901 · Edmund dies at Whitmore Park. His illegitimate son begins a new chapter.',
+  viii: '1914–1918 · The Hales serve in the trenches. Halecroft becomes a hospital.',
+  ix:   '1939–1950 · Brixton is bombed. Edmund designs Harlow. The family disperses, then gathers.',
+  x:    '1950–2026 · James Marsh-Hale becomes chronicler of the dynasty. The saga nears its end.'
 };
 
 var EE_DATA = {
-  compass:   { seal:'\uD83D\uDD0F', title:'The Hale Motto', body:'Malis Temporibus, Sedemus Firmi \u2014 In Evil Times, We Stand Fast.\n\nCarved into the lintel at Halecroft in 1121 by Brother Eadmer of Worcester. It remains there still. There are marks in the stone below it where, in 1642, someone took a chisel to it and thought better of it halfway through.' },
-  'ship-west': { seal:'\u26F5', title:'Cargo Manifest \u2014 Stella Maris, October 1066', body:'Three destriers of Norman breed.\nOne chest sealed with the de la Hale sigil \u2014 contents unknown.\nOne sword of Norman steel, blessed at F\xe9camp Abbey.\nOne man who would not return.\n\nDestination: England.' },
-  cartouche:  { seal:'\uD83D\uDCDC', title:'Regni Angli\xe6 & Principatus Wall\xeae Descriptio', body:'Per Hondium Hondio, MDLXCVII.\n\nThis cartographic record was commissioned by Sir Nathaniel Hale in 1698, shortly after his arrival in London. He wished, he said, \u2018to see the whole of it at once \u2014 the land that made us.\u2019\n\nThe original hangs in the study at Halecroft. The room is kept locked.' },
-  'ship-east': { seal:'\u26A0', title:'A Vessel Lost \u2014 Winter 1348', body:'A Hale ship was lost off the Norfolk coast in the first winter of the plague. Thomas Hale\u2019s younger brother was aboard, returning from the continent with medicines purchased at great cost.\n\nNo survivors. No cargo recovered. One line in the parish record of Blakeney, dated February 1349.\n\n\u2014 Hale-Marsh Papers, Vol. II, marginal note' },
-  scotland:   { seal:'\uD83E\uDECA', title:'The Hale-Mackay Accord, February 1320', body:'An alliance struck in secret during the Scottish Wars of Independence. A Hale daughter given in marriage north of the border. The terms were never written down \u2014 by agreement of both parties.\n\nIt is not recorded in any English chronicle.\nIt is not recorded in any Scottish one either.\n\nSomething was exchanged. No one living knows what.' },
-  channel:    { seal:'\u2693', title:'The Crossing \u2014 14th October, 1066', body:'Ranulf de la Hale crossed here with William the Conqueror\u2019s fleet. He was twenty-three years old. He carried nothing except a sword and a letter of introduction from the Bishop of Bayeux.\n\nHe would never return to Normandy.\n\nFrom this crossing, nine centuries follow.' }
+  compass:    { seal:'🔏', title:'The Hale Motto', body:'Malis Temporibus, Sedemus Firmi — In Evil Times, We Stand Fast.\n\nCarved into the lintel at Halecroft in 1121 by Brother Eadmer of Worcester. It remains there still. There are marks in the stone below it where, in 1642, someone took a chisel to it and thought better of it halfway through.' },
+  'ship-west':{ seal:'⛵', title:'Cargo Manifest — Stella Maris, October 1066', body:'Three destriers of Norman breed.\nOne chest sealed with the de la Hale sigil — contents unknown.\nOne sword of Norman steel, blessed at Fécamp Abbey.\nOne man who would not return.\n\nDestination: England.' },
+  cartouche:  { seal:'📜', title:'Regni Angliae & Principatus Walliae Descriptio', body:'Per Hondium Hondio, MDLXCVII.\n\nThis cartographic record was commissioned by Sir Nathaniel Hale in 1698, shortly after his arrival in London. He wished, he said, \'to see the whole of it at once — the land that made us.\'\n\nThe original hangs in the study at Halecroft. The room is kept locked.' },
+  'ship-east':{ seal:'⚠', title:'A Vessel Lost — Winter 1348', body:'A Hale ship was lost off the Norfolk coast in the first winter of the plague. Thomas Hale\'s younger brother was aboard, returning from the continent with medicines purchased at great cost.\n\nNo survivors. No cargo recovered. One line in the parish record of Blakeney, dated February 1349.\n\n— Hale-Marsh Papers, Vol. II, marginal note' },
+  scotland:   { seal:'🪶', title:'The Hale-Mackay Accord, February 1320', body:'An alliance struck in secret during the Scottish Wars of Independence. A Hale daughter given in marriage north of the border. The terms were never written down — by agreement of both parties.\n\nIt is not recorded in any English chronicle.\nIt is not recorded in any Scottish one either.\n\nSomething was exchanged. No one living knows what.' },
+  channel:    { seal:'⚓', title:'The Crossing — 14th October, 1066', body:'Ranulf de la Hale crossed here with William the Conqueror\'s fleet. He was twenty-three years old. He carried nothing except a sword and a letter of introduction from the Bishop of Bayeux.\n\nHe would never return to Normandy.\n\nFrom this crossing, nine centuries follow.' }
 };
 
-/* ── ERA FILTERS ── */
-var currentEra = 'all';
-document.getElementById('eraStrip').addEventListener('click', function(e){
-  var btn = e.target.closest('.era-btn'); if(!btn) return;
-  document.querySelectorAll('.era-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  currentEra = btn.dataset.era;
-  document.getElementById('eraDesc').textContent = ERA_DESCS[currentEra]||'';
-  document.getElementById('routeNote').textContent = ROUTE_NOTES[currentEra]||'';
-  filterPins(); updateRoutes(); closePanel();
+/* Easter egg locations */
+var EE_PINS = {
+  compass:    { latlng:[51.49, 0.00],   data:'compass'    },
+  'ship-west':{ latlng:[50.00,-4.50],   data:'ship-west'  },
+  cartouche:  { latlng:[56.50,-7.50],   data:'cartouche'  },
+  'ship-east':{ latlng:[53.00, 2.80],   data:'ship-east'  },
+  scotland:   { latlng:[57.20,-3.80],   data:'scotland'   },
+  channel:    { latlng:[50.10,-1.50],   data:'channel'    }
+};
+
+/* ══════════════════════════════════════════════
+   INITIALISE MAP
+══════════════════════════════════════════════ */
+
+var map = L.map('map', {
+  center: [53.0, -2.5],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 13,
+  zoomControl: true,
+  attributionControl: true
 });
 
-function pinMatchesEra(pin){
-  if(currentEra==='all') return true;
-  var eras=(pin.dataset.eras||'').split(',');
-  return eras.includes(currentEra)||eras.includes('all');
-}
-function filterPins(){
-  document.querySelectorAll('.map-pin,.map-pin-ghost').forEach(function(p){
-    p.classList.toggle('faded', !pinMatchesEra(p));
-  });
-}
-function updateRoutes(){
-  document.querySelectorAll('.route-i,.route-iv,.route-ix').forEach(function(r){r.style.display='none';});
-  if(currentEra==='i')  document.querySelector('.route-i').style.display='';
-  if(currentEra==='iv') document.querySelector('.route-iv').style.display='';
-  if(currentEra==='ix') document.querySelector('.route-ix').style.display='';
+// CartoDB Dark Matter (no labels) — aged with CSS filter
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://carto.com">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 20
+}).addTo(map);
+
+// Move zoom control to bottom-right (away from nav bar)
+map.zoomControl.setPosition('bottomright');
+
+/* ══════════════════════════════════════════════
+   MARKER HELPERS
+══════════════════════════════════════════════ */
+
+function pinColor(type) {
+  var colors = {
+    seat:  '#E8C84C',
+    main:  '#C8A83C',
+    plague:'#8B1A1A',
+    war:   '#3A5480',
+    ghost: 'rgba(200,168,60,0.28)'
+  };
+  return colors[type] || '#C8A83C';
 }
 
-/* ── DETAIL PANEL ── */
-var panel=document.getElementById('detailPanel'), activePin=null;
-function openPanel(key, pin){
-  var loc=PINS[key]; if(!loc) return;
-  if(activePin) activePin.classList.remove('selected');
-  activePin=pin; if(activePin) activePin.classList.add('selected');
-  document.getElementById('detailBadge').textContent=loc.badge||'';
-  document.getElementById('detailName').textContent=loc.name;
-  var tags=document.getElementById('detailTags'); tags.innerHTML='';
-  loc.eras.forEach(function(era){ var t=document.createElement('span'); t.className='detail-tag'; t.textContent=ERA_LABELS[era]||era; tags.appendChild(t); });
-  document.getElementById('detailDesc').textContent=loc.desc;
-  var lk=document.getElementById('detailLink');
-  if(loc.link){ lk.href=loc.link; lk.textContent=(loc.linkText||'Open era record')+' \u2192'; lk.style.display=''; }
-  else lk.style.display='none';
-  // Person links
-  var personsSection=document.getElementById('detailPersons');
-  var personsContainer=document.getElementById('detailPersonLinks');
-  personsContainer.innerHTML='';
-  if(loc.persons && loc.persons.length){
-    loc.persons.forEach(function(p){
-      var a=document.createElement('a');
-      a.className='detail-person-link';
-      a.href='persons.html#'+p.id;
-      a.textContent=p.name;
-      personsContainer.appendChild(a);
-    });
-    personsSection.style.display='';
+function makeMarkerIcon(key, pin) {
+  var isHalecroft = key === 'halecroft';
+  var isGhost     = pin.type === 'ghost';
+  var isWar       = pin.type === 'war';
+  var isPlagueType = pin.type === 'plague';
+  var col = pinColor(pin.type);
+
+  var pulseHtml = isHalecroft
+    ? '<div class="hd-pulse"></div><div class="hd-pulse" style="animation-delay:0.8s"></div>'
+    : '';
+
+  var svgSize = isHalecroft ? 38 : 24;
+  var pinSvg;
+
+  if (isHalecroft) {
+    pinSvg = '<svg width="38" height="38" viewBox="-19 -19 38 38">' +
+      '<circle r="16" fill="none" stroke="rgba(200,168,60,0.3)" stroke-width="0.8"/>' +
+      '<polygon points="0,-12 2.8,-3.8 11,-3.8 4.5,1.5 7,9.5 0,5.2 -7,9.5 -4.5,1.5 -11,-3.8 -2.8,-3.8"' +
+      ' fill="' + col + '" stroke="rgba(140,100,20,0.8)" stroke-width="0.7"/>' +
+      '</svg>';
+  } else if (isGhost) {
+    pinSvg = '<svg width="18" height="25" viewBox="-9 -12 18 26">' +
+      '<path d="M0,12 C-1,8 -8,4 -8,-2 A8,8,0,1,1,8,-2 C8,4 1,8 0,12 Z"' +
+      ' fill="rgba(200,168,60,0.15)" stroke="rgba(200,168,60,0.3)" stroke-width="0.8" stroke-dasharray="3,2"/>' +
+      '<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" fill="rgba(200,168,60,0.4)" font-size="7" font-family="serif">?</text>' +
+      '</svg>';
   } else {
-    personsSection.style.display='none';
+    pinSvg = '<svg width="20" height="28" viewBox="-10 -12 20 28">' +
+      '<path d="M0,14 C-1,9 -9,5 -9,-2 A9,9,0,1,1,9,-2 C9,5 1,9 0,14 Z" fill="' + col + '" stroke="rgba(255,220,100,0.4)" stroke-width="0.7"/>' +
+      '<circle cx="0" cy="-2" r="3.5" fill="rgba(255,240,160,0.5)"/>' +
+      '</svg>';
   }
+
+  var html = '<div class="hd-marker' + (isGhost ? ' hd-ghost' : '') + '" style="width:' + svgSize + 'px;height:' + (isHalecroft ? 38 : 28) + 'px;position:relative;">' +
+    pulseHtml +
+    '<div class="hd-marker-inner">' + pinSvg + '</div>' +
+    '<span class="hd-marker-label">' + pin.name + '</span>' +
+    '</div>';
+
+  return L.divIcon({
+    html: html,
+    className: '',
+    iconSize:   isHalecroft ? [38, 38] : [20, 28],
+    iconAnchor: isHalecroft ? [19, 19] : [10, 28],
+    popupAnchor:[0, -28]
+  });
+}
+
+/* ══════════════════════════════════════════════
+   CREATE MARKERS
+══════════════════════════════════════════════ */
+
+var markers = {};
+
+Object.keys(PINS).forEach(function(key) {
+  var pin = PINS[key];
+  var m = L.marker(pin.latlng, {
+    icon: makeMarkerIcon(key, pin),
+    title: pin.name
+  }).addTo(map);
+
+  m.on('click', function(e) {
+    L.DomEvent.stopPropagation(e);
+    openPanel(key);
+  });
+
+  markers[key] = { marker: m, pin: pin };
+});
+
+/* Easter egg markers */
+Object.keys(EE_PINS).forEach(function(key) {
+  var ep = EE_PINS[key];
+  var icon = L.divIcon({
+    html: '<div class="hd-ee-marker"><div class="hd-ee-dot"></div></div>',
+    className: '',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+  var em = L.marker(ep.latlng, { icon: icon }).addTo(map);
+  em.on('click', function(e) {
+    L.DomEvent.stopPropagation(e);
+    showEE(ep.data, e.originalEvent);
+  });
+});
+
+/* ══════════════════════════════════════════════
+   PANEL
+══════════════════════════════════════════════ */
+
+var panel = document.getElementById('detailPanel');
+
+function openPanel(key) {
+  var loc = PINS[key]; if (!loc) return;
+
+  // Update URL hash for shareable deep-link
+  if (history.replaceState) history.replaceState(null, '', '#' + key);
+
+  // Fly the map to this location — minimum zoom 9, keep higher if already zoomed in
+  var targetZoom = Math.max(map.getZoom(), 9);
+  map.flyTo(loc.latlng, targetZoom, { animate: true, duration: 1.1, easeLinearity: 0.25 });
+
+  document.getElementById('detailBadge').textContent = loc.badge || '';
+  document.getElementById('detailName').textContent  = loc.name;
+
+  document.getElementById('detailDesc').textContent = loc.desc;
+
+  var lk = document.getElementById('detailLink');
+  if (loc.link) { lk.href=loc.link; lk.textContent=(loc.linkText||'Open era record')+' →'; lk.style.display=''; }
+  else lk.style.display='none';
+
+  var ps = document.getElementById('detailPersons');
+  var pc = document.getElementById('detailPersonLinks'); pc.innerHTML = '';
+  if (loc.persons && loc.persons.length) {
+    loc.persons.forEach(function(p) {
+      var a = document.createElement('a');
+      a.className='detail-person-link'; a.href='persons.html#'+p.id; a.textContent=p.name;
+      pc.appendChild(a);
+    });
+    ps.style.display='';
+  } else {
+    ps.style.display='none';
+  }
+
   panel.classList.add('open');
 }
-function closePanel(){
+
+function closePanel() {
   panel.classList.remove('open');
-  if(activePin){activePin.classList.remove('selected');activePin=null;}
+  if (history.replaceState) history.replaceState(null, '', window.location.pathname);
 }
-document.getElementById('closeBtn').addEventListener('click',closePanel);
-document.querySelectorAll('.map-pin,.map-pin-ghost').forEach(function(pin){
-  pin.addEventListener('click',function(e){
-    e.stopPropagation();
-    if(pin.classList.contains('faded')) return;
-    if(activePin===pin && panel.classList.contains('open')) closePanel();
-    else openPanel(pin.dataset.key, pin);
+
+document.getElementById('closeBtn').addEventListener('click', closePanel);
+map.on('click', closePanel);
+
+// Open pin from URL hash on page load
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && PINS[hash]) {
+    setTimeout(function() { openPanel(hash); }, 800);
+  }
+})();
+
+/* ══════════════════════════════════════════════
+   ERA FILTERS
+══════════════════════════════════════════════ */
+
+var currentEra = 'all';
+
+function filterMarkers() {
+  Object.keys(markers).forEach(function(key) {
+    var m = markers[key];
+    var eras = m.pin.eras;
+    var show = currentEra === 'all' || eras.indexOf(currentEra) !== -1 || eras.indexOf('all') !== -1;
+    var el = m.marker.getElement();
+    if (el) el.style.opacity = show ? '1' : '0.08';
+    if (el) el.style.pointerEvents = show ? '' : 'none';
   });
-});
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.detail-panel')&&!e.target.closest('.map-pin')&&!e.target.closest('.map-pin-ghost')) closePanel();
+}
+
+document.getElementById('eraStrip').addEventListener('click', function(e) {
+  var btn = e.target.closest('.era-btn'); if (!btn) return;
+  document.querySelectorAll('.era-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  currentEra = btn.dataset.era;
+  document.getElementById('eraDesc').textContent = ERA_DESCS[currentEra] || '';
+  filterMarkers();
+  closePanel();
+
+  // Fly to fit the pins for this era
+  if (currentEra === 'all') {
+    map.flyTo([53.0, -2.5], 6, { animate: true, duration: 1.2 });
+  } else {
+    var pts = [];
+    Object.keys(PINS).forEach(function(k) {
+      var p = PINS[k];
+      if (p.eras.indexOf(currentEra) !== -1) pts.push(L.latLng(p.latlng));
+    });
+    // Always anchor to Halecroft
+    pts.push(L.latLng(PINS.halecroft.latlng));
+    if (pts.length > 1) {
+      map.flyToBounds(L.latLngBounds(pts), { padding: [90, 90], maxZoom: 10, animate: true, duration: 1.3 });
+    }
+  }
 });
 
-/* ── EASTER EGGS ── */
-var eeCard=document.getElementById('eeCard');
-document.getElementById('eeClose').addEventListener('click',function(){eeCard.style.display='none';});
-document.querySelectorAll('.ee-zone').forEach(function(zone){
-  zone.addEventListener('click',function(e){
-    e.stopPropagation();
-    var data=EE_DATA[zone.dataset.ee]; if(!data) return;
-    document.getElementById('eeSeal').textContent=data.seal||'\uD83D\uDD0F';
-    document.getElementById('eeTitle').textContent=data.title;
-    document.getElementById('eeBody').textContent=data.body;
-    /* Position card near click, clamped to viewport */
-    var x=e.clientX, y=e.clientY, w=window.innerWidth, h=window.innerHeight;
-    eeCard.style.display='block';
-    var cw=eeCard.offsetWidth||320, ch=eeCard.offsetHeight||200;
-    var left=Math.min(x+12, w-cw-12);
-    var top=Math.min(y-20, h-ch-12);
-    if(top<8) top=8;
-    eeCard.style.left=left+'px'; eeCard.style.top=top+'px';
-    eeCard.style.animation='none';
-    void eeCard.offsetWidth;
-    eeCard.style.animation='';
-  });
-});
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.ee-card')&&!e.target.closest('.ee-zone')) eeCard.style.display='none';
-});
+/* ══════════════════════════════════════════════
+   EASTER EGGS
+══════════════════════════════════════════════ */
+
+var eeCard = document.getElementById('eeCard');
+
+function showEE(key, evt) {
+  var data = EE_DATA[key]; if (!data) return;
+  document.getElementById('eeSeal').textContent = data.seal||'';
+  document.getElementById('eeTitle').textContent = data.title;
+  document.getElementById('eeBody').textContent  = data.body;
+
+  eeCard.style.display = 'block';
+  var x = evt ? evt.clientX : window.innerWidth/2;
+  var y = evt ? evt.clientY : window.innerHeight/2;
+  var cw = 300, ch = 200;
+  var left = Math.min(x+14, window.innerWidth-cw-14);
+  var top  = Math.min(y-20, window.innerHeight-ch-14);
+  if (top < 8) top = 8;
+  eeCard.style.left = left+'px'; eeCard.style.top = top+'px';
+}
+
+document.getElementById('eeClose').addEventListener('click', function(){ eeCard.style.display='none'; });
+map.on('click', function(){ eeCard.style.display='none'; });
 
 })();
 </script>
 
 <script src="transitions.js"></script>
 <script src="features.js"></script>
+<script src="inquiry.js"></script>
 </body>
 </html>

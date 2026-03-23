@@ -128,10 +128,23 @@
     }
   }
 
+  /* ── Ornamental dividers between .document sections ── */
+  function injectOrnaments() {
+    var docs = document.querySelectorAll('.era-content .document');
+    for (var i = 0; i < docs.length - 1; i++) {
+      var orn = document.createElement('div');
+      orn.className = 'hd-section-ornament';
+      orn.setAttribute('aria-hidden', 'true');
+      orn.innerHTML = '<span>&#10022;</span>';
+      docs[i].insertAdjacentElement('afterend', orn);
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('DOMContentLoaded', function() { run(); injectOrnaments(); });
   } else {
     run();
+    injectOrnaments();
   }
 
 })();

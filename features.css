@@ -908,3 +908,84 @@ body.hd-marg-on .hd-marginal {
     left: 16px !important;
   }
 }
+
+/* ── ORNAMENTAL SECTION DIVIDERS (era pages) ─────────────────────────
+   Injected between .document sections by name-links.js
+   ─────────────────────────────────────────────────────────────────── */
+.hd-section-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 36px 0;
+  gap: 16px;
+  opacity: 0.45;
+}
+.hd-section-ornament::before,
+.hd-section-ornament::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(200,168,60,0.4));
+}
+.hd-section-ornament::after {
+  background: linear-gradient(to left, transparent, rgba(200,168,60,0.4));
+}
+.hd-section-ornament span {
+  font-family: Georgia, serif;
+  font-size: 0.75em;
+  color: rgba(200,168,60,0.6);
+  letter-spacing: 0.3em;
+  user-select: none;
+}
+@media print {
+  .hd-section-ornament { display: none; }
+}
+
+/* ── MOBILE ERA STICKY NAV ─────────────────────────────────────── */
+.hd-mobile-era-nav {
+  display: none;
+}
+@media (max-width: 640px) {
+  .hd-mobile-era-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 500;
+    background: rgba(10,8,5,0.94);
+    border-top: 1px solid rgba(200,168,60,0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px calc(10px + env(safe-area-inset-bottom));
+    font-family: 'Courier New', monospace;
+    font-size: 0.6em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hd-mobile-era-nav a {
+    color: rgba(200,168,60,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    padding: 6px 2px;
+    max-width: 38%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hd-mobile-era-nav a:active { color: rgba(200,168,60,0.85); }
+  .hd-mobile-era-nav .men-center {
+    color: rgba(200,168,60,0.2);
+    font-size: 0.92em;
+    letter-spacing: 0.05em;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  body.has-mobile-era-nav {
+    padding-bottom: calc(52px + env(safe-area-inset-bottom));
+  }
+}
+@media print {
+  .hd-mobile-era-nav { display: none !important; }
+}

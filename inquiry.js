@@ -693,6 +693,47 @@
       if (isOpen && !panel.contains(e.target) && e.target !== fab) closePanel();
     });
 
+    /* ── First-visit nudge — shows once, 20s after page load ── */
+    var NUDGE_KEY = 'hd_eleanor_nudge_seen';
+    if (!localStorage.getItem(NUDGE_KEY)) {
+      setTimeout(function () {
+        if (isOpen) return; // already open, skip
+        var nudge = document.createElement('div');
+        nudge.id = 'hd-eleanor-nudge';
+        nudge.style.cssText = [
+          'position:fixed',
+          'bottom:80px',
+          'right:24px',
+          'z-index:8000',
+          'background:rgba(14,12,10,0.97)',
+          'border:1px solid rgba(200,168,60,0.28)',
+          'padding:11px 16px',
+          'font-family:Georgia,serif',
+          'font-style:italic',
+          'font-size:0.78em',
+          'color:rgba(200,168,60,0.75)',
+          'pointer-events:none',
+          'opacity:0',
+          'transition:opacity 0.8s ease',
+          'max-width:220px',
+          'line-height:1.55',
+          'box-shadow:0 4px 24px rgba(0,0,0,0.6)'
+        ].join(';');
+        nudge.textContent = 'The archivist will answer questions.';
+        document.body.appendChild(nudge);
+        // Fade in
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() { nudge.style.opacity = '1'; });
+        });
+        // Fade out after 5s
+        setTimeout(function () {
+          nudge.style.opacity = '0';
+          setTimeout(function () { nudge.remove(); }, 900);
+        }, 5000);
+        try { localStorage.setItem(NUDGE_KEY, 'true'); } catch(e) {}
+      }, 20000);
+    }
+
   });
 
 })();
