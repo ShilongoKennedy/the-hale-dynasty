@@ -201,67 +201,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 (function(){'use strict';
 
-/* ─── GLOBAL EFFECTS TOGGLE ─────────────────────────────────────────
-   Reads/writes localStorage key 'hd_fx'. Off = '0', On = '1' (default on).
-   Toggle button only appears on the home page (splash present). */
-var fxOn = localStorage.getItem('hd_fx') !== '0';
-var isDarkPage = !!document.getElementById('splash');
-
-function applyFxState(){
-  /* Candle effect always on — toggle button removed */
-  var c = document.getElementById('hd-candle');
-  /* Particles canvas — always on */
-  var cv = document.getElementById('hd-atmos');
-}
-applyFxState();
-
-
-/* ╔═══════════════════════════════════════════════════════════════════╗
-   ║  1. CANDLELIGHT CURSOR  (dark pages only: home)                  ║
-   ╚═══════════════════════════════════════════════════════════════════╝ */
-var hasFinePonter = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-if(isDarkPage && hasFinePonter){
-  var candle = document.createElement('div');
-  candle.id = 'hd-candle';
-  candle.style.cssText = [
-    'position:fixed;inset:0;',
-    'pointer-events:none;',
-    'z-index:9989;',
-    'opacity:0;',
-    'transition:opacity 0.5s;',
-    'will-change:background;'
-  ].join('');
-  document.body.appendChild(candle);
-
-  var mx = window.innerWidth/2, my = window.innerHeight/2, cr = 210;
-
-  function paintCandle(){
-    if(!fxOn){ candle.style.setProperty('opacity','0','important'); return; }
-    candle.style.background = [
-      'radial-gradient(circle ',cr,'px at ',mx,'px ',my,'px,',
-      'transparent 0%,',
-      'rgba(0,0,0,0.18) 42%,',
-      'rgba(0,0,0,0.90) 100%)'
-    ].join('');
-  }
-
-  /* Subtle flicker */
-  setInterval(function(){
-    cr = 210 + (Math.random()-0.5)*20;
-    paintCandle();
-  }, 100);
-
-  document.addEventListener('mousemove', function(e){
-    mx = e.clientX; my = e.clientY;
-    paintCandle();
-    if(fxOn) candle.style.opacity = '1';
-  });
-  document.addEventListener('mouseleave', function(){
-    candle.style.opacity = '0';
-  });
-
-  paintCandle();
-}
+/* Candlelight cursor — removed */
 
 
 /* ╔═══════════════════════════════════════════════════════════════════╗
@@ -320,7 +260,7 @@ if(era){
     'position:fixed;inset:0;',
     'pointer-events:none;',
     'z-index:0;',
-    'opacity:', fxOn ? '0.72' : '0', ';',
+    'opacity:0.72;',
     'transition:opacity 0.6s;'
   ].join('');
   document.body.insertBefore(cv, document.body.firstChild);
