@@ -884,6 +884,190 @@
     }
     .explore-card:hover .explore-card-arrow { color: var(--gold-dim); transform: translateX(4px); }
 
+    /* ── START HERE ────────────────────────────────────────── */
+    .start-here-section {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 30px 28px;
+    }
+    .start-here-box {
+      border: 1px solid rgba(200,168,60,0.2);
+      background: linear-gradient(180deg, rgba(26,22,16,0.92), rgba(16,12,8,0.96));
+      padding: 24px 24px 20px;
+    }
+    .start-here-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.55);
+      margin-bottom: 10px;
+    }
+    .start-here-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.1em, 2.4vw, 1.5em);
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .start-here-copy {
+      font-size: 0.86em;
+      line-height: 1.75;
+      color: rgba(200,168,60,0.5);
+      margin-bottom: 18px;
+      max-width: 62ch;
+    }
+    .start-here-main {
+      display: inline-block;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #1A1408;
+      background: #C8A83C;
+      border: 1px solid #D6BA58;
+      padding: 12px 16px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .start-here-main:hover {
+      background: #E8C84C;
+      transform: translateY(-1px);
+    }
+    .start-here-steps {
+      list-style: none;
+      margin-top: 14px;
+      border-top: 1px solid rgba(200,168,60,0.1);
+      padding-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .start-here-steps a {
+      display: block;
+      text-decoration: none;
+      border: 1px solid rgba(200,168,60,0.15);
+      background: rgba(200,168,60,0.03);
+      padding: 10px 12px;
+      min-height: 62px;
+    }
+    .start-here-step-label {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.38);
+      margin-bottom: 6px;
+    }
+    .start-here-step-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.78em;
+      color: rgba(200,168,60,0.82);
+      line-height: 1.35;
+    }
+
+    /* ── FEEDBACK PROMPT ───────────────────────────────────── */
+    .feedback-prompt {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6px 30px 34px;
+    }
+    .feedback-card {
+      border: 1px solid rgba(200,168,60,0.16);
+      background: rgba(12,10,8,0.92);
+      padding: 18px 18px 16px;
+    }
+    .feedback-head {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.98em;
+      color: rgba(200,168,60,0.85);
+      margin-bottom: 6px;
+    }
+    .feedback-sub {
+      font-size: 0.78em;
+      color: rgba(200,168,60,0.45);
+      margin-bottom: 12px;
+      line-height: 1.65;
+      font-style: italic;
+    }
+    .feedback-choice-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .feedback-choice-row input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .feedback-choice {
+      border: 1px solid rgba(200,168,60,0.2);
+      color: rgba(200,168,60,0.55);
+      padding: 8px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      background: rgba(200,168,60,0.03);
+    }
+    .feedback-choice-row input:checked + .feedback-choice {
+      border-color: rgba(200,168,60,0.6);
+      color: #E8C84C;
+      background: rgba(200,168,60,0.1);
+    }
+    #feedbackConfusion {
+      width: 100%;
+      background: #110F0A;
+      border: 1px solid rgba(200,168,60,0.18);
+      color: rgba(220,205,160,0.9);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 0.9em;
+      line-height: 1.55;
+      padding: 10px 12px;
+      min-height: 92px;
+      resize: vertical;
+    }
+    #feedbackConfusion::placeholder { color: rgba(200,168,60,0.24); }
+    #feedbackConfusion:focus {
+      outline: none;
+      border-color: rgba(200,168,60,0.42);
+    }
+    .feedback-actions {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .feedback-submit {
+      border: 1px solid rgba(200,168,60,0.35);
+      background: rgba(200,168,60,0.08);
+      color: rgba(220,200,140,0.9);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .feedback-submit:hover {
+      border-color: rgba(200,168,60,0.6);
+      color: #E8C84C;
+      background: rgba(200,168,60,0.14);
+    }
+    .feedback-status {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: rgba(200,168,60,0.45);
+    }
+
     /* ── THEMATIC READING PATHS ────────────────────────────── */
     .reading-paths-section {
       max-width: 820px; margin: 0 auto 0; padding: 56px 30px 0;
@@ -958,6 +1142,10 @@
       .access-header { flex-direction: column; gap: 3px; text-align: center; font-size: 0.56em; }
       .access-header span:nth-child(2),
       .access-header span:nth-child(3) { display: none; }
+      .start-here-section { padding: 0 16px 22px; }
+      .start-here-box { padding: 16px 14px 14px; }
+      .start-here-steps { grid-template-columns: 1fr; }
+      .feedback-prompt { padding: 6px 16px 24px; }
       .archive-grid { grid-template-columns: 1fr; gap: 12px; }
       .main-title { font-size: 1.6em; }
       .mystery-inner { flex-direction: column; gap: 10px; text-align: center; }
@@ -1025,6 +1213,35 @@
     <p class="tagline">Nine Centuries &nbsp;&middot;&nbsp; Ten Books &nbsp;&middot;&nbsp; One Question</p>
     <p class="matilda-quote">&ldquo;Keep asking. Keep the land. See to the pig.&rdquo;</p>
     <p class="matilda-attr">— Matilda of Halecroft, c. 1390</p>
+  </section>
+
+  <section class="start-here-section" aria-label="Start here">
+    <div class="start-here-box">
+      <div class="start-here-kicker">First Visit</div>
+      <h2 class="start-here-title">Start Here: A short guided path through the archive</h2>
+      <p class="start-here-copy">New readers usually get the most from this route. Start with Vol. I, then trace people and place before continuing deeper.</p>
+      <a href="era-I.html" class="start-here-main" data-track="start_story_click" data-track-label="start_here_main">Start the story (3-5 min)</a>
+      <ul class="start-here-steps">
+        <li>
+          <a href="era-I.html" data-track="guided_path_click" data-track-label="step_1_era_i">
+            <span class="start-here-step-label">Step 1</span>
+            <span class="start-here-step-title">Vol. I - The Chronicle</span>
+          </a>
+        </li>
+        <li>
+          <a href="family-tree.html" data-track="guided_path_click" data-track-label="step_2_tree">
+            <span class="start-here-step-label">Step 2</span>
+            <span class="start-here-step-title">Family Tree - Who is who</span>
+          </a>
+        </li>
+        <li>
+          <a href="map.html" data-track="guided_path_click" data-track-label="step_3_map">
+            <span class="start-here-step-label">Step 3</span>
+            <span class="start-here-step-title">Map - Where the story moves</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
@@ -1363,6 +1580,34 @@
         </ul>
       </div>
 
+    </div>
+  </section>
+
+  <section class="feedback-prompt" aria-label="Reader feedback">
+    <div class="feedback-card">
+      <h3 class="feedback-head">Help shape the next revision</h3>
+      <p class="feedback-sub">Was this clear so far? What confused you most? This helps improve the reading path for new visitors.</p>
+      <form id="archiveFeedbackForm">
+        <div class="feedback-choice-row">
+          <label>
+            <input type="radio" name="feedback_clarity" value="clear" checked>
+            <span class="feedback-choice">Clear</span>
+          </label>
+          <label>
+            <input type="radio" name="feedback_clarity" value="mostly_clear">
+            <span class="feedback-choice">Mostly clear</span>
+          </label>
+          <label>
+            <input type="radio" name="feedback_clarity" value="confusing">
+            <span class="feedback-choice">Confusing</span>
+          </label>
+        </div>
+        <textarea id="feedbackConfusion" name="feedback_confusion" maxlength="700" placeholder="What was unclear, confusing, or hard to follow?"></textarea>
+        <div class="feedback-actions">
+          <button type="submit" class="feedback-submit">Submit feedback</button>
+          <span class="feedback-status" id="feedbackStatus" aria-live="polite"></span>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -2051,6 +2296,8 @@
   </script>
 
   <script src="transitions.js"></script>
+
+<script src="analytics.js"></script>
 
 <script src="features.js"></script>
 
