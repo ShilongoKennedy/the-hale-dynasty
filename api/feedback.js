@@ -5,11 +5,24 @@ const { createClient } = require('redis');
 
 const LIST_KEY = 'hd_feedback';
 const MAX_ENTRIES = 250;
+const ADMIN_KEY = process.env.FEEDBACK_ADMIN_KEY || '';
+
+function hasValidReadKey(req) {
+  const headerKey = String(req.headers['x-feedback-key'] || '').trim();
+  const queryKey = req.query && typeof req.query.key === 'string'
+    ? String(req.query.key).trim()
+    : '';
+  const bodyKey = req.body && typeof req.body.key === 'string'
+    ? String(req.body.key).trim()
+    : '';
+  const candidate = headerKey || queryKey || bodyKey;
+  return Boolean(ADMIN_KEY) && candidate === ADMIN_KEY;
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Feedback-Key');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
@@ -24,6 +37,12 @@ module.exports = async function handler(req, res) {
     await client.connect();
 
     if (req.method === 'GET') {
+      if (!ADMIN_KEY) {
+        return res.status(503).json({ error: 'Feedback reader not configured.' });
+      }
+      if (!hasValidReadKey(req)) {
+        return res.status(403).json({ error: 'Unauthorized.' });
+      }
       const raw = await client.lRange(LIST_KEY, 0, 99);
       const entries = raw.map(function (e) {
         try { return JSON.parse(e); } catch (_) { return null; }
