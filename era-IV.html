@@ -32,12 +32,58 @@
     .era-nav .vol-marker { color:#8090A8; }
 
     .era-header {
-      background:#E4E8F2; border-bottom:4px solid #1C2E4A; border-top:2px solid #6E1418;
-      padding:50px 40px 40px; text-align:center;
+      background:
+        linear-gradient(180deg, #eef1f7, #dee4ef),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(28,46,74,0.04) 34px, rgba(28,46,74,0.04) 35px);
+      border-bottom:3px solid #1C2E4A;
+      padding:46px 40px 34px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .era-header::before {
+      content:'';
+      position:absolute;
+      inset:12px;
+      border:1px solid rgba(28,46,74,0.14);
+      pointer-events:none;
+    }
+    .era-header::after {
+      content:'';
+      position:absolute;
+      top:0;
+      left:38px;
+      right:38px;
+      height:2px;
+      background:linear-gradient(90deg, rgba(110,20,24,0.7), rgba(28,46,74,0.18), transparent 78%);
     }
     .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#1C2E4A; text-transform:uppercase; margin-bottom:14px; }
     .era-main-title { font-family:'IM Fell French Canon','Cinzel',Georgia,serif; font-size:clamp(1.6em,4vw,2.9em); color:#1A1A2A; letter-spacing:0.04em; margin-bottom:8px; }
     .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#6E1418; letter-spacing:0.2em; margin-top:12px; }
+    .era-orientation {
+      max-width:760px;
+      margin:18px auto 0;
+      padding-top:16px;
+      border-top:1px solid rgba(28,46,74,0.2);
+      font-size:0.86em;
+      line-height:1.75;
+      color:#43506b;
+      font-style:italic;
+    }
+    .era-reading-guide {
+      max-width:760px;
+      margin:18px auto 0;
+      padding:16px 18px 14px;
+      border:1px solid rgba(28,46,74,0.18);
+      background:rgba(255,255,255,0.24);
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      text-align:left;
+    }
+    .era-guide-card { padding:10px 12px; border:1px solid rgba(28,46,74,0.12); background:rgba(255,255,255,0.18); }
+    .era-guide-kicker { display:block; font-family:'Courier New',monospace; font-size:0.56em; letter-spacing:0.14em; text-transform:uppercase; color:#6E1418; margin-bottom:6px; }
+    .era-guide-copy { display:block; color:#43506b; font-size:0.76em; line-height:1.58; }
 
     .era-content { max-width:820px; margin:0 auto; padding:50px 30px 80px; }
 
@@ -55,6 +101,32 @@
       border-left:3px solid #1C2E4A; padding:16px 20px; background:#D8DCE8;
       font-style:italic; font-size:0.85em; color:#2A3A5A; margin-bottom:50px; line-height:1.7;
     }
+    .era-next {
+      margin-top:42px;
+      border:1px solid rgba(28,46,74,0.2);
+      background:
+        linear-gradient(180deg, rgba(232,236,244,0.8), rgba(216,222,232,0.88)),
+        radial-gradient(circle at 86% 18%, rgba(110,20,24,0.08), transparent 16%);
+      padding:24px 24px 20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .era-next::before {
+      content:'';
+      position:absolute;
+      inset:10px;
+      border:1px solid rgba(28,46,74,0.08);
+      pointer-events:none;
+    }
+    .era-next-label { font-family:'Courier New',monospace; font-size:0.68em; letter-spacing:0.2em; text-transform:uppercase; color:#6E1418; margin-bottom:8px; }
+    .era-next-title { font-family:'Cinzel',Georgia,serif; font-size:1.05em; color:#1A1A2A; margin-bottom:10px; letter-spacing:0.04em; }
+    .era-next-copy { color:#43506b; font-size:0.9em; line-height:1.75; margin-bottom:16px; font-style:italic; }
+    .era-next-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .era-next-card { display:block; text-decoration:none; padding:14px 14px 12px; border:1px solid rgba(28,46,74,0.2); background:rgba(255,255,255,0.32); transition:transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; }
+    .era-next-card:hover { transform:translateY(-1px); border-color:rgba(110,20,24,0.32); background:rgba(255,255,255,0.4); }
+    .era-next-kicker { display:block; font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.14em; text-transform:uppercase; color:#6E1418; margin-bottom:6px; }
+    .era-next-name { display:block; font-family:'Cinzel',Georgia,serif; font-size:0.92em; color:#1A1A2A; margin-bottom:6px; }
+    .era-next-desc { display:block; color:#43506b; font-size:0.76em; line-height:1.55; }
     .document { margin-bottom:60px; }
     .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#1C2E4A; text-transform:uppercase; margin-bottom:6px; }
     .nota-bene { background:#D8DCE8; border-left:4px solid #8A9AB8; padding:12px 18px; font-style:italic; font-size:0.82em; color:#2A3A5A; margin-bottom:8px; }
@@ -242,6 +314,8 @@
     @media (max-width:600px) {
       .parliament-letter,.royalist-letter,.field-dispatch,.puritan,.restoration { padding:20px 16px; }
       .era-content { padding:30px 16px 60px; }
+      .era-reading-guide, .era-next-grid { grid-template-columns:1fr; }
+      .era-header { padding:38px 20px 28px; }
     }
 
     /* ── ERA SEQUENCE NAV ─────────────────────────────── */
@@ -539,6 +613,21 @@
       Being the Correspondence of John Hale and Thomas Hale, Brothers, Written During the Years of the Civil War Between the Parliament and the Crown. Two Brothers. Opposite Sides. Eleven Letters.
     </p>
     <div class="era-dates">1620 — 1665</div>
+    <div class="era-orientation">Volume IV is the family under open fracture. Read this one for the moment when Hale continuity depends not on agreement, but on whether the house can hold opposing truths at once.</div>
+    <div class="era-reading-guide">
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Read This For</span>
+        <span class="era-guide-copy">The Civil War letters, the split between John and Thomas, and the quieter work of William, who keeps the estate standing.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Watch Closely</span>
+        <span class="era-guide-copy">How often the record values the person who stays with the land over the people who make the grander arguments.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Then Continue</span>
+        <span class="era-guide-copy">Into Vol. V, where that survival becomes ambition, performance, and social ascent under Sir Nathaniel.</span>
+      </div>
+    </div>
   </header>
 
   <div class="era-content">
@@ -563,7 +652,7 @@
     </div>
 
     <div class="editorial-note">
-      John Hale (1620–1668) fought for Parliament. His brother Thomas Hale (1624–1672) fought for the King. Their youngest brother William (1628–1689) held Halecroft and the family's lands throughout, fighting for neither side and corresponding with both. The eleven letters between John and Thomas constitute one of the more remarkable documents in the archive: two men who understood each other completely, disagreed entirely, and never stopped writing.
+      John Hale (1620–1668) fought for Parliament. His brother Thomas Hale (1624–1672) fought for the King. Their youngest brother William (1628–1689) held Halecroft and the family's lands throughout, fighting for neither side and corresponding with both. The eleven letters between John and Thomas are among the most revealing documents in the archive: two men who understood one another fully, differed entirely, and never ceased writing.
       <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
     </div>
 
@@ -831,6 +920,29 @@
     <div class="hd-whn-heading">What Happened Next</div>
     <div class="hd-whn-body">
       King Charles I was executed in January 1649. The Commonwealth lasted eleven years. The Restoration of Charles II in 1660 required all who had fought for Parliament — including John Hale — to negotiate their position with a Crown that remembered. Thomas, who had fought for the King, was by then dead at Halecroft. The brothers' argument was settled not by either of them but by history, which found, as history tends to, that both sides had been partly right and partly catastrophically wrong. Halecroft survived the war intact. The family did not fight again until 1914. Continue with <a href="era-V.html">Vol. V: The Georgian Baronet →</a>
+    </div>
+  </div>
+
+  <div class="era-next">
+    <div class="era-next-label">Where Next</div>
+    <div class="era-next-title">The war ends. The performance begins.</div>
+    <div class="era-next-copy">If Vol. IV showed the house under strain, the next volume shows what the family makes of surviving it. Or you can step out for lineage and chronology before continuing.</div>
+    <div class="era-next-grid">
+      <a href="era-V.html" class="era-next-card">
+        <span class="era-next-kicker">Continue The Story</span>
+        <span class="era-next-name">Vol. V · Sir Nathaniel Hale</span>
+        <span class="era-next-desc">London ambition, memoir, money, and the family learning to perform itself in public.</span>
+      </a>
+      <a href="family-tree.html" class="era-next-card">
+        <span class="era-next-kicker">Track The Line</span>
+        <span class="era-next-name">Family Tree</span>
+        <span class="era-next-desc">See where the warring brothers and their descendants sit in the widening Hale line.</span>
+      </a>
+      <a href="timeline.html" class="era-next-card">
+        <span class="era-next-kicker">See The Full Record</span>
+        <span class="era-next-name">Chronicle Timeline</span>
+        <span class="era-next-desc">Step back and place the Civil War against the centuries before and after it.</span>
+      </a>
     </div>
   </div>
 

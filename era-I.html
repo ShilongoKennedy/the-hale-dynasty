@@ -66,11 +66,32 @@
 
     /* ── ERA HEADER ─────────────────────────────────────── */
     .era-header {
-      background: #F5EDD6;
+      background:
+        linear-gradient(180deg, #f4ecd5, #eadcbc),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(120,90,50,0.05) 34px, rgba(120,90,50,0.05) 35px);
       border-bottom: 3px solid #5C3A1E;
-      padding: 50px 40px 40px;
+      padding: 46px 40px 34px;
       text-align: center;
       position: relative;
+      overflow: hidden;
+    }
+
+    .era-header::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(92,58,30,0.14);
+      pointer-events: none;
+    }
+
+    .era-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 38px;
+      right: 38px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(139,26,26,0.75), rgba(200,160,80,0.18), transparent 78%);
     }
 
     .era-label {
@@ -109,6 +130,144 @@
       font-size: 1.1em;
       color: #8B1A1A;
       letter-spacing: 0.2em;
+    }
+
+    .era-orientation {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid rgba(92,58,30,0.22);
+      font-size: 0.86em;
+      line-height: 1.75;
+      color: #6F5630;
+      font-style: italic;
+    }
+
+    .era-reading-guide {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding: 16px 18px 14px;
+      border: 1px solid rgba(92,58,30,0.18);
+      background: rgba(255,255,255,0.22);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      text-align: left;
+    }
+
+    .era-guide-card {
+      padding: 10px 12px;
+      border: 1px solid rgba(92,58,30,0.12);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .era-guide-kicker {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8B1A1A;
+      margin-bottom: 6px;
+    }
+
+    .era-guide-copy {
+      display: block;
+      color: #6F5630;
+      font-size: 0.76em;
+      line-height: 1.58;
+    }
+
+    .era-next {
+      margin-top: 42px;
+      border: 1px solid rgba(92,58,30,0.22);
+      background:
+        linear-gradient(180deg, rgba(243,233,208,0.72), rgba(233,219,188,0.78)),
+        radial-gradient(circle at 86% 18%, rgba(139,26,26,0.08), transparent 16%);
+      padding: 24px 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .era-next::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(92,58,30,0.08);
+      pointer-events: none;
+    }
+
+    .era-next-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8B1A1A;
+      margin-bottom: 8px;
+    }
+
+    .era-next-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.05em;
+      color: #3B2A1A;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    .era-next-copy {
+      color: #6F5630;
+      font-size: 0.9em;
+      line-height: 1.75;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .era-next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .era-next-card {
+      display: block;
+      text-decoration: none;
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(92,58,30,0.22);
+      background: rgba(255,255,255,0.32);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      position: relative;
+    }
+
+    .era-next-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(139,26,26,0.32);
+      background: rgba(255,255,255,0.34);
+    }
+
+    .era-next-kicker {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8B1A1A;
+      margin-bottom: 6px;
+    }
+
+    .era-next-name {
+      display: block;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.88em;
+      color: #3B2A1A;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .era-next-desc {
+      display: block;
+      color: #6F5630;
+      font-size: 0.78em;
+      line-height: 1.6;
     }
 
     /* ── MAIN CONTENT ────────────────────────────────────── */
@@ -557,6 +716,14 @@
 
       .era-content {
         padding: 30px 16px 60px;
+      }
+
+      .era-next-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .era-reading-guide {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -1541,6 +1708,21 @@
       St. Mary,<br>
       in the Year of Our Lord 1121. <em>Anno Domini MXXI.</em></p>
     <div style="margin-top:16px;" class="era-dates">1066 — 1121</div>
+    <p class="era-orientation">This is the first volume in a ten-part family archive spanning 1066 to 2026. What begins here as a chronicle of conquest becomes, over the centuries, a record of one family told through the documents it leaves behind.</p>
+    <div class="era-reading-guide">
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Read for</span>
+        <span class="era-guide-copy">Origin, conquest, and the first shape of the Hale line.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Best next</span>
+        <span class="era-guide-copy">Continue to Vol. II before branching into maps, people, or side archives.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">What changes later</span>
+        <span class="era-guide-copy">The archive moves from chronicle into letters, legal records, memoir, and modern notes.</span>
+      </div>
+    </div>
   </header>
 
   <div class="era-content">
@@ -1560,9 +1742,8 @@
     <div class="editorial-note">
       Brother Eadmer's Chronicle was discovered in the manuscript collection of Worcester Cathedral Priory in 1872.
       It constitutes the founding document of the Hale family history. The language of the original is Latin;
-      what follows is drawn from the chronicle in Eadmer's own English rendering, together with the documents
-      he preserved. The reader will observe that Eadmer is, throughout, a man of considerable intellectual honesty.
-      He does not invent. Where he is uncertain, he says so. This is rarer than it sounds.
+      what follows is presented in a modern English rendering based on Eadmer's chronicle together with the documents
+      he preserved. Eadmer is, throughout, a writer of unusual scruple: where he is uncertain, he says so plainly.
       <div style="text-align:right; margin-top:10px; font-style:normal; letter-spacing:0.1em; font-size:0.85em;">
         — A.F., <em>London, November 1884</em>
       </div>
@@ -1891,6 +2072,29 @@
     <div class="hd-whn-heading">What Happened Next</div>
     <div class="hd-whn-body">
       The Domesday Survey of 1086 confirmed Ranulf's tenure. The Hale passed intact to his sons. Within two generations the family had learned enough French to manage the courts, enough Latin to keep their records, and enough English to retain the labour of the men who had always worked the land. The Norman and the Saxon did not reconcile — they simply continued, side by side, until the distinction ceased to be practical. By 1200 the Hales were a family of Worcestershire, not of conquest. Continue with <a href="era-II.html">Vol. II: The House of Hale →</a>
+    </div>
+  </div>
+
+  <div class="era-next">
+    <div class="era-next-label">Where Next</div>
+    <div class="era-next-title">Choose the next thread in the record</div>
+    <div class="era-next-copy">Continue in time, or step sideways for context. New readers usually do best with one more volume before exploring the wider archive.</div>
+    <div class="era-next-grid">
+      <a href="era-II.html" class="era-next-card" data-track="era_i_next_click" data-track-label="continue_vol_ii">
+        <span class="era-next-kicker">Continue the story</span>
+        <span class="era-next-name">Vol. II - The House of Hale</span>
+        <span class="era-next-desc">See what the family becomes once conquest gives way to plague, inheritance, and survival.</span>
+      </a>
+      <a href="family-tree.html" class="era-next-card" data-track="era_i_next_click" data-track-label="open_family_tree">
+        <span class="era-next-kicker">Follow the people</span>
+        <span class="era-next-name">Family Tree</span>
+        <span class="era-next-desc">Trace how Ranulf, Aelswith, and their descendants connect across the full 958-year record.</span>
+      </a>
+      <a href="map.html" class="era-next-card" data-track="era_i_next_click" data-track-label="open_map">
+        <span class="era-next-kicker">Follow the place</span>
+        <span class="era-next-name">Map of the Hale Lands</span>
+        <span class="era-next-desc">See where Halecroft sits in relation to Worcester, London, and the later movements of the family.</span>
+      </a>
     </div>
   </div>
 

@@ -595,6 +595,21 @@
       High Victorian. The performance. The letters with black borders. The diary no one was meant to read. The confession on a plain white page. The locked room in Shropshire.
     </p>
     <div class="era-dates">1868 — 1882</div>
+    <div class="era-orientation">Volume VII is the archive at its most self-conscious and least honest. Read it for the gap between performance and action, and for the cost of never crossing that gap in time.</div>
+    <div class="era-reading-guide">
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Read This For</span>
+        <span class="era-guide-copy">Edmund's letters, diary, confession, and the first full emergence of the Marsh-Hale line as an unanswered moral fact.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Watch Closely</span>
+        <span class="era-guide-copy">How the archive stops rewarding polish here. The more finished Edmund sounds, the more the documents expose what he has failed to do.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Then Continue</span>
+        <span class="era-guide-copy">Into Vol. VIII, where Thomas Marsh-Hale inherits the question without inheriting the protections of the main line.</span>
+      </div>
+    </div>
   </header>
 
   <div class="era-content">
@@ -962,6 +977,29 @@
     </div>
   </div>
 
+  <div class="era-next">
+    <div class="era-next-label">Where Next</div>
+    <div class="era-next-title">The main line closes. The archive continues elsewhere.</div>
+    <div class="era-next-copy">If this volume is about not acting in time, the next is about what survives anyway: the son, the name, the war, and the record being claimed from a different branch.</div>
+    <div class="era-next-grid">
+      <a href="era-VIII.html" class="era-next-card">
+        <span class="era-next-kicker">Continue The Story</span>
+        <span class="era-next-name">Vol. VIII · Thomas</span>
+        <span class="era-next-desc">The Marsh-Hale line takes the archive forward through journalism, war, and the rediscovery of the record.</span>
+      </a>
+      <a href="family-tree.html" class="era-next-card">
+        <span class="era-next-kicker">Track The Line</span>
+        <span class="era-next-name">Family Tree</span>
+        <span class="era-next-desc">See exactly where the main Hale line ends and where the Marsh and Voss continuations begin to matter.</span>
+      </a>
+      <a href="persons.html" class="era-next-card">
+        <span class="era-next-kicker">Follow The People</span>
+        <span class="era-next-name">Portraits & People</span>
+        <span class="era-next-desc">Step out of Edmund's voice and follow the figures whose lives his documents only partially understood.</span>
+      </a>
+    </div>
+  </div>
+
 
   <nav class="era-seq-nav">
     <a href="era-VI.html" class="esn-prev">
@@ -1223,6 +1261,84 @@ function toggleEraSound() {
     border-top: 1px solid rgba(200,168,60,0.07);
     padding-top: 16px;
   }
+    .era-header {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(242,240,234,0.96), rgba(222,220,212,0.95)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(74,74,58,0.04) 34px, rgba(74,74,58,0.04) 35px);
+      border-bottom: 3px solid #4A4A3A;
+      padding: 46px 40px 34px;
+    }
+    .era-header::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(74,74,58,0.12);
+      pointer-events: none;
+    }
+    .era-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 38px;
+      right: 38px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(74,74,58,0.7), rgba(200,168,60,0.16), transparent 78%);
+    }
+    .era-orientation {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid rgba(74,74,58,0.18);
+      font-size: 0.86em;
+      line-height: 1.75;
+      color: #666357;
+      font-style: italic;
+    }
+    .era-reading-guide {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding: 16px 18px 14px;
+      border: 1px solid rgba(74,74,58,0.16);
+      background: rgba(255,255,255,0.18);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      text-align: left;
+    }
+    .era-guide-card { padding: 10px 12px; border: 1px solid rgba(74,74,58,0.1); background: rgba(255,255,255,0.16); }
+    .era-guide-kicker { display: block; font-family: 'Courier New', monospace; font-size: 0.56em; letter-spacing: 0.14em; text-transform: uppercase; color: #4A4A3A; margin-bottom: 6px; }
+    .era-guide-copy { display: block; color: #666357; font-size: 0.76em; line-height: 1.58; }
+    .era-next {
+      margin-top: 42px;
+      border: 1px solid rgba(74,74,58,0.18);
+      background: linear-gradient(180deg, rgba(240,238,232,0.86), rgba(225,222,214,0.92));
+      padding: 24px 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .era-next::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(74,74,58,0.08);
+      pointer-events: none;
+    }
+    .era-next-label { font-family: 'Courier New', monospace; font-size: 0.68em; letter-spacing: 0.2em; text-transform: uppercase; color: #4A4A3A; margin-bottom: 8px; }
+    .era-next-title { font-family: 'Cinzel', Georgia, serif; font-size: 1.05em; color: #26261f; margin-bottom: 10px; letter-spacing: 0.04em; }
+    .era-next-copy { color: #666357; font-size: 0.9em; line-height: 1.75; margin-bottom: 16px; font-style: italic; }
+    .era-next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .era-next-card { display: block; text-decoration: none; padding: 14px 14px 12px; border: 1px solid rgba(74,74,58,0.18); background: rgba(255,255,255,0.28); transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; }
+    .era-next-card:hover { transform: translateY(-1px); border-color: rgba(74,74,58,0.3); background: rgba(255,255,255,0.38); }
+    .era-next-kicker { display: block; font-family: 'Courier New', monospace; font-size: 0.6em; letter-spacing: 0.14em; text-transform: uppercase; color: #4A4A3A; margin-bottom: 6px; }
+    .era-next-name { display: block; font-family: 'Cinzel', Georgia, serif; font-size: 0.92em; color: #26261f; margin-bottom: 6px; }
+    .era-next-desc { display: block; color: #666357; font-size: 0.76em; line-height: 1.55; }
+    @media (max-width: 760px) {
+      .era-reading-guide,
+      .era-next-grid { grid-template-columns: 1fr; }
+      .era-header { padding: 38px 20px 28px; }
+    }
   </style>
 
   <div id="hd-confession-modal" role="dialog" aria-modal="true" aria-labelledby="hd-cfm-title">

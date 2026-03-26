@@ -9,43 +9,56 @@
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #efe2c7;
+      --paper-deep: #dcc39a;
+      --ink: #2d2218;
+      --ink-soft: #68543d;
+      --oxblood: #7b3428;
+      --brass: #b38a34;
+      --frame: rgba(94, 66, 38, 0.22);
+      --shadow: 0 16px 38px rgba(26, 16, 8, 0.18);
+    }
     body {
-      background: #080604;
-      color: #C8A050;
+      background:
+        radial-gradient(circle at 14% 16%, rgba(123, 52, 40, 0.08), transparent 24%),
+        radial-gradient(circle at 86% 10%, rgba(58, 82, 106, 0.08), transparent 22%),
+        linear-gradient(180deg, #f5ecda 0%, #e3d2ae 100%);
+      color: var(--ink);
       font-family: Georgia, 'Times New Roman', serif;
       min-height: 100vh;
     }
 
     .top-nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(8,6,4,0.95);
-      border-bottom: 1px solid rgba(200,168,60,0.1);
+      background: rgba(244, 236, 220, 0.88);
+      border-bottom: 1px solid var(--frame);
       padding: 10px 30px;
       display: flex; justify-content: space-between; align-items: center;
       font-family: 'Courier New', monospace;
       font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
       backdrop-filter: blur(8px);
     }
-    .top-nav a { color: rgba(200,168,60,0.55); text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #C8A83C; }
-    .top-nav .center { color: rgba(200,168,60,0.3); font-size: 0.9em; }
+    .top-nav a { color: rgba(94,66,38,0.68); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: var(--oxblood); }
+    .top-nav .center { color: rgba(94,66,38,0.38); font-size: 0.9em; }
 
     .page-header {
       text-align: center;
       padding: 56px 24px 40px;
-      border-bottom: 1px solid rgba(200,168,60,0.06);
+      border-bottom: 1px solid rgba(94,66,38,0.1);
     }
     .page-title {
       font-family: 'Cinzel', Georgia, serif;
       font-size: clamp(1.8em, 4vw, 3em);
-      color: #F0C840;
+      color: #402e1d;
       letter-spacing: 0.1em;
-      text-shadow: 0 0 60px rgba(240,200,64,0.3);
+      text-shadow: none;
       margin-bottom: 12px;
     }
     .page-subtitle {
       font-style: italic;
-      color: rgba(200,168,60,0.4);
+      color: rgba(94,66,38,0.7);
       font-size: 0.88em;
       letter-spacing: 0.04em;
       max-width: 520px;
@@ -54,14 +67,14 @@
     }
     .eleanor-intro {
       display: inline-block;
-      background: rgba(200,168,60,0.04);
-      border: 1px solid rgba(200,168,60,0.12);
+      background: rgba(255,255,255,0.28);
+      border: 1px solid rgba(94,66,38,0.16);
       padding: 10px 22px;
       font-family: 'Courier New', monospace;
       font-size: 0.65em;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.4);
+      color: rgba(94,66,38,0.6);
     }
 
     .filter-bar {
@@ -73,8 +86,8 @@
     }
     .filter-btn {
       background: transparent;
-      border: 1px solid rgba(200,168,60,0.15);
-      color: rgba(200,168,60,0.4);
+      border: 1px solid rgba(94,66,38,0.18);
+      color: rgba(94,66,38,0.55);
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
       letter-spacing: 0.12em;
@@ -84,9 +97,9 @@
       transition: all 0.2s;
     }
     .filter-btn:hover, .filter-btn.active {
-      border-color: rgba(200,168,60,0.5);
-      color: #C8A83C;
-      background: rgba(200,168,60,0.04);
+      border-color: rgba(123,52,40,0.42);
+      color: var(--oxblood);
+      background: rgba(123,52,40,0.05);
     }
 
     .persons-grid {
@@ -101,15 +114,19 @@
     .person-card {
       position: relative;
       cursor: pointer;
-      background: #0A0806;
-      border: 1px solid rgba(200,168,60,0.06);
+      background:
+        linear-gradient(180deg, rgba(241,232,212,0.98), rgba(219,201,171,0.96)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 30px, rgba(94,66,38,0.035) 30px, rgba(94,66,38,0.035) 31px);
+      border: 1px solid rgba(94,66,38,0.14);
       overflow: hidden;
-      transition: border-color 0.25s, transform 0.2s;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
       aspect-ratio: 3/4;
+      box-shadow: var(--shadow);
     }
     .person-card:hover {
-      border-color: rgba(200,168,60,0.25);
+      border-color: rgba(123,52,40,0.28);
       transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(26, 16, 8, 0.22);
       z-index: 2;
     }
     .person-card.hidden { display: none; }
@@ -119,21 +136,21 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      filter: sepia(55%) brightness(0.7) contrast(1.1);
+      filter: sepia(28%) brightness(0.9) contrast(1.02);
       transition: filter 0.3s;
     }
-    .person-card:hover .person-portrait { filter: sepia(40%) brightness(0.85) contrast(1.1); }
+    .person-card:hover .person-portrait { filter: sepia(18%) brightness(0.98) contrast(1.04); }
 
     .person-portrait-placeholder {
       width: 100%; height: 70%;
-      background: #0D0B07;
+      background: rgba(79, 61, 42, 0.08);
       display: flex; align-items: center; justify-content: center;
     }
     .person-portrait-placeholder svg { opacity: 0.08; }
 
     .person-info {
       padding: 12px 14px 14px;
-      background: linear-gradient(180deg, #0A0806 0%, #060402 100%);
+      background: linear-gradient(180deg, rgba(247,241,230,0.82) 0%, rgba(232,221,198,0.9) 100%);
       height: 30%;
       display: flex; flex-direction: column; justify-content: center;
     }
@@ -146,7 +163,7 @@
     .person-name {
       font-family: 'Cinzel', Georgia, serif;
       font-size: 0.78em;
-      color: #C8A83C;
+      color: #3f2b1c;
       letter-spacing: 0.03em;
       line-height: 1.3;
       margin-bottom: 3px;
@@ -154,17 +171,17 @@
     .person-dates {
       font-family: 'Courier New', monospace;
       font-size: 0.55em;
-      color: rgba(200,168,60,0.3);
+      color: rgba(94,66,38,0.5);
       letter-spacing: 0.08em;
     }
 
     .person-ask-btn {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      background: rgba(200,168,60,0.08);
+      background: rgba(123,52,40,0.06);
       border: none;
-      border-top: 1px solid rgba(200,168,60,0.12);
-      color: rgba(200,168,60,0.5);
+      border-top: 1px solid rgba(94,66,38,0.12);
+      color: rgba(94,66,38,0.6);
       font-family: 'Courier New', monospace;
       font-size: 0.55em;
       letter-spacing: 0.12em;
@@ -178,17 +195,17 @@
       opacity: 1;
     }
     .person-ask-btn:hover {
-      background: rgba(200,168,60,0.14);
-      color: #C8A83C;
+      background: rgba(123,52,40,0.1);
+      color: var(--oxblood);
     }
 
     /* ERA LINK badge */
     .person-era-link {
       position: absolute;
       top: 10px; right: 10px;
-      background: rgba(8,6,4,0.85);
-      border: 1px solid rgba(200,168,60,0.2);
-      color: rgba(200,168,60,0.5);
+      background: rgba(245,236,221,0.9);
+      border: 1px solid rgba(94,66,38,0.18);
+      color: rgba(94,66,38,0.62);
       font-family: 'Courier New', monospace;
       font-size: 0.52em;
       letter-spacing: 0.1em;
@@ -212,8 +229,8 @@
     }
     #inquiry-overlay.open { display: flex; }
     #inquiry-box {
-      background: #060402;
-      border: 1px solid rgba(200,168,60,0.18);
+      background: linear-gradient(180deg, rgba(245,236,221,0.98), rgba(229,215,190,0.98));
+      border: 1px solid rgba(94,66,38,0.18);
       width: 100%;
       max-width: 560px;
       max-height: 80vh;
@@ -364,7 +381,7 @@
 <header class="page-header">
   <h1 class="page-title">Persons of the Archive</h1>
   <p class="page-subtitle">Select any figure from the dynasty to consult Eleanor — archivist and keeper of the record — about their life, significance, and place in nine centuries of the Hale line.</p>
-  <div class="eleanor-intro">✦ &nbsp; Ask Eleanor anything about the dynasty &nbsp; ✦</div>
+  <div class="eleanor-intro">✦ &nbsp; Consult Eleanor on any figure in the record &nbsp; ✦</div>
 </header>
 
 <div class="filter-bar">
@@ -471,7 +488,7 @@ function buildGrid(filter) {
         <div class="person-name">${p.name}</div>
         <div class="person-dates">${p.dates} · ${p.era}</div>
       </div>
-      <button class="person-ask-btn">✦ Ask Eleanor</button>
+      <button class="person-ask-btn">✦ Consult Eleanor</button>
       ${p.eraLink ? `<a class="person-era-link" href="${p.eraLink}" onclick="event.stopPropagation()">→ Era</a>` : ''}
     `;
 

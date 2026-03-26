@@ -66,120 +66,423 @@
 
     /* ── HERO ──────────────────────────────────────────────── */
     .hero {
-      text-align: center;
-      padding: 80px 40px 44px;
+      padding: 60px 40px 30px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Subtle radiating glow behind the title */
     .hero::before {
       content: '';
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -60%);
-      width: 600px; height: 300px;
-      background: radial-gradient(ellipse, rgba(200,168,60,0.06) 0%, transparent 70%);
+      inset: 0;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(141, 53, 38, 0.16), transparent 24%),
+        radial-gradient(circle at 82% 14%, rgba(101, 118, 134, 0.12), transparent 22%),
+        linear-gradient(180deg, rgba(228, 212, 182, 0.05), transparent 38%);
       pointer-events: none;
     }
 
+    .hero-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(420px, 560px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-ledger {
+      position: relative;
+      padding: 22px 28px 18px;
+      background:
+        linear-gradient(180deg, rgba(231, 219, 194, 0.98), rgba(212, 194, 163, 0.98)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(107, 80, 44, 0.08) 34px, rgba(107, 80, 44, 0.08) 35px);
+      border: 1px solid rgba(111, 76, 39, 0.34);
+      box-shadow: 0 20px 52px rgba(0,0,0,0.22);
+    }
+
+    .hero-ledger-top {
+      position: relative;
+      padding-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .hero-ledger-top::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10px;
+      right: 10px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(95, 36, 26, 0.26), transparent);
+    }
+
+    .hero-ledger-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-left: 10px;
+    }
+
+    .hero-ledger-ref {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hero-ledger::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(111, 76, 39, 0.15);
+      pointer-events: none;
+    }
+
+    .hero-ledger::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+      left: 22px;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(143, 53, 38, 0.38), transparent);
+      opacity: 0.9;
+    }
+
+    .hero-ledger-body {
+      display: grid;
+      grid-template-columns: minmax(180px, 235px) minmax(240px, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero-ledger-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding-right: 4px;
+    }
+
+    .hero-thesis {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 18px 0 18px 10px;
+      text-align: left;
+      position: relative;
+    }
+
+    .hero-thesis::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      bottom: 28px;
+      left: -12px;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(164, 89, 70, 0.2), transparent);
+    }
+
+    .hero-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.64em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(116, 68, 42, 0.72);
+      margin-bottom: 0;
+    }
+
+    .hero-ledger-sub {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(87, 74, 58, 0.68);
+    }
+
+    .hero-stamp {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      border: 1px solid rgba(95, 36, 26, 0.3);
+      background:
+        radial-gradient(circle at 32% 28%, rgba(255,255,255,0.32), transparent 24%),
+        radial-gradient(circle, rgba(138, 41, 30, 0.18), rgba(109, 33, 24, 0.04) 62%, transparent 64%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-8deg);
+      box-shadow: inset 0 0 18px rgba(95,36,26,0.12);
+      flex-shrink: 0;
+    }
+
+    .hero-stamp-inner {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 1px dashed rgba(95,36,26,0.36);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.74em;
+      color: rgba(95,36,26,0.72);
+      letter-spacing: 0.12em;
+    }
+
+    .hero-crest-frame {
+      position: relative;
+      padding: 12px 12px 10px;
+      margin: 0;
+      border: 1px solid rgba(95, 36, 26, 0.16);
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.36), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.2), rgba(174, 151, 117, 0.06));
+      overflow: hidden;
+    }
+
+    .hero-crest-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(95, 36, 26, 0.1);
+      pointer-events: none;
+    }
+
+    .hero-crest-frame::after {
+      content: 'Recovered crest impression';
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.46em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(87, 74, 58, 0.56);
+    }
+
     .ornament {
-      color: var(--gold);
-      font-size: 1.2em;
-      letter-spacing: 0.4em;
+      color: rgba(143, 53, 38, 0.74);
+      font-size: 0.84em;
+      letter-spacing: 0.22em;
       display: block;
-      margin-bottom: 22px;
-      opacity: 0.6;
+      margin-bottom: 8px;
+      opacity: 0.7;
     }
 
     .main-title {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.7em, 3.6vw, 3.0em);
+      font-size: clamp(1.82em, 3.15vw, 2.8em);
       font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.12em;
+      color: #5f241a;
+      letter-spacing: 0.05em;
       line-height: 1;
-      text-shadow: 0 0 80px rgba(200,168,60,0.12), 0 2px 4px rgba(0,0,0,0.8);
-      margin-bottom: 14px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+      margin-bottom: 8px;
     }
 
     .subtitle {
       font-style: italic;
-      font-size: 1em;
-      color: var(--text-mid);
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
+      font-size: 0.86em;
+      color: rgba(95, 66, 40, 0.82);
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
     }
 
     .hero-divider {
-      width: 50px; height: 1px;
-      background: var(--gold-dim);
-      margin: 0 auto 20px;
-      opacity: 0.4;
+      width: 56px; height: 1px;
+      background: rgba(143, 53, 38, 0.38);
+      margin: 0 0 8px;
+      opacity: 0.9;
     }
 
     .dates-line {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 1.5em;
-      color: var(--gold);
-      letter-spacing: 0.22em;
-      margin-bottom: 10px;
+      font-size: 1.04em;
+      color: #3f4c5d;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
     }
 
     .tagline {
       font-family: 'Courier New', monospace;
-      font-size: 0.72em;
-      color: var(--text-dim);
-      letter-spacing: 0.25em;
+      font-size: 0.56em;
+      color: rgba(79, 66, 52, 0.76);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      margin-bottom: 0;
+    }
+
+    .hero-note {
+      max-width: 38rem;
+      margin: 0 0 18px;
+      font-size: 1.08em;
+      line-height: 1.82;
+      color: rgba(223, 212, 188, 0.92);
+      font-style: normal;
+    }
+
+    .hero-thesis-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.45em, 2.8vw, 2.25em);
+      color: #d4c39a;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      max-width: 13ch;
+    }
+
+    .hero-thesis-list {
+      list-style: none;
+      margin: 0 0 22px;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-thesis-list li {
+      position: relative;
+      padding-left: 18px;
+      color: rgba(208, 193, 159, 0.8);
+      font-size: 0.9em;
+      line-height: 1.65;
+    }
+
+    .hero-thesis-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: rgba(164, 89, 70, 0.9);
+    }
+
+    .hero-context {
+      max-width: 34rem;
+      border-left: 2px solid rgba(164, 89, 70, 0.42);
+      padding-left: 16px;
+      color: rgba(208, 193, 159, 0.62);
+      font-size: 0.86em;
+      line-height: 1.75;
+    }
+
+    .hero-context-note {
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(208, 193, 159, 0.44);
     }
 
     .matilda-quote {
       font-style: italic;
-      color: var(--gold);
-      font-size: 1.05em;
-      margin-bottom: 5px;
+      color: #e0c48c;
+      font-size: 1.08em;
+      margin-bottom: 6px;
     }
     .matilda-attr {
       font-family: 'Courier New', monospace;
       font-size: 0.7em;
-      color: var(--text-dim);
+      color: rgba(197, 178, 141, 0.62);
       letter-spacing: 0.1em;
+    }
+
+    .section-intro {
+      max-width: 900px;
+      margin: 0 auto 18px;
+      padding: 0 30px;
+      text-align: left;
+    }
+    .section-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.76);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.05em, 2.2vw, 1.45em);
+      letter-spacing: 0.04em;
+      color: #dbc796;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .section-copy {
+      max-width: 60ch;
+      font-size: 0.84em;
+      line-height: 1.72;
+      color: rgba(216, 202, 172, 0.68);
     }
 
     /* ── ARCHIVE SEARCH ────────────────────────────────────── */
     .search-section {
-      max-width: 860px;
-      margin: 0 auto 20px;
+      max-width: 980px;
+      margin: 0 auto 24px;
       padding: 0 30px;
+    }
+    .search-panel {
+      position: relative;
+      border: 1px solid rgba(111, 76, 39, 0.22);
+      background:
+        linear-gradient(180deg, rgba(33,29,25,0.96), rgba(18,16,13,0.98)),
+        radial-gradient(circle at 85% 18%, rgba(164,89,70,0.08), transparent 18%);
+      padding: 22px 22px 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 36px rgba(0,0,0,0.16);
+    }
+    .search-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(164,89,70,0.08), transparent 20%),
+        repeating-linear-gradient(180deg, transparent 0, transparent 29px, rgba(111,76,39,0.05) 29px, rgba(111,76,39,0.05) 30px);
+      pointer-events: none;
     }
 
     .search-heading {
-      text-align: center;
+      text-align: left;
       font-family: 'Courier New', monospace;
-      font-size: 0.74em;
-      letter-spacing: 0.35em;
-      color: var(--text-dim);
+      font-size: 0.62em;
+      letter-spacing: 0.24em;
+      color: rgba(164,89,70,0.74);
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
-    .search-heading::before, .search-heading::after {
-      content: '──────';
-      margin: 0 14px;
-      opacity: 0.25;
+    .search-heading::before, .search-heading::after { content: none; }
+
+    .search-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.02em, 2vw, 1.34em);
+      color: #dcc58f;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .search-copy {
+      max-width: 58ch;
+      font-size: 0.82em;
+      line-height: 1.7;
+      color: rgba(212,198,165,0.67);
+      margin-bottom: 16px;
     }
 
     .search-bar-wrap {
       position: relative;
-      border: 1px solid #2E2818;
-      background: #141008;
+      border: 1px solid rgba(164,89,70,0.22);
+      background: rgba(15, 12, 10, 0.82);
       display: flex;
       align-items: center;
       transition: border-color 0.2s;
     }
     .search-bar-wrap:focus-within {
-      border-color: #5A4A20;
+      border-color: rgba(208, 170, 122, 0.48);
     }
 
     .search-icon {
@@ -206,8 +509,8 @@
     .search-shortcut {
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
-      color: #2E2818;
-      border: 1px solid #2E2818;
+      color: rgba(170, 140, 102, 0.46);
+      border: 1px solid rgba(164,89,70,0.18);
       padding: 2px 7px;
       margin-right: 14px;
       letter-spacing: 0.1em;
@@ -217,12 +520,12 @@
     .search-hint {
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
-      color: #3A3020;
+      color: rgba(170, 140, 102, 0.42);
       letter-spacing: 0.1em;
-      margin-top: 8px;
-      text-align: center;
+      margin-top: 10px;
+      text-align: left;
     }
-    .search-hint span { color: #5A4A28; }
+    .search-hint span { color: rgba(218, 190, 136, 0.62); }
 
     /* ── SEARCH RESULTS ────────────────────────────────────── */
     .search-results {
@@ -329,18 +632,12 @@
 
     /* ── ARCHIVE INSTRUCTION ───────────────────────────────── */
     .archive-instruction {
-      text-align: center;
-      font-family: 'Courier New', monospace;
-      font-size: 0.7em;
-      color: var(--text-dim);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 30px 40px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 30px 22px;
     }
     .archive-instruction::before, .archive-instruction::after {
-      content: '───────';
-      margin: 0 16px;
-      opacity: 0.2;
+      content: none;
     }
 
     /* ── ARCHIVE GRID ──────────────────────────────────────── */
@@ -352,6 +649,90 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 18px;
     }
+    .archive-clusters {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px 60px;
+      display: grid;
+      gap: 28px;
+    }
+    .archive-cluster {
+      position: relative;
+      padding: 18px 18px 20px;
+      border: 1px solid rgba(111, 76, 39, 0.22);
+      background:
+        linear-gradient(180deg, rgba(26,23,19,0.98), rgba(16,14,11,0.99)),
+        radial-gradient(circle at 92% 14%, rgba(164,89,70,0.06), transparent 16%);
+      overflow: hidden;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.14);
+    }
+    .archive-cluster::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(214,188,143,0.05);
+      pointer-events: none;
+    }
+    .archive-cluster::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 22px;
+      right: 22px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(164,89,70,0.88), rgba(215,186,134,0.22), transparent 78%);
+    }
+    .archive-cluster--continue::after {
+      background: linear-gradient(90deg, rgba(116,145,165,0.7), rgba(215,186,134,0.18), transparent 78%);
+    }
+    .archive-cluster--later::after {
+      background: linear-gradient(90deg, rgba(90,122,70,0.7), rgba(215,186,134,0.18), transparent 78%);
+    }
+    .archive-cluster-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 18px;
+      margin: 0 0 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .archive-cluster-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.72);
+    }
+    .archive-cluster-copy {
+      max-width: 54ch;
+      font-size: 0.78em;
+      line-height: 1.62;
+      color: rgba(212,198,165,0.54);
+    }
+    .archive-cluster-copy strong {
+      color: rgba(221,197,144,0.82);
+      font-weight: normal;
+    }
+    .archive-cluster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .archive-box-note {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.54em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.68);
+    }
+    .archive-box--continue .archive-box-note {
+      color: rgba(116,145,165,0.72);
+    }
 
     /* ── ARCHIVE BOX ───────────────────────────────────────── */
     @keyframes boxReveal {
@@ -361,17 +742,47 @@
 
     .archive-box {
       position: relative;
-      background: var(--bg-box);
-      border: 1px solid #252018;
+      background:
+        linear-gradient(180deg, rgba(27,23,18,0.98), rgba(16,14,11,0.98)),
+        radial-gradient(circle at top right, rgba(164,89,70,0.06), transparent 18%);
+      border: 1px solid rgba(111, 76, 39, 0.22);
       overflow: hidden;
       cursor: pointer;
       text-decoration: none;
       display: flex;
       flex-direction: column;
-      box-shadow: 3px 3px 0 #080604, 5px 5px 0 #0C0A08;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.16);
       /* Start hidden, reveal in sequence */
       opacity: 0;
       animation: boxReveal 0.5s ease forwards;
+    }
+    .archive-box-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.5em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(242, 231, 204, 0.86);
+      background: rgba(104, 39, 28, 0.82);
+      border: 1px solid rgba(206, 173, 127, 0.34);
+      padding: 4px 7px;
+      z-index: 3;
+    }
+    .archive-box--continue .archive-box-badge {
+      background: rgba(55, 74, 96, 0.84);
+    }
+    .archive-box--later .archive-box-badge {
+      background: rgba(60, 79, 48, 0.82);
+    }
+    .archive-box--feature {
+      border-color: rgba(206, 173, 127, 0.26);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.2);
+    }
+    .archive-box--feature .box-label {
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
 
     .archive-box:nth-child(1)  { animation-delay: 1.0s; }
@@ -386,9 +797,9 @@
     .archive-box:nth-child(10) { animation-delay: 2.08s; }
 
     .archive-box:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 6px 6px 0 #080604, 8px 8px 0 #0C0A08;
-      border-color: #4A3C20;
+      transform: translateY(-4px);
+      box-shadow: 0 22px 40px rgba(0,0,0,0.24);
+      border-color: rgba(189, 153, 108, 0.34);
     }
     .archive-box:hover .box-title { color: var(--gold-bright); }
     .archive-box:hover .box-spine-inner { opacity: 1; }
@@ -463,13 +874,19 @@
       width: 5px;
     }
     .box-label { padding: 16px 18px 18px 24px; }
+    .box-label {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(247,239,221,0.035), transparent 18%),
+        repeating-linear-gradient(180deg, transparent 0, transparent 24px, rgba(255,255,255,0.02) 24px, rgba(255,255,255,0.02) 25px);
+    }
     .box-vol {
       display: none; /* vol is now shown in banner overlay */
     }
     .box-title {
-      font-size: 0.96em;
+      font-size: 0.94em;
       font-weight: bold;
-      color: var(--gold);
+      color: #d8c490;
       line-height: 1.3;
       margin-bottom: 8px;
       transition: color 0.2s;
@@ -485,7 +902,7 @@
     .box-desc {
       font-style: italic;
       font-size: 0.73em;
-      color: var(--text-dim);
+      color: rgba(208,193,159,0.48);
       line-height: 1.5;
     }
     .box-enter {
@@ -793,15 +1210,16 @@
     /* ── MYSTERY TRAIL ─────────────────────────────────────── */
     .matilda-mystery {
       max-width: 1300px;
-      margin: 0 auto 20px;
+      margin: 0 auto 28px;
       padding: 0 30px;
     }
     .mystery-inner {
-      border: 1px dashed #2A2218;
+      border: 1px dashed rgba(111, 76, 39, 0.26);
       padding: 20px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: linear-gradient(180deg, rgba(22,19,16,0.82), rgba(14,12,10,0.92));
     }
     .mystery-label {
       font-family: 'Courier New', monospace;
@@ -819,8 +1237,8 @@
     /* ── FOOTER ────────────────────────────────────────────── */
     .archive-footer {
       text-align: center;
-      padding: 30px 40px 50px;
-      border-top: 1px solid #181410;
+      padding: 34px 40px 56px;
+      border-top: 1px solid rgba(111, 76, 39, 0.16);
     }
     .footer-note {
       font-family: 'Courier New', monospace;
@@ -832,17 +1250,93 @@
 
     /* ── EXPLORE NAV (Map + Family Tree) ───────────────────── */
     .explore-nav {
-      max-width: 860px;
-      margin: 0 auto 32px;
+      max-width: 1100px;
+      margin: 0 auto 36px;
       padding: 0 30px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .explore-shell {
+      max-width: 1160px;
+      margin: 0 auto 8px;
+    }
+    .explore-group {
+      position: relative;
+      padding: 22px 22px 20px;
+      border: 1px solid rgba(111, 76, 39, 0.24);
+      background:
+        linear-gradient(180deg, rgba(29,25,21,0.98), rgba(16,14,11,0.99)),
+        radial-gradient(circle at 92% 14%, rgba(164,89,70,0.08), transparent 16%);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.16);
+      overflow: hidden;
+    }
+    .explore-group::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(214,188,143,0.06);
+      pointer-events: none;
+    }
+    .explore-group::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(164,89,70,0.9), rgba(215,186,134,0.22), transparent 78%);
+      opacity: 0.85;
+    }
+    .explore-group--world {
+      background:
+        linear-gradient(180deg, rgba(25,24,22,0.98), rgba(15,14,12,0.99)),
+        radial-gradient(circle at 92% 14%, rgba(70,101,122,0.08), transparent 18%);
+    }
+    .explore-group--world::after {
+      background: linear-gradient(90deg, rgba(116,145,165,0.7), rgba(214,188,143,0.18), transparent 78%);
+    }
+    .explore-group--deep {
+      background:
+        linear-gradient(180deg, rgba(28,24,20,0.98), rgba(15,13,11,0.99)),
+        radial-gradient(circle at 92% 14%, rgba(90,122,70,0.08), transparent 18%);
+    }
+    .explore-group-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 18px;
+      margin: 0 0 12px;
+      padding: 0 2px;
+    }
+    .explore-group-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.72);
+    }
+    .explore-group-copy {
+      max-width: 52ch;
+      font-size: 0.77em;
+      line-height: 1.62;
+      color: rgba(212,198,165,0.54);
+    }
+    .explore-group-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .explore-group--primary .explore-group-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     }
     .explore-card {
-      background: #141008;
-      border: 1px solid #2A2010;
-      padding: 18px 22px;
+      background:
+        linear-gradient(180deg, rgba(37,32,27,0.96), rgba(19,17,14,0.98)),
+        radial-gradient(circle at 84% 18%, rgba(164,89,70,0.08), transparent 18%);
+      border: 1px solid rgba(138, 108, 70, 0.24);
+      border-left: 3px solid rgba(164,89,70,0.5);
+      padding: 18px 20px;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -852,6 +1346,13 @@
       position: relative;
       overflow: hidden;
     }
+    .explore-card::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(214,188,143,0.06);
+      pointer-events: none;
+    }
     .explore-card::before {
       content: '';
       position: absolute; inset: 0;
@@ -859,23 +1360,45 @@
       pointer-events: none;
     }
     .explore-card:hover {
-      background: #1C1810;
-      border-color: #5A4A20;
-      transform: translateY(-2px);
+      background: linear-gradient(180deg, rgba(48,39,31,0.98), rgba(22,18,15,0.98));
+      border-color: rgba(206, 173, 127, 0.34);
+      transform: translateY(-4px) translateX(2px);
+      box-shadow: 0 18px 34px rgba(0,0,0,0.22);
     }
-    .explore-card-icon { flex-shrink: 0; width: 42px; height: 42px; opacity: 0.65; transition: opacity 0.2s; }
+    .explore-card-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      opacity: 0.72;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(164,89,70,0.16);
+      background: rgba(255,255,255,0.02);
+    }
     .explore-card:hover .explore-card-icon { opacity: 1; }
     .explore-card-text { flex: 1; }
+    .explore-card-eyebrow {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.52em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.64);
+      margin-bottom: 5px;
+    }
     .explore-card-title {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.84em; color: var(--gold);
+      font-size: 0.82em; color: #d7c38f;
       letter-spacing: 0.14em; text-transform: uppercase;
       margin-bottom: 5px;
     }
     .explore-card-sub {
-      font-family: 'Courier New', monospace;
-      font-size: 0.58em; color: var(--text-dim);
-      letter-spacing: 0.14em; text-transform: uppercase;
+      font-size: 0.78em;
+      color: rgba(212,198,165,0.62);
+      line-height: 1.58;
+      max-width: 40ch;
     }
     .explore-card-arrow {
       margin-left: auto; color: #3A3020;
@@ -883,37 +1406,100 @@
       transition: color 0.2s, transform 0.15s; flex-shrink: 0;
     }
     .explore-card:hover .explore-card-arrow { color: var(--gold-dim); transform: translateX(4px); }
+    .explore-card--primary {
+      padding: 26px 24px;
+      min-height: 188px;
+      align-items: flex-start;
+      border-left-width: 4px;
+    }
+    .explore-card--primary .explore-card-icon {
+      width: 54px;
+      height: 54px;
+      margin-top: 2px;
+    }
+    .explore-card--primary .explore-card-title {
+      font-size: 1.08em;
+      margin-bottom: 8px;
+    }
+    .explore-card--primary .explore-card-sub {
+      font-size: 0.84em;
+      max-width: 34ch;
+    }
+    .explore-card--utility {
+      min-height: 114px;
+    }
+    .explore-group--world .explore-card {
+      border-left-color: rgba(116,145,165,0.48);
+    }
+    .explore-group--deep .explore-card {
+      border-left-color: rgba(90,122,70,0.48);
+    }
+    .explore-group--world .explore-card-icon {
+      border-color: rgba(116,145,165,0.16);
+    }
+    .explore-group--deep .explore-card-icon {
+      border-color: rgba(90,122,70,0.18);
+    }
 
     /* ── START HERE ────────────────────────────────────────── */
     .start-here-section {
       max-width: 940px;
       margin: 0 auto;
       padding: 0 30px 28px;
+      position: relative;
     }
+
+    .start-here-section::before {
+      content: '';
+      display: block;
+      width: min(940px, calc(100% - 8px));
+      height: 34px;
+      margin: 0 auto 14px;
+      background:
+        linear-gradient(180deg, rgba(164,89,70,0.16), transparent 65%),
+        repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(164,89,70,0.09) 22px, rgba(164,89,70,0.09) 23px);
+      clip-path: polygon(2% 0, 98% 0, 100% 100%, 0 100%);
+      opacity: 0.7;
+    }
+
     .start-here-box {
-      border: 1px solid rgba(200,168,60,0.2);
-      background: linear-gradient(180deg, rgba(26,22,16,0.92), rgba(16,12,8,0.96));
+      border: 1px solid rgba(111, 76, 39, 0.24);
+      background:
+        linear-gradient(180deg, rgba(35,31,26,0.92), rgba(21,18,15,0.96)),
+        radial-gradient(circle at top right, rgba(164,89,70,0.08), transparent 28%);
       padding: 24px 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-here-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(164,89,70,0.08), transparent 18%),
+        radial-gradient(circle at 86% 20%, rgba(221,197,144,0.06), transparent 18%);
+      pointer-events: none;
     }
     .start-here-kicker {
       font-family: 'Courier New', monospace;
       font-size: 0.62em;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.55);
+      color: rgba(164,89,70,0.74);
       margin-bottom: 10px;
     }
     .start-here-title {
       font-family: 'Cinzel', Georgia, serif;
       font-size: clamp(1.1em, 2.4vw, 1.5em);
       letter-spacing: 0.05em;
-      color: var(--gold);
+      color: #dcc58f;
       margin-bottom: 8px;
     }
     .start-here-copy {
       font-size: 0.86em;
       line-height: 1.75;
-      color: rgba(200,168,60,0.5);
+      color: rgba(212,198,165,0.7);
       margin-bottom: 18px;
       max-width: 62ch;
     }
@@ -924,20 +1510,21 @@
       font-size: 0.72em;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #1A1408;
-      background: #C8A83C;
-      border: 1px solid #D6BA58;
+      color: #f1e8d0;
+      background: linear-gradient(180deg, #7d3023, #612319);
+      border: 1px solid #a35d4a;
       padding: 12px 16px;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
     .start-here-main:hover {
-      background: #E8C84C;
+      background: linear-gradient(180deg, #8d3828, #6b261a);
       transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(97,35,25,0.22);
     }
     .start-here-steps {
       list-style: none;
       margin-top: 14px;
-      border-top: 1px solid rgba(200,168,60,0.1);
+      border-top: 1px solid rgba(164,89,70,0.14);
       padding-top: 12px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -946,8 +1533,8 @@
     .start-here-steps a {
       display: block;
       text-decoration: none;
-      border: 1px solid rgba(200,168,60,0.15);
-      background: rgba(200,168,60,0.03);
+      border: 1px solid rgba(164,89,70,0.16);
+      background: rgba(255,255,255,0.02);
       padding: 10px 12px;
       min-height: 62px;
     }
@@ -957,13 +1544,13 @@
       font-size: 0.56em;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.38);
+      color: rgba(164,89,70,0.64);
       margin-bottom: 6px;
     }
     .start-here-step-title {
       font-family: 'Cinzel', Georgia, serif;
       font-size: 0.78em;
-      color: rgba(200,168,60,0.82);
+      color: rgba(221,197,144,0.88);
       line-height: 1.35;
     }
 
@@ -974,19 +1561,32 @@
       padding: 6px 30px 34px;
     }
     .feedback-card {
-      border: 1px solid rgba(200,168,60,0.16);
-      background: rgba(12,10,8,0.92);
-      padding: 18px 18px 16px;
+      border: 1px solid rgba(111, 76, 39, 0.22);
+      background:
+        linear-gradient(180deg, rgba(31,28,24,0.96), rgba(18,16,13,0.98)),
+        radial-gradient(circle at 88% 16%, rgba(164,89,70,0.08), transparent 18%);
+      padding: 20px 20px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .feedback-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(164,89,70,0.08), transparent 18%),
+        repeating-linear-gradient(180deg, transparent 0, transparent 28px, rgba(255,255,255,0.02) 28px, rgba(255,255,255,0.02) 29px);
+      pointer-events: none;
     }
     .feedback-head {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.98em;
-      color: rgba(200,168,60,0.85);
+      font-size: 1.05em;
+      color: #dcc58f;
       margin-bottom: 6px;
     }
     .feedback-sub {
       font-size: 0.78em;
-      color: rgba(200,168,60,0.45);
+      color: rgba(216,202,172,0.58);
       margin-bottom: 12px;
       line-height: 1.65;
       font-style: italic;
@@ -1070,13 +1670,30 @@
 
     /* ── THEMATIC READING PATHS ────────────────────────────── */
     .reading-paths-section {
-      max-width: 820px; margin: 0 auto 0; padding: 56px 30px 0;
+      max-width: 1100px; margin: 0 auto 0; padding: 56px 30px 8px;
     }
     .reading-paths-heading {
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.76);
+      margin-bottom: 8px;
+    }
+    .reading-paths-title {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.72em; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(200,168,60,0.28); text-align: center;
-      margin-bottom: 28px;
+      font-size: clamp(1.02em, 2vw, 1.34em);
+      color: #dcc58f;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .reading-paths-copy {
+      max-width: 60ch;
+      font-size: 0.82em;
+      line-height: 1.7;
+      color: rgba(216,202,172,0.64);
+      margin-bottom: 18px;
     }
     .reading-paths-grid {
       display: grid;
@@ -1085,14 +1702,21 @@
     }
     @media (max-width: 640px) { .reading-paths-grid { grid-template-columns: 1fr; } }
     .reading-path-card {
-      background: #0E0C10;
-      border: 1px solid #1E1C20;
+      background:
+        linear-gradient(180deg, rgba(31,28,24,0.96), rgba(18,16,13,0.98)),
+        radial-gradient(circle at top right, rgba(164,89,70,0.06), transparent 20%);
+      border: 1px solid rgba(111, 76, 39, 0.22);
       padding: 20px 18px 22px;
       position: relative;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.18s, box-shadow 0.18s;
       cursor: default;
     }
-    .reading-path-card:hover { background: #131118; border-color: #3A3240; }
+    .reading-path-card:hover {
+      background: linear-gradient(180deg, rgba(36,31,27,0.98), rgba(20,17,14,0.98));
+      border-color: rgba(189, 153, 108, 0.28);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 28px rgba(0,0,0,0.16);
+    }
     .reading-path-icon {
       font-size: 1.3em; margin-bottom: 12px; display: block; opacity: 0.5;
       font-family: Georgia, serif;
@@ -1142,32 +1766,59 @@
       .access-header { flex-direction: column; gap: 3px; text-align: center; font-size: 0.56em; }
       .access-header span:nth-child(2),
       .access-header span:nth-child(3) { display: none; }
+      .hero { padding: 46px 20px 24px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 18px; }
+      .hero-ledger { padding: 22px 18px 18px; }
+      .hero-ledger::after { display: none; }
+      .hero-thesis::before { display: none; }
+      .hero-ledger-body { grid-template-columns: 1fr; gap: 14px; }
+      .hero-ledger-meta { padding-left: 0; }
+      .hero-stamp { width: 68px; height: 68px; }
+      .hero-stamp-inner { width: 52px; height: 52px; font-size: 0.66em; }
+      .hero-crest-frame { margin-left: 0; margin-right: 0; padding: 16px 14px 18px; }
+      .hero-thesis { padding: 0; }
+      .hero-context { max-width: none; }
+      .start-here-section::before { height: 22px; margin-bottom: 10px; }
       .start-here-section { padding: 0 16px 22px; }
       .start-here-box { padding: 16px 14px 14px; }
       .start-here-steps { grid-template-columns: 1fr; }
       .feedback-prompt { padding: 6px 16px 24px; }
       .archive-grid { grid-template-columns: 1fr; gap: 12px; }
+      .archive-clusters { padding: 0 16px 48px; gap: 20px; }
+      .archive-cluster { padding: 16px 14px 16px; }
+      .archive-cluster-head { display: block; }
+      .archive-cluster-copy { margin-top: 6px; }
+      .archive-cluster-grid { grid-template-columns: 1fr; gap: 12px; }
       .main-title { font-size: 1.6em; }
       .mystery-inner { flex-direction: column; gap: 10px; text-align: center; }
       .search-section { padding: 0 16px; }
+      .section-intro { padding: 0 16px; }
       .explore-nav { grid-template-columns: 1fr; padding: 0 16px; }
-      .hero { padding: 50px 20px 30px; }
+      .explore-group { padding: 18px 16px 16px; }
+      .explore-group-head { display: block; }
+      .explore-group-copy { margin-top: 6px; }
+      .explore-group-grid { grid-template-columns: 1fr; }
       .dates-line { font-size: 1.1em; letter-spacing: 0.12em; }
-      .hero-divider { margin: 0 auto 16px; }
+      .hero-divider { margin: 0 0 14px; }
       .explore-card { padding: 14px 16px; gap: 12px; }
       .explore-card-icon { width: 32px; height: 32px; }
+      .explore-card--primary { min-height: 0; padding: 18px 16px; }
+      .explore-card--primary .explore-card-icon { width: 38px; height: 38px; }
+      .reading-paths-section { padding: 46px 16px 8px; }
+      .archive-instruction { padding: 22px 16px 18px; }
     }
     /* ── SITE CREST LOGO ─────────────────────────────────── */
     .site-crest-hero {
       display: flex;
       justify-content: center;
-      margin-bottom: 24px;
-      filter: drop-shadow(0 0 40px rgba(200,168,60,0.22));
+      margin-bottom: 8px;
+      filter: drop-shadow(0 16px 22px rgba(95,36,26,0.12));
     }
     .crest-hero-img {
-      width: clamp(200px, 24vw, 300px);
+      width: clamp(220px, 24vw, 320px);
       height: auto;
       display: block;
+      filter: sepia(0.22) saturate(0.92) contrast(1.02);
       -webkit-mask-image: radial-gradient(ellipse 72% 80% at center, black 30%, transparent 100%);
       mask-image: radial-gradient(ellipse 72% 80% at center, black 30%, transparent 100%);
     }
@@ -1202,24 +1853,57 @@
   </header>
 
   <section class="hero">
-    <div class="site-crest-hero">
-      <img src="crests/main_family_crest.png" class="crest-hero-img" alt="Hale Family Coat of Arms — Per Saecula Manimus">
+    <div class="hero-grid">
+      <div class="hero-ledger">
+        <div class="hero-ledger-top">
+          <div class="hero-ledger-meta">
+            <div class="hero-ledger-ref">
+              <div class="hero-kicker">MSS. Hale-Marsh 1-10 · Reading Room Copy</div>
+              <div class="hero-ledger-sub">Accession noted March 2026 · Restricted copy released</div>
+            </div>
+            <div class="hero-stamp" aria-hidden="true">
+              <div class="hero-stamp-inner">H·M</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-ledger-body">
+          <div class="hero-crest-frame">
+            <div class="site-crest-hero">
+              <img src="crests/main_family_crest.png" class="crest-hero-img" alt="Hale Family Coat of Arms — Per Saecula Manimus">
+            </div>
+          </div>
+          <div class="hero-ledger-copy">
+            <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+            <h1 class="main-title">THE HALE DYNASTY</h1>
+            <p class="subtitle">A Family Saga Told Through Ten Volumes</p>
+            <div class="hero-divider"></div>
+            <div class="dates-line">1066 &mdash; 2026</div>
+            <p class="tagline">958 Years &nbsp;&middot;&nbsp; Ten Volumes &nbsp;&middot;&nbsp; One Family</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-thesis">
+        <p class="hero-note">A fictional archive following one English family across nearly a millennium, through chronicles, letters, legal records, and the voices each century leaves behind.</p>
+        <h2 class="hero-thesis-title">Not an encyclopedia of lore, but a line of descent carried through documents.</h2>
+        <ul class="hero-thesis-list">
+          <li>The record begins with conquest, then turns into inheritance, grief, memory, and survival.</li>
+          <li>Each volume shifts in voice and period, but the family remains legible across the centuries.</li>
+          <li>The archive is meant to be read, not merely browsed.</li>
+        </ul>
+        <div class="hero-context">
+          <p class="matilda-quote">&ldquo;Keep asking. Keep the land. See to the pig.&rdquo;</p>
+          <p class="matilda-attr">— Matilda of Halecroft, c. 1390</p>
+          <div class="hero-context-note">One phrase survives where whole generations do not.</div>
+        </div>
+      </div>
     </div>
-    <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
-    <h1 class="main-title">THE HALE DYNASTY</h1>
-    <p class="subtitle">A Complete Chronicle in Ten Volumes</p>
-    <div class="hero-divider"></div>
-    <div class="dates-line">1066 &mdash; 2026</div>
-    <p class="tagline">Nine Centuries &nbsp;&middot;&nbsp; Ten Books &nbsp;&middot;&nbsp; One Question</p>
-    <p class="matilda-quote">&ldquo;Keep asking. Keep the land. See to the pig.&rdquo;</p>
-    <p class="matilda-attr">— Matilda of Halecroft, c. 1390</p>
   </section>
 
   <section class="start-here-section" aria-label="Start here">
     <div class="start-here-box">
       <div class="start-here-kicker">First Visit</div>
-      <h2 class="start-here-title">Start Here: A short guided path through the archive</h2>
-      <p class="start-here-copy">New readers usually get the most from this route. Start with Vol. I, then trace people and place before continuing deeper.</p>
+      <h2 class="start-here-title">Start Here: the opening path through the archive</h2>
+      <p class="start-here-copy">Start with the founding chronicle, continue into the next century, then use the family tree once the line of descent is already familiar.</p>
       <a href="era-I.html" class="start-here-main" data-track="start_story_click" data-track-label="start_here_main">Start the story (3-5 min)</a>
       <ul class="start-here-steps">
         <li>
@@ -1229,15 +1913,15 @@
           </a>
         </li>
         <li>
-          <a href="family-tree.html" data-track="guided_path_click" data-track-label="step_2_tree">
+          <a href="era-II.html" data-track="guided_path_click" data-track-label="step_2_era_ii">
             <span class="start-here-step-label">Step 2</span>
-            <span class="start-here-step-title">Family Tree - Who is who</span>
+            <span class="start-here-step-title">Vol. II - The House of Hale</span>
           </a>
         </li>
         <li>
-          <a href="map.html" data-track="guided_path_click" data-track-label="step_3_map">
+          <a href="family-tree.html" data-track="guided_path_click" data-track-label="step_3_tree">
             <span class="start-here-step-label">Step 3</span>
-            <span class="start-here-step-title">Map - Where the story moves</span>
+            <span class="start-here-step-title">Family Tree - Follow the line</span>
           </a>
         </li>
       </ul>
@@ -1247,8 +1931,20 @@
   <!-- ══════════════════════════════════════════════
        EXPLORE NAV — Family Tree + Map
        ══════════════════════════════════════════════ -->
-  <section class="explore-nav" aria-label="Explore the Dynasty">
-    <a href="family-tree.html" class="explore-card">
+  <section class="explore-shell" aria-label="Explore the Dynasty">
+    <div class="section-intro">
+      <div class="section-kicker">Beyond The Volumes</div>
+      <h2 class="section-title">Read the family through places, faces, papers, and the apparatus built around them.</h2>
+      <p class="section-copy">These are not side quests so much as alternative doors into the same record: the line of descent, the estate it circles, the portraits imagined from the archive, and the research notebooks left in its wake.</p>
+    </div>
+  <div class="explore-nav">
+    <div class="explore-group explore-group--primary">
+      <div class="explore-group-head">
+        <div class="explore-group-kicker">Best First</div>
+        <p class="explore-group-copy">If this is your first visit, these are the clearest companion pages after the opening volumes.</p>
+      </div>
+      <div class="explore-group-grid">
+    <a href="family-tree.html" class="explore-card explore-card--primary">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="21" cy="5" r="3.5" fill="#C8A83C"/>
@@ -1271,12 +1967,43 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Follow the line</span>
         <div class="explore-card-title">Family Tree</div>
-        <div class="explore-card-sub">Complete Dynasty · 1066–2026 · 20 Generations</div>
+        <div class="explore-card-sub">See who belongs to whom, where the branches split, and how the family remains legible across ten centuries.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="map.html" class="explore-card">
+    <a href="timeline.html" class="explore-card explore-card--primary">
+      <div class="explore-card-icon">
+        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="21" y1="6" x2="21" y2="36" stroke="#C8A83C" stroke-width="0.8" opacity="0.5"/>
+          <circle cx="21" cy="10" r="2.5" fill="rgba(200,168,60,0.35)" stroke="#C8A83C" stroke-width="0.8"/>
+          <line x1="21" y1="10" x2="30" y2="10" stroke="#C8A83C" stroke-width="0.7" opacity="0.5"/>
+          <circle cx="21" cy="18" r="2" fill="rgba(200,168,60,0.25)" stroke="#C8A83C" stroke-width="0.7"/>
+          <line x1="21" y1="18" x2="14" y2="18" stroke="#C8A83C" stroke-width="0.7" opacity="0.4"/>
+          <circle cx="21" cy="25" r="2" fill="rgba(200,168,60,0.25)" stroke="#C8A83C" stroke-width="0.7"/>
+          <line x1="21" y1="25" x2="30" y2="25" stroke="#C8A83C" stroke-width="0.7" opacity="0.4"/>
+          <circle cx="21" cy="32" r="2.5" fill="rgba(200,168,60,0.35)" stroke="#C8A83C" stroke-width="0.8"/>
+          <line x1="21" y1="32" x2="14" y2="32" stroke="#C8A83C" stroke-width="0.7" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="explore-card-text">
+        <span class="explore-card-eyebrow">See the whole record</span>
+        <div class="explore-card-title">Chronicle Timeline</div>
+        <div class="explore-card-sub">Scan the entire archive in order, from 1066 to 2026, before diving into a particular voice or century.</div>
+      </div>
+      <span class="explore-card-arrow">→</span>
+    </a>
+      </div>
+    </div>
+
+    <div class="explore-group explore-group--world">
+      <div class="explore-group-head">
+        <div class="explore-group-kicker">World & Context</div>
+        <p class="explore-group-copy">Use these when you want the places, objects, faces, and reference tools around the main narrative.</p>
+      </div>
+      <div class="explore-group-grid">
+    <a href="map.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Simplified England/Wales outline -->
@@ -1291,12 +2018,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Track the places</span>
         <div class="explore-card-title">Family Map</div>
-        <div class="explore-card-sub">England · Nine Centuries · Halecroft to London</div>
+        <div class="explore-card-sub">Follow the family from Halecroft to London and see how geography shapes the record.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="halecroft.html" class="explore-card">
+    <a href="halecroft.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Manor house silhouette -->
@@ -1317,12 +2045,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">The family seat</span>
         <div class="explore-card-title">Halecroft Estate</div>
-        <div class="explore-card-sub">The Family Seat · 1067–2026 · Nine Centuries of Change</div>
+        <div class="explore-card-sub">The house, land, and estate life that keep returning beneath the documents.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="portraits.html" class="explore-card">
+    <a href="portraits.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Portrait frame -->
@@ -1338,12 +2067,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Imagined from the record</span>
         <div class="explore-card-title">Portraits</div>
-        <div class="explore-card-sub">Ten Faces · Imagined from the Record · 1066–2026</div>
+        <div class="explore-card-sub">A visual gallery of faces assembled from the textual evidence left behind.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="documents.html" class="explore-card">
+    <a href="documents.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Document stack -->
@@ -1359,12 +2089,22 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">All primary sources</span>
         <div class="explore-card-title">Document Index</div>
-        <div class="explore-card-sub">Every Primary Source · Letters, Memos, Inventories</div>
+        <div class="explore-card-sub">A direct index of letters, memos, deeds, inventories, and other source material.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="voss.html" class="explore-card">
+      </div>
+    </div>
+
+    <div class="explore-group explore-group--deep">
+      <div class="explore-group-head">
+        <div class="explore-group-kicker">Deep Cuts</div>
+        <p class="explore-group-copy">These pages are best once you already understand the archive’s logic and want to branch into its stranger side rooms.</p>
+      </div>
+      <div class="explore-group-grid">
+    <a href="voss.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Branch / tree icon -->
@@ -1378,32 +2118,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">A parallel line</span>
         <div class="explore-card-title">The Voss Archive</div>
-        <div class="explore-card-sub">Margery Hale to Eleanor Voss · 1373–2026 · 653 Years</div>
+        <div class="explore-card-sub">A related archive that traces one branch of the family outward and forward.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="timeline.html" class="explore-card">
-      <div class="explore-card-icon">
-        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="21" y1="6" x2="21" y2="36" stroke="#C8A83C" stroke-width="0.8" opacity="0.5"/>
-          <circle cx="21" cy="10" r="2.5" fill="rgba(200,168,60,0.35)" stroke="#C8A83C" stroke-width="0.8"/>
-          <line x1="21" y1="10" x2="30" y2="10" stroke="#C8A83C" stroke-width="0.7" opacity="0.5"/>
-          <circle cx="21" cy="18" r="2" fill="rgba(200,168,60,0.25)" stroke="#C8A83C" stroke-width="0.7"/>
-          <line x1="21" y1="18" x2="14" y2="18" stroke="#C8A83C" stroke-width="0.7" opacity="0.4"/>
-          <circle cx="21" cy="25" r="2" fill="rgba(200,168,60,0.25)" stroke="#C8A83C" stroke-width="0.7"/>
-          <line x1="21" y1="25" x2="30" y2="25" stroke="#C8A83C" stroke-width="0.7" opacity="0.4"/>
-          <circle cx="21" cy="32" r="2.5" fill="rgba(200,168,60,0.35)" stroke="#C8A83C" stroke-width="0.8"/>
-          <line x1="21" y1="32" x2="14" y2="32" stroke="#C8A83C" stroke-width="0.7" opacity="0.5"/>
-        </svg>
-      </div>
-      <div class="explore-card-text">
-        <div class="explore-card-title">Chronicle Timeline</div>
-        <div class="explore-card-sub">All Documents · 1066–2026 · Scrollable</div>
-      </div>
-      <span class="explore-card-arrow">→</span>
-    </a>
-    <a href="deed-box.html" class="explore-card">
+    <a href="deed-box.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="9" y="20" width="24" height="16" rx="1" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.04)" opacity="0.7"/>
@@ -1416,12 +2137,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Browse the holdings</span>
         <div class="explore-card-title">The Deed-Box</div>
-        <div class="explore-card-sub">All 45 Documents · Folded &amp; Kept · Browse the Archive</div>
+        <div class="explore-card-sub">A more tactile way into the archive through the documents as kept objects.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="notes.html" class="explore-card">
+    <a href="notes.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Notebook -->
@@ -1440,12 +2162,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">The modern editor</span>
         <div class="explore-card-title">Eleanor's Notes</div>
-        <div class="explore-card-sub">Research Notebook · D.Phil. Working Papers · 2022–2026</div>
+        <div class="explore-card-sub">Research notes and editorial traces from the person assembling the archive in the present.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="guestbook.html" class="explore-card">
+    <a href="guestbook.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="8" y="8" width="26" height="26" rx="1" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.04)" opacity="0.7"/>
@@ -1458,12 +2181,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Leave the record a mark</span>
         <div class="explore-card-title">The Visitor Register</div>
-        <div class="explore-card-sub">Sign the Guestbook · Add Your Name to the Record</div>
+        <div class="explore-card-sub">Sign the guestbook once you have spent time inside the archive and want to leave a trace.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="persons.html" class="explore-card">
+    <a href="persons.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="21" cy="13" r="5" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.04)" opacity="0.8"/>
@@ -1475,12 +2199,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Who is in this record?</span>
         <div class="explore-card-title">Persons of the Archive</div>
-        <div class="explore-card-sub">Ask Eleanor · Character Profiles · All 18 Figures</div>
+        <div class="explore-card-sub">Character profiles and archive notes for the people who keep resurfacing across the volumes.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="grief.html" class="explore-card">
+    <a href="grief.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Continuous line representing the grief index -->
@@ -1496,12 +2221,13 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">A thematic index</span>
         <div class="explore-card-title">The Grief Index</div>
-        <div class="explore-card-sub">Every Loss Recorded · Ten Volumes · Without Division</div>
+        <div class="explore-card-sub">A thematic way through every recorded loss, without regard to chronology.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
-    <a href="glossary.html" class="explore-card">
+    <a href="glossary.html" class="explore-card explore-card--utility">
       <div class="explore-card-icon">
         <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="7" y="5" width="28" height="32" rx="1" stroke="#C8A83C" stroke-width="0.9" fill="rgba(200,168,60,0.03)" opacity="0.7"/>
@@ -1516,11 +2242,15 @@
         </svg>
       </div>
       <div class="explore-card-text">
+        <span class="explore-card-eyebrow">Reference tool</span>
         <div class="explore-card-title">Glossary & Index</div>
-        <div class="explore-card-sub">Persons · Places · Documents · Events · Terms</div>
+        <div class="explore-card-sub">An index of people, places, events, and terms for readers who want orientation fast.</div>
       </div>
       <span class="explore-card-arrow">→</span>
     </a>
+      </div>
+    </div>
+  </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
@@ -1542,6 +2272,8 @@
        ══════════════════════════════════════════════ -->
   <section class="reading-paths-section" aria-label="Thematic reading paths">
     <div class="reading-paths-heading">Guided Reading Paths</div>
+    <h2 class="reading-paths-title">Three ways to cross the archive without reading it straight through.</h2>
+    <p class="reading-paths-copy">If you would rather follow a theme than a chronology, these paths hold the family together by inheritance, voice, and recurrence.</p>
     <div class="reading-paths-grid">
 
       <div class="reading-path-card">
@@ -1615,26 +2347,41 @@
        ARCHIVE SEARCH — The discovery begins here
        ══════════════════════════════════════════════ -->
   <section class="search-section">
-    <div class="search-heading">Search the Archive</div>
-    <div class="search-bar-wrap">
-      <span class="search-icon">⌕</span>
-      <input type="text"
-             id="archiveSearch"
-             placeholder="Search by name, date, event, or document type..."
-             autocomplete="off"
-             spellcheck="false"
-             aria-label="Search the Hale-Marsh archive">
-      <span class="search-shortcut">/ to focus</span>
+    <div class="search-panel">
+      <div class="search-heading">Search the Archive</div>
+      <h2 class="search-title">Enter by person, place, object, or the fragment that stayed with you.</h2>
+      <p class="search-copy">The record is broad enough to browse and strange enough to search. If a name, date, phrase, or image catches, this is the quickest way back into the line.</p>
+      <div class="search-bar-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text"
+               id="archiveSearch"
+               placeholder="Search by name, date, event, or document type..."
+               autocomplete="off"
+               spellcheck="false"
+               aria-label="Search the Hale-Marsh archive">
+        <span class="search-shortcut">/ to focus</span>
+      </div>
+      <div class="search-hint">Try: <span>Voss</span> &nbsp;·&nbsp; <span>plague</span> &nbsp;·&nbsp; <span>telegram</span> &nbsp;·&nbsp; <span>confession</span> &nbsp;·&nbsp; <span>pig</span> &nbsp;·&nbsp; <span>Matilda</span></div>
+      <div class="search-results" id="searchResults" role="region" aria-live="polite"></div>
     </div>
-    <div class="search-hint">Try: <span>Voss</span> &nbsp;·&nbsp; <span>plague</span> &nbsp;·&nbsp; <span>telegram</span> &nbsp;·&nbsp; <span>confession</span> &nbsp;·&nbsp; <span>pig</span> &nbsp;·&nbsp; <span>Matilda</span></div>
-    <div class="search-results" id="searchResults" role="region" aria-live="polite"></div>
   </section>
 
-  <div class="archive-instruction">Or enter by era</div>
+  <div class="archive-instruction">
+    <div class="section-kicker">By Era</div>
+    <h2 class="section-title">Or enter through the volumes themselves, with the archive guiding your first steps.</h2>
+    <p class="section-copy">Not every volume is equally useful on a first visit. The opening chronicle is the cleanest beginning, the next books deepen the family line, and the rest of the archive opens more fully once the record has taken shape.</p>
+  </div>
 
-  <main class="archive-grid">
+  <main class="archive-clusters">
+    <section class="archive-cluster archive-cluster--start" aria-label="Start here in the volumes">
+      <div class="archive-cluster-head">
+        <div class="archive-cluster-kicker">Start Here</div>
+        <p class="archive-cluster-copy">Begin with the founding document and let the archive teach you how it wants to be read.</p>
+      </div>
+      <div class="archive-cluster-grid">
 
-    <a class="archive-box" href="era-I.html">
+    <a class="archive-box archive-box--feature" href="era-I.html">
+      <span class="archive-box-badge">Best first volume</span>
       <div class="box-spine" style="background:#8B1A1A"></div>
       <div class="box-banner">
         <img src="banners/era-I.jpg" alt="" style="object-position:center 30%;">
@@ -1652,8 +2399,18 @@
       <!-- Norman sword -->
       <div class="box-era-art"><svg width="36" height="54" viewBox="0 0 36 54"><line x1="18" y1="2" x2="18" y2="46" stroke="#C8A83C" stroke-width="2.5"/><line x1="6" y1="16" x2="30" y2="16" stroke="#C8A83C" stroke-width="2.5"/><polygon points="18,46 14,53 22,53" fill="#C8A83C"/><rect x="15" y="43" width="6" height="3" fill="#C8A83C"/></svg></div>
     </a>
+      </div>
+    </section>
 
-    <a class="archive-box" href="era-II.html">
+    <section class="archive-cluster archive-cluster--continue" aria-label="Continue here after the opening">
+      <div class="archive-cluster-head">
+        <div class="archive-cluster-kicker">Continue Here</div>
+        <p class="archive-cluster-copy">Once Vol. I has oriented you, these volumes carry the family from <strong>origin</strong> into <strong>inheritance</strong> and then into the first unmistakable patterns that will echo through the rest of the archive.</p>
+      </div>
+      <div class="archive-cluster-grid">
+
+    <a class="archive-box archive-box--continue archive-box--feature" href="era-II.html">
+      <span class="archive-box-badge">Next after Vol. I</span>
       <div class="box-spine" style="background:#5C3A1E"></div>
       <div class="box-banner">
         <img src="banners/era-II.jpg" alt="" style="object-position:center 30%;">
@@ -1661,18 +2418,20 @@
         <div class="box-banner-vol">VOL. II  ·  1121–1400</div>
       </div>
       <div class="box-label">
+        <span class="archive-box-note">The line becomes a house</span>
         <div class="box-vol">Vol. II &nbsp;·&nbsp; 1121–1400</div>
         <div class="box-title">The House of Hale</div>
         <div class="box-dates">1121 — 1400</div>
         <div class="box-divider"></div>
-        <div class="box-desc">Parish records. The Great Famine. The Black Death. Thomas Hale comes home with a cooking pot.</div>
+        <div class="box-desc">The family settles into inheritance, weather, death, marriage, and recurrence. This is where the line first starts to feel lived in.</div>
         <span class="box-enter">Open box →</span>
       </div>
       <!-- Plague cross -->
       <div class="box-era-art"><svg width="38" height="50" viewBox="0 0 38 50"><rect x="16" y="2" width="6" height="46" fill="#8B1A1A"/><rect x="2" y="14" width="34" height="6" fill="#8B1A1A"/></svg></div>
     </a>
 
-    <a class="archive-box" href="era-III.html">
+    <a class="archive-box archive-box--continue" href="era-III.html">
+      <span class="archive-box-badge">Then deepen the line</span>
       <div class="box-spine" style="background:#7A1C1C"></div>
       <div class="box-banner">
         <img src="banners/era-III.jpg" alt="" style="object-position:center 30%;">
@@ -1680,18 +2439,29 @@
         <div class="box-banner-vol">VOL. III  ·  1485–1560</div>
       </div>
       <div class="box-label">
+        <span class="archive-box-note">The record begins to fracture</span>
         <div class="box-vol">Vol. III &nbsp;·&nbsp; 1485–1560</div>
         <div class="box-title">The Hale Inheritance</div>
         <div class="box-dates">1485 — 1560</div>
         <div class="box-divider"></div>
-        <div class="box-desc">Early Tudor. The Reformation comes to Halecroft. William Hale before the bishop's visitors.</div>
+        <div class="box-desc">Religion, law, and family memory begin pulling against one another. The archive becomes more conflicted, and more recognizably Hale.</div>
         <span class="box-enter">Open box →</span>
       </div>
       <!-- Tudor rose — 5 petals -->
       <div class="box-era-art"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="7" fill="#7A1C1C"/><ellipse cx="24" cy="8" rx="5" ry="9" fill="#7A1C1C" opacity="0.85"/><ellipse cx="24" cy="8" rx="5" ry="9" fill="#7A1C1C" opacity="0.85" transform="rotate(72 24 24)"/><ellipse cx="24" cy="8" rx="5" ry="9" fill="#7A1C1C" opacity="0.85" transform="rotate(144 24 24)"/><ellipse cx="24" cy="8" rx="5" ry="9" fill="#7A1C1C" opacity="0.85" transform="rotate(216 24 24)"/><ellipse cx="24" cy="8" rx="5" ry="9" fill="#7A1C1C" opacity="0.85" transform="rotate(288 24 24)"/><circle cx="24" cy="24" r="4" fill="#F5EDD6" opacity="0.3"/></svg></div>
     </a>
+      </div>
+    </section>
 
-    <a class="archive-box" href="era-IV.html">
+    <section class="archive-cluster archive-cluster--later" aria-label="Read later or use as advanced entry points">
+      <div class="archive-cluster-head">
+        <div class="archive-cluster-kicker">Read Later / Advanced Entry Points</div>
+        <p class="archive-cluster-copy">These volumes are richer once you already know the family, or if you are entering through a specific historical period, voice, or obsession.</p>
+      </div>
+      <div class="archive-cluster-grid">
+
+    <a class="archive-box archive-box--later" href="era-IV.html">
+      <span class="archive-box-badge">Advanced entry</span>
       <div class="box-spine" style="background:#1C2E4A"></div>
       <div class="box-banner">
         <img src="banners/era-IV.jpg" alt="" style="object-position:center 25%;">
@@ -1710,7 +2480,7 @@
       <div class="box-era-art"><svg width="46" height="54" viewBox="0 0 46 54"><path d="M2 4 L23 4 L23 42 Q23 52 2 52 Z" fill="#1C2E4A" opacity="0.9"/><path d="M23 4 L44 4 L44 52 Q23 52 23 42 Z" fill="#6E1418" opacity="0.9"/><line x1="23" y1="2" x2="23" y2="54" stroke="#C8A83C" stroke-width="1" opacity="0.6"/><text x="10" y="28" font-family="serif" font-size="14" fill="#C8D0E8" opacity="0.8" text-anchor="middle">P</text><text x="35" y="28" font-family="serif" font-size="14" fill="#E8C0C0" opacity="0.8" text-anchor="middle">R</text></svg></div>
     </a>
 
-    <a class="archive-box" href="era-V.html">
+    <a class="archive-box archive-box--later" href="era-V.html">
       <div class="box-spine" style="background:#8B6914"></div>
       <div class="box-banner">
         <img src="banners/era-V.jpg" alt="" style="object-position:center 30%;">
@@ -1729,7 +2499,7 @@
       <div class="box-era-art"><svg width="44" height="44" viewBox="0 0 44 44"><path d="M8 28 Q22 10 36 28 Z" fill="#8B6914" opacity="0.9"/><rect x="8" y="28" width="28" height="6" rx="1" fill="#8B6914" opacity="0.9"/><circle cx="22" cy="14" r="4" fill="#C8A83C"/><circle cx="10" cy="22" r="3" fill="#C8A83C" opacity="0.7"/><circle cx="34" cy="22" r="3" fill="#C8A83C" opacity="0.7"/><line x1="22" y1="10" x2="22" y2="7" stroke="#C8A83C" stroke-width="1.5"/><circle cx="22" cy="6" r="2" fill="#C8A83C"/></svg></div>
     </a>
 
-    <a class="archive-box" href="era-VI.html">
+    <a class="archive-box archive-box--later" href="era-VI.html">
       <div class="box-spine" style="background:#5C1828"></div>
       <div class="box-banner">
         <img src="banners/era-VI.jpg" alt="" style="object-position:center 65%;">
@@ -1748,7 +2518,7 @@
       <div class="box-era-art"><svg width="40" height="54" viewBox="0 0 40 54"><path d="M32 2 Q28 8 24 14 L18 34 L22 36 L28 18 Q36 10 38 4 Z" fill="#5C1828" opacity="0.9"/><path d="M18 34 L14 50 L16 50 L22 36 Z" fill="#5C1828" opacity="0.7"/><line x1="16" y1="48" x2="20" y2="52" stroke="#5C1828" stroke-width="1.5" stroke-linecap="round"/></svg></div>
     </a>
 
-    <a class="archive-box" href="era-VII.html">
+    <a class="archive-box archive-box--later" href="era-VII.html">
       <div class="box-spine" style="background:#2A2A2A"></div>
       <div class="box-banner">
         <img src="banners/era-VII.jpg" alt="" style="object-position:center 30%;">
@@ -1767,7 +2537,7 @@
       <div class="box-era-art"><svg width="38" height="54" viewBox="0 0 38 54"><rect x="6" y="10" width="26" height="38" rx="2" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><rect x="9" y="13" width="20" height="32" rx="1" fill="#1A1A1A" opacity="0.4"/><circle cx="19" cy="30" r="4" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="19" y1="34" x2="19" y2="40" stroke="#1A1A1A" stroke-width="2"/><path d="M10 10 Q10 2 19 2 Q28 2 28 10" fill="none" stroke="#1A1A1A" stroke-width="2.5"/><rect x="26" y="26" width="3" height="6" rx="1" fill="#1A1A1A" opacity="0.6"/></svg></div>
     </a>
 
-    <a class="archive-box" href="era-VIII.html">
+    <a class="archive-box archive-box--later" href="era-VIII.html">
       <div class="box-spine" style="background:#7A6A40"></div>
       <div class="box-banner">
         <img src="banners/era-VIII.jpg" alt="" style="object-position:center 30%;">
@@ -1786,7 +2556,7 @@
       <div class="box-era-art"><svg width="42" height="52" viewBox="0 0 42 52"><ellipse cx="21" cy="26" rx="10" ry="13" fill="#7A3020" opacity="0.85" transform="rotate(-20 21 26)"/><ellipse cx="21" cy="26" rx="10" ry="13" fill="#7A3020" opacity="0.85" transform="rotate(20 21 26)"/><ellipse cx="21" cy="26" rx="9" ry="12" fill="#7A3020" opacity="0.6" transform="rotate(70 21 26)"/><ellipse cx="21" cy="26" rx="9" ry="12" fill="#7A3020" opacity="0.6" transform="rotate(-70 21 26)"/><circle cx="21" cy="26" r="4" fill="#1A1A1A" opacity="0.8"/><line x1="21" y1="36" x2="20" y2="52" stroke="#3A5020" stroke-width="1.5"/><line x1="20" y1="46" x2="15" y2="44" stroke="#3A5020" stroke-width="1.2"/></svg></div>
     </a>
 
-    <a class="archive-box" href="era-IX.html">
+    <a class="archive-box archive-box--later" href="era-IX.html">
       <div class="box-spine" style="background:#1A2E48"></div>
       <div class="box-banner">
         <img src="banners/era-IX.jpg" alt="" style="object-position:center 22%;">
@@ -1805,7 +2575,8 @@
       <div class="box-era-art"><svg width="36" height="54" viewBox="0 0 36 54"><ellipse cx="20" cy="22" rx="7" ry="11" fill="#1A2E48" opacity="0.9" transform="rotate(35 20 22)"/><polygon points="26,30 30,34 20,31" fill="#1A2E48" opacity="0.7"/><line x1="6" y1="6" x2="24" y2="30" stroke="#2A4A68" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/><circle cx="6" cy="6" r="2" fill="#2A4A68" opacity="0.5"/><path d="M12 38 Q14 44 11 50 Q16 47 18 50 Q17 44 19 40" fill="#1A2E48" opacity="0.5"/></svg></div>
     </a>
 
-    <a class="archive-box archive-box--discovery" href="era-X.html">
+    <a class="archive-box archive-box--later archive-box--discovery" href="era-X.html">
+      <span class="archive-box-badge">Culmination volume</span>
       <div class="discovery-badge">Text recovered</div>
       <div class="box-spine" style="background:#C8A83C"></div>
       <div class="box-banner">
@@ -1824,7 +2595,8 @@
       <!-- Matilda's seal — gold ring with M -->
       <div class="box-era-art"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="#C8A83C" stroke-width="2"/><circle cx="22" cy="22" r="14" fill="none" stroke="#C8A83C" stroke-width="0.8" opacity="0.5"/><text x="22" y="28" font-family="Georgia, serif" font-size="16" font-style="italic" text-anchor="middle" fill="#C8A83C" opacity="0.9">M</text><circle cx="22" cy="4" r="2" fill="#C8A83C" opacity="0.6"/><circle cx="40" cy="22" r="2" fill="#C8A83C" opacity="0.6"/><circle cx="22" cy="40" r="2" fill="#C8A83C" opacity="0.6"/><circle cx="4" cy="22" r="2" fill="#C8A83C" opacity="0.6"/></svg></div>
     </a>
-
+      </div>
+    </section>
   </main>
 
   <div class="matilda-mystery">

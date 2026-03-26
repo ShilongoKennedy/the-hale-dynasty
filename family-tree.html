@@ -10,8 +10,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; overflow: hidden; }
+    :root {
+      --ink-bg: #090705;
+      --paper-line: rgba(111, 76, 39, 0.24);
+      --paper-line-soft: rgba(214, 188, 143, 0.06);
+      --text-bright: #dcc58f;
+      --text-mid: rgba(214,198,163,0.68);
+      --text-dim: rgba(200,168,60,0.3);
+      --accent-oxblood: rgba(164,89,70,0.82);
+      --accent-brass: #C8A83C;
+      --accent-blue: rgba(116,145,165,0.78);
+      --tree-panel-bg: linear-gradient(180deg, rgba(26,22,18,0.97), rgba(12,10,8,0.985));
+      --tree-panel-line: rgba(143, 109, 63, 0.24);
+    }
     body {
-      background: #080604;
+      background: var(--ink-bg);
       color: #C8A050;
       font-family: Georgia, 'Times New Roman', serif;
     }
@@ -19,52 +32,160 @@
     /* ── NAVIGATION ──────────────────────────────────────────── */
     .top-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(8,6,4,0.92);
-      border-bottom: 1px solid rgba(200,168,60,0.12);
+      background: rgba(10,8,6,0.94);
+      border-bottom: 1px solid rgba(111,76,39,0.18);
       padding: 10px 30px;
       display: flex; justify-content: space-between; align-items: center;
       font-family: 'Courier New', monospace;
       font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase;
       backdrop-filter: blur(8px);
     }
-    .top-nav a { color: rgba(200,168,60,0.6); text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #C8A83C; }
-    .top-nav .center { color: rgba(200,168,60,0.35); font-size: 0.9em; }
+    .top-nav a { color: rgba(214,198,163,0.64); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: var(--text-bright); }
+    .top-nav .center { color: rgba(200,168,60,0.28); font-size: 0.9em; }
 
     /* ── HEADER ──────────────────────────────────────────────── */
     .tree-header {
-      position: fixed; top: 40px; left: 0; right: 0; z-index: 190;
-      background: linear-gradient(180deg, #080604 60%, transparent 100%);
-      padding: 24px 30px 30px;
-      text-align: center;
+      position: fixed; top: 54px; left: 16px; z-index: 190;
+      width: min(360px, calc(100vw - 32px));
+      padding: 0;
+      text-align: left;
       pointer-events: none;
+    }
+    .tree-header.compact {
+      width: min(320px, calc(100vw - 32px));
+    }
+    .tree-header-inner {
+      margin: 0;
+      padding: 16px 18px 14px;
+      background:
+        var(--tree-panel-bg),
+        radial-gradient(circle at 88% 14%, rgba(164,89,70,0.08), transparent 18%);
+      border: 1px solid var(--tree-panel-line);
+      box-shadow: 0 18px 34px rgba(0,0,0,0.28);
+      position: relative;
+      pointer-events: auto;
+    }
+    .tree-header.compact .tree-header-inner {
+      padding-bottom: 12px;
+    }
+    .tree-header-inner::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(214,188,143,0.06);
+      pointer-events: none;
+    }
+    .tree-header-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 18px;
+      right: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(164,89,70,0.85), rgba(215,186,134,0.18), transparent 78%);
     }
     .tree-title {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(2.2em, 5vw, 4em);
-      color: #F0C840;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 80px rgba(240,200,64,0.35), 0 0 30px rgba(220,160,40,0.2), 0 2px 6px rgba(0,0,0,0.9);
-      margin-bottom: 10px;
+      font-size: clamp(1.45em, 2.7vw, 2.25em);
+      color: #dcc58f;
+      letter-spacing: 0.06em;
+      text-shadow: none;
+      margin-bottom: 8px;
       font-weight: 600;
+      line-height: 1.1;
+    }
+    .tree-header.compact .tree-title {
+      font-size: clamp(1.08em, 2.1vw, 1.45em);
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
     }
     .tree-subtitle {
-      font-style: italic;
-      color: rgba(220,180,80,0.6);
-      font-size: 1em;
-      letter-spacing: 0.05em;
+      color: rgba(214,198,163,0.68);
+      font-size: 0.83em;
+      letter-spacing: 0.03em;
+      line-height: 1.58;
+      max-width: 30ch;
+    }
+    .tree-header.compact .tree-subtitle {
+      font-size: 0.72em;
+      max-width: 28ch;
+      margin: 0;
     }
     .tree-legend {
       margin-top: 12px;
-      display: flex; justify-content: center; gap: 22px;
+      display: flex; justify-content: flex-start; gap: 10px;
       flex-wrap: wrap;
       font-family: 'Courier New', monospace;
-      font-size: 0.68em; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.58em; letter-spacing: 0.08em; text-transform: uppercase;
       color: rgba(200,168,60,0.3);
       pointer-events: auto;
     }
+    .tree-header.compact .tree-legend {
+      margin-top: 8px;
+      gap: 8px;
+      font-size: 0.54em;
+    }
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .tree-guide {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      text-align: left;
+      pointer-events: auto;
+    }
+    .tree-header.compact .tree-guide {
+      display: none;
+    }
+    .tree-guide-card {
+      border: 1px solid rgba(111,76,39,0.16);
+      background: rgba(255,255,255,0.025);
+      padding: 10px 12px;
+    }
+    .tree-guide-kicker {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.54em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.72);
+      margin-bottom: 6px;
+    }
+    .tree-guide-copy {
+      display: block;
+      font-size: 0.76em;
+      line-height: 1.55;
+      color: rgba(214,198,163,0.6);
+    }
+    .tree-header-actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .tree-header-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(111,76,39,0.24);
+      color: rgba(214,198,163,0.66);
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+    }
+    .tree-header-btn:hover {
+      color: var(--text-bright);
+      border-color: rgba(206,173,127,0.3);
+      background: rgba(255,255,255,0.05);
+    }
+    .tree-header.compact .tree-header-btn {
+      padding: 7px 11px;
+    }
 
     /* ── TREE VIEWPORT ───────────────────────────────────────── */
     #treeViewport {
@@ -240,16 +361,16 @@
     #tree-search-wrap {
       position: fixed;
       top: 52px;
-      left: 16px;
+      right: 118px;
       z-index: 210;
       display: flex;
       align-items: center;
       gap: 4px;
     }
     #tree-search {
-      background: rgba(8,6,4,0.92);
-      border: 1px solid rgba(200,168,60,0.2);
-      color: rgba(200,168,60,0.7);
+      background: rgba(14,11,9,0.94);
+      border: 1px solid rgba(111,76,39,0.24);
+      color: rgba(214,198,163,0.76);
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
       letter-spacing: 0.1em;
@@ -259,18 +380,18 @@
       backdrop-filter: blur(6px);
       -webkit-appearance: none;
     }
-    #tree-search::placeholder { color: rgba(200,168,60,0.25); }
-    #tree-search:focus { border-color: rgba(200,168,60,0.4); }
+    #tree-search::placeholder { color: rgba(214,198,163,0.26); }
+    #tree-search:focus { border-color: rgba(206,173,127,0.36); }
     #tree-search-clear {
-      background: rgba(8,6,4,0.92);
-      border: 1px solid rgba(200,168,60,0.15);
-      color: rgba(200,168,60,0.4);
+      background: rgba(14,11,9,0.94);
+      border: 1px solid rgba(111,76,39,0.2);
+      color: rgba(214,198,163,0.46);
       font-size: 0.65em;
       padding: 5px 8px;
       cursor: pointer;
       backdrop-filter: blur(6px);
     }
-    #tree-search-clear:hover { color: rgba(200,168,60,0.8); border-color: rgba(200,168,60,0.35); }
+    #tree-search-clear:hover { color: var(--text-bright); border-color: rgba(206,173,127,0.3); }
 
     /* ── PAGE OVERLAY ────────────────────────────────────────── */
     .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
@@ -280,8 +401,8 @@
       position: fixed;
       top: 0; right: 0; bottom: 0;
       width: 360px;
-      background: #060402;
-      border-left: 1px solid rgba(200,168,60,0.14);
+      background: #0b0907;
+      border-left: 1px solid rgba(111,76,39,0.18);
       z-index: 500;
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
@@ -292,7 +413,7 @@
     #profile-panel-close {
       position: absolute; top: 14px; right: 16px;
       background: none; border: none;
-      color: rgba(200,168,60,0.3);
+      color: rgba(214,198,163,0.34);
       font-size: 1.3em; cursor: pointer;
       font-family: 'Courier New', monospace;
       transition: color 0.2s;
@@ -347,14 +468,14 @@
     }
     #pp-name {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 1.35em; color: #E8C84C;
+      font-size: 1.35em; color: var(--text-bright);
       letter-spacing: 0.04em; line-height: 1.2;
       margin-bottom: 6px;
     }
     #pp-dates {
       font-family: Georgia, serif;
       font-size: 0.78em; font-style: italic;
-      color: rgba(200,168,60,0.35);
+      color: rgba(214,198,163,0.4);
       margin-bottom: 16px;
     }
     #pp-divider {
@@ -364,7 +485,7 @@
     }
     #pp-desc {
       font-size: 0.84em; line-height: 1.85;
-      color: rgba(200,168,60,0.6);
+      color: rgba(214,198,163,0.64);
       font-family: Georgia, serif;
     }
     #pp-actions {
@@ -419,10 +540,22 @@
 
       .top-nav { padding: 8px 14px; font-size: 0.6em; }
       .top-nav .center { display: none; }
-      .tree-header { padding: 14px 14px 16px; }
+      .tree-header {
+        top: 40px;
+        left: 0;
+        right: 0;
+        width: auto;
+        padding: 14px 14px 16px;
+        text-align: center;
+      }
+      .tree-header.compact { width: auto; }
+      .tree-header-inner { padding: 14px 14px 12px; }
       .tree-title { font-size: 1.6em; }
-      .tree-subtitle { font-size: 0.58em; letter-spacing: 0.04em; }
-      .tree-legend { flex-wrap: wrap; gap: 5px; font-size: 0.52em; padding: 0 10px; }
+      .tree-subtitle { font-size: 0.68em; letter-spacing: 0.04em; max-width: none; }
+      .tree-legend { flex-wrap: wrap; justify-content: center; gap: 5px; font-size: 0.52em; padding: 0 10px; }
+      .tree-guide { grid-template-columns: 1fr; }
+      .tree-header-actions { flex-wrap: wrap; justify-content: center; }
+      #tree-search-wrap { left: 14px; right: auto; top: 52px; }
 
       /* Viewport gets full screen */
       #treeViewport { touch-action: pan-x pan-y; }
@@ -442,17 +575,36 @@
   <a href="portraits.html">Portraits →</a>
 </nav>
 
-<div class="tree-header">
-  <div class="tree-title">The Hale Family Tree</div>
-  <div class="tree-subtitle">Ranulf de la Hale, 1066 — Eleanor Voss, 2026 · Nine centuries. One unbroken line.</div>
-  <div class="tree-legend">
-    <span class="legend-item"><span class="legend-dot" style="background:#C8A83C;border:1px solid rgba(200,168,60,0.4)"></span> Key figures</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#6B1212"></span> Plague era</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#1C2E4A"></span> Civil War</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#5C1828"></span> Victorian</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#3A5820;border:1px solid #3A5820"></span> Voss branch</span>
-    <span class="legend-item hd-hover-hint" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open</span>
-    <span class="legend-item hd-touch-hint" style="color:rgba(200,168,60,0.2);display:none">Tap any name to open</span>
+<div class="tree-header compact" id="treeHeader">
+  <div class="tree-header-inner">
+    <div class="tree-title">The Hale Family Tree</div>
+    <div class="tree-subtitle">Ranulf de la Hale, 1066 — Eleanor Voss, 2026 · A guide to the people, branches, and recurrences that hold the archive together.</div>
+    <div class="tree-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#C8A83C;border:1px solid rgba(200,168,60,0.4)"></span> Key figures</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#6B1212"></span> Plague era</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#1C2E4A"></span> Civil War</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#5C1828"></span> Victorian</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#3A5820;border:1px solid #3A5820"></span> Voss branch</span>
+      <span class="legend-item hd-hover-hint" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open</span>
+      <span class="legend-item hd-touch-hint" style="color:rgba(200,168,60,0.2);display:none">Tap any name to open</span>
+    </div>
+    <div class="tree-guide">
+      <div class="tree-guide-card">
+        <span class="tree-guide-kicker">Use this page for</span>
+        <span class="tree-guide-copy">Seeing who belongs to whom, where the line divides, and which figures matter most to the archive.</span>
+      </div>
+      <div class="tree-guide-card">
+        <span class="tree-guide-kicker">Best after</span>
+        <span class="tree-guide-copy">Vol. I or Vol. II, once the first names in the record have started to settle in your mind.</span>
+      </div>
+      <div class="tree-guide-card">
+        <span class="tree-guide-kicker">How to read it</span>
+        <span class="tree-guide-copy">Start at Ranulf, follow the main line downward, then branch outward to Matilda, Augusta, Thomas, and Eleanor.</span>
+      </div>
+    </div>
+    <div class="tree-header-actions">
+      <button id="tree-header-toggle" class="tree-header-btn" type="button" aria-expanded="false">Open guide</button>
+    </div>
   </div>
 </div>
 
@@ -497,7 +649,7 @@
   </div>
   <div id="pp-actions">
     <a id="pp-era-link" href="#" class="pp-btn primary" style="display:none">→ Open Era Page</a>
-    <button id="pp-ask-eleanor" class="pp-btn">✦ Ask Eleanor about this person</button>
+    <button id="pp-ask-eleanor" class="pp-btn">✦ Consult Eleanor on this person</button>
   </div>
 </aside>
 
@@ -826,6 +978,16 @@ const MAT_R  = 40;
 const SP_R   = 18;
 
 function personById(id) { return PEOPLE.find(p => p.id === id); }
+function getTreeContentOffset() {
+  const topNav = document.querySelector('.top-nav');
+  const treeHeader = document.getElementById('treeHeader');
+  const navH = topNav ? topNav.offsetHeight : 40;
+  const headerH = treeHeader ? treeHeader.offsetHeight : 120;
+  if (window.innerWidth <= 600) {
+    return Math.max(96, navH + headerH + 14);
+  }
+  return Math.max(90, navH + 26);
+}
 
 function getR(p) {
   if (p.matilda) return MAT_R;
@@ -898,9 +1060,9 @@ function buildTree() {
   bg.setAttribute('width', W); bg.setAttribute('height', H); bg.setAttribute('fill', '#080604');
   svg.appendChild(bg);
 
-  // Push all content below the fixed header (nav ~40px + tree-header ~160px)
+  // Push content below the fixed controls/header without wasting vertical space.
   const contentG = document.createElementNS(svgNS, 'g');
-  contentG.setAttribute('transform', 'translate(0, 200)');
+  contentG.setAttribute('transform', 'translate(0, ' + getTreeContentOffset() + ')');
   svg.appendChild(contentG);
 
   // Era section dividers (subtle horizontal lines)
@@ -1444,6 +1606,8 @@ const ppDesc          = document.getElementById('pp-desc');
 const ppEraLink       = document.getElementById('pp-era-link');
 const ppEraStripe     = document.getElementById('pp-era-stripe');
 const ppAskEleanor    = document.getElementById('pp-ask-eleanor');
+const treeHeader      = document.getElementById('treeHeader');
+const treeHeaderToggle = document.getElementById('tree-header-toggle');
 
 function openProfile(person) {
   // Portrait
@@ -1534,6 +1698,22 @@ window.addEventListener('DOMContentLoaded', () => {
     if (person) setTimeout(() => openProfile(person), 600);
   }
 });
+if (treeHeaderToggle && treeHeader) {
+  treeHeaderToggle.addEventListener('click', function() {
+    const compact = treeHeader.classList.toggle('compact');
+    this.textContent = compact ? 'Open guide' : 'Hide guide';
+    this.setAttribute('aria-expanded', compact ? 'false' : 'true');
+    const vp = document.getElementById('treeViewport');
+    if (vp) {
+      const prevLeft = vp.scrollLeft;
+      const prevTop = vp.scrollTop;
+      vp.innerHTML = '';
+      buildTree();
+      vp.scrollLeft = prevLeft;
+      vp.scrollTop = prevTop;
+    }
+  });
+}
 window.addEventListener('resize', () => {
   // Rebuild on resize for correct viewport sizing
   const vp = document.getElementById('treeViewport');

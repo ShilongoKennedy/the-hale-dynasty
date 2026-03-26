@@ -463,6 +463,84 @@
       color: #7A5820;
       min-width: 24px;
     }
+    .era-header {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(245,238,223,0.96), rgba(227,214,187,0.95)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(90,74,40,0.04) 34px, rgba(90,74,40,0.04) 35px);
+      border-bottom: 3px solid #6d5c2d;
+      padding: 46px 40px 34px;
+    }
+    .era-header::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(90,74,40,0.12);
+      pointer-events: none;
+    }
+    .era-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 38px;
+      right: 38px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(109,92,45,0.72), rgba(200,168,60,0.16), transparent 78%);
+    }
+    .era-orientation {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid rgba(90,74,40,0.18);
+      font-size: 0.86em;
+      line-height: 1.75;
+      color: #6b5d3d;
+      font-style: italic;
+    }
+    .era-reading-guide {
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding: 16px 18px 14px;
+      border: 1px solid rgba(90,74,40,0.16);
+      background: rgba(255,255,255,0.18);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      text-align: left;
+    }
+    .era-guide-card { padding: 10px 12px; border: 1px solid rgba(90,74,40,0.1); background: rgba(255,255,255,0.16); }
+    .era-guide-kicker { display: block; font-family: 'Courier New', monospace; font-size: 0.56em; letter-spacing: 0.14em; text-transform: uppercase; color: #6d5c2d; margin-bottom: 6px; }
+    .era-guide-copy { display: block; color: #6b5d3d; font-size: 0.76em; line-height: 1.58; }
+    .era-next {
+      margin-top: 42px;
+      border: 1px solid rgba(90,74,40,0.18);
+      background: linear-gradient(180deg, rgba(241,234,220,0.86), rgba(229,219,198,0.92));
+      padding: 24px 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .era-next::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(90,74,40,0.08);
+      pointer-events: none;
+    }
+    .era-next-label { font-family: 'Courier New', monospace; font-size: 0.68em; letter-spacing: 0.2em; text-transform: uppercase; color: #6d5c2d; margin-bottom: 8px; }
+    .era-next-title { font-family: 'Cinzel', Georgia, serif; font-size: 1.05em; color: #2f2818; margin-bottom: 10px; letter-spacing: 0.04em; }
+    .era-next-copy { color: #6b5d3d; font-size: 0.9em; line-height: 1.75; margin-bottom: 16px; font-style: italic; }
+    .era-next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .era-next-card { display: block; text-decoration: none; padding: 14px 14px 12px; border: 1px solid rgba(90,74,40,0.18); background: rgba(255,255,255,0.28); transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; }
+    .era-next-card:hover { transform: translateY(-1px); border-color: rgba(90,74,40,0.3); background: rgba(255,255,255,0.38); }
+    .era-next-kicker { display: block; font-family: 'Courier New', monospace; font-size: 0.6em; letter-spacing: 0.14em; text-transform: uppercase; color: #6d5c2d; margin-bottom: 6px; }
+    .era-next-name { display: block; font-family: 'Cinzel', Georgia, serif; font-size: 0.92em; color: #2f2818; margin-bottom: 6px; }
+    .era-next-desc { display: block; color: #6b5d3d; font-size: 0.76em; line-height: 1.55; }
+    @media (max-width: 760px) {
+      .era-reading-guide,
+      .era-next-grid { grid-template-columns: 1fr; }
+      .era-header { padding: 38px 20px 28px; }
+    }
     </style>
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
@@ -505,6 +583,21 @@
       Being the Letters of Thomas Marsh-Hale, Journalist, Illegitimate Son. Three Registers: Before the War, During the War, After the War. The Archive Found.
     </p>
     <div class="era-dates">1873 — 1919</div>
+    <div class="era-orientation">Volume VIII is the archive reclaimed by the line it almost lost. Read it for the name being reassembled, the register stripping down under war, and the moment the archive becomes an inheritance chosen rather than imposed.</div>
+    <div class="era-reading-guide">
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Read This For</span>
+        <span class="era-guide-copy">Thomas Marsh-Hale's changing prose, Daniel Okafor's place in the record, and the 1919 rediscovery of the archive in Oxford.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Watch Closely</span>
+        <span class="era-guide-copy">How the family question becomes plainer here. The performance drops away, but the attention sharpens.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Then Continue</span>
+        <span class="era-guide-copy">Into Vol. IX, where the archive passes into war engineering, official records, and the built landscape of the twentieth century.</span>
+      </div>
+    </div>
   </header>
 
   <div class="era-content">
@@ -518,7 +611,7 @@
     </div>
 
     <div class="editorial-note">
-      Thomas Marsh-Hale (1873–1951) was the son of Edmund Hale and Clara Marsh. He was told about his father at the age of sixteen, when Miss Ruth Hale came to Brixton to explain the situation. He became a journalist. He found the family archive in a reading room in Oxford in 1919, shortly after the armistice. He spent the rest of his life thinking about what he had found. His prose — observe the letters below — changes register three times across his life. The war stripped something out of it and it never quite grew back. This is not a complaint. The stripped prose is better.
+      Thomas Marsh-Hale (1873–1951) was the son of Edmund Hale and Clara Marsh. He was told about his father at the age of sixteen, when Miss Ruth Hale came to Brixton to explain the situation. He became a journalist. He found the family archive in a reading room in Oxford in 1919, shortly after the armistice, and spent the rest of his life thinking about what he had found. His prose changes register markedly across his life. The war strips something out of it; the later style is plainer, harder, and more exact.
       <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— J.M-H., <em>London, 1984</em></div>
     </div>
 
@@ -834,6 +927,29 @@
     <div class="hd-whn-heading">What Happened Next</div>
     <div class="hd-whn-body">
       Thomas Marsh-Hale returned from France in February 1919, as promised. He married Rachel, moved to Worcestershire, and had two sons — Edmund and James. He covered the Paris Peace Conference, found the terms impractical, said so in print, and was proved correct within twenty years. He died in 1938, the year before the second war began, which was perhaps fortunate. His son Edmund was twenty-two at the outbreak and worked in signals intelligence, which is to say he kept records of things that could not be recorded. He kept them anyway. Continue with <a href="era-IX.html">Vol. IX: The Wartime Engineer →</a>
+    </div>
+  </div>
+
+  <div class="era-next">
+    <div class="era-next-label">Where Next</div>
+    <div class="era-next-title">The war ends. The archive enters the age of paperwork and systems.</div>
+    <div class="era-next-copy">If Thomas reclaimed the record and carried it forward, the next volume shows what happens when that same intelligence is translated into memos, damage reports, and postwar construction.</div>
+    <div class="era-next-grid">
+      <a href="era-IX.html" class="era-next-card">
+        <span class="era-next-kicker">Continue The Story</span>
+        <span class="era-next-name">Vol. IX · The Name</span>
+        <span class="era-next-desc">Edmund Marsh-Hale keeps records of what war does to structures, cities, and people.</span>
+      </a>
+      <a href="family-tree.html" class="era-next-card">
+        <span class="era-next-kicker">Track The Line</span>
+        <span class="era-next-name">Family Tree</span>
+        <span class="era-next-desc">See how the Marsh-Hale branch reconnects the archive to the older Hale and Voss lines.</span>
+      </a>
+      <a href="gazette.html" class="era-next-card">
+        <span class="era-next-kicker">Read Around The Volume</span>
+        <span class="era-next-name">Worcester Gazette</span>
+        <span class="era-next-desc">Step into the surrounding public world that Thomas and his generation were writing through.</span>
+      </a>
     </div>
   </div>
 

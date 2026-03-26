@@ -32,13 +32,59 @@
     .era-nav .vol-marker { color:#A08040; }
 
     .era-header {
-      background:#F8F2E4; border-bottom:4px solid #8B6914; border-top:1px solid #C8A840;
-      padding:50px 40px 40px; text-align:center;
+      background:
+        linear-gradient(180deg, #fbf5e7, #eadfc3),
+        repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(139,105,20,0.04) 34px, rgba(139,105,20,0.04) 35px);
+      border-bottom:3px solid #6A5010;
+      padding:46px 40px 34px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .era-header::before {
+      content:'';
+      position:absolute;
+      inset:12px;
+      border:1px solid rgba(106,80,16,0.14);
+      pointer-events:none;
+    }
+    .era-header::after {
+      content:'';
+      position:absolute;
+      top:0;
+      left:38px;
+      right:38px;
+      height:2px;
+      background:linear-gradient(90deg, rgba(139,105,20,0.72), rgba(200,168,64,0.18), transparent 78%);
     }
     .era-label { font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.3em; color:#8B6914; text-transform:uppercase; margin-bottom:14px; }
     .era-main-title { font-family:'Cormorant Garamond','Cinzel',Georgia,serif; font-size:clamp(1.8em,4.5vw,3.2em); color:#2A2010; letter-spacing:0.06em; font-weight:600; margin-bottom:8px; }
     .era-sub { font-style:italic; color:#6A5010; font-size:1em; margin-bottom:8px; }
     .era-dates { font-family:'Cinzel',Georgia,serif; font-size:1.1em; color:#8B6914; letter-spacing:0.2em; margin-top:12px; }
+    .era-orientation {
+      max-width:760px;
+      margin:18px auto 0;
+      padding-top:16px;
+      border-top:1px solid rgba(106,80,16,0.2);
+      font-size:0.86em;
+      line-height:1.75;
+      color:#6A5010;
+      font-style:italic;
+    }
+    .era-reading-guide {
+      max-width:760px;
+      margin:18px auto 0;
+      padding:16px 18px 14px;
+      border:1px solid rgba(106,80,16,0.18);
+      background:rgba(255,255,255,0.22);
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      text-align:left;
+    }
+    .era-guide-card { padding:10px 12px; border:1px solid rgba(106,80,16,0.12); background:rgba(255,255,255,0.18); }
+    .era-guide-kicker { display:block; font-family:'Courier New',monospace; font-size:0.56em; letter-spacing:0.14em; text-transform:uppercase; color:#8B6914; margin-bottom:6px; }
+    .era-guide-copy { display:block; color:#6A5010; font-size:0.76em; line-height:1.58; }
 
     .era-content { max-width:800px; margin:0 auto; padding:50px 30px 80px; }
 
@@ -56,6 +102,32 @@
       border-left:3px solid #8B6914; padding:16px 20px; background:#EDE4C8;
       font-style:italic; font-size:0.85em; color:#5A4010; margin-bottom:50px; line-height:1.7;
     }
+    .era-next {
+      margin-top:42px;
+      border:1px solid rgba(106,80,16,0.22);
+      background:
+        linear-gradient(180deg, rgba(243,233,208,0.74), rgba(237,228,200,0.82)),
+        radial-gradient(circle at 86% 18%, rgba(139,105,20,0.08), transparent 16%);
+      padding:24px 24px 20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .era-next::before {
+      content:'';
+      position:absolute;
+      inset:10px;
+      border:1px solid rgba(106,80,16,0.08);
+      pointer-events:none;
+    }
+    .era-next-label { font-family:'Courier New',monospace; font-size:0.68em; letter-spacing:0.2em; text-transform:uppercase; color:#8B6914; margin-bottom:8px; }
+    .era-next-title { font-family:'Cinzel',Georgia,serif; font-size:1.05em; color:#2A2010; margin-bottom:10px; letter-spacing:0.04em; }
+    .era-next-copy { color:#6A5010; font-size:0.9em; line-height:1.75; margin-bottom:16px; font-style:italic; }
+    .era-next-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .era-next-card { display:block; text-decoration:none; padding:14px 14px 12px; border:1px solid rgba(106,80,16,0.22); background:rgba(255,255,255,0.32); transition:transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; }
+    .era-next-card:hover { transform:translateY(-1px); border-color:rgba(139,105,20,0.32); background:rgba(255,255,255,0.4); }
+    .era-next-kicker { display:block; font-family:'Courier New',monospace; font-size:0.6em; letter-spacing:0.14em; text-transform:uppercase; color:#8B6914; margin-bottom:6px; }
+    .era-next-name { display:block; font-family:'Cinzel',Georgia,serif; font-size:0.92em; color:#2A2010; margin-bottom:6px; }
+    .era-next-desc { display:block; color:#6A5010; font-size:0.76em; line-height:1.55; }
     .document { margin-bottom:60px; }
     .doc-label { font-family:'Courier New',monospace; font-size: 0.75em; letter-spacing:0.25em; color:#8B6914; text-transform:uppercase; margin-bottom:6px; }
 
@@ -134,6 +206,8 @@
       .memoir-page { padding:30px 20px; }
       .memoir-page p:first-of-type::first-letter { font-size:2em; }
       .era-content { padding:30px 16px 60px; }
+      .era-reading-guide, .era-next-grid { grid-template-columns:1fr; }
+      .era-header { padding:38px 20px 28px; }
       .era-seq-nav { flex-direction: column; gap: 14px; padding: 24px 16px; text-align: center; }
       .esn-prev, .esn-next { justify-content: center; }
       .era-nav { flex-wrap: wrap; gap: 6px; padding: 10px 14px; justify-content: center; }
@@ -434,6 +508,21 @@
     <p class="era-sub">of Worcestershire and later of London; Baronet; a Man Who Had Opinions and the Stamina to Express Them</p>
     <p style="font-size:0.82em; color:#8B6914; margin-top:8px;">Dictated by Sir Nathaniel Hale to his secretary Mr. James Croft<br>in the years 1738–1744. Printed posthumously, London, 1746.</p>
     <div class="era-dates">1671 — 1744</div>
+    <div class="era-orientation">Volume V is the archive in full self-performance: clever, ambitious, socially mobile, and aware of itself as spectacle. Read it for the family learning how to turn survival into style.</div>
+    <div class="era-reading-guide">
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Read This For</span>
+        <span class="era-guide-copy">Sir Nathaniel's voice, the London turn, and the point where Hale inheritance becomes wit, money, and calculated public identity.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Watch Closely</span>
+        <span class="era-guide-copy">How often Nathaniel performs honesty by saying the uncomfortable thing first. It is one of the archive's most recognisable later voices.</span>
+      </div>
+      <div class="era-guide-card">
+        <span class="era-guide-kicker">Then Continue</span>
+        <span class="era-guide-copy">Into Vol. VI, where Augusta inherits the consequence of Nathaniel's world without inheriting its formal power.</span>
+      </div>
+    </div>
   </header>
 
   <div class="era-content">
@@ -444,7 +533,7 @@
     </div>
 
     <div class="editorial-note">
-      Sir Nathaniel Hale (1671–1744) is the most entertaining voice in the entire archive, which is saying something given the competition. He bought the baronetcy in 1702, left Worcestershire in 1698 and returned only to die, built a considerable fortune through means he describes with more relish than precision, and dictated his memoirs in the last six years of his life to a secretary whom he addresses, in the margins, as "young Croft, who writes too slowly and winces too much." The memoirs are blunt, sardonic, digressive, and almost certainly accurate in all the ways that matter.
+      Sir Nathaniel Hale (1671–1744) is one of the most distinctive voices in the archive. He bought the baronetcy in 1702, left Worcestershire in 1698 and returned only to die, built a considerable fortune through means he describes with more relish than precision, and dictated his memoirs in the last six years of his life to a secretary whom he addresses, in the margins, as "young Croft, who writes too slowly and winces too much." The memoirs are blunt, sardonic, and digressive; they are also, in all essentials, to be trusted.
       <div style="text-align:right; margin-top:10px; font-style:normal; font-size:0.85em;">— A.F., <em>London, 1884</em></div>
     </div>
 
@@ -675,6 +764,29 @@
     <div class="hd-whn-heading">What Happened Next</div>
     <div class="hd-whn-body">
       Nathaniel Hale, First Baronet, died at Halecroft in November 1741, as he had predicted. Edmund inherited the baronetcy and the estate in good order. The latter half of the eighteenth century was kind to the Hales: the enclosure of common land added acreage, the improvements to the Worcester road cut the journey to market, and Edmund's wife brought a useful connection to a Birmingham merchant house. The baronetcy endured one more generation before passing, in 1803, to a female heir — Augusta — who was barred by entail from inheriting the title but managed the estate with a precision that made the question irrelevant to anyone paying attention. Continue with <a href="era-VI.html">Vol. VI: The Regency Manager →</a>
+    </div>
+  </div>
+
+  <div class="era-next">
+    <div class="era-next-label">Where Next</div>
+    <div class="era-next-title">The title passes on. The competence shifts to the margins.</div>
+    <div class="era-next-copy">If Nathaniel is the great performer, Augusta is the great corrective. The next volume narrows from public style to private stewardship.</div>
+    <div class="era-next-grid">
+      <a href="era-VI.html" class="era-next-card">
+        <span class="era-next-kicker">Continue The Story</span>
+        <span class="era-next-name">Vol. VI · The Hale Entail</span>
+        <span class="era-next-desc">Augusta Hale manages the estate brilliantly while the law insists she does not count.</span>
+      </a>
+      <a href="family-tree.html" class="era-next-card">
+        <span class="era-next-kicker">Track The Line</span>
+        <span class="era-next-name">Family Tree</span>
+        <span class="era-next-desc">Place Nathaniel, Edmund, and Augusta in the generational line that leads toward the Victorian fracture.</span>
+      </a>
+      <a href="deed-box.html" class="era-next-card">
+        <span class="era-next-kicker">Open The Archive</span>
+        <span class="era-next-name">The Deed-Box</span>
+        <span class="era-next-desc">Browse the objects and documents the family keeps folding back into its own record.</span>
+      </a>
     </div>
   </div>
 

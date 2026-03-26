@@ -1,5 +1,16 @@
 /* THE HALE DYNASTY — features.css */
 
+:root {
+  --hd-paper: #ddc8a6;
+  --hd-paper-deep: #c7ac80;
+  --hd-paper-line: rgba(82, 57, 33, 0.26);
+  --hd-ink: #1f170f;
+  --hd-ink-soft: #594936;
+  --hd-brass: #9f7a2f;
+  --hd-oxblood: #6c2b20;
+  --hd-panel-shadow: 0 14px 34px rgba(18, 12, 7, 0.2);
+}
+
 /* ══ CREST ON ERA HEADERS ═══════════════════════════════════ */
 .era-crest-wrap {
   display:flex;
@@ -150,9 +161,12 @@
 /* ── INTERACTIVE OBJECT WRAPPER ─────────────────────────────────── */
 .interactive-obj {
   margin: 60px 0;
-  border: 1px solid rgba(168,144,112,0.35);
-  background: #F2EAD5;
+  border: 1px solid var(--hd-paper-line);
+  background:
+    linear-gradient(180deg, rgba(221,200,168,0.98), rgba(198,173,137,0.96)),
+    repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(94,66,38,0.04) 34px, rgba(94,66,38,0.04) 35px);
   position: relative;
+  box-shadow: var(--hd-panel-shadow);
 }
 
 .interactive-obj::before {
@@ -171,8 +185,8 @@
   gap: 14px;
   padding: 18px 24px;
   cursor: pointer;
-  background: rgba(58,42,24,0.04);
-  border-bottom: 1px solid rgba(168,144,112,0);
+  background: rgba(82,57,33,0.055);
+  border-bottom: 1px solid transparent;
   transition: background 0.2s, border-color 0.3s;
   user-select: none;
   position: relative;
@@ -180,16 +194,16 @@
 }
 
 .obj-lid:hover {
-  background: rgba(58,42,24,0.07);
+  background: rgba(82,57,33,0.1);
 }
 
 .obj-lid.obj-lid-opened {
-  border-bottom-color: rgba(168,144,112,0.3);
+  border-bottom-color: rgba(94,66,38,0.24);
 }
 
 .obj-lid-icon {
   flex-shrink: 0;
-  color: #C8A83C;
+  color: var(--hd-brass);
   opacity: 0.8;
 }
 
@@ -199,7 +213,7 @@
   font-size: 0.8em;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #4A3A20;
+  color: #4c3928;
 }
 
 .obj-lid-text span {
@@ -208,14 +222,14 @@
   font-size: 1.1em;
   letter-spacing: 0.04em;
   text-transform: none;
-  color: #3B2A1A;
+  color: var(--hd-ink);
   margin-top: 3px;
 }
 
 .obj-chevron {
   flex-shrink: 0;
   transition: transform 0.3s ease;
-  color: #8A7A5A;
+  color: rgba(94,66,38,0.7);
 }
 
 /* ── OBJECT CONTENT (hidden / shown) ────────────────────────────── */
@@ -233,14 +247,14 @@
 
 .obj-inner {
   padding: 28px 28px 32px;
-  border-top: 1px solid rgba(168,144,112,0.3);
+  border-top: 1px solid rgba(94,66,38,0.22);
 }
 
 /* ── OBJECT DOCUMENT ────────────────────────────────────────────── */
 .obj-doc {
   font-size: 0.92em;
   line-height: 1.85;
-  color: #3B2A1A;
+  color: var(--hd-ink);
   margin-bottom: 20px;
 }
 
@@ -250,11 +264,11 @@
 .obj-note {
   margin-top: 18px;
   padding: 12px 16px;
-  background: rgba(139,26,26,0.04);
-  border-left: 3px solid #8B1A1A;
+  background: rgba(108,43,32,0.08);
+  border-left: 3px solid rgba(125,51,39,0.45);
   font-style: italic;
   font-size: 0.88em;
-  color: #5C3A1E;
+  color: #493625;
   line-height: 1.7;
 }
 
@@ -263,7 +277,7 @@
   display: none;
   margin-top: 24px;
   padding-top: 24px;
-  border-top: 1px dashed rgba(168,144,112,0.4);
+  border-top: 1px dashed rgba(94,66,38,0.28);
   opacity: 0;
   transition: opacity 0.6s ease 0.2s;
 }
@@ -279,7 +293,7 @@
   font-size: 0.68em;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #8B6914;
+  color: var(--hd-brass);
   margin-bottom: 14px;
 }
 
@@ -287,10 +301,10 @@
 .obj-egg {
   margin-top: 18px;
   padding: 14px 16px;
-  background: rgba(139,100,20,0.06);
-  border: 1px solid rgba(139,100,20,0.2);
+  background: rgba(159,122,47,0.09);
+  border: 1px solid rgba(179,138,52,0.24);
   font-size: 0.85em;
-  color: #4A3010;
+  color: #433121;
   font-style: italic;
   line-height: 1.7;
 }
@@ -300,7 +314,7 @@
   font-size: 0.72em;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #8B6914;
+  color: var(--hd-brass);
   font-style: normal;
   display: block;
   margin-bottom: 8px;
@@ -311,7 +325,7 @@
   font-family: 'Courier New', monospace;
   font-size: 0.72em;
   letter-spacing: 0.25em;
-  color: #8B6914;
+  color: var(--hd-brass);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
@@ -325,18 +339,18 @@
   font-family: 'Courier New', monospace;
   font-size: 0.72em;
   letter-spacing: 0.25em;
-  color: #8B1A1A;
+  color: var(--hd-oxblood);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
 
 .recovered-archival {
-  background: rgba(139,26,26,0.05);
-  border-left: 3px solid rgba(139,26,26,0.3);
+  background: rgba(108,43,32,0.075);
+  border-left: 3px solid rgba(125,51,39,0.34);
   padding: 12px 16px;
   font-style: italic;
   font-size: 0.88em;
-  color: #5C3A1E;
+  color: #493625;
   line-height: 1.7;
   margin-bottom: 0;
 }
@@ -519,21 +533,25 @@
 .hd-xref {
   margin: 60px 0 0;
   padding: 28px 32px 32px;
-  border-top: 1px solid rgba(200,168,60,0.18);
-  background: rgba(200,168,60,0.025);
+  border: 1px solid rgba(94,66,38,0.18);
+  border-top: 2px solid rgba(125,51,39,0.26);
+  background:
+    linear-gradient(180deg, rgba(214,194,164,0.82), rgba(196,174,139,0.9)),
+    radial-gradient(circle at 92% 14%, rgba(125,51,39,0.05), transparent 18%);
+  box-shadow: var(--hd-panel-shadow);
 }
 .hd-xref-heading {
   font-family: 'Courier New', monospace;
   font-size: 0.62em; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(200,168,60,0.5);
+  color: rgba(94,66,38,0.58);
   margin-bottom: 20px;
 }
 .hd-xref-grid {
   display: flex; flex-wrap: wrap; gap: 14px;
 }
 .hd-xref-card {
-  background: rgba(200,168,60,0.03);
-  border: 1px solid rgba(200,168,60,0.16);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(94,66,38,0.16);
   padding: 14px 16px;
   text-decoration: none;
   color: inherit;
@@ -544,26 +562,26 @@
   display: block;
 }
 .hd-xref-card:hover {
-  border-color: rgba(200,168,60,0.38);
-  background: rgba(200,168,60,0.06);
+  border-color: rgba(125,51,39,0.3);
+  background: rgba(255,255,255,0.18);
 }
 .hd-xref-card-vol {
   font-family: 'Courier New', monospace;
   font-size: 0.6em; letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(200,168,60,0.45);
+  color: rgba(94,66,38,0.55);
   margin-bottom: 5px;
 }
 .hd-xref-card-name {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 0.85em;
-  color: rgba(200,168,60,0.75);
+  color: #3f2d1b;
   margin-bottom: 5px;
   font-style: italic;
 }
 .hd-xref-card-reason {
   font-family: 'Courier New', monospace;
   font-size: 0.58em; letter-spacing: 0.06em;
-  color: rgba(200,168,60,0.45);
+  color: rgba(94,66,38,0.62);
   line-height: 1.5;
 }
 
@@ -571,53 +589,56 @@
 .hd-whathappened {
   margin: 24px 0 0;
   padding: 24px 28px 28px;
-  border: 1px solid rgba(200,168,60,0.18);
-  border-top: 2px solid rgba(200,168,60,0.28);
-  background: rgba(200,168,60,0.02);
+  border: 1px solid rgba(94,66,38,0.18);
+  border-top: 2px solid rgba(179,138,52,0.28);
+  background:
+    linear-gradient(180deg, rgba(214,194,164,0.84), rgba(194,173,140,0.92)),
+    radial-gradient(circle at 88% 16%, rgba(179,138,52,0.06), transparent 20%);
+  box-shadow: var(--hd-panel-shadow);
 }
 .hd-whn-heading {
   font-family: 'Courier New', monospace;
   font-size: 0.6em; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(200,168,60,0.52);
+  color: rgba(94,66,38,0.56);
   margin-bottom: 16px;
 }
 .hd-whn-body {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 0.82em;
   line-height: 1.8;
-  color: rgba(200,168,60,0.62);
+  color: rgba(60,35,8,0.76);
   font-style: italic;
 }
 .hd-whn-body strong {
   font-style: normal;
-  color: rgba(200,168,60,0.75);
+  color: rgba(60,35,8,0.86);
   font-weight: normal;
 }
 .hd-whn-body a {
-  color: rgba(200,168,60,0.65);
+  color: rgba(125,51,39,0.78);
   text-decoration: none;
-  border-bottom: 1px solid rgba(200,168,60,0.3);
+  border-bottom: 1px solid rgba(125,51,39,0.24);
   transition: color 0.2s, border-color 0.2s;
 }
 .hd-whn-body a:hover {
-  color: rgba(200,168,60,0.9);
-  border-bottom-color: rgba(200,168,60,0.6);
+  color: rgba(125,51,39,1);
+  border-bottom-color: rgba(125,51,39,0.56);
 }
 
 /* ── LIGHT-BACKGROUND OVERRIDES (era-I parchment) ───────────────── */
 /* Used when body has class 'hd-bg-light' — added by features.js on era-I */
 body.hd-bg-light .hd-xref {
   border-top-color: rgba(80,50,10,0.25);
-  background: rgba(80,50,10,0.025);
+  background: rgba(80,50,10,0.05);
 }
 body.hd-bg-light .hd-xref-heading { color: rgba(80,50,10,0.55); }
 body.hd-bg-light .hd-xref-card {
   border-color: rgba(80,50,10,0.18);
-  background: rgba(80,50,10,0.025);
+  background: rgba(80,50,10,0.055);
 }
 body.hd-bg-light .hd-xref-card:hover {
   border-color: rgba(80,50,10,0.38);
-  background: rgba(80,50,10,0.05);
+  background: rgba(80,50,10,0.09);
 }
 body.hd-bg-light .hd-xref-card-vol { color: rgba(80,50,10,0.48); }
 body.hd-bg-light .hd-xref-card-name { color: rgba(60,35,8,0.8); }
@@ -625,7 +646,7 @@ body.hd-bg-light .hd-xref-card-reason { color: rgba(80,50,10,0.52); }
 body.hd-bg-light .hd-whathappened {
   border-color: rgba(80,50,10,0.18);
   border-top-color: rgba(80,50,10,0.3);
-  background: rgba(80,50,10,0.02);
+  background: rgba(80,50,10,0.055);
 }
 body.hd-bg-light .hd-whn-heading { color: rgba(80,50,10,0.52); }
 body.hd-bg-light .hd-whn-body { color: rgba(60,35,8,0.68); }
