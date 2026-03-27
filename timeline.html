@@ -9,18 +9,31 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --paper: #deca9f;
+      --paper-deep: #bb9768;
+      --ink: #24180f;
+      --ink-soft: rgba(62, 43, 26, 0.84);
+      --oxblood: #6f2f24;
+      --brass: #9e7b31;
+      --frame: rgba(82, 57, 33, 0.14);
+      --shadow: 0 16px 38px rgba(22, 14, 8, 0.14);
+    }
+
     body {
-      background: #0D0B08;
-      color: #C8B890;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(111,47,36,0.08), transparent 22%),
+        radial-gradient(circle at 86% 8%, rgba(79,102,125,0.07), transparent 20%),
+        linear-gradient(180deg, #e1cc9f 0%, #bc9a6d 100%);
+      color: var(--ink);
       font-family: 'IM Fell English', Georgia, serif;
-      line-height: 1.7;
+      line-height: 1.8;
       min-height: 100vh;
     }
 
-    /* ── NAV ── */
     .tl-nav {
-      background: #0D0B08;
-      border-bottom: 1px solid rgba(200,168,60,0.12);
+      background: rgba(243,232,210,0.9);
+      border-bottom: 1px solid var(--frame);
       padding: 12px 28px;
       display: flex;
       justify-content: space-between;
@@ -28,67 +41,67 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      backdrop-filter: blur(8px);
     }
     .tl-nav a {
       font-family: 'Courier New', monospace;
       font-size: 0.7em;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.55);
+      color: rgba(74,51,32,0.72);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .tl-nav a:hover { color: rgba(200,168,60,0.9); }
+    .tl-nav a:hover { color: var(--oxblood); }
     .tl-nav-title {
       font-family: 'Courier New', monospace;
       font-size: 0.65em;
       letter-spacing: 0.3em;
-      color: rgba(200,168,60,0.3);
+      color: rgba(74,51,32,0.42);
       text-transform: uppercase;
     }
 
-    /* ── HEADER ── */
     .tl-header {
       text-align: center;
-      padding: 56px 30px 40px;
-      border-bottom: 1px solid rgba(200,168,60,0.1);
+      padding: 54px 30px 34px;
+      border-bottom: 1px solid rgba(82,57,33,0.12);
     }
     .tl-label {
       font-family: 'Courier New', monospace;
       font-size: 0.65em;
       letter-spacing: 0.4em;
-      color: rgba(200,168,60,0.4);
+      color: rgba(111,47,36,0.62);
       text-transform: uppercase;
       margin-bottom: 16px;
     }
     .tl-title {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.6em, 4vw, 2.6em);
-      color: rgba(200,168,60,0.9);
+      font-size: clamp(1.8em, 4vw, 3em);
+      color: #432f1f;
       letter-spacing: 0.06em;
       margin-bottom: 10px;
     }
     .tl-subtitle {
-      font-style: italic;
-      color: rgba(200,168,60,0.45);
-      font-size: 0.9em;
-      max-width: 560px;
+      color: rgba(62,43,26,0.8);
+      font-size: 0.95em;
+      max-width: 620px;
       margin: 0 auto;
+      line-height: 1.78;
+      font-style: italic;
     }
 
-    /* ── FILTER BAR ── */
     .tl-filters {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
       padding: 24px 20px 16px;
-      border-bottom: 1px solid rgba(200,168,60,0.07);
+      border-bottom: 1px solid rgba(82,57,33,0.12);
     }
     .tl-filter-btn {
-      background: none;
-      border: 1px solid rgba(200,168,60,0.2);
-      color: rgba(200,168,60,0.5);
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(82,57,33,0.2);
+      color: rgba(74,51,32,0.68);
       font-family: 'Courier New', monospace;
       font-size: 0.62em;
       letter-spacing: 0.18em;
@@ -99,20 +112,55 @@
     }
     .tl-filter-btn:hover,
     .tl-filter-btn.active {
-      background: rgba(200,168,60,0.1);
-      border-color: rgba(200,168,60,0.5);
-      color: rgba(200,168,60,0.9);
+      background: rgba(111,47,36,0.05);
+      border-color: rgba(111,47,36,0.34);
+      color: var(--oxblood);
     }
 
-    /* ── TIMELINE BODY ── */
-    .tl-body {
-      max-width: 820px;
+    .tl-guide {
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 50px 30px 100px;
+      padding: 18px 30px 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .tl-guide-card,
+    .tl-next,
+    .tl-event-card {
+      background:
+        linear-gradient(180deg, rgba(233,218,189,0.92), rgba(205,178,137,0.94)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 31px, rgba(82,57,33,0.03) 31px, rgba(82,57,33,0.03) 32px);
+      border: 1px solid rgba(82,57,33,0.18);
+      box-shadow: 0 18px 38px rgba(22, 14, 8, 0.16);
+    }
+    .tl-guide-card {
+      padding: 16px 18px 18px;
+      min-height: 120px;
+    }
+    .tl-guide-kicker,
+    .tl-next-kicker {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.82);
+      margin-bottom: 8px;
+    }
+    .tl-guide-copy {
+      display: block;
+      font-size: 0.8em;
+      line-height: 1.74;
+      color: rgba(49,34,21,0.84);
+    }
+
+    .tl-body {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 42px 30px 76px;
       position: relative;
     }
-
-    /* Vertical spine */
     .tl-body::before {
       content: '';
       position: absolute;
@@ -121,14 +169,13 @@
       bottom: 0;
       width: 1px;
       background: linear-gradient(to bottom,
-        rgba(200,168,60,0) 0%,
-        rgba(200,168,60,0.18) 6%,
-        rgba(200,168,60,0.18) 94%,
-        rgba(200,168,60,0) 100%);
+        rgba(82,57,33,0) 0%,
+        rgba(82,57,33,0.2) 6%,
+        rgba(82,57,33,0.2) 94%,
+        rgba(82,57,33,0) 100%);
       transform: translateX(-50%);
     }
 
-    /* ── ERA GROUP HEADING ── */
     .tl-era-head {
       text-align: center;
       position: relative;
@@ -136,7 +183,7 @@
     }
     .tl-era-head-inner {
       display: inline-block;
-      background: #0D0B08;
+      background: rgba(238,225,199,0.96);
       padding: 0 20px;
       position: relative;
       z-index: 2;
@@ -145,18 +192,17 @@
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
       letter-spacing: 0.35em;
-      color: rgba(200,168,60,0.35);
+      color: rgba(111,47,36,0.64);
       text-transform: uppercase;
       margin-bottom: 4px;
     }
     .tl-era-name {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 1.0em;
-      color: rgba(200,168,60,0.7);
+      font-size: 1.02em;
+      color: #3f2b1c;
       letter-spacing: 0.08em;
     }
 
-    /* ── TIMELINE EVENT ── */
     .tl-event {
       display: flex;
       gap: 24px;
@@ -168,12 +214,8 @@
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
     .tl-event.tl-in { opacity: 1; transform: none; }
-
-    /* Alternating: left / right */
     .tl-event.tl-left  { flex-direction: row-reverse; }
     .tl-event.tl-right { flex-direction: row; }
-
-    /* Dot on spine */
     .tl-event::before {
       content: '';
       position: absolute;
@@ -182,44 +224,41 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(200,168,60,0.5);
+      background: rgba(111,47,36,0.5);
       transform: translateX(-50%);
       transition: background 0.2s;
       z-index: 2;
     }
-    .tl-event:hover::before { background: rgba(200,168,60,0.9); }
-
-    /* Card side */
+    .tl-event:hover::before { background: rgba(111,47,36,0.82); }
     .tl-event-card {
       width: calc(50% - 28px);
-      background: rgba(200,168,60,0.04);
-      border: 1px solid rgba(200,168,60,0.1);
       padding: 14px 18px;
-      transition: background 0.2s, border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     }
     .tl-event:hover .tl-event-card {
-      background: rgba(200,168,60,0.07);
-      border-color: rgba(200,168,60,0.22);
+      border-color: rgba(111,47,36,0.28);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(22,14,8,0.16);
     }
     .tl-event-year {
       font-family: 'Courier New', monospace;
       font-size: 0.68em;
       letter-spacing: 0.2em;
-      color: rgba(200,168,60,0.55);
+      color: rgba(111,47,36,0.76);
       margin-bottom: 4px;
     }
     .tl-event-name {
       font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.88em;
-      color: rgba(200,168,60,0.85);
+      font-size: 0.9em;
+      color: #3d2a1b;
       letter-spacing: 0.04em;
       margin-bottom: 6px;
+      line-height: 1.38;
     }
     .tl-event-desc {
-      font-size: 0.78em;
-      line-height: 1.65;
-      color: rgba(200,168,60,0.5);
-      font-style: italic;
+      font-size: 0.8em;
+      line-height: 1.72;
+      color: rgba(49,34,21,0.82);
     }
     .tl-event-type {
       display: inline-block;
@@ -227,8 +266,8 @@
       font-size: 0.58em;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.3);
-      border: 1px solid rgba(200,168,60,0.12);
+      color: rgba(82,57,33,0.58);
+      border: 1px solid rgba(82,57,33,0.16);
       padding: 1px 6px;
       margin-top: 8px;
     }
@@ -239,19 +278,14 @@
       font-size: 0.6em;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(200,168,60,0.35);
+      color: rgba(74,51,32,0.7);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .tl-event-link:hover { color: rgba(200,168,60,0.75); }
-
-    /* Spacer (empty half) */
+    .tl-event-link:hover { color: var(--oxblood); }
     .tl-event-spacer { width: calc(50% - 28px); }
-
-    /* Hidden via filter */
     .tl-event.tl-hidden { display: none; }
 
-    /* ── CENTURY MARKER ── */
     .tl-century {
       text-align: center;
       margin: 14px 0 8px;
@@ -259,38 +293,91 @@
     }
     .tl-century span {
       display: inline-block;
-      background: #0D0B08;
+      background: rgba(238,225,199,0.96);
       padding: 0 16px;
       font-family: 'Courier New', monospace;
       font-size: 0.58em;
       letter-spacing: 0.4em;
-      color: rgba(200,168,60,0.18);
+      color: rgba(82,57,33,0.42);
       text-transform: uppercase;
       position: relative;
       z-index: 2;
     }
 
-    /* ── FOOTER ── */
+    .tl-next-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 30px 22px;
+    }
+    .tl-next {
+      padding: 20px 22px 22px;
+    }
+    .tl-next-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1em;
+      letter-spacing: 0.08em;
+      color: #3d2a1b;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .tl-next-copy {
+      font-size: 0.8em;
+      line-height: 1.76;
+      color: rgba(49,34,21,0.8);
+      max-width: 720px;
+      margin-bottom: 12px;
+    }
+    .tl-next-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tl-next-link {
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(74,51,32,0.72);
+      border: 1px solid rgba(82,57,33,0.2);
+      padding: 8px 10px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: rgba(255,255,255,0.18);
+    }
+    .tl-next-link:hover {
+      color: var(--oxblood);
+      border-color: rgba(111,47,36,0.34);
+      background: rgba(111,47,36,0.05);
+    }
+
     .tl-footer {
       text-align: center;
       padding: 40px 20px 60px;
-      border-top: 1px solid rgba(200,168,60,0.07);
+      border-top: 1px solid rgba(82,57,33,0.08);
       font-family: 'Courier New', monospace;
       font-size: 0.62em;
       letter-spacing: 0.2em;
-      color: rgba(200,168,60,0.2);
+      color: rgba(82,57,33,0.34);
     }
-    .tl-footer a { color: rgba(200,168,60,0.35); text-decoration: none; }
-    .tl-footer a:hover { color: rgba(200,168,60,0.65); }
+    .tl-footer a { color: rgba(82,57,33,0.58); text-decoration: none; }
+    .tl-footer a:hover { color: var(--oxblood); }
 
     @media (max-width: 640px) {
+      .tl-nav { padding: 10px 14px; }
+      .tl-nav-title { display: none; }
+      .tl-header { padding: 34px 18px 24px; }
+      .tl-guide { grid-template-columns: 1fr; padding: 16px 16px 6px; gap: 10px; }
+      .tl-body { padding: 34px 16px 56px; }
       .tl-body::before { left: 16px; }
       .tl-event { flex-direction: column !important; padding-left: 36px; }
       .tl-event::before { left: 16px; }
       .tl-event-card, .tl-event-spacer { width: 100%; }
       .tl-event-spacer { display: none; }
+      .tl-era-head-inner, .tl-century span { background: rgba(233,219,191,0.96); }
+      .tl-next-wrap { padding: 0 16px 18px; }
     }
   </style>
+
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
@@ -317,6 +404,21 @@
     <button class="tl-filter-btn" data-filter="object">Objects</button>
     <button class="tl-filter-btn" data-filter="discovery">Discovery</button>
   </div>
+
+  <section class="tl-guide" aria-label="Timeline guide">
+    <div class="tl-guide-card">
+      <span class="tl-guide-kicker">Use this page for</span>
+      <span class="tl-guide-copy">Seeing the whole archive in sequence, especially when you want the long shape of the family before diving back into individual voices.</span>
+    </div>
+    <div class="tl-guide-card">
+      <span class="tl-guide-kicker">Best after</span>
+      <span class="tl-guide-copy">Vol. I or the family tree, once you know the line exists and want to watch the documents accumulate across nine centuries.</span>
+    </div>
+    <div class="tl-guide-card">
+      <span class="tl-guide-kicker">How to use it</span>
+      <span class="tl-guide-copy">Filter by document type if needed, but the best first read is straight down the spine, treating the archive as one long sequence of evidence.</span>
+    </div>
+  </section>
 
   <div class="tl-body" id="tl-body">
 
@@ -824,6 +926,20 @@
     </div>
 
   </div><!-- /tl-body -->
+
+  <section class="tl-next-wrap" aria-label="Where next">
+    <div class="tl-next">
+      <span class="tl-next-kicker">Where next</span>
+      <div class="tl-next-title">Once the chronology is clear, return to the voices inside it</div>
+      <p class="tl-next-copy">The timeline is best used as a spine. Once you have found the moment you care about, the strongest next move is to return to the relevant volume, the family tree, or the people index and read the record at human scale again.</p>
+      <div class="tl-next-links">
+        <a class="tl-next-link" href="era-I.html">Begin With Vol. I</a>
+        <a class="tl-next-link" href="family-tree.html">Open Family Tree</a>
+        <a class="tl-next-link" href="persons.html">Persons of Record</a>
+        <a class="tl-next-link" href="map.html">See the Map</a>
+      </div>
+    </div>
+  </section>
 
   <div class="tl-footer">
     <p>MSS. Hale-Marsh Collection · Bodleian Library, Oxford · 1066–2026</p>

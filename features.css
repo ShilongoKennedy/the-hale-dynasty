@@ -884,8 +884,38 @@ body.hd-marg-on .hd-marginal {
 .nsb-label {
   color: #8A6830 !important;   /* warm gold-brown, readable on #1A0E06 bg */
 }
+.era-nav,
+.era-header-nav,
+.era-seq-nav {
+  background: rgba(244,236,222,0.92) !important;
+  border-color: rgba(117,86,45,0.16) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.era-nav a,
+.era-header-nav a,
+.era-seq-nav a {
+  color: rgba(117,86,45,0.82) !important;
+}
+.era-nav a:hover,
+.era-header-nav a:hover,
+.era-seq-nav a:hover {
+  color: #6f311f !important;
+}
 .era-nav .vol-marker {
-  color: #C8A050 !important;   /* same as .era-nav a — clearly readable */
+  color: rgba(117,86,45,0.62) !important;
+}
+.home-float {
+  background: rgba(244,236,220,0.94) !important;
+  border-color: rgba(117,86,45,0.22) !important;
+  box-shadow: 0 3px 18px rgba(60,35,10,0.14) !important;
+}
+.home-float:hover {
+  border-color: #6f311f !important;
+}
+.home-float svg path {
+  stroke: #6f311f !important;
 }
 
 /* ── ERA HEADER / CONTENT SPACING ───────────────────────────────────
@@ -896,6 +926,37 @@ body.hd-marg-on .hd-marginal {
 }
 .era-content {
   padding-top: 32px !important;
+}
+
+/* ── READABILITY POLISH ────────────────────────────────────────────
+   Slightly deepen small metadata and steady long-form rhythm across
+   the archive without flattening each volume's local mood.
+   ───────────────────────────────────────────────────────────────── */
+.document,
+.hd-xref,
+.hd-whathappened,
+.archive-object-panel,
+.archive-note-panel {
+  line-height: 1.82;
+}
+.doc-label,
+.nsb-label,
+.vol-subtitle,
+.era-subtitle,
+.hd-kicker,
+.archive-meta,
+.timeline-meta {
+  color: rgba(92,67,39,0.72) !important;
+  letter-spacing: 0.12em;
+}
+.document p,
+.archive-object-panel p,
+.archive-note-panel p {
+  color: rgba(49,34,19,0.88);
+}
+.hd-xref p,
+.hd-whathappened p {
+  color: rgba(55,38,22,0.82);
 }
 
 /* ── Mobile Responsive ───────────────────────────────────────────── */

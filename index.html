@@ -689,13 +689,14 @@
       background: linear-gradient(90deg, rgba(90,122,70,0.7), rgba(215,186,134,0.18), transparent 78%);
     }
     .archive-cluster-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      display: grid;
+      grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
       gap: 18px;
       margin: 0 0 14px;
       position: relative;
       z-index: 1;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(214,188,143,0.08);
     }
     .archive-cluster-kicker {
       font-family: 'Courier New', monospace;
@@ -706,9 +707,9 @@
     }
     .archive-cluster-copy {
       max-width: 54ch;
-      font-size: 0.78em;
-      line-height: 1.62;
-      color: rgba(212,198,165,0.54);
+      font-size: 0.8em;
+      line-height: 1.72;
+      color: rgba(222,210,181,0.68);
     }
     .archive-cluster-copy strong {
       color: rgba(221,197,144,0.82);
@@ -887,7 +888,7 @@
       font-size: 0.94em;
       font-weight: bold;
       color: #d8c490;
-      line-height: 1.3;
+      line-height: 1.34;
       margin-bottom: 8px;
       transition: color 0.2s;
     }
@@ -901,9 +902,9 @@
     }
     .box-desc {
       font-style: italic;
-      font-size: 0.73em;
-      color: rgba(208,193,159,0.48);
-      line-height: 1.5;
+      font-size: 0.76em;
+      color: rgba(220,206,177,0.62);
+      line-height: 1.62;
     }
     .box-enter {
       display: block;
@@ -1302,12 +1303,12 @@
         radial-gradient(circle at 92% 14%, rgba(90,122,70,0.08), transparent 18%);
     }
     .explore-group-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      display: grid;
+      grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
       gap: 18px;
-      margin: 0 0 12px;
-      padding: 0 2px;
+      margin: 0 0 14px;
+      padding: 0 2px 12px;
+      border-bottom: 1px solid rgba(214,188,143,0.08);
     }
     .explore-group-kicker {
       font-family: 'Courier New', monospace;
@@ -1317,10 +1318,10 @@
       color: rgba(164,89,70,0.72);
     }
     .explore-group-copy {
-      max-width: 52ch;
-      font-size: 0.77em;
-      line-height: 1.62;
-      color: rgba(212,198,165,0.54);
+      max-width: 56ch;
+      font-size: 0.79em;
+      line-height: 1.7;
+      color: rgba(222,210,181,0.68);
     }
     .explore-group-grid {
       display: grid;
@@ -1332,7 +1333,7 @@
     }
     .explore-card {
       background:
-        linear-gradient(180deg, rgba(37,32,27,0.96), rgba(19,17,14,0.98)),
+        linear-gradient(180deg, rgba(44,37,31,0.98), rgba(22,19,16,0.99)),
         radial-gradient(circle at 84% 18%, rgba(164,89,70,0.08), transparent 18%);
       border: 1px solid rgba(138, 108, 70, 0.24);
       border-left: 3px solid rgba(164,89,70,0.5);
@@ -1360,7 +1361,7 @@
       pointer-events: none;
     }
     .explore-card:hover {
-      background: linear-gradient(180deg, rgba(48,39,31,0.98), rgba(22,18,15,0.98));
+      background: linear-gradient(180deg, rgba(56,45,36,0.99), rgba(25,21,17,0.99));
       border-color: rgba(206, 173, 127, 0.34);
       transform: translateY(-4px) translateX(2px);
       box-shadow: 0 18px 34px rgba(0,0,0,0.22);
@@ -1395,13 +1396,13 @@
       margin-bottom: 5px;
     }
     .explore-card-sub {
-      font-size: 0.78em;
-      color: rgba(212,198,165,0.62);
-      line-height: 1.58;
+      font-size: 0.8em;
+      color: rgba(224,211,182,0.72);
+      line-height: 1.68;
       max-width: 40ch;
     }
     .explore-card-arrow {
-      margin-left: auto; color: #3A3020;
+      margin-left: auto; color: rgba(216,192,136,0.5);
       font-size: 1.2em; font-family: 'Courier New', monospace;
       transition: color 0.2s, transform 0.15s; flex-shrink: 0;
     }
@@ -1497,9 +1498,9 @@
       margin-bottom: 8px;
     }
     .start-here-copy {
-      font-size: 0.86em;
-      line-height: 1.75;
-      color: rgba(212,198,165,0.7);
+      font-size: 0.89em;
+      line-height: 1.8;
+      color: rgba(224,211,182,0.76);
       margin-bottom: 18px;
       max-width: 62ch;
     }
@@ -1534,9 +1535,15 @@
       display: block;
       text-decoration: none;
       border: 1px solid rgba(164,89,70,0.16);
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.04);
       padding: 10px 12px;
       min-height: 62px;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+    }
+    .start-here-steps a:hover {
+      border-color: rgba(206,173,127,0.3);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
     }
     .start-here-step-label {
       display: block;
@@ -1585,8 +1592,8 @@
       margin-bottom: 6px;
     }
     .feedback-sub {
-      font-size: 0.78em;
-      color: rgba(216,202,172,0.58);
+      font-size: 0.8em;
+      color: rgba(220,206,177,0.68);
       margin-bottom: 12px;
       line-height: 1.65;
       font-style: italic;
@@ -1690,9 +1697,9 @@
     }
     .reading-paths-copy {
       max-width: 60ch;
-      font-size: 0.82em;
-      line-height: 1.7;
-      color: rgba(216,202,172,0.64);
+      font-size: 0.84em;
+      line-height: 1.75;
+      color: rgba(220,206,177,0.72);
       margin-bottom: 18px;
     }
     .reading-paths-grid {
@@ -1728,8 +1735,8 @@
     }
     .reading-path-desc {
       font-family: Georgia, serif;
-      font-size: 0.78em; line-height: 1.65;
-      color: rgba(200,168,60,0.38); font-style: italic;
+      font-size: 0.8em; line-height: 1.72;
+      color: rgba(224,211,182,0.66); font-style: italic;
       margin-bottom: 14px;
     }
     .reading-path-stops {
@@ -1740,7 +1747,7 @@
     .reading-path-stops li {
       font-family: 'Courier New', monospace;
       font-size: 0.58em; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(200,168,60,0.25);
+      color: rgba(216,192,136,0.34);
       padding: 3px 0;
       display: flex; align-items: center; gap: 8px;
     }
@@ -1786,7 +1793,7 @@
       .archive-grid { grid-template-columns: 1fr; gap: 12px; }
       .archive-clusters { padding: 0 16px 48px; gap: 20px; }
       .archive-cluster { padding: 16px 14px 16px; }
-      .archive-cluster-head { display: block; }
+      .archive-cluster-head { display: block; border-bottom: none; padding-bottom: 0; }
       .archive-cluster-copy { margin-top: 6px; }
       .archive-cluster-grid { grid-template-columns: 1fr; gap: 12px; }
       .main-title { font-size: 1.6em; }
@@ -1795,7 +1802,7 @@
       .section-intro { padding: 0 16px; }
       .explore-nav { grid-template-columns: 1fr; padding: 0 16px; }
       .explore-group { padding: 18px 16px 16px; }
-      .explore-group-head { display: block; }
+      .explore-group-head { display: block; border-bottom: none; padding-bottom: 0; }
       .explore-group-copy { margin-top: 6px; }
       .explore-group-grid { grid-template-columns: 1fr; }
       .dates-line { font-size: 1.1em; letter-spacing: 0.12em; }

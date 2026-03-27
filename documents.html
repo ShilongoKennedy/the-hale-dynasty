@@ -11,8 +11,11 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: #07060A;
-      color: #C8A050;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(111,47,36,0.08), transparent 22%),
+        radial-gradient(circle at 86% 10%, rgba(79,102,125,0.07), transparent 20%),
+        linear-gradient(180deg, #e7d5b4 0%, #c9aa7b 100%);
+      color: #2c2016;
       font-family: 'Courier New', monospace;
       min-height: 100vh;
     }
@@ -20,50 +23,50 @@
     /* ── NAV ──────────────────────────────────────────────────── */
     .top-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(7,6,10,0.95);
-      border-bottom: 1px solid rgba(200,168,60,0.1);
+      background: rgba(244,236,220,0.88);
+      border-bottom: 1px solid rgba(82,57,33,0.14);
       padding: 10px 30px;
       display: flex; justify-content: space-between; align-items: center;
       font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
       backdrop-filter: blur(10px);
     }
-    .top-nav a { color: rgba(200,168,60,0.5); text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #C8A83C; }
-    .top-nav .center { color: rgba(200,168,60,0.25); font-size: 0.9em; }
+    .top-nav a { color: rgba(94,66,38,0.62); text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #6f2f24; }
+    .top-nav .center { color: rgba(94,66,38,0.34); font-size: 0.9em; }
 
     /* ── HEADER ──────────────────────────────────────────────── */
     .doc-header {
       padding: 100px 40px 48px;
       text-align: center;
-      border-bottom: 1px solid rgba(200,168,60,0.07);
+      border-bottom: 1px solid rgba(82,57,33,0.08);
       position: relative;
     }
     .doc-header::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center top, rgba(200,168,60,0.035) 0%, transparent 60%);
+      background: radial-gradient(ellipse at center top, rgba(111,47,36,0.05) 0%, transparent 60%);
       pointer-events: none;
     }
     .doc-eyebrow {
       font-size: 0.62em; letter-spacing: 0.28em; text-transform: uppercase;
-      color: rgba(200,168,60,0.25); margin-bottom: 16px;
+      color: rgba(111,47,36,0.54); margin-bottom: 16px;
     }
     .doc-title {
       font-family: 'Cinzel', Georgia, serif;
       font-size: clamp(1.8em, 4vw, 3em);
-      color: #F0C840;
+      color: #432f1f;
       letter-spacing: 0.08em; font-weight: 600;
       margin-bottom: 12px;
-      text-shadow: 0 0 50px rgba(240,200,64,0.18);
+      text-shadow: none;
     }
     .doc-subtitle {
       font-size: 0.7em; letter-spacing: 0.12em;
-      color: rgba(200,168,60,0.3);
+      color: rgba(82,57,33,0.66);
       margin-bottom: 8px;
     }
     .doc-count {
       font-size: 0.6em; letter-spacing: 0.15em;
-      color: rgba(200,168,60,0.18);
+      color: rgba(82,57,33,0.42);
     }
     #doc-count-label { color: rgba(200,168,60,0.45); }
 
@@ -79,20 +82,20 @@
     }
     .filter-label {
       font-size: 0.6em; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(200,168,60,0.2);
+      color: rgba(82,57,33,0.42);
     }
     .filter-btn {
-      background: rgba(200,168,60,0.03);
-      border: 1px solid rgba(200,168,60,0.1);
-      color: rgba(200,168,60,0.35);
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(82,57,33,0.16);
+      color: rgba(82,57,33,0.58);
       font-family: 'Courier New', monospace;
       font-size: 0.6em; letter-spacing: 0.12em; text-transform: uppercase;
       padding: 5px 12px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .filter-btn:hover { border-color: rgba(200,168,60,0.3); color: rgba(200,168,60,0.65); }
-    .filter-btn.active { background: rgba(200,168,60,0.08); border-color: rgba(200,168,60,0.4); color: #C8A83C; }
+    .filter-btn:hover { border-color: rgba(111,47,36,0.3); color: rgba(82,57,33,0.78); }
+    .filter-btn.active { background: rgba(111,47,36,0.05); border-color: rgba(111,47,36,0.34); color: #6f2f24; }
 
     .search-bar-wrap {
       flex: 1; min-width: 200px;
@@ -100,21 +103,21 @@
     }
     .search-bar-wrap input {
       width: 100%;
-      background: rgba(200,168,60,0.03);
-      border: 1px solid rgba(200,168,60,0.1);
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(82,57,33,0.16);
       border-radius: 0;
-      color: rgba(200,168,60,0.7);
+      color: rgba(55,38,22,0.78);
       font-family: 'Courier New', monospace;
       font-size: 0.65em; letter-spacing: 0.08em;
       padding: 6px 12px 6px 30px;
       outline: none;
       transition: border-color 0.2s;
     }
-    .search-bar-wrap input:focus { border-color: rgba(200,168,60,0.3); }
-    .search-bar-wrap input::placeholder { color: rgba(200,168,60,0.2); }
+    .search-bar-wrap input:focus { border-color: rgba(111,47,36,0.34); }
+    .search-bar-wrap input::placeholder { color: rgba(82,57,33,0.34); }
     .search-icon {
       position: absolute; left: 10px;
-      color: rgba(200,168,60,0.25); font-size: 0.8em; pointer-events: none;
+      color: rgba(82,57,33,0.38); font-size: 0.8em; pointer-events: none;
     }
 
     /* ── DOCUMENT TABLE ───────────────────────────────────────── */
@@ -127,19 +130,19 @@
       display: grid;
       grid-template-columns: 80px 1fr 120px 90px;
       gap: 0;
-      border-bottom: 1px solid rgba(200,168,60,0.05);
+      border-bottom: 1px solid rgba(82,57,33,0.08);
       align-items: start;
       padding: 14px 0;
       text-decoration: none;
       color: inherit;
       transition: background 0.12s;
     }
-    .doc-row:hover { background: rgba(200,168,60,0.02); }
+    .doc-row:hover { background: rgba(111,47,36,0.035); }
     .doc-row.hidden { display: none; }
 
     .doc-col-vol {
       font-size: 0.58em; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(200,168,60,0.22);
+      color: rgba(111,47,36,0.44);
       padding-right: 12px;
       padding-top: 2px;
     }
@@ -147,24 +150,24 @@
     .doc-col-title {
       font-family: Georgia, serif;
       font-size: 0.82em;
-      color: rgba(200,168,60,0.65);
+      color: rgba(55,38,22,0.82);
       margin-bottom: 4px;
       font-style: italic;
     }
     .doc-col-meta {
       font-size: 0.58em; letter-spacing: 0.08em;
-      color: rgba(200,168,60,0.22);
+      color: rgba(82,57,33,0.48);
       line-height: 1.5;
     }
     .doc-col-type {
       font-size: 0.55em; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(200,168,60,0.2);
+      color: rgba(82,57,33,0.46);
       padding-left: 12px;
       padding-top: 3px;
     }
     .doc-col-date {
       font-size: 0.58em; letter-spacing: 0.08em;
-      color: rgba(200,168,60,0.2);
+      color: rgba(82,57,33,0.46);
       padding-left: 12px;
       padding-top: 3px;
     }
@@ -189,24 +192,24 @@
     }
     .era-group-line {
       height: 1px; flex: 1;
-      background: linear-gradient(to right, rgba(200,168,60,0.14), transparent);
+      background: linear-gradient(to right, rgba(82,57,33,0.18), transparent);
     }
     .era-group-line.right {
-      background: linear-gradient(to left, rgba(200,168,60,0.14), transparent);
+      background: linear-gradient(to left, rgba(82,57,33,0.18), transparent);
     }
     .era-group-seal {
       width: 28px; height: 28px; flex-shrink: 0;
-      border: 1px solid rgba(200,168,60,0.2);
+      border: 1px solid rgba(82,57,33,0.16);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Cinzel', Georgia, serif;
       font-size: 0.58em; letter-spacing: 0.04em;
-      color: rgba(200,168,60,0.38);
+      color: rgba(111,47,36,0.5);
     }
     .era-group-name {
       font-family: 'Cinzel', Georgia, serif;
       font-size: 0.76em; letter-spacing: 0.2em;
-      color: rgba(200,168,60,0.42);
+      color: rgba(82,57,33,0.62);
       font-weight: 400; white-space: nowrap;
       text-transform: uppercase;
     }
@@ -218,14 +221,14 @@
     }
     .era-group-vol-link {
       font-size: 0.5em; letter-spacing: 0.14em;
-      color: rgba(200,168,60,0.18); text-decoration: none;
+      color: rgba(82,57,33,0.42); text-decoration: none;
       font-family: 'Courier New', monospace;
       text-transform: uppercase; white-space: nowrap;
       transition: color 0.2s;
-      border-bottom: 1px solid rgba(200,168,60,0.1);
+      border-bottom: 1px solid rgba(82,57,33,0.12);
       flex-shrink: 0; padding-bottom: 1px;
     }
-    .era-group-vol-link:hover { color: rgba(200,168,60,0.55); border-color: rgba(200,168,60,0.35); }
+    .era-group-vol-link:hover { color: #6f2f24; border-color: rgba(111,47,36,0.34); }
 
     /* ── NO RESULTS ───────────────────────────────────────────── */
     #no-results {
@@ -233,22 +236,22 @@
       text-align: center;
       padding: 60px 0;
       font-size: 0.7em; letter-spacing: 0.15em;
-      color: rgba(200,168,60,0.18);
+      color: rgba(82,57,33,0.42);
     }
 
     /* ── HOME BUTTON ─────────────────────────────────────────── */
     .home-float {
       position: fixed; bottom: 28px; right: 28px; z-index: 400;
       width: 44px; height: 44px;
-      background: rgba(7,6,10,0.92);
-      border: 1px solid rgba(200,168,60,0.22);
+      background: rgba(244,236,220,0.9);
+      border: 1px solid rgba(82,57,33,0.18);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
       transition: all 0.22s;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.7);
+      box-shadow: 0 3px 18px rgba(0,0,0,0.22);
     }
-    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
+    .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.1); }
     .home-float svg { width: 20px; height: 20px; }
 
     /* ── PAGE OVERLAY ────────────────────────────────────────── */

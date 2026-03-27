@@ -9,8 +9,56 @@
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0F0C08; color: #D4C8A8; font-family: Georgia, serif; min-height: 100vh; padding: 80px 20px 120px; }
+    body { background: #0F0C08; color: #D4C8A8; font-family: Georgia, serif; min-height: 100vh; padding: 24px 20px 120px; }
+    .artifact-ribbon {
+      max-width: 760px;
+      margin: 0 auto 16px;
+      padding: 12px 18px;
+      background: rgba(244,236,222,0.92);
+      border: 1px solid rgba(117,86,45,0.16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(117,86,45,0.78);
+    }
+    .artifact-ribbon a {
+      color: rgba(117,86,45,0.82);
+      text-decoration: none;
+    }
+    .artifact-ribbon a:hover { color: #6f311f; }
+    .artifact-ribbon-mark { opacity: 0.76; text-align: center; }
     .wrap { max-width: 760px; margin: 0 auto; }
+    .artifact-guide {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .artifact-guide-card {
+      padding: 14px 16px;
+      background: rgba(244,236,222,0.9);
+      border: 1px solid rgba(117,86,45,0.14);
+    }
+    .artifact-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.74);
+    }
+    .artifact-guide-copy {
+      display: block;
+      font-size: 0.82em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.84);
+    }
     .page-note { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,168,60,0.4); margin-bottom: 60px; text-align: center; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
     .doc-block { }
@@ -25,13 +73,16 @@
     .finding-aid-entry { font-family: 'Courier New', monospace; font-size: 0.82em; line-height: 1.9; color: #B0A888; }
     .annotation-1 { color: rgba(200,180,120,0.5); font-style: italic; border-left: 2px solid rgba(200,168,60,0.2); padding-left: 10px; margin: 10px 0; }
     .final-sentences { font-family: Georgia, serif; font-size: 1em; font-style: italic; color: #C8A050; border-left: 3px solid rgba(200,168,60,0.4); padding-left: 14px; margin-top: 20px; line-height: 1.9; }
-    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(10,6,2,0.95); border: 1px solid rgba(200,168,60,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; }
-    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
     .page-footer-note { text-align: center; margin-top: 80px; font-family: 'Courier New', monospace; font-size: 0.68em; letter-spacing: 0.16em; color: rgba(200,168,60,0.2); text-transform: uppercase; }
     .page-footer-note a { color: rgba(200,168,60,0.3); text-decoration: none; }
     .page-footer-note a:hover { color: rgba(200,168,60,0.6); }
     .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-    @media (max-width: 660px) { .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 660px) {
+      .two-col { grid-template-columns: 1fr; }
+      .artifact-ribbon { font-size: 0.56em; padding: 10px 12px; }
+      .artifact-ribbon-mark { display: none; }
+      .artifact-guide { grid-template-columns: 1fr; }
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -40,7 +91,28 @@
 
 <div class="wrap">
 
+  <div class="artifact-ribbon">
+    <a href="index.html">← Archive Home</a>
+    <span class="artifact-ribbon-mark">Special Artifact · Vol. X Supplement</span>
+    <a href="era-X.html">Return to Vol. X →</a>
+  </div>
+
   <div class="page-note">Two documents · written in the same decade · neither writer knew about the other</div>
+
+  <div class="artifact-guide" aria-label="How to use this artifact">
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Use this artifact for</span>
+      <span class="artifact-guide-copy">Seeing the contemporary line from two angles at once: Eleanor discovering the record and James finally understanding it.</span>
+    </div>
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Best after</span>
+      <span class="artifact-guide-copy">Vol. X, once the present-day custodians matter to you as readers, not only as archivists.</span>
+    </div>
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Where next</span>
+      <span class="artifact-guide-copy">Read Matilda’s letter in full, then return to the family tree and trace who finally answered it.</span>
+    </div>
+  </div>
 
   <div class="two-col">
 

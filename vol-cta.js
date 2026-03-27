@@ -53,7 +53,7 @@
           '<a href="family-tree.html" class="hd-cta-btn">Family Tree</a>' +
           '<a href="persons.html" class="hd-cta-btn">Persons</a>' +
           '<a href="grief.html" class="hd-cta-btn">The Grief Index</a>' +
-          '<button class="hd-cta-btn hd-cta-eleanor" type="button">Ask Eleanor</button>' +
+          '<button class="hd-cta-btn hd-cta-eleanor" type="button">Consult Eleanor</button>' +
         '</div>' +
         (isLast
           ? '<div class="hd-cta-final">You have reached the end of the collection.<br>' +
@@ -158,7 +158,7 @@
 
     nav.parentNode.insertBefore(cta, nav);
 
-    // Wire Ask Eleanor button
+    // Wire Consult Eleanor button
     cta.querySelector('.hd-cta-eleanor').addEventListener('click', function () {
       var panel = document.getElementById('hd-inq-panel');
       var fab   = document.getElementById('hd-inq-fab');
@@ -166,7 +166,7 @@
       if (panel && input) {
         panel.classList.add('open');
         if (fab) fab.classList.add('open');
-        input.value = 'Tell me about Volume ' + vol + ' of the Hale archive.';
+        input.value = 'Place Volume ' + vol + ' in the Hale archive and explain why it matters.';
         input.dispatchEvent(new Event('input'));
         input.focus();
       }

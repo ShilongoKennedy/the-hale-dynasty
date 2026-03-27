@@ -16,6 +16,53 @@
       line-height: 1.8;
       min-height: 100vh;
     }
+    .artifact-guide {
+      max-width: 960px;
+      margin: 22px auto 0;
+      padding: 0 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .artifact-guide-card {
+      padding: 14px 16px;
+      background: rgba(244,236,222,0.9);
+      border: 1px solid rgba(117,86,45,0.14);
+      color: rgba(55,38,22,0.86);
+    }
+    .artifact-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.72);
+    }
+    .artifact-guide-copy {
+      display: block;
+      font-size: 0.8em;
+      line-height: 1.7;
+    }
+    .artifact-next {
+      margin-top: 42px;
+      padding: 18px 22px;
+      background: rgba(244,236,222,0.9);
+      border: 1px solid rgba(117,86,45,0.14);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.67em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(117,86,45,0.74);
+    }
+    .artifact-next a {
+      color: #6f311f;
+      text-decoration: none;
+    }
 
     .era-nav {
       background: #0A0804;
@@ -291,6 +338,8 @@
       .oral-content { padding: 36px 16px 70px; }
       .player { padding: 22px 18px; }
       .controls { flex-wrap: wrap; }
+      .artifact-guide { grid-template-columns: 1fr; padding: 0 16px; }
+      .artifact-next { flex-direction: column; align-items: flex-start; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -308,6 +357,21 @@
     <h1 class="oral-title">The Oral History</h1>
     <p class="oral-subtitle">Ten passages — one from each volume of the MSS. Hale-Marsh Collection — selected by Eleanor Voss for reading aloud. Select an era. Press play. The archive will speak.</p>
   </header>
+
+  <div class="artifact-guide" aria-label="How to use this artifact">
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Use this artifact for</span>
+      <span class="artifact-guide-copy">Hearing the archive as cadence and pressure instead of only as text on the page.</span>
+    </div>
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Best after</span>
+      <span class="artifact-guide-copy">Vol. I or the timeline, once you know the line well enough to hear it change from century to century.</span>
+    </div>
+    <div class="artifact-guide-card">
+      <span class="artifact-guide-kicker">Where next</span>
+      <span class="artifact-guide-copy">Return to the matching volume, or go to the family tree if a voice makes you want to place a figure more firmly.</span>
+    </div>
+  </div>
 
   <div class="oral-content">
 
@@ -369,6 +433,11 @@
     <div class="transcript-label">Transcript</div>
     <div class="transcript" id="transcript-display">
       Select an era above and press Play to begin.
+    </div>
+
+    <div class="artifact-next">
+      <span>Supplementary artifact · read beside the volumes, not instead of them</span>
+      <a href="timeline.html">Continue to the Chronicle Timeline →</a>
     </div>
 
   </div>

@@ -11,21 +11,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C8A83C;
-      --gold-dim: #9A7A28;
-      --gold-bright: #E8C84C;
-      --bg: #0E0C0A;
-      --bg-mid: #1A1612;
-      --bg-box: #1E1A14;
-      --text-dim: #6A5A48;
-      --text-mid: #8A7A62;
-      --text-light: #B8A888;
+      --gold: #8d5b34;
+      --gold-dim: #b38c63;
+      --gold-bright: #6f311f;
+      --bg: #f1e6d1;
+      --bg-mid: #eadcc4;
+      --bg-box: #e6d7be;
+      --text-dim: #8d6e53;
+      --text-mid: #6d4d34;
+      --text-light: #433123;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: linear-gradient(180deg, #efe1c8 0%, #e2d1b7 100%);
       color: var(--text-light);
       font-family: 'IM Fell English', Georgia, serif;
       min-height: 100vh;
@@ -40,8 +40,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 36px;
-      border-bottom: 1px solid rgba(200,168,60,0.1);
-      background: rgba(8,6,4,0.9);
+      border-bottom: 1px solid rgba(117,86,45,0.16);
+      background: rgba(244,236,222,0.92);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -51,18 +51,18 @@
       font-family: 'Cinzel', serif;
       font-size: 0.62em;
       letter-spacing: 0.18em;
-      color: rgba(200,168,60,0.5);
+      color: rgba(117,86,45,0.78);
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.2s;
     }
-    .hc-nav a:hover { color: rgba(200,168,60,0.9); }
+    .hc-nav a:hover { color: #6f311f; }
     .hc-nav-title {
       font-family: 'Cinzel', serif;
       font-size: 0.72em;
       font-weight: 600;
       letter-spacing: 0.22em;
-      color: rgba(200,168,60,0.65);
+      color: rgba(117,86,45,0.62);
       text-transform: uppercase;
     }
 
@@ -79,7 +79,7 @@
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 500px; height: 300px;
-      background: radial-gradient(ellipse, rgba(200,168,60,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(143,92,53,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
     .hc-ref {
@@ -109,7 +109,7 @@
     .hc-rule {
       width: 60px;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+      background: linear-gradient(to right, transparent, rgba(117,86,45,0.55), transparent);
       margin: 0 auto 28px;
     }
     .hc-intro {
@@ -146,8 +146,8 @@
       width: 1px;
       background: linear-gradient(to bottom,
         transparent 0%,
-        rgba(200,168,60,0.18) 8%,
-        rgba(200,168,60,0.18) 92%,
+        rgba(117,86,45,0.2) 8%,
+        rgba(117,86,45,0.2) 92%,
         transparent 100%);
     }
 
@@ -180,8 +180,8 @@
     .tl-dot {
       width: 14px; height: 14px;
       border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--gold-dim);
+      background: #f4ead7;
+      border: 2px solid rgba(117,86,45,0.58);
       flex-shrink: 0;
       position: relative;
       z-index: 2;
@@ -189,7 +189,7 @@
     }
     .tl-entry:hover .tl-dot {
       border-color: var(--gold);
-      box-shadow: 0 0 10px rgba(200,168,60,0.35);
+      box-shadow: 0 0 10px rgba(117,86,45,0.24);
     }
 
     /* Image side */
@@ -201,7 +201,7 @@
       width: 100%;
       aspect-ratio: 3/4;
       background: var(--bg-box);
-      border: 1px solid rgba(200,168,60,0.14);
+      border: 1px solid rgba(117,86,45,0.18);
       overflow: hidden;
     }
     .tl-img-frame img {
@@ -209,7 +209,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: sepia(20%) brightness(0.88);
+      filter: sepia(18%) brightness(0.93);
       transition: filter 0.4s, transform 0.5s;
     }
     .tl-entry:hover .tl-img-frame img {
@@ -221,7 +221,7 @@
       content: '';
       position: absolute;
       width: 12px; height: 12px;
-      border-color: rgba(200,168,60,0.25);
+      border-color: rgba(117,86,45,0.28);
       border-style: solid;
       z-index: 3;
       pointer-events: none;
@@ -241,8 +241,8 @@
       font-family: 'Cinzel', serif;
       font-size: 0.5em;
       letter-spacing: 0.2em;
-      color: rgba(200,168,60,0.5);
-      border: 1px solid rgba(200,168,60,0.18);
+      color: rgba(117,86,45,0.64);
+      border: 1px solid rgba(117,86,45,0.18);
       padding: 3px 9px;
       margin-bottom: 10px;
       text-transform: uppercase;
@@ -264,7 +264,7 @@
       font-size: 0.82em;
       font-weight: 600;
       letter-spacing: 0.1em;
-      color: rgba(200,168,60,0.75);
+      color: #6f311f;
       margin-bottom: 14px;
       line-height: 1.4;
       text-transform: uppercase;
@@ -287,8 +287,8 @@
     .tl-change {
       margin-top: 12px;
       padding: 10px 14px;
-      border-left: 2px solid rgba(200,168,60,0.2);
-      background: rgba(200,168,60,0.03);
+      border-left: 2px solid rgba(117,86,45,0.18);
+      background: rgba(255,248,238,0.56);
     }
     .tl-entry:nth-child(even) .tl-change {
       border-left: none;
@@ -304,7 +304,7 @@
     }
     .tl-change-text {
       font-size: 0.76em;
-      color: rgba(200,168,60,0.55);
+      color: rgba(117,86,45,0.72);
       font-style: italic;
       line-height: 1.6;
     }
@@ -321,7 +321,34 @@
       text-transform: uppercase;
       transition: color 0.2s, border-color 0.2s;
     }
-    .tl-era-link:hover { color: var(--gold); border-color: var(--gold); }
+    .tl-era-link:hover { color: #6f311f; border-color: #6f311f; }
+
+    .hc-guide {
+      max-width: 900px;
+      margin: 0 auto 34px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .hc-guide-card {
+      background: rgba(251,246,238,0.72);
+      border: 1px solid rgba(117,86,45,0.16);
+      padding: 18px 20px;
+    }
+    .hc-guide-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.22em;
+      color: rgba(117,86,45,0.58);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hc-guide-copy {
+      font-size: 0.82em;
+      line-height: 1.8;
+      color: var(--text-light);
+    }
 
     /* ── PRESENT STATE BANNER ── */
     .hc-present {
@@ -330,8 +357,8 @@
       padding: 0 24px;
     }
     .hc-present-inner {
-      border: 1px solid rgba(200,168,60,0.18);
-      background: rgba(200,168,60,0.03);
+      border: 1px solid rgba(117,86,45,0.18);
+      background: rgba(251,246,238,0.62);
       padding: 36px 40px;
       text-align: center;
       position: relative;
@@ -340,7 +367,7 @@
       content: '';
       position: absolute;
       width: 18px; height: 18px;
-      border-color: rgba(200,168,60,0.22);
+      border-color: rgba(117,86,45,0.22);
       border-style: solid;
     }
     .hc-present-inner::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
@@ -372,7 +399,7 @@
 
     /* ── BOTTOM NAV ── */
     .hc-foot-nav {
-      border-top: 1px solid rgba(200,168,60,0.1);
+      border-top: 1px solid rgba(117,86,45,0.14);
       padding: 28px 36px max(28px, env(safe-area-inset-bottom));
       display: flex;
       justify-content: space-between;
@@ -386,11 +413,11 @@
       gap: 12px;
     }
     .hc-foot-nav a {
-      color: rgba(200,168,60,0.4);
+      color: rgba(117,86,45,0.72);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .hc-foot-nav a:hover { color: var(--gold); }
+    .hc-foot-nav a:hover { color: #6f311f; }
 
     /* ── MOBILE ── */
     @media (max-width: 680px) {
@@ -414,10 +441,11 @@
 
       .tl-entry:nth-child(even) .tl-era-badge { align-self: flex-start; }
       .tl-entry:nth-child(even) .tl-divider { background: linear-gradient(to right, var(--gold-dim), transparent); margin-left: 0; }
-      .tl-entry:nth-child(even) .tl-change { border-left: 2px solid rgba(200,168,60,0.2); border-right: none; }
+      .tl-entry:nth-child(even) .tl-change { border-left: 2px solid rgba(117,86,45,0.18); border-right: none; }
 
       .tl-image { padding: 0 16px; }
       .hc-present { padding: 0 16px; }
+      .hc-guide { grid-template-columns: 1fr; padding: 0 16px; }
       .hc-present-inner { padding: 24px 20px; }
       .hc-foot-nav { padding: 20px 16px max(20px, env(safe-area-inset-bottom)); font-size: 0.52em; }
     }
@@ -449,6 +477,21 @@
   </p>
   <div class="hc-coords">52°04′N 2°22′W · Worcestershire, England</div>
 </header>
+
+<section class="hc-guide">
+  <div class="hc-guide-card">
+    <div class="hc-guide-label">Use This Page For</div>
+    <div class="hc-guide-copy">Seeing the estate itself as a character: how the house changes, contracts, survives, and remembers the line that keeps returning to it.</div>
+  </div>
+  <div class="hc-guide-card">
+    <div class="hc-guide-label">Best After</div>
+    <div class="hc-guide-copy">Vol. I or the map, once Halecroft already matters to you as more than a place name in the documents.</div>
+  </div>
+  <div class="hc-guide-card">
+    <div class="hc-guide-label">Where Next</div>
+    <div class="hc-guide-copy">Read the corresponding volume links through the estate timeline, then use the map to see how Halecroft sits among the wider family lands.</div>
+  </div>
+</section>
 
 <!-- TIMELINE -->
 <main class="timeline" aria-label="Halecroft through the ages">

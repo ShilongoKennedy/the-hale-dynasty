@@ -12,15 +12,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C8A83C;
-      --gold-dim: #7A5A18;
+      --gold: #6f2f24;
+      --gold-dim: #8f6b3f;
+      --ink: #2c2016;
+      --paper: #e7d5b4;
+      --paper-deep: #c9aa7b;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: #0A0806;
-      color: #B8A888;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(111,47,36,0.08), transparent 22%),
+        radial-gradient(circle at 86% 10%, rgba(79,102,125,0.07), transparent 20%),
+        linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+      color: var(--ink);
       font-family: Georgia, 'Times New Roman', serif;
       opacity: 0;
       animation: pageIn 1s ease 0.2s forwards;
@@ -34,8 +40,8 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(10,8,6,0.96);
-      border-bottom: 1px solid #1A1610;
+      background: rgba(244,236,220,0.88);
+      border-bottom: 1px solid rgba(82,57,33,0.14);
       padding: 10px 40px;
       display: flex;
       justify-content: space-between;
@@ -45,9 +51,9 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
-    .read-nav a { color: #4A3A20; text-decoration: none; transition: color 0.2s; }
+    .read-nav a { color: rgba(94,66,38,0.64); text-decoration: none; transition: color 0.2s; }
     .read-nav a:hover { color: var(--gold); }
-    .read-progress-label { color: #2A2010; }
+    .read-progress-label { color: rgba(94,66,38,0.38); }
 
     /* Progress bar */
     .read-progress-bar {
@@ -58,7 +64,7 @@
       width: 0%;
       z-index: 200;
       transition: width 0.1s linear;
-      opacity: 0.6;
+      opacity: 0.8;
     }
 
     /* ── OPENING ──────────────────────────────────────── */
@@ -78,7 +84,7 @@
     }
     .read-opening p {
       font-style: italic;
-      color: #6A5A40;
+      color: rgba(82,57,33,0.72);
       font-size: 0.95em;
       line-height: 1.7;
       margin-bottom: 10px;
@@ -86,7 +92,7 @@
     .read-opening .dates {
       font-family: 'Cinzel', Georgia, serif;
       font-size: 1.4em;
-      color: #3A2A10;
+      color: rgba(82,57,33,0.58);
       letter-spacing: 0.24em;
       margin-top: 28px;
     }
@@ -112,14 +118,14 @@
     .era-divider-text {
       flex: 1;
       padding: 36px 60px;
-      border-top: 1px solid #1A1610;
-      border-bottom: 1px solid #1A1610;
+      border-top: 1px solid rgba(82,57,33,0.12);
+      border-bottom: 1px solid rgba(82,57,33,0.12);
     }
     .era-vol {
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
       letter-spacing: 0.3em;
-      color: #3A2A10;
+      color: rgba(82,57,33,0.54);
       text-transform: uppercase;
       margin-bottom: 8px;
     }
@@ -134,13 +140,13 @@
       font-family: 'Cinzel', Georgia, serif;
       font-size: 0.9em;
       letter-spacing: 0.2em;
-      color: #3A2A10;
+      color: rgba(82,57,33,0.58);
       margin-bottom: 12px;
     }
     .era-desc {
       font-style: italic;
       font-size: 0.88em;
-      color: #5A4A30;
+      color: rgba(82,57,33,0.72);
       line-height: 1.65;
       max-width: 520px;
     }
@@ -153,18 +159,18 @@
       text-decoration: none;
       margin-top: 16px;
       padding: 6px 16px;
-      border: 1px solid #2A1E0A;
-      color: #4A3A1A;
+      border: 1px solid rgba(82,57,33,0.18);
+      color: rgba(82,57,33,0.72);
       transition: color 0.2s, border-color 0.2s;
     }
-    .era-divider-link:hover { color: var(--gold); border-color: #5A4A20; }
+    .era-divider-link:hover { color: var(--gold); border-color: rgba(111,47,36,0.34); }
 
     /* ── EXCERPT BLOCK ────────────────────────────────── */
     .excerpt-block {
       max-width: 720px;
       margin: 0 auto;
       padding: 48px 40px;
-      border-bottom: 1px solid #1A1610;
+      border-bottom: 1px solid rgba(82,57,33,0.1);
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.9s ease, transform 0.9s ease;
@@ -175,21 +181,21 @@
       font-family: 'Courier New', monospace;
       font-size: 0.58em;
       letter-spacing: 0.24em;
-      color: #2A2010;
+      color: rgba(111,47,36,0.5);
       text-transform: uppercase;
       margin-bottom: 16px;
     }
     .excerpt-text {
       font-size: 0.96em;
       line-height: 2.0;
-      color: #8A7A5A;
+      color: rgba(55,38,22,0.78);
       font-style: italic;
     }
     .excerpt-text p { margin-bottom: 1em; }
     .excerpt-sig {
       text-align: right;
       font-size: 0.82em;
-      color: #4A3A20;
+      color: rgba(82,57,33,0.62);
       margin-top: 14px;
       font-style: italic;
     }
@@ -210,7 +216,7 @@
     }
     .read-closing p {
       font-style: italic;
-      color: #5A4A30;
+      color: rgba(82,57,33,0.72);
       font-size: 0.92em;
       line-height: 1.8;
       margin-bottom: 10px;
@@ -222,22 +228,22 @@
       font-size: 0.74em;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #4A3A20;
+      color: rgba(82,57,33,0.72);
       text-decoration: none;
-      border: 1px solid #2A1E0A;
+      border: 1px solid rgba(82,57,33,0.18);
       padding: 10px 24px;
       transition: color 0.2s, border-color 0.2s;
     }
-    .read-closing-link:hover { color: var(--gold); border-color: #5A4A20; }
+    .read-closing-link:hover { color: var(--gold); border-color: rgba(111,47,36,0.34); }
     /* ── FLOATING HOME CREST ─────────────────────────────── */
     .home-float {
       position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
-      background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35);
+      background: rgba(244,236,220,0.9); border: 1px solid rgba(82,57,33,0.18);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       text-decoration: none; z-index: 400; transition: all 0.22s;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.6);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
     }
-    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.12); }
     .home-float svg { width: 22px; height: 22px; }
       .page-transition-overlay {
       position: fixed;

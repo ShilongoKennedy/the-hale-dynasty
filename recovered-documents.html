@@ -9,40 +9,44 @@
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #E8DFC8; color: #3B2A1A; font-family: Georgia, serif; min-height: 100vh; line-height: 1.7; }
-    .era-nav { background: #3B2A1A; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.15em; text-transform: uppercase; }
-    .era-nav a { color: #C8A050; text-decoration: none; }
-    .era-nav a:hover { color: #E8C060; }
-    .era-nav .vol-marker { color: #7A5A28; }
-    .page-header { background: #F5EDD6; border-bottom: 3px solid #5C3A1E; padding: 50px 40px 40px; text-align: center; }
+    body { background: linear-gradient(180deg, #efe2cb 0%, #e2d2b8 100%); color: #3B2A1A; font-family: Georgia, serif; min-height: 100vh; line-height: 1.7; }
+    .era-nav { background: rgba(244,236,222,0.94); border-bottom: 1px solid rgba(117,86,45,0.18); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.15em; text-transform: uppercase; }
+    .era-nav a { color: #75562d; text-decoration: none; }
+    .era-nav a:hover { color: #6f311f; }
+    .era-nav .vol-marker { color: rgba(117,86,45,0.62); }
+    .page-header { background: linear-gradient(180deg, rgba(248,241,228,0.96) 0%, rgba(236,224,204,0.88) 100%); border-bottom: 1px solid rgba(117,86,45,0.18); padding: 50px 40px 40px; text-align: center; }
     .page-label { font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.3em; color: #8B1A1A; text-transform: uppercase; margin-bottom: 14px; }
-    .page-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.6em,4vw,2.6em); color: #3B2A1A; letter-spacing: 0.06em; margin-bottom: 10px; }
-    .page-subtitle { font-style: italic; color: #7A5C1E; font-size: 0.98em; }
+    .page-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.6em,4vw,2.6em); color: #6f311f; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .page-subtitle { font-style: italic; color: #6e5033; font-size: 0.98em; }
     .page-content { max-width: 900px; margin: 0 auto; padding: 50px 30px 80px; }
-    .editorial-note { border-left: 3px solid #8B1A1A; padding: 16px 20px; background: #F0E8D0; font-style: italic; font-size: 0.93em; color: #5C3A1E; margin-bottom: 40px; line-height: 1.75; }
+    .editorial-note { border-left: 3px solid #8B1A1A; padding: 16px 20px; background: rgba(248,241,230,0.72); font-style: italic; font-size: 0.93em; color: #5C3A1E; margin-bottom: 26px; line-height: 1.75; }
+    .rd-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 34px; }
+    .rd-guide-card { background: rgba(250,246,238,0.74); border: 1px solid rgba(117,86,45,0.16); padding: 18px 20px; }
+    .rd-guide-label { font-family: 'Courier New', monospace; font-size: 0.58em; letter-spacing: 0.22em; color: rgba(117,86,45,0.58); text-transform: uppercase; margin-bottom: 10px; }
+    .rd-guide-copy { font-size: 0.88em; line-height: 1.76; color: #4a3621; }
     /* Volume selector tabs */
     .vol-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 40px; }
-    .vol-tab { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 14px; border: 1px solid rgba(139,100,40,0.3); background: transparent; color: #5C3A1E; cursor: pointer; transition: all 0.2s; }
-    .vol-tab:hover, .vol-tab.active { background: #3B2A1A; color: #C8A050; border-color: #3B2A1A; }
+    .vol-tab { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 14px; border: 1px solid rgba(139,100,40,0.24); background: rgba(255,249,240,0.64); color: #5C3A1E; cursor: pointer; transition: all 0.2s; }
+    .vol-tab:hover, .vol-tab.active { background: rgba(111,49,31,0.08); color: #6f311f; border-color: rgba(111,49,31,0.36); }
     /* Volume section */
     .vol-section { display: none; }
     .vol-section.visible { display: block; }
     .vol-head { font-family: 'Cinzel', Georgia, serif; font-size: 1.3em; color: #3B2A1A; margin-bottom: 6px; }
     .vol-dates { font-family: 'Courier New', monospace; font-size: 0.8em; letter-spacing: 0.18em; color: #8B1A1A; margin-bottom: 30px; }
     /* Document card in list */
-    .doc-card { border: 1px solid rgba(168,144,112,0.4); background: #F5EDD6; padding: 20px 24px; margin-bottom: 16px; cursor: pointer; transition: background 0.2s; }
-    .doc-card:hover { background: #EDE0C4; }
+    .doc-card { border: 1px solid rgba(168,144,112,0.34); background: rgba(250,244,234,0.86); padding: 20px 24px; margin-bottom: 16px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+    .doc-card:hover { background: rgba(255,249,241,0.96); border-color: rgba(111,49,31,0.22); transform: translateY(-1px); }
     .doc-card-ref { font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: #8B1A1A; margin-bottom: 5px; }
     .doc-card-title { font-size: 1em; font-weight: bold; color: #3B2A1A; margin-bottom: 4px; }
     .doc-card-meta { font-style: italic; font-size: 0.88em; color: #5C3A1E; margin-bottom: 8px; }
     .doc-card-opener { font-size: 0.88em; color: #4A3A20; }
     /* Full document viewer */
-    .doc-viewer { display: none; position: fixed; inset: 0; background: rgba(30,18,8,0.82); z-index: 500; overflow-y: auto; padding: 40px 20px; }
+    .doc-viewer { display: none; position: fixed; inset: 0; background: rgba(32,20,10,0.7); z-index: 500; overflow-y: auto; padding: 40px 20px; }
     .doc-viewer.open { display: flex; align-items: flex-start; justify-content: center; }
     .doc-viewer-inner { max-width: 720px; width: 100%; position: relative; }
     .doc-viewer-close { position: sticky; top: 0; text-align: right; margin-bottom: 12px; z-index: 10; }
-    .doc-viewer-close button { font-family: 'Courier New', monospace; font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; background: #3B2A1A; color: #C8A050; border: 1px solid rgba(200,168,60,0.3); padding: 8px 16px; cursor: pointer; }
-    .doc-viewer-close button:hover { background: #5C3A1E; }
+    .doc-viewer-close button { font-family: 'Courier New', monospace; font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(244,236,222,0.94); color: #6f311f; border: 1px solid rgba(117,86,45,0.22); padding: 8px 16px; cursor: pointer; }
+    .doc-viewer-close button:hover { background: rgba(251,246,239,1); }
     /* Parchment in viewer */
     .viewer-parchment { background-color: #EBD8B7; background-image: radial-gradient(ellipse 70px 50px at 12% 18%, rgba(139,90,30,0.09) 0%, transparent 70%), radial-gradient(ellipse 40px 30px at 88% 72%, rgba(100,60,20,0.08) 0%, transparent 70%); border: 1px solid #A88F5B; padding: 40px 44px; line-height: 1.85; font-size: 1em; }
     .viewer-parchment::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(139,100,40,0.12); pointer-events: none; }
@@ -50,13 +54,19 @@
     .viewer-parchment p:last-child { margin-bottom: 0; }
     .viewer-ref { font-family: 'Courier New', monospace; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: #8B1A1A; margin-bottom: 6px; }
     .viewer-archival { background: rgba(139,26,26,0.05); border-left: 3px solid rgba(139,26,26,0.3); padding: 12px 16px; font-style: italic; font-size: 0.88em; color: #5C3A1E; line-height: 1.7; margin-bottom: 18px; }
-    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(10,6,2,0.92); border: 1px solid rgba(200,168,60,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; box-shadow: 0 3px 14px rgba(0,0,0,0.6); }
-    .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
+    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(244,236,222,0.95); border: 1px solid rgba(117,86,45,0.28); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; box-shadow: 0 3px 14px rgba(60,35,10,0.14); }
+    .home-float:hover { border-color: #6f311f; transform: scale(1.12); }
     .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-    .page-footer { background: #3B2A1A; padding: 24px 30px; text-align: center; font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(200,168,60,0.4); text-transform: uppercase; }
-    .page-footer a { color: rgba(200,168,60,0.5); text-decoration: none; margin: 0 12px; }
-    .page-footer a:hover { color: #C8A83C; }
-    @media (max-width:600px) { .vol-tab { font-size: 0.65em; padding: 6px 10px; } .page-content { padding: 30px 16px 60px; } .viewer-parchment { padding: 24px 20px; } }
+    .page-footer { background: rgba(244,236,222,0.9); border-top: 1px solid rgba(117,86,45,0.16); padding: 24px 30px; text-align: center; font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(117,86,45,0.62); text-transform: uppercase; }
+    .page-footer a { color: rgba(117,86,45,0.82); text-decoration: none; margin: 0 12px; }
+    .page-footer a:hover { color: #6f311f; }
+    .rd-next { margin-top: 34px; background: rgba(250,246,238,0.72); border: 1px solid rgba(117,86,45,0.16); padding: 20px 22px; }
+    .rd-next-label { font-family: 'Courier New', monospace; font-size: 0.58em; letter-spacing: 0.22em; color: rgba(117,86,45,0.58); text-transform: uppercase; margin-bottom: 10px; }
+    .rd-next-copy { font-size: 0.88em; line-height: 1.76; color: #4a3621; margin-bottom: 14px; }
+    .rd-next-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .rd-next-links a { font-family: 'Courier New', monospace; font-size: 0.62em; letter-spacing: 0.16em; text-transform: uppercase; color: #6f311f; text-decoration: none; border: 1px solid rgba(111,49,31,0.2); padding: 8px 12px; background: rgba(255,249,241,0.74); }
+    .rd-next-links a:hover { border-color: rgba(111,49,31,0.42); background: rgba(255,249,241,0.98); }
+    @media (max-width:600px) { .vol-tab { font-size: 0.65em; padding: 6px 10px; } .page-content { padding: 30px 16px 60px; } .viewer-parchment { padding: 24px 20px; } .rd-guide { grid-template-columns: 1fr; } }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -81,6 +91,22 @@
     The twenty documents gathered here do not exist in the main chronicle. They are new documents — letters, court records, account book entries, diary pages — written in the exact period voice of each volume, as if discovered after the ten-volume chronicle was complete. Each one fills a specific gap. Gaston's letter exists because the chronicle tells us he was there for thirty years and then disappears; the letter gives him back his voice. The 1891 letter exists because two volumes of the archive have been moving toward it; the letter is what they were moving toward. Select a volume below.
     <br><br>
     <em>— James Marsh-Hale and Eleanor Voss, Oxford, 2026</em>
+  </div>
+
+
+  <div class="rd-guide">
+    <div class="rd-guide-card">
+      <div class="rd-guide-label">Use This Page For</div>
+      <div class="rd-guide-copy">Reading the missing evidence: documents discovered after the ten-volume chronicle was complete, each one filling a silence the main archive had left open.</div>
+    </div>
+    <div class="rd-guide-card">
+      <div class="rd-guide-label">Best After</div>
+      <div class="rd-guide-copy">The main volumes or the deed-box, once you already know the family line and want the archive’s afterlife rather than its first arrangement.</div>
+    </div>
+    <div class="rd-guide-card">
+      <div class="rd-guide-label">How To Use It</div>
+      <div class="rd-guide-copy">Choose a volume tab, read the gap-filling documents there, then return to the original volume to feel how the recovered pages change the shape of what you thought you knew.</div>
+    </div>
   </div>
 
   <div class="vol-tabs" role="tablist">
@@ -278,6 +304,18 @@
 
 </div><!-- page-content -->
 
+<div class="page-content" style="padding-top:0;">
+  <div class="rd-next">
+    <div class="rd-next-label">Where Next</div>
+    <div class="rd-next-copy">Return to the corresponding volume after reading any recovered item, or use the deed-box and document index when you want the whole archive as a field of evidence rather than one sequence.</div>
+    <div class="rd-next-links">
+      <a href="deed-box.html">The Deed-Box</a>
+      <a href="documents.html">Document Index</a>
+      <a href="timeline.html">Chronicle Timeline</a>
+    </div>
+  </div>
+</div>
+
 <!-- Document viewer overlay — populated by JS -->
 <div class="doc-viewer" id="doc-viewer" onclick="closeDocViewer(event)">
   <div class="doc-viewer-inner">
@@ -289,7 +327,7 @@
 </div>
 
 <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#6f311f" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
 <footer class="page-footer">

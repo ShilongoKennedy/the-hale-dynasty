@@ -27,6 +27,28 @@
       line-height: 1.8;
       padding: 40px 20px;
     }
+    .artifact-ribbon {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 12px 18px;
+      background: rgba(244,236,222,0.92);
+      border: 1px solid rgba(117,86,45,0.16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(117,86,45,0.78);
+    }
+    .artifact-ribbon a {
+      color: rgba(117,86,45,0.82);
+      text-decoration: none;
+    }
+    .artifact-ribbon a:hover { color: #6f311f; }
+    .artifact-ribbon-mark { opacity: 0.76; text-align: center; }
 
     .container {
       max-width: 720px;
@@ -80,6 +102,32 @@
       margin-bottom: 40px;
       color: #A89878;
       font-style: italic;
+    }
+    .artifact-guide {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .artifact-guide-card {
+      padding: 14px 16px;
+      background: rgba(244,236,222,0.9);
+      border: 1px solid rgba(117,86,45,0.14);
+    }
+    .artifact-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.74);
+    }
+    .artifact-guide-copy {
+      display: block;
+      font-size: 0.82em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.84);
     }
 
     /* FORM SECTION */
@@ -271,11 +319,19 @@
       body { padding: 20px 16px; }
       .page-title { font-size: 1.8em; }
       .form-section { padding: 20px; }
+      .artifact-ribbon { font-size: 0.56em; padding: 10px 12px; }
+      .artifact-ribbon-mark { display: none; }
+      .artifact-guide { grid-template-columns: 1fr; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+  <div class="artifact-ribbon">
+    <a href="index.html">← Archive Home</a>
+    <span class="artifact-ribbon-mark">Special Artifact · Visitor Register</span>
+    <a href="deed-box.html">Back to the Deed-Box →</a>
+  </div>
   <div class="container">
     <a href="/" class="back-link">← back to the archive</a>
 
@@ -285,6 +341,21 @@
     <p class="intro-text">
       You have reached the end of the deed-box and found something unexpected. Sign your name here, and your entry will be added to the record — a visitor to the archive, recorded for whatever comes after.
     </p>
+
+    <div class="artifact-guide" aria-label="How to use this artifact">
+      <div class="artifact-guide-card">
+        <span class="artifact-guide-kicker">Use this artifact for</span>
+        <span class="artifact-guide-copy">Leaving a trace of your own reading after the archive has turned from documents back into visitors.</span>
+      </div>
+      <div class="artifact-guide-card">
+        <span class="artifact-guide-kicker">Best after</span>
+        <span class="artifact-guide-copy">The Deed-Box or Vol. X, once Eleanor has brought the record fully into the present.</span>
+      </div>
+      <div class="artifact-guide-card">
+        <span class="artifact-guide-kicker">Where next</span>
+        <span class="artifact-guide-copy">Return to the archive home, or reopen the family tree and read the line again with the ending in mind.</span>
+      </div>
+    </div>
 
     <div class="form-section">
       <h2 class="form-title">Sign the Register</h2>

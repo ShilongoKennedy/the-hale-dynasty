@@ -17,6 +17,58 @@
       min-height: 100vh;
       padding: 30px 20px;
     }
+    .artifact-ribbon {
+      max-width: 920px;
+      margin: 0 auto 14px;
+      padding: 12px 18px;
+      background: rgba(244,236,222,0.92);
+      border: 1px solid rgba(117,86,45,0.16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(117,86,45,0.8);
+    }
+    .artifact-ribbon a {
+      color: rgba(117,86,45,0.82);
+      text-decoration: none;
+    }
+    .artifact-ribbon a:hover { color: #6f311f; }
+    .artifact-ribbon-mark { opacity: 0.75; text-align: center; }
+    .artifact-guide {
+      max-width: 920px;
+      margin: 0 auto 18px;
+      padding: 16px 18px;
+      background: rgba(244,236,222,0.92);
+      border: 1px solid rgba(117,86,45,0.16);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .artifact-guide-card {
+      padding: 14px 16px;
+      background: rgba(255,251,243,0.58);
+      border: 1px solid rgba(117,86,45,0.1);
+    }
+    .artifact-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.64em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.74);
+    }
+    .artifact-guide-copy {
+      display: block;
+      font-size: 0.88em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.84);
+    }
 
     .page-wrapper {
       max-width: 920px;
@@ -246,7 +298,15 @@
     @media print {
       body { background: white; padding: 0; }
       .page-wrapper { box-shadow: none; }
-      .return-link, .home-float { display: none; }
+      .return-link, .home-float, .artifact-ribbon, .artifact-guide { display: none; }
+    }
+    @media (max-width: 720px) {
+      .artifact-ribbon {
+        font-size: 0.58em;
+        padding: 10px 12px;
+      }
+      .artifact-ribbon-mark { display: none; }
+      .artifact-guide { grid-template-columns: 1fr; padding: 12px; }
     }
       .page-transition-overlay {
       position: fixed;
@@ -270,6 +330,27 @@
 </head>
 <body>
 <div class="page-transition-overlay" id="pageOverlay"></div>
+
+<div class="artifact-ribbon">
+  <a href="index.html">← Archive Home</a>
+  <span class="artifact-ribbon-mark">Special Artifact · Vol. VIII Supplement</span>
+  <a href="era-VIII.html">Return to Thomas →</a>
+</div>
+
+<div class="artifact-guide" aria-label="How to use this artifact">
+  <div class="artifact-guide-card">
+    <span class="artifact-guide-kicker">Use this artifact for</span>
+    <span class="artifact-guide-copy">Seeing how Thomas Hale appears when the family line is reduced to one line in a county newspaper.</span>
+  </div>
+  <div class="artifact-guide-card">
+    <span class="artifact-guide-kicker">Best after</span>
+    <span class="artifact-guide-copy">Vol. VIII, once Thomas has become a person to you and not only a name in the record.</span>
+  </div>
+  <div class="artifact-guide-card">
+    <span class="artifact-guide-kicker">Where next</span>
+    <span class="artifact-guide-copy">Return to Vol. VIII, then follow the war’s afterlife into the timeline or the family tree.</span>
+  </div>
+</div>
 
 <div class="page-wrapper">
 

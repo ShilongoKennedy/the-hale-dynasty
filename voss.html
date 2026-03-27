@@ -30,7 +30,8 @@
     }
 
     .top-nav {
-      background: #1A2A10;
+      background: rgba(245, 248, 239, 0.9);
+      border-bottom: 1px solid rgba(74,106,56,0.18);
       padding: 10px 30px;
       display: flex;
       justify-content: space-between;
@@ -42,9 +43,9 @@
       position: relative;
       z-index: 100;
     }
-    .top-nav a { color: #8AAA70; text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #B0CC90; }
-    .top-nav .center { color: #4A6A38; }
+    .top-nav a { color: #4A6A38; text-decoration: none; transition: color 0.2s; }
+    .top-nav a:hover { color: #2E4A22; }
+    .top-nav .center { color: rgba(74,106,56,0.72); }
 
     .wrap {
       max-width: 720px;
@@ -284,6 +285,62 @@
       margin-bottom: 10px;
     }
 
+
+    .voss-guide {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 34px 0 40px;
+    }
+
+    .voss-guide-card {
+      background: rgba(245,248,239,0.72);
+      border: 1px solid rgba(74,106,56,0.16);
+      padding: 18px 20px;
+      min-height: 100%;
+    }
+
+    .voss-guide-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(74,106,56,0.54);
+      margin-bottom: 10px;
+    }
+
+    .voss-guide-copy {
+      font-size: 0.88em;
+      line-height: 1.8;
+      color: #24331c;
+    }
+
+    .voss-next {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .voss-next a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #3a5a28;
+      text-decoration: none;
+      border: 1px solid rgba(74,106,56,0.2);
+      padding: 8px 12px;
+      background: rgba(245,248,239,0.62);
+    }
+
+    .voss-next a:hover {
+      color: #1f3416;
+      border-color: rgba(74,106,56,0.42);
+      background: rgba(245,248,239,0.92);
+    }
+
     /* Provenance */
     .provenance {
       margin-top: 60px;
@@ -339,6 +396,7 @@
       .tl-entry { grid-template-columns: 38px 1fr; gap: 0 14px; }
       .tl-marker { width: 38px; }
       .discovery-panel { padding: 20px 20px; }
+      .voss-guide { grid-template-columns: 1fr; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -364,6 +422,27 @@
 
   <div class="editorial">
     In 1373, Margery Hale — daughter of Thomas Hale, the plague survivor — married Thomas Voss of Pershore and left Halecroft. Matilda the beekeeper tracked her departure and wrote it down in a letter that would not be readable for six hundred and fifty-one years. What follows is a reconstruction of what happened to the line Margery began: a family that held in Pershore for six centuries, unaware that the name Voss was grafted onto a Hale root in 1373, and that they were always, in some sense, asking the same question as the family they had left.
+  </div>
+
+
+  <div class="voss-guide">
+    <div class="voss-guide-card">
+      <div class="voss-guide-label">Use This Page For</div>
+      <div class="voss-guide-copy">Understanding the Pershore branch as a parallel line: how Hale habits, questions, and temperaments continue even after the surname changes.</div>
+    </div>
+    <div class="voss-guide-card">
+      <div class="voss-guide-label">Best After</div>
+      <div class="voss-guide-copy">Vol. II, the family tree, or Matilda's letter, once Margery's departure and Eleanor's discovery are already in view.</div>
+    </div>
+    <div class="voss-guide-card">
+      <div class="voss-guide-label">Where Next</div>
+      <div class="voss-guide-copy">Use the family tree for branch logic, then return to Vol. X to see how Eleanor recovers the line.</div>
+      <div class="voss-next">
+        <a href="family-tree.html">Family Tree</a>
+        <a href="matilda.html">Matilda's Letter</a>
+        <a href="era-X.html">Vol. X</a>
+      </div>
+    </div>
   </div>
 
   <div class="matilda-panel">
@@ -556,7 +635,7 @@
 </div><!-- wrap -->
 
 <a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
-  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#5A9A3C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#3a5a28" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
 <script src="features.js"></script>
