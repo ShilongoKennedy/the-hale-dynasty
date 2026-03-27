@@ -69,6 +69,33 @@
       color: rgba(82,57,33,0.42);
     }
     #doc-count-label { color: rgba(200,168,60,0.45); }
+    .doc-guide {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 18px 30px 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .doc-guide-card {
+      background: rgba(252,247,239,0.72);
+      border: 1px solid rgba(82,57,33,0.14);
+      padding: 16px 18px;
+    }
+    .doc-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.56em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.62);
+    }
+    .doc-guide-copy {
+      display: block;
+      font-size: 0.76em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.78);
+    }
 
     /* ── FILTERS ──────────────────────────────────────────────── */
     .filters-bar {
@@ -258,6 +285,7 @@
     .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
 
     @media (max-width: 640px) {
+      .doc-guide { grid-template-columns: 1fr; padding: 16px 18px 0; }
       .doc-row { grid-template-columns: 60px 1fr; }
       .doc-col-type, .doc-col-date { display: none; }
     }
@@ -279,6 +307,21 @@
   <p class="doc-subtitle">Every primary source in the Hale-Marsh archive · 1066–2026</p>
   <div class="doc-count">Showing <span id="doc-count-label">0</span> documents</div>
 </header>
+
+<section class="doc-guide" aria-label="How to use this page">
+  <div class="doc-guide-card">
+    <span class="doc-guide-kicker">Use this page for</span>
+    <span class="doc-guide-copy">Searching the archive by document rather than by era when you want a clean index of the evidence itself.</span>
+  </div>
+  <div class="doc-guide-card">
+    <span class="doc-guide-kicker">Best after</span>
+    <span class="doc-guide-copy">Vol. I, the timeline, or the deed-box, once the family line is clear enough for you to follow documents across centuries.</span>
+  </div>
+  <div class="doc-guide-card">
+    <span class="doc-guide-kicker">Where next</span>
+    <span class="doc-guide-copy">Open any item that catches you here, then return to its full volume for context around the document’s voice and pressure.</span>
+  </div>
+</section>
 
 <div class="filters-bar">
   <span class="filter-label">Filter:</span>

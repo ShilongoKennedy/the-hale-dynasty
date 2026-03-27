@@ -74,6 +74,14 @@
       max-width: 700px;
       margin: 0 auto;
     }
+    .read-opening-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.56);
+      margin-bottom: 16px;
+    }
     .read-opening h1 {
       font-family: 'Cinzel', Georgia, serif;
       font-size: clamp(2em, 5vw, 3.8em);
@@ -95,6 +103,40 @@
       color: rgba(82,57,33,0.58);
       letter-spacing: 0.24em;
       margin-top: 28px;
+    }
+    .read-guide {
+      max-width: 960px;
+      margin: 0 auto 28px;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .read-guide-card {
+      background: rgba(252,247,239,0.72);
+      border: 1px solid rgba(82,57,33,0.14);
+      padding: 16px 18px;
+    }
+    .read-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.62);
+    }
+    .read-guide-copy {
+      display: block;
+      font-size: 0.82em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.8);
+    }
+    @media (max-width: 768px) {
+      .read-guide {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+      }
     }
 
     /* ── ERA DIVIDER ──────────────────────────────────── */
@@ -278,11 +320,27 @@
 
 <!-- ── OPENING ─────────────────────────────────────────────────────────── -->
 <div class="read-opening">
+  <div class="read-opening-kicker">MSS. Hale-Marsh Collection · Continuous Reading Edition</div>
   <h1>The Hale Dynasty</h1>
   <p>A complete chronicle in ten volumes. Nine centuries of one family, read end to end.</p>
   <p>Each volume is presented here in its essential documents. To read any volume in full, follow the link at its heading.</p>
   <div class="dates">1066 &mdash; 2026</div>
 </div>
+
+<section class="read-guide" aria-label="How to use this page">
+  <div class="read-guide-card">
+    <span class="read-guide-kicker">Use this page for</span>
+    <span class="read-guide-copy">Reading the whole archive in one long movement when you want the full family shape before returning to individual documents.</span>
+  </div>
+  <div class="read-guide-card">
+    <span class="read-guide-kicker">Best after</span>
+    <span class="read-guide-copy">The homepage or Vol. I, once you know the archive’s premise and want the broad sweep of the line without stopping between pages.</span>
+  </div>
+  <div class="read-guide-card">
+    <span class="read-guide-kicker">Where next</span>
+    <span class="read-guide-copy">After any excerpt catches you, follow its volume link and return to the full archive page where that voice can fully unfold.</span>
+  </div>
+</section>
 
 <!-- ══════════════════════════════════════════════════════════════════════ -->
 <!-- VOL. I — NORMAN -->

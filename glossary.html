@@ -37,6 +37,14 @@
       padding: 56px 24px 40px;
       border-bottom: 1px solid rgba(82,57,33,0.08);
     }
+    .page-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.56);
+      margin-bottom: 14px;
+    }
     .page-title {
       font-family: 'Cinzel', Georgia, serif;
       font-size: clamp(1.8em, 4vw, 3em);
@@ -60,6 +68,34 @@
       margin: 28px auto 0;
       padding: 0 24px;
       position: relative;
+    }
+    .gloss-guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .gloss-guide-card {
+      background: rgba(252,247,239,0.72);
+      border: 1px solid rgba(82,57,33,0.14);
+      padding: 16px 18px;
+    }
+    .gloss-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.62);
+    }
+    .gloss-guide-copy {
+      display: block;
+      font-size: 0.78em;
+      line-height: 1.7;
+      color: rgba(55,38,22,0.78);
     }
     .gloss-search {
       width: 100%;
@@ -200,6 +236,7 @@
 
     @media (max-width: 600px) {
       .entry { grid-template-columns: 1fr; gap: 4px; }
+      .gloss-guide { grid-template-columns: 1fr; padding: 16px 18px 0; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -212,6 +249,7 @@
 </nav>
 
 <header class="page-header">
+  <div class="page-kicker">MSS. Hale-Marsh Collection · Finding Aid</div>
   <h1 class="page-title">Glossary & Index</h1>
   <p class="page-subtitle">An alphabetical record of persons, places, documents, and events in the Hale-Marsh archive. Each entry links to the relevant era.</p>
   <div class="gloss-search-wrap">
@@ -219,6 +257,21 @@
     <span class="gloss-search-icon">⌕</span>
   </div>
 </header>
+
+<section class="gloss-guide" aria-label="How to use this page">
+  <div class="gloss-guide-card">
+    <span class="gloss-guide-kicker">Use this page for</span>
+    <span class="gloss-guide-copy">Checking names, places, and archive terms quickly when you want orientation without leaving the record entirely.</span>
+  </div>
+  <div class="gloss-guide-card">
+    <span class="gloss-guide-kicker">Best after</span>
+    <span class="gloss-guide-copy">Any volume, especially once the archive has begun to accumulate names faster than you can comfortably hold them in memory.</span>
+  </div>
+  <div class="gloss-guide-card">
+    <span class="gloss-guide-kicker">Where next</span>
+    <span class="gloss-guide-copy">Use each entry’s link to return straight to the era where the person, place, or term matters most in context.</span>
+  </div>
+</section>
 
 <nav class="alpha-nav" id="alphaNav" aria-label="Jump to letter"></nav>
 

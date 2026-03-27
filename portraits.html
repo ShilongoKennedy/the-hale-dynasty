@@ -76,6 +76,34 @@
       font-size: 0.65em; letter-spacing: 0.12em;
       color: rgba(82,57,33,0.42);
     }
+    .gallery-guide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 30px 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .gallery-guide-card {
+      background: rgba(252,247,239,0.72);
+      border: 1px solid rgba(82,57,33,0.14);
+      padding: 16px 18px;
+    }
+    .gallery-guide-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(111,47,36,0.62);
+    }
+    .gallery-guide-copy {
+      display: block;
+      font-size: 0.8em;
+      line-height: 1.72;
+      color: rgba(55,38,22,0.8);
+    }
 
     /* ── GALLERY GRID ─────────────────────────────────────────── */
     .gallery-main {
@@ -279,6 +307,7 @@
 
     /* ── RESPONSIVE ──────────────────────────────────────────── */
     @media (max-width: 680px) {
+      .gallery-guide { grid-template-columns: 1fr; padding: 16px 20px 0; }
       .portrait-card, .portrait-card.reverse {
         flex-direction: column;
         align-items: center;
@@ -306,6 +335,21 @@
   <p class="gallery-subtitle">Ten portraits. Nine centuries. No original likenesses survive — these are the faces the archive allows itself to imagine.</p>
   <div class="gallery-note">Commission notes · A.F., London, 1884 · J.M-H., London, 1984 · E.V., Oxford, 2024</div>
 </header>
+
+<section class="gallery-guide" aria-label="How to use this page">
+  <div class="gallery-guide-card">
+    <span class="gallery-guide-kicker">Use this page for</span>
+    <span class="gallery-guide-copy">Meeting the archive face to face when names in the record have started to feel real and you want imagined likenesses to hold them in view.</span>
+  </div>
+  <div class="gallery-guide-card">
+    <span class="gallery-guide-kicker">Best after</span>
+    <span class="gallery-guide-copy">Vol. I, the family tree, or the persons index, once the line is legible enough for a face to sharpen a figure rather than replace them.</span>
+  </div>
+  <div class="gallery-guide-card">
+    <span class="gallery-guide-kicker">Where next</span>
+    <span class="gallery-guide-copy">Use the links in each portrait to return to the volume where that person’s voice and consequences are actually preserved.</span>
+  </div>
+</section>
 
 <main class="gallery-main">
 
