@@ -921,76 +921,206 @@
     /* ── CINEMATIC INTRO SPLASH ─────────────────────────────── */
     .splash {
       position: fixed; inset: 0;
-      background: #000;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(186,145,44,0.18), transparent 18%),
+        radial-gradient(circle at 50% 58%, rgba(111,47,36,0.16), transparent 34%),
+        linear-gradient(180deg, #050403 0%, #090705 45%, #120c08 100%);
       z-index: 900;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
       pointer-events: all;
       transition: opacity 1.2s ease;
     }
     .splash.out { opacity: 0; pointer-events: none; }
-    .splash-crest {
-      opacity: 0;
-      transition: opacity 1.4s ease;
-      margin-bottom: 36px;
+    .splash-backdrop {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
     }
-    .splash.go .splash-crest { opacity: 1; }
-    .splash-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.4em, 3.2vw, 2.4em);
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.18em;
+    .splash-backdrop::before {
+      content: '';
+      position: absolute;
+      inset: 4.5vh 4vw;
+      border: 1px solid rgba(216,192,136,0.08);
+      box-shadow: inset 0 0 0 1px rgba(216,192,136,0.03);
+    }
+    .splash-backdrop::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 14vh;
+      width: min(72vw, 860px);
+      height: min(72vw, 860px);
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle, rgba(216,192,136,0.18) 0%, rgba(216,192,136,0.05) 22%, transparent 56%);
+      filter: blur(10px);
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 1.2s ease 0.5s, transform 1.2s ease 0.5s;
+      transition: opacity 1.5s ease 0.1s;
+    }
+    .splash.go .splash-backdrop::after { opacity: 1; }
+    .splash-rings,
+    .splash-rings::before,
+    .splash-rings::after {
+      position: absolute;
+      content: '';
+      left: 50%;
+      top: 18vh;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .splash-rings {
+      width: min(52vw, 620px);
+      height: min(52vw, 620px);
+      border: 1px solid rgba(216,192,136,0.12);
+      opacity: 0;
+      transition: opacity 1.4s ease 0.3s;
+    }
+    .splash-rings::before {
+      inset: 24px;
+      border: 1px dashed rgba(216,192,136,0.14);
+    }
+    .splash-rings::after {
+      inset: 72px;
+      border: 1px solid rgba(111,47,36,0.18);
+    }
+    .splash.go .splash-rings { opacity: 1; }
+    .splash-axis {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(216,192,136,0.18), transparent);
+      opacity: 0;
+      transition: opacity 1.2s ease 0.6s;
+    }
+    .splash.go .splash-axis { opacity: 1; }
+    .splash-stage {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12vh 24px 16vh;
       text-align: center;
     }
-    .splash.go .splash-title { opacity: 1; transform: none; }
-    .splash-sub {
+    .splash-crest {
+      opacity: 0;
+      transition: opacity 1.4s ease, transform 1.4s ease;
+      margin-bottom: 26px;
+      transform: translateY(22px) scale(0.92);
+      width: 106px;
+      height: 118px;
+    }
+    .splash.go .splash-crest { opacity: 1; transform: none; }
+    .splash-overline {
+      font-family: 'Courier New', monospace;
+      font-size: 0.66em;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(216,192,136,0.5);
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 1.2s ease 0.35s, transform 1.2s ease 0.35s;
+    }
+    .splash.go .splash-overline { opacity: 1; transform: none; }
+    .splash-era {
       font-family: 'Courier New', monospace;
       font-size: 0.78em;
-      color: var(--text-dim);
-      letter-spacing: 0.28em;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      margin-top: 12px;
+      color: rgba(189,165,118,0.62);
+      margin-bottom: 18px;
       opacity: 0;
-      transition: opacity 1s ease 1.2s;
+      transform: translateY(16px);
+      transition: opacity 1.2s ease 0.65s, transform 1.2s ease 0.65s;
     }
-    .splash.go .splash-sub { opacity: 1; }
+    .splash.go .splash-era { opacity: 1; transform: none; }
+    .splash-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2.7em, 9vw, 7.2em);
+      font-weight: 700;
+      line-height: 0.93;
+      color: #E1C15C;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 26px rgba(216,192,136,0.08),
+        0 16px 34px rgba(0,0,0,0.55);
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: opacity 1.3s ease 0.85s, transform 1.3s ease 0.85s;
+      text-align: center;
+      margin: 0;
+    }
+    .splash.go .splash-title { opacity: 1; transform: none; }
+    .splash-deck {
+      margin: 24px auto 0;
+      max-width: 20ch;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.35em, 2.8vw, 2.2em);
+      line-height: 1.18;
+      color: rgba(237,224,194,0.82);
+      text-wrap: balance;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 1.2s ease 1.25s, transform 1.2s ease 1.25s;
+    }
+    .splash.go .splash-deck { opacity: 1; transform: none; }
     .splash-line {
       width: 0;
-      height: 1px;
-      background: var(--gold-dim);
-      margin: 28px auto;
-      opacity: 0.4;
-      transition: width 1.4s ease 1.6s;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(216,192,136,0.78), transparent);
+      margin: 30px auto 26px;
+      opacity: 0.88;
+      transition: width 1.4s ease 1.75s;
     }
-    .splash.go .splash-line { width: 120px; }
+    .splash.go .splash-line { width: min(340px, 56vw); }
+    .splash-thesis {
+      font-family: 'Courier New', monospace;
+      font-size: 0.74em;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(216,192,136,0.56);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 1s ease 2s, transform 1s ease 2s;
+    }
+    .splash.go .splash-thesis { opacity: 1; transform: none; }
     .splash-begin {
       font-family: 'Courier New', monospace;
-      font-size: 0.6em;
-      color: #2A2010;
-      letter-spacing: 0.3em;
+      font-size: 0.68em;
+      color: rgba(111,47,36,0.96);
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       opacity: 0;
-      transition: opacity 0.8s ease 2.8s;
+      margin-top: 18px;
+      transition: opacity 0.8s ease 2.45s;
     }
     .splash.go .splash-begin { opacity: 1; }
     /* Mobile splash adjustments */
     @media (max-width: 600px) {
-      .splash-title { font-size: 1.4em; letter-spacing: 0.18em; }
-      .splash-sub   { font-size: 1.1em; letter-spacing: 0.2em; }
-      .splash-begin { font-size: 0.65em; letter-spacing: 0.2em; }
+      .splash-stage { padding: 13vh 18px 17vh; }
+      .splash-overline { font-size: 0.54em; letter-spacing: 0.22em; line-height: 1.8; max-width: 28ch; }
+      .splash-crest { width: 84px; height: 94px; margin-bottom: 20px; }
+      .splash-era { font-size: 0.62em; letter-spacing: 0.28em; margin-bottom: 14px; }
+      .splash-title { font-size: clamp(2.2em, 12.5vw, 4.1em); letter-spacing: 0.1em; }
+      .splash-deck { font-size: 1.12em; max-width: 18ch; margin-top: 18px; }
+      .splash-line { margin: 24px auto 18px; }
+      .splash-thesis { font-size: 0.62em; letter-spacing: 0.24em; }
+      .splash-begin { font-size: 0.62em; letter-spacing: 0.24em; }
     }
     .splash-sound-btn {
       position: absolute;
       bottom: max(28px, calc(28px + env(safe-area-inset-bottom)));
-      left: 28px;
-      background: none; border: 1px solid rgba(200,168,60,0.3);
-      border-radius: 50%; width: 44px; height: 44px;
+      right: 28px;
+      background: rgba(15,10,7,0.72);
+      border: 1px solid rgba(200,168,60,0.28);
+      border-radius: 50%; width: 52px; height: 52px;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; color: rgba(200,168,60,0.55);
       transition: border-color 0.2s, color 0.2s, opacity 0.8s ease 3s;
@@ -1003,22 +1133,22 @@
     .splash-sound-btn.playing { border-color: rgba(200,168,60,0.7); color: rgba(200,168,60,0.9); }
     .splash-sound-label {
       position: fixed;
-      bottom: max(18px, calc(18px + env(safe-area-inset-bottom)));
-      left: 50%; transform: translateX(-50%);
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-size: 0.62em;
+      bottom: max(44px, calc(44px + env(safe-area-inset-bottom)));
+      left: 30px;
+      transform: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6em;
       color: rgba(200,168,60,0);
-      letter-spacing: 0.06em;
-      white-space: nowrap;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       pointer-events: none;
       transition: color 1s ease 0.6s;
       z-index: 900;
     }
     .splash.go .splash-sound-label { color: rgba(200,168,60,0.35); }
     @media (max-width: 600px) {
-      .splash-sound-btn { width: 48px; height: 48px; bottom: max(72px, calc(72px + env(safe-area-inset-bottom))); left: 50%; transform: translateX(-50%); }
-      .splash-sound-label { bottom: max(130px, calc(130px + env(safe-area-inset-bottom))); }
+      .splash-sound-btn { width: 48px; height: 48px; bottom: max(22px, calc(22px + env(safe-area-inset-bottom))); right: 18px; left: auto; transform: none; }
+      .splash-sound-label { bottom: max(38px, calc(38px + env(safe-area-inset-bottom))); left: 18px; max-width: 50vw; line-height: 1.5; }
     }
 
     /* ── MATILDA EASTER EGG OVERLAY ────────────────────────── */
@@ -2763,23 +2893,28 @@
 
   <!-- Cinematic intro splash -->
   <div class="splash" id="splash">
-    <svg class="splash-crest" width="88" height="98" viewBox="0 0 72 80">
-      <!-- Shield outline -->
-      <path d="M36 4 L66 16 L66 46 Q66 66 36 76 Q6 66 6 46 L6 16 Z" fill="rgba(0,0,0,0.1)" stroke="rgba(200,168,60,0.75)" stroke-width="1.4"/>
-      <path d="M36 10 L60 20 L60 46 Q60 62 36 70 Q12 62 12 46 L12 20 Z" fill="none" stroke="rgba(200,168,60,0.32)" stroke-width="0.8"/>
-      <!-- Diagonal divide — Norman bend -->
-      <line x1="12" y1="20" x2="60" y2="60" stroke="rgba(200,168,60,0.25)" stroke-width="0.8"/>
-      <!-- M initial for Matilda — centre -->
-      <text x="36" y="46" text-anchor="middle" font-family="'Cinzel', Georgia, serif" font-size="18" fill="rgba(200,168,60,0.88)" font-weight="700">H</text>
-      <!-- Stars at corners -->
-      <circle cx="24" cy="28" r="2.2" fill="rgba(200,168,60,0.55)"/>
-      <circle cx="48" cy="28" r="2.2" fill="rgba(200,168,60,0.55)"/>
-      <circle cx="36" cy="58" r="2.2" fill="rgba(200,168,60,0.55)"/>
-    </svg>
-    <div class="splash-title">THE HALE DYNASTY</div>
-    <div class="splash-sub">1066 &nbsp;—&nbsp; 2026</div>
-    <div class="splash-line"></div>
-    <div class="splash-begin">Nine centuries &nbsp;·&nbsp; Begin</div>
+    <div class="splash-backdrop" aria-hidden="true">
+      <div class="splash-rings"></div>
+      <div class="splash-axis"></div>
+    </div>
+    <div class="splash-stage">
+      <svg class="splash-crest" viewBox="0 0 72 80" aria-hidden="true">
+        <path d="M36 4 L66 16 L66 46 Q66 66 36 76 Q6 66 6 46 L6 16 Z" fill="rgba(7,6,4,0.72)" stroke="rgba(216,192,136,0.88)" stroke-width="2.2"/>
+        <path d="M36 10 L60 20 L60 46 Q60 62 36 70 Q12 62 12 46 L12 20 Z" fill="none" stroke="rgba(216,192,136,0.28)" stroke-width="0.9"/>
+        <line x1="15" y1="24" x2="57" y2="56" stroke="rgba(111,47,36,0.35)" stroke-width="1.1"/>
+        <circle cx="24" cy="28" r="3" fill="rgba(216,192,136,0.45)"/>
+        <circle cx="48" cy="28" r="3" fill="rgba(216,192,136,0.45)"/>
+        <circle cx="36" cy="58" r="3" fill="rgba(216,192,136,0.45)"/>
+        <text x="36" y="47" text-anchor="middle" font-family="'Cinzel', Georgia, serif" font-size="26" fill="rgba(225,193,92,0.98)" font-weight="700">H</text>
+      </svg>
+      <div class="splash-overline">MSS. Hale-Marsh Collection &nbsp;·&nbsp; Bodleian Library &nbsp;·&nbsp; Reading Room Release</div>
+      <div class="splash-era">1066 &nbsp;—&nbsp; 2026</div>
+      <div class="splash-title">THE HALE<br>DYNASTY</div>
+      <div class="splash-deck">One family kept the land. The record kept them.</div>
+      <div class="splash-line"></div>
+      <div class="splash-thesis">Enter the inheritance</div>
+      <div class="splash-begin">The archive opens</div>
+    </div>
     <button class="splash-sound-btn" id="splashSoundBtn" title="Play ambient sound" aria-label="Toggle ambient sound">
       <svg id="soundIcon" viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
