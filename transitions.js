@@ -322,6 +322,23 @@
   overlay.style.zIndex = '9999';
   overlay.style.pointerEvents = 'none';
 
+  function resetOverlay() {
+    overlay.classList.remove('pto-active', 'pto-out', 'fade-out');
+    overlay.innerHTML = '';
+    overlay.style.transition = 'none';
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+  }
+
+  // Safari/iOS can restore pages from the back-forward cache with the
+  // transition overlay still visible. Reset aggressively on restore.
+  window.addEventListener('pageshow', function () {
+    resetOverlay();
+    requestAnimationFrame(function () {
+      overlay.style.transition = 'opacity 0.7s ease';
+    });
+  });
+
   // PAGE-LOAD FADE-IN
   var splashEl = document.getElementById('splash');
   if (splashEl) {

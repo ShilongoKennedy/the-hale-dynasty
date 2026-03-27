@@ -370,6 +370,29 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
+    .lv-mobile-banner {
+      max-width: 980px;
+      margin: 0 auto 18px;
+      padding: 16px 18px;
+      border: 1px solid rgba(200,168,60,0.12);
+      background: rgba(244,236,220,0.08);
+      display: none;
+    }
+    .lv-mobile-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(221,194,140,0.5);
+    }
+    .lv-mobile-copy {
+      display: block;
+      font-size: 0.84em;
+      line-height: 1.7;
+      color: rgba(235,216,183,0.84);
+    }
     .lv-intro-card {
       background: rgba(244,236,220,0.07);
       border: 1px solid rgba(200,168,60,0.12);
@@ -638,28 +661,54 @@
 
       .top-nav { padding: 8px 14px; font-size: 0.6em; }
       .top-nav .center { display: none; }
+      #view-toggle {
+        top: 52px;
+        right: 14px;
+        width: 122px;
+        padding: 7px 10px;
+        text-align: center;
+      }
+      #tree-search-wrap {
+        left: 14px;
+        right: 148px;
+        top: 52px;
+      }
+      #tree-search { width: 100%; }
       .tree-header {
-        top: 40px;
+        top: 94px;
         left: 0;
         right: 0;
         width: auto;
-        padding: 14px 14px 16px;
+        padding: 0 12px 14px;
         text-align: center;
       }
       .tree-header.compact { width: auto; }
-      .tree-header-inner { padding: 14px 14px 12px; }
-      .tree-title { font-size: 1.6em; }
+      .tree-header-inner { padding: 12px 12px 10px; }
+      .tree-title { font-size: 1.18em; margin-bottom: 2px; }
       .tree-subtitle { font-size: 0.68em; letter-spacing: 0.04em; max-width: none; }
       .tree-legend { flex-wrap: wrap; justify-content: center; gap: 5px; font-size: 0.52em; padding: 0 10px; }
       .tree-guide { grid-template-columns: 1fr; }
       .tree-header-actions { flex-wrap: wrap; justify-content: center; }
       .tree-route-row { grid-template-columns: 1fr; }
-      #tree-search-wrap { left: 14px; right: auto; top: 52px; }
+      .tree-header.compact .tree-subtitle,
+      .tree-header.compact .tree-legend,
+      .tree-header.compact .tree-route-row,
+      .tree-header.compact .tree-jump-row,
+      .tree-header.compact .tree-guide {
+        display: none;
+      }
+      .tree-header.compact .tree-header-inner { padding-bottom: 8px; }
+      .tree-header.compact .tree-header-actions { margin-top: 6px; }
 
       /* Viewport gets full screen */
       #treeViewport { touch-action: pan-x pan-y; }
       /* Tooltip hidden on touch devices */
       #tooltip { display: none !important; }
+      #list-view {
+        top: 86px;
+        padding: 24px 14px 110px;
+      }
+      .lv-mobile-banner { display: block; }
       .lv-intro { grid-template-columns: 1fr; }
     }
   </style>
@@ -1669,6 +1718,12 @@ const ERA_GROUPS = [
 function buildListView() {
   const container = document.getElementById('list-view');
   container.innerHTML = '';
+  const mobileBanner = document.createElement('div');
+  mobileBanner.className = 'lv-mobile-banner';
+  mobileBanner.innerHTML =
+    '<span class="lv-mobile-kicker">Mobile family tree</span>' +
+    '<span class="lv-mobile-copy">Start in the lineage view on phone. Follow the Hale line by era, then open the visual map only when you want the full branch structure.</span>';
+  container.appendChild(mobileBanner);
   const intro = document.createElement('div');
   intro.className = 'lv-intro';
   intro.innerHTML =
@@ -1758,23 +1813,30 @@ function focusPersonInTree(personId) {
 }
 
 let listViewBuilt = false;
-document.getElementById('view-toggle').addEventListener('click', function() {
+function setTreeMode(mode) {
   const lv = document.getElementById('list-view');
   const vp = document.getElementById('treeViewport');
   const hint = document.getElementById('scrollHint');
-  const isVisible = lv.classList.contains('visible');
-  if (isVisible) {
-    lv.classList.remove('visible');
-    vp.style.display = '';
-    if (hint) hint.style.display = '';
-    this.textContent = '☰ List View';
-  } else {
+  const toggle = document.getElementById('view-toggle');
+  const showList = mode === 'list';
+  if (showList) {
     if (!listViewBuilt) { buildListView(); listViewBuilt = true; applyListSearch(treeSearchInput.value.trim()); }
     lv.classList.add('visible');
     vp.style.display = 'none';
     if (hint) hint.style.display = 'none';
-    this.textContent = '⊞ Tree View';
+    if (toggle) toggle.textContent = '⊞ Visual Map';
+  } else {
+    lv.classList.remove('visible');
+    vp.style.display = '';
+    if (hint) hint.style.display = '';
+    if (toggle) toggle.textContent = '☰ Lineage View';
   }
+}
+
+document.getElementById('view-toggle').addEventListener('click', function() {
+  const lv = document.getElementById('list-view');
+  const isVisible = lv.classList.contains('visible');
+  setTreeMode(isVisible ? 'tree' : 'list');
 });
 
 // ── PROFILE PANEL ────────────────────────────────────────────────────────
@@ -1881,6 +1943,11 @@ document.querySelectorAll('[data-person-jump]').forEach(function(btn) {
 window.addEventListener('DOMContentLoaded', () => {
   buildTree();
   tryMatildaLink();
+  if (window.matchMedia && window.matchMedia('(max-width: 600px)').matches) {
+    setTreeMode('list');
+  } else {
+    setTreeMode('tree');
+  }
   // Open profile from URL hash on page load
   const hash = window.location.hash.replace('#', '');
   if (hash) {
@@ -1909,6 +1976,9 @@ window.addEventListener('resize', () => {
   const vp = document.getElementById('treeViewport');
   vp.innerHTML = '';
   buildTree();
+  if (window.matchMedia && window.matchMedia('(max-width: 600px)').matches) {
+    setTreeMode('list');
+  }
 });
 </script>
 <script src="inquiry.js"></script>
