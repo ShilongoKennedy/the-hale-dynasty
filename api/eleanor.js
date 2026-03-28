@@ -9,7 +9,6 @@
 
 var fs = require('fs');
 var path = require('path');
-var PDFParse = require('pdf-parse').PDFParse;
 
 var BASE_SYSTEM_PROMPT = [
   'You are Eleanor Voss, research fellow at the Bodleian Libraries, Oxford. You speak through the Inquiry Desk of the MSS. Hale-Marsh Collection — a fictional private archive of the Hale family of Worcestershire, England, spanning 1066 to 2026.',
@@ -136,31 +135,11 @@ function scoreChunk(chunk, terms, query) {
   return score;
 }
 
-async function readPdfText(pdfPath) {
-  var parser = new PDFParse({ data: fs.readFileSync(pdfPath) });
-  try {
-    var result = await parser.getText();
-    return normalizeArchiveText(result && result.text);
-  } finally {
-    if (typeof parser.destroy === 'function') {
-      try { await parser.destroy(); } catch (e) {}
-    }
-  }
-}
-
 async function loadArchive() {
   var root = process.cwd();
-  var pdfPath = path.join(root, 'The_Hale_Dynasty_Complete.pdf');
   var txtPath = path.join(root, 'extracted.txt');
 
   var keyParts = [];
-  try {
-    var pdfStat = fs.statSync(pdfPath);
-    keyParts.push('pdf:' + pdfStat.size + ':' + Number(pdfStat.mtimeMs || 0));
-  } catch (e) {
-    keyParts.push('pdf:missing');
-  }
-
   try {
     var txtStat = fs.statSync(txtPath);
     keyParts.push('txt:' + txtStat.size + ':' + Number(txtStat.mtimeMs || 0));
@@ -178,14 +157,6 @@ async function loadArchive() {
     text = normalizeArchiveText(fs.readFileSync(txtPath, 'utf8'));
   } catch (e) {
     text = '';
-  }
-
-  if (!text) {
-    try {
-      text = await readPdfText(pdfPath);
-    } catch (e) {
-      text = '';
-    }
   }
 
   archiveCache = {
