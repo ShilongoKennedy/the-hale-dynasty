@@ -19,7 +19,7 @@
       vol: 'VOL. I OF X', title: 'The Chronicle of de la Hale',
       dates: '1066 — 1121', sub: 'Norman England',
       color: '#C8A83C', crest: 'crests/EraI.png',
-      quote: '"Aldric of the Hale. He held this land before the Conquest,\nand he held it after."',
+      quote: '"In the spring of 1068 Ranulf de la Hale married\nAelswith of Halecroft."',
       introKicker: 'Worcester Cathedral Priory · Reading Room Extract',
       introDeck: 'Here the line enters England under conquest and learns to call the land by name.',
       introBegin: 'Begin the chronicle'

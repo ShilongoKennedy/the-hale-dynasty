@@ -1008,7 +1008,7 @@ if(cspans.length){
     ],
     'VI': [
       { label: 'On Augusta\'s accounts', note: 'Augusta kept her accounts in double-entry bookkeeping, which she taught herself from a published manual. The handwriting in the accounts is noticeably different from her letters — smaller, more controlled. She understood the accounts were a different kind of document. She was right about that. She was right about most things, which did not always make her life easier.' },
-      { label: 'On the note about James', note: '"He was the only one I could talk to." Augusta wrote this about her brother James, who died of typhoid in 1821. She kept the letter about his death. She folded the note inside it. She never referred to it again, anywhere in the surviving papers. This is one of the most private things in the archive.' },
+      { label: 'On the note about James', note: 'Augusta kept the letter announcing her brother James\'s death folded inside her papers for decades. A separate slip in her hand was found tucked into it. Even without forcing the note into a single quotable line, it is one of the most private survivals in the archive.' },
       { label: 'On the Halecroft damson', note: 'Augusta sold Halecroft damson to a Pershore preserve-maker for three shillings the bushel from 1831 onwards. The preserve-maker\'s records survive in the Worcestershire Record Office. They continue to list "Halecroft damson" as a supplier until 1871, nine years after Augusta\'s death. Someone kept the trees going. I do not know who.' }
     ],
     'VII': [
@@ -1022,9 +1022,9 @@ if(cspans.length){
       { label: 'On Arthur', note: 'Arthur Marsh appears in the 1939 register as living in lodgings in Leamington Spa, occupation: clerk. He does not appear after that date in the family record. I have tried to find out what happened to him. I have not been able to. There are a great many men who disappear from the record after 1939.' }
     ],
     'IX': [
-      { label: 'On Violet', note: 'Violet Marsh stood at the end of her street in October 1940 and understood what she was looking at. She described the house in Harlow as "perfectly adequate," which is the most complete sentence in the oral history. She said it twice. I think she meant it, and I think she meant something else by it as well.' },
+      { label: 'On Violet', note: 'Violet Marsh stood at the end of her street in October 1940 and understood what she was looking at. Her oral history is restrained almost to breaking point: she lists what was lost, item by item, and leaves the rest to the listener.' },
       { label: 'On the cat', note: '"There was a cat. George. He was ginger. I never got another one." This is from Violet\'s 1978 interview. The interviewer does not follow up on the cat. I think about this.' },
-      { label: 'On Harlow', note: 'Harlow New Town was designed in the late 1940s by Frederick Gibberd, intended as a model of planned community living. Violet Marsh lived there for the rest of her life. She said it was perfectly adequate. This is not a criticism of Harlow. It is an accurate description of the distance between "adequate" and "home."' }
+      { label: 'On Harlow', note: 'Harlow New Town became Violet Marsh\'s home after the Blitz destroyed the house she had known before. She lived there for the rest of her life, which makes the place part of the family record whether or not it ever felt like a replacement.' }
     ],
     'X': [
       { label: 'On the deed-box', note: 'The deed-box was smaller than I expected. Inside it were forty-seven items. The last thing I found, at the very bottom, was a slip of paper that read: "If you find this, please know that it was not all unhappiness." It is not signed. I sat with it for a long time before I wrote anything in my notes.' },

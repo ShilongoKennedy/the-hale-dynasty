@@ -9,7 +9,7 @@ Then add the character-specific prompt below.
 ---
 
 ### 1. `aelswith.png`
-**Character:** Aelswith — Saxon English widow, c.1045–1079
+**Character:** Aelswith — English widow of Halecroft, c.1045–c.1110
 
 *Prompt:*
 An Anglo-Saxon English woman in her late 30s, strong-featured and composed, wearing a simple linen coif and dark undyed woollen dress. Late 11th century England. Her expression is one of quiet, permanent resilience — a woman who chose to stay after the Conquest and made the invader into something worthwhile. Dark background, warm candlelight from one side. Dignified. Close portrait.
