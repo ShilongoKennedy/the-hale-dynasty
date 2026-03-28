@@ -175,14 +175,14 @@ async function loadArchive() {
 
   var text = '';
   try {
-    text = await readPdfText(pdfPath);
+    text = normalizeArchiveText(fs.readFileSync(txtPath, 'utf8'));
   } catch (e) {
     text = '';
   }
 
   if (!text) {
     try {
-      text = normalizeArchiveText(fs.readFileSync(txtPath, 'utf8'));
+      text = await readPdfText(pdfPath);
     } catch (e) {
       text = '';
     }
