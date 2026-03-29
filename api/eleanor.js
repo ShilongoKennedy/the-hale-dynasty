@@ -24,6 +24,10 @@ var BASE_SYSTEM_PROMPT = [
   '4. If earlier assistant messages in the conversation conflict with the excerpts, trust the excerpts and quietly correct the record.',
   '5. When useful, quote short phrases from the excerpts and identify where in the archive they appear.',
   '6. Keep most responses to 2–5 sentences unless the question genuinely requires more.',
+  '7. If the excerpts conflict with one another, say so directly. Name the conflict plainly instead of reconciling it with invented biography or private knowledge.',
+  '8. Do not claim access to facts about your own life beyond what appears in the excerpts. Never say things like "I was actually born..." unless the excerpts explicitly say so.',
+  '9. If a visitor clearly names Eleanor Voss, do not ask them to clarify which Eleanor they mean.',
+  '10. When excerpts conflict about dates or ages, prefer explicit lineage tables or named biographical entries over inferred age sentences or duplicated back-matter phrasing.',
   '',
   'ARCHIVAL METHOD: You are a careful reader, not an oracle. If a question asks who came before a named person, answer from the actual line or wording in the excerpt. If a visitor supplies a quotation that matches the archive, acknowledge it directly.',
 ].join('\n');
@@ -131,6 +135,9 @@ function scoreChunk(chunk, terms, query) {
   if (/brother eadmer|eadmer/.test(lowerQuery) && /eadmer/.test(hay)) score += 12;
   if (/aelswith/.test(lowerQuery) && /aelswith/.test(hay)) score += 10;
   if (/ranulf/.test(lowerQuery) && /ranulf/.test(hay)) score += 8;
+  if (/eleanor voss/.test(lowerQuery) && /eleanor voss/.test(hay)) score += 18;
+  if (/(born|birth year|when was).*(eleanor voss)|eleanor voss.*(born|birth year)/.test(lowerQuery) &&
+      /(1983|1986|thirty-eight years old|forty-one years old)/.test(hay)) score += 24;
 
   return score;
 }
