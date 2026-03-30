@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Hale Dynasty — Experimental Landing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #17110d;
+      --ink-soft: #261b15;
+      --ember: #9d4f34;
+      --ember-bright: #c96b45;
+      --gold: #cfb26b;
+      --gold-soft: #a88b54;
+      --parchment: #eadfc7;
+      --parchment-deep: #d9c3a1;
+      --line: rgba(207, 178, 107, 0.22);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --max: 1280px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(157, 79, 52, 0.18), transparent 24%),
+        radial-gradient(circle at 84% 14%, rgba(207, 178, 107, 0.08), transparent 20%),
+        linear-gradient(180deg, #0e0907 0%, #120d0a 35%, #17110d 100%);
+      color: var(--parchment);
+      font-family: "Cormorant Garamond", Georgia, serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: min(14vw, 180px);
+      pointer-events: none;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .page-shell::before {
+      left: 0;
+      background:
+        linear-gradient(180deg, transparent, rgba(207, 178, 107, 0.06), transparent),
+        linear-gradient(90deg, rgba(207, 178, 107, 0.04), transparent 70%);
+      border-right: 1px solid rgba(207, 178, 107, 0.07);
+    }
+
+    .page-shell::after {
+      right: 0;
+      background:
+        linear-gradient(180deg, transparent, rgba(157, 79, 52, 0.06), transparent),
+        linear-gradient(270deg, rgba(207, 178, 107, 0.04), transparent 70%);
+      border-left: 1px solid rgba(207, 178, 107, 0.07);
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.8);
+    }
+
+    .topbar-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .topbar-mark img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px rgba(201, 107, 69, 0.18));
+    }
+
+    .topbar-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topbar-links a {
+      opacity: 0.82;
+      transition: opacity 180ms ease, color 180ms ease;
+    }
+
+    .topbar-links a:hover {
+      opacity: 1;
+      color: var(--parchment);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 38px 28px 80px;
+    }
+
+    .hero-shell {
+      position: relative;
+      min-height: calc(100vh - 110px);
+      padding: clamp(28px, 4vw, 52px);
+      display: grid;
+      grid-template-columns: minmax(320px, 0.92fr) minmax(340px, 1.08fr);
+      gap: 28px;
+      align-items: stretch;
+      border: 1px solid rgba(207, 178, 107, 0.16);
+      background:
+        radial-gradient(circle at 50% 14%, rgba(207, 178, 107, 0.08), transparent 18%),
+        linear-gradient(180deg, rgba(20, 14, 11, 0.88), rgba(13, 9, 7, 0.96));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-shell::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(207, 178, 107, 0.11);
+      pointer-events: none;
+    }
+
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -14%;
+      transform: translateX(-50%);
+      width: min(48vw, 620px);
+      height: min(48vw, 620px);
+      border-radius: 50%;
+      border: 1px solid rgba(207, 178, 107, 0.12);
+      box-shadow:
+        0 0 0 28px rgba(207, 178, 107, 0.04),
+        0 0 0 66px rgba(207, 178, 107, 0.025);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .hero-altar,
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-altar {
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+    }
+
+    .archive-card {
+      position: relative;
+      padding: 26px;
+      background:
+        linear-gradient(180deg, rgba(236, 223, 198, 0.98), rgba(211, 192, 158, 0.98));
+      color: var(--ink);
+      border: 1px solid rgba(121, 89, 46, 0.3);
+      min-height: 100%;
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.26);
+    }
+
+    .archive-card::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(121, 89, 46, 0.14);
+      pointer-events: none;
+    }
+
+    .archive-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(78, 55, 31, 0.75);
+    }
+
+    .archive-seal {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1px solid rgba(121, 89, 46, 0.25);
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      color: rgba(98, 53, 34, 0.74);
+      background: radial-gradient(circle, rgba(157, 79, 52, 0.12), transparent 72%);
+      transform: rotate(-8deg);
+    }
+
+    .archive-crest-frame {
+      position: relative;
+      padding: 16px;
+      border: 1px solid rgba(121, 89, 46, 0.2);
+      background: rgba(255, 255, 255, 0.22);
+      margin-bottom: 20px;
+    }
+
+    .archive-crest-frame img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center;
+      border: 1px solid rgba(121, 89, 46, 0.14);
+    }
+
+    .archive-caption {
+      margin-top: 10px;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(97, 66, 36, 0.72);
+      text-align: right;
+    }
+
+    .archive-title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: #6f2f24;
+      margin: 12px 0 18px;
+      text-transform: uppercase;
+    }
+
+    .archive-sub {
+      font-size: 1.18rem;
+      line-height: 1.45;
+      color: rgba(70, 49, 31, 0.82);
+      max-width: 28ch;
+    }
+
+    .archive-dates {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(121, 89, 46, 0.2);
+      font-size: 1.1rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #2f4c7f;
+    }
+
+    .archive-notes {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(97, 66, 36, 0.76);
+    }
+
+    .hero-copy {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: clamp(8px, 2vw, 22px) 8px 8px;
+    }
+
+    .hero-overline {
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.72);
+    }
+
+    .hero-heading {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0;
+      color: #f0dec0;
+      text-shadow: 0 0 22px rgba(201, 107, 69, 0.14);
+    }
+
+    .hero-heading span { display: block; }
+
+    .hero-premise {
+      font-size: clamp(1.45rem, 2vw, 1.95rem);
+      line-height: 1.22;
+      color: #d7c1a0;
+      max-width: 19ch;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.6;
+      color: rgba(234, 223, 199, 0.84);
+      max-width: 31ch;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-top: 10px;
+    }
+
+    .button-main,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 26px;
+      border: 1px solid transparent;
+      font-size: 0.92rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .button-main {
+      background: linear-gradient(180deg, #bc6845, #8f422d);
+      color: #f5e8d4;
+      box-shadow: 0 14px 34px rgba(157, 79, 52, 0.28);
+    }
+
+    .button-main:hover,
+    .button-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      border-color: rgba(207, 178, 107, 0.24);
+      background: rgba(24, 16, 12, 0.55);
+      color: var(--parchment);
+    }
+
+    .hero-ritual {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(207, 178, 107, 0.12);
+      max-width: 760px;
+    }
+
+    .ritual-item {
+      padding: 12px 14px;
+      border-left: 2px solid rgba(201, 107, 69, 0.6);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ritual-item strong {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.7);
+      margin-bottom: 6px;
+    }
+
+    .ritual-item span {
+      font-size: 1rem;
+      line-height: 1.35;
+      color: rgba(234, 223, 199, 0.88);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px 100px;
+      display: grid;
+      gap: 28px;
+    }
+
+    .section-shell {
+      position: relative;
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(22, 16, 12, 0.84), rgba(18, 13, 10, 0.92));
+      box-shadow: var(--shadow);
+    }
+
+    .section-shell::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(207, 178, 107, 0.08);
+      pointer-events: none;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.68);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: #edd7b3;
+    }
+
+    .section-lead {
+      margin: 0;
+      max-width: 44rem;
+      font-size: 1.18rem;
+      line-height: 1.6;
+      color: rgba(234, 223, 199, 0.82);
+    }
+
+    .entry-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .entry-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      min-height: 240px;
+      border: 1px solid rgba(207, 178, 107, 0.14);
+      background:
+        linear-gradient(180deg, rgba(45, 33, 25, 0.92), rgba(22, 16, 12, 0.96));
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .entry-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(157, 79, 52, 0.14), transparent 40%),
+        radial-gradient(circle at top right, rgba(207, 178, 107, 0.08), transparent 24%);
+      pointer-events: none;
+    }
+
+    .entry-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201, 107, 69, 0.35);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+    }
+
+    .entry-card-main {
+      min-height: 280px;
+      background:
+        linear-gradient(180deg, rgba(69, 35, 24, 0.9), rgba(24, 16, 12, 0.96)),
+        url("banners/era-I.jpg") center/cover no-repeat;
+      background-blend-mode: screen, normal;
+    }
+
+    .entry-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: #f0dec0;
+    }
+
+    .entry-card .entry-kicker {
+      position: relative;
+      z-index: 1;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.72);
+    }
+
+    .entry-card p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: rgba(234, 223, 199, 0.86);
+      max-width: 24ch;
+    }
+
+    .entry-meta {
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.64);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .proof-fragment {
+      padding: 26px;
+      border: 1px solid rgba(207, 178, 107, 0.12);
+      background:
+        linear-gradient(180deg, rgba(229, 219, 198, 0.96), rgba(210, 193, 159, 0.96));
+      color: var(--ink-soft);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+    }
+
+    .proof-fragment blockquote {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+      line-height: 1.14;
+      color: #5a2d23;
+    }
+
+    .proof-fragment cite {
+      display: block;
+      margin-top: 16px;
+      font-size: 0.92rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(82, 57, 34, 0.75);
+      font-style: normal;
+    }
+
+    .lineage-strip {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .lineage-node {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1px solid rgba(207, 178, 107, 0.12);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .lineage-node .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 5px rgba(207, 178, 107, 0.08);
+    }
+
+    .lineage-node strong {
+      font-size: 1.18rem;
+      color: #edd7b3;
+    }
+
+    .lineage-node span {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.66);
+    }
+
+    .support-shell {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .support-copy p {
+      margin: 10px 0 0;
+      font-size: 1.16rem;
+      line-height: 1.55;
+      color: rgba(234, 223, 199, 0.82);
+      max-width: 34rem;
+    }
+
+    .support-card {
+      padding: 26px;
+      border: 1px solid rgba(201, 107, 69, 0.28);
+      background:
+        linear-gradient(180deg, rgba(72, 38, 28, 0.88), rgba(28, 18, 14, 0.96));
+      box-shadow: 0 20px 44px rgba(0,0,0,0.28);
+    }
+
+    .support-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+      color: #f1ddbe;
+    }
+
+    .support-card p {
+      margin: 0 0 18px;
+      font-size: 1.04rem;
+      line-height: 1.55;
+      color: rgba(241, 221, 190, 0.82);
+    }
+
+    .support-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 56px;
+      padding: 0 20px;
+      background: linear-gradient(180deg, #d6b76f, #b1883e);
+      color: #2d1d12;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 0 14px 30px rgba(207, 178, 107, 0.22);
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 4px 28px 60px;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(207, 178, 107, 0.56);
+    }
+
+    @media (max-width: 980px) {
+      .hero-shell,
+      .proof-grid,
+      .support-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-ritual {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar {
+        padding: 18px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero,
+      .content {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .hero-shell,
+      .section-shell {
+        padding: 18px;
+      }
+
+      .archive-card {
+        padding: 18px;
+      }
+
+      .archive-meta {
+        flex-direction: column;
+      }
+
+      .archive-seal {
+        width: 62px;
+        height: 62px;
+      }
+
+      .hero-heading {
+        font-size: 3.2rem;
+      }
+
+      .entry-card,
+      .entry-card-main {
+        min-height: 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .proof-fragment blockquote {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar-mark">
+        <img src="crests/main_family_crest.png" alt="Hale family crest">
+        <span>MSS. Hale-Marsh Collection</span>
+      </div>
+      <nav class="topbar-links" aria-label="Experimental landing navigation">
+        <a href="index.html">Current homepage</a>
+        <a href="era-I.html">Volume I</a>
+        <a href="family-tree.html">Family tree</a>
+        <a href="timeline.html">Timeline</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="Experimental landing hero">
+        <div class="hero-shell">
+          <div class="hero-altar">
+            <div class="archive-card">
+              <div class="archive-meta">
+                <div>
+                  <div>MSS. Hale-Marsh 1-10</div>
+                  <div>Reading Room Copy</div>
+                </div>
+                <div class="archive-seal">H.M.</div>
+              </div>
+
+              <div class="archive-crest-frame">
+                <img src="crests/main_family_crest.png" alt="The Hale Dynasty crest">
+                <div class="archive-caption">Recovered crest impression</div>
+              </div>
+
+              <div class="archive-title">The Hale Dynasty</div>
+              <div class="archive-sub">A family saga told through chronicles, letters, legal records, and the papers that outlived the people who made them.</div>
+              <div class="archive-dates">1066 — 2026</div>
+              <div class="archive-notes">Ten volumes · One line of descent · Final reader in Oxford</div>
+            </div>
+          </div>
+
+          <div class="hero-copy">
+            <div class="hero-overline">Bodleian reading room release · experimental landing</div>
+            <h1 class="hero-heading">
+              <span>Open</span>
+              <span>The Dynasty</span>
+            </h1>
+            <div class="hero-premise">One English family kept the land for centuries. The record kept them even longer.</div>
+            <p>This is not a wiki of lore. It is a line of inheritance made legible through documents: conquest, plague, marriage, absence, memory, and the people who kept writing after they should have gone silent.</p>
+
+            <div class="hero-cta-row">
+              <a class="button-main" href="era-I.html">Begin with Volume I</a>
+              <a class="button-secondary" href="#entry-points">Choose another way in</a>
+            </div>
+
+            <div class="hero-ritual">
+              <div class="ritual-item">
+                <strong>Read this for</strong>
+                <span>A story told through fragments, not chapters.</span>
+              </div>
+              <div class="ritual-item">
+                <strong>Expect</strong>
+                <span>Documents, recurrences, and lives echoing across centuries.</span>
+              </div>
+              <div class="ritual-item">
+                <strong>Best first move</strong>
+                <span>Read Volume I, then follow the family tree.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="content">
+        <section class="section-shell" aria-label="What this is">
+          <p class="section-kicker">What this is</p>
+          <h2 class="section-title">An archive before it is a website</h2>
+          <p class="section-lead">The Hale Dynasty is a fictional long-form archive: ten volumes spanning nearly a millennium, supported by portraits, a family tree, maps, glossaries, recovered documents, and the modern readers who inherit the record at the end.</p>
+        </section>
+
+        <section class="section-shell" id="entry-points" aria-label="Entry points">
+          <p class="section-kicker">Start here</p>
+          <h2 class="section-title">Three clean ways into the record</h2>
+          <p class="section-lead">The archive is largest when it is first opened. These are the clearest paths for a first visit.</p>
+
+          <div class="entry-grid">
+            <a class="entry-card entry-card-main" href="era-I.html">
+              <div class="entry-kicker">Primary reading path</div>
+              <h3>Volume I</h3>
+              <p>Begin with conquest, Aelswith, and the first acts by which the family learns to call the land by name.</p>
+              <div class="entry-meta">1066–1121 · The Chronicle</div>
+            </a>
+
+            <a class="entry-card" href="family-tree.html">
+              <div class="entry-kicker">Follow the line</div>
+              <h3>Family Tree</h3>
+              <p>See who belongs to whom, where the branches split, and how the Voss line returns at the end.</p>
+              <div class="entry-meta">Main line · Voss branch · Key figures</div>
+            </a>
+
+            <a class="entry-card" href="timeline.html">
+              <div class="entry-kicker">See the whole record</div>
+              <h3>Timeline</h3>
+              <p>Trace the archive from 1066 to 2026 in sequence before diving into a particular century.</p>
+              <div class="entry-meta">Chronological path · Full archive</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section-shell" aria-label="Proof of depth">
+          <p class="section-kicker">What survives</p>
+          <h2 class="section-title">A dynasty carried by documents</h2>
+          <div class="proof-grid">
+            <div class="proof-fragment">
+              <blockquote>“Keep asking. Keep the land. See to the pig.”</blockquote>
+              <cite>Matilda of Halecroft · c.1390</cite>
+            </div>
+
+            <div class="lineage-strip">
+              <div class="lineage-node">
+                <div class="dot"></div>
+                <strong>Ranulf de la Hale</strong>
+                <span>1066</span>
+              </div>
+              <div class="lineage-node">
+                <div class="dot"></div>
+                <strong>Matilda Hale</strong>
+                <span>c.1390</span>
+              </div>
+              <div class="lineage-node">
+                <div class="dot"></div>
+                <strong>Thomas Marsh-Hale</strong>
+                <span>1919</span>
+              </div>
+              <div class="lineage-node">
+                <div class="dot"></div>
+                <strong>Eleanor Voss</strong>
+                <span>2026</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-shell" aria-label="Support the archive">
+          <div class="support-shell">
+            <div class="support-copy">
+              <p class="section-kicker">Support</p>
+              <h2 class="section-title">Help keep the archive alive</h2>
+              <p>If you’ve enjoyed following this project and feel like buying me a coffee, that would mean a great deal to me.</p>
+            </div>
+
+            <div class="support-card">
+              <strong>Buy me a coffee</strong>
+              <p>A small gesture, quietly appreciated. It helps me keep building, revising, and extending the world of the archive.</p>
+              <a class="support-button" href="https://buymeacoffee.com/haledynasty" target="_blank" rel="noopener noreferrer">Support the archive</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="footer-note">Experimental landing concept · Current site remains unchanged</div>
+  </div>
+</body>
+</html>
