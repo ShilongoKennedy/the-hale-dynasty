@@ -28,6 +28,7 @@ var BASE_SYSTEM_PROMPT = [
   '8. Do not claim access to facts about your own life beyond what appears in the excerpts. Never say things like "I was actually born..." unless the excerpts explicitly say so.',
   '9. If a visitor clearly names Eleanor Voss, do not ask them to clarify which Eleanor they mean.',
   '10. When excerpts conflict about dates or ages, prefer explicit lineage tables or named biographical entries over inferred age sentences or duplicated back-matter phrasing.',
+  '11. If the excerpts say Eleanor Voss is a descendant of Margery Hale, that is sufficient evidence that she is of the Hale line. If asked when she found this out, distinguish between the genealogical fact and the point in the narrative when she learns it.',
   '',
   'ARCHIVAL METHOD: You are a careful reader, not an oracle. If a question asks who came before a named person, answer from the actual line or wording in the excerpt. If a visitor supplies a quotation that matches the archive, acknowledge it directly.',
 ].join('\n');
@@ -52,7 +53,7 @@ var STOPWORDS = {
   'this': true, 'those': true, 'through': true, 'what': true, 'when': true,
   'where': true, 'which': true, 'while': true, 'with': true, 'would': true,
   'your': true, 'volume': true, 'book': true, 'page': true, 'document': true,
-  'question': true, 'archive': true, 'hale': true, 'dynasty': true
+  'question': true, 'archive': true, 'dynasty': true
 };
 
 function isRateLimited(ip) {
@@ -136,6 +137,13 @@ function scoreChunk(chunk, terms, query) {
   if (/aelswith/.test(lowerQuery) && /aelswith/.test(hay)) score += 10;
   if (/ranulf/.test(lowerQuery) && /ranulf/.test(hay)) score += 8;
   if (/eleanor voss/.test(lowerQuery) && /eleanor voss/.test(hay)) score += 18;
+  if (/hale/.test(lowerQuery) && /hale/.test(hay)) score += 8;
+  if (/(when did .*find out.*hale|when .*discover.*hale|are you a hale|were you a hale|you were a hale)/.test(lowerQuery)) {
+    if (/she has no idea she is a hale/.test(hay)) score += 24;
+    if (/she knows now/.test(hay)) score += 24;
+    if (/descendant of margery hale/.test(hay)) score += 28;
+    if (/the letter's final reader/.test(hay)) score += 10;
+  }
   if (/(born|birth year|when was).*(eleanor voss)|eleanor voss.*(born|birth year)/.test(lowerQuery) &&
       /(1983|forty years old|forty-two years old)/.test(hay)) score += 24;
 

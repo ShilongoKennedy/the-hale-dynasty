@@ -34,8 +34,8 @@
   /* ══════════════════════════════════════════
      1. SESSION PERSISTENCE
   ══════════════════════════════════════════ */
-  var STORAGE_KEY     = 'hd_eleanor_history_v3';
-  var STORAGE_META    = 'hd_eleanor_meta_v3';
+  var STORAGE_KEY     = 'hd_eleanor_history_v6';
+  var STORAGE_META    = 'hd_eleanor_meta_v6';
   var conversationHistory = [];
   var MAX_HISTORY     = 20;
   var EXPIRY_DAYS     = 14;
