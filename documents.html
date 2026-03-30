@@ -350,6 +350,7 @@
   <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
+<script defer src="analytics.js"></script>
 <script src="transitions.js"></script>
 <script src="features.js"></script>
 <script>
@@ -654,13 +655,29 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
     activeType = this.dataset.filter;
+    if (window.hdTrack) {
+      window.hdTrack('documents_filter_change', { filter: activeType });
+    }
     applyFilters();
   });
 });
 
 document.getElementById('docSearch').addEventListener('input', function() {
   searchTerm = this.value.trim();
+  if (window.hdTrack && searchTerm.length >= 3) {
+    window.hdTrack('documents_search', { query_length: searchTerm.length });
+  }
   applyFilters();
+});
+
+document.getElementById('doc-list').addEventListener('click', function(e) {
+  var link = e.target.closest('a.doc-row');
+  if (!link || !window.hdTrack) return;
+  var title = link.querySelector('.doc-col-title');
+  window.hdTrack('documents_open', {
+    label: title ? title.textContent.trim() : (link.getAttribute('href') || ''),
+    href: link.getAttribute('href') || ''
+  });
 });
 </script>
 </body>

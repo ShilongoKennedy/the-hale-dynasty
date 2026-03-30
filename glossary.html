@@ -281,6 +281,7 @@
   <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
+<script defer src="analytics.js"></script>
 <script src="transitions.js"></script>
 <script src="features.js"></script>
 <script>
@@ -420,6 +421,9 @@ function buildAlphaNav() {
     btn.textContent = l;
     if (allLetters.has(l)) {
       btn.addEventListener('click', () => {
+        if (window.hdTrack) {
+          window.hdTrack('glossary_letter_jump', { letter: l });
+        }
         const section = document.getElementById('letter-' + l);
         if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -430,7 +434,11 @@ function buildAlphaNav() {
 
 // Search
 document.getElementById('glossSearch').addEventListener('input', function() {
-  buildGlossary(this.value.trim().toLowerCase());
+  var value = this.value.trim().toLowerCase();
+  if (window.hdTrack && value.length >= 2) {
+    window.hdTrack('glossary_search', { query_length: value.length });
+  }
+  buildGlossary(value);
 });
 
 buildAlphaNav();

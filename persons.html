@@ -530,6 +530,7 @@
   <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
+<script defer src="analytics.js"></script>
 <script src="transitions.js"></script>
 <script src="features.js"></script>
 <script>
@@ -625,6 +626,9 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
     const filter = this.dataset.filter;
+    if (window.hdTrack) {
+      window.hdTrack('persons_filter_change', { filter: filter });
+    }
     document.querySelectorAll('.person-card').forEach(card => {
       const p = PERSONS.find(p => p.id === card.dataset.personId);
       if (!p) return;
@@ -646,6 +650,9 @@ const PAGE_CONTEXT = 'persons — the persons of the archive page, showing all d
 function openPersonChat(person) {
   currentPerson = person;
   chatHistory   = [];
+  if (window.hdTrack) {
+    window.hdTrack('persons_open_profile', { person: person.name, id: person.id });
+  }
   document.getElementById('iq-person-name').textContent = person.name;
   const msgs = document.getElementById('iq-messages');
   msgs.innerHTML = '';

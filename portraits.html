@@ -624,6 +624,7 @@
   <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
+<script defer src="analytics.js"></script>
 <script src="transitions.js"></script>
 <script src="features.js"></script>
 <script>
@@ -671,6 +672,13 @@
 
     btn.addEventListener('click', function() {
       initAudio();
+      if (window.hdTrack && audio && audio.paused) {
+        var card = player.closest('.portrait-card');
+        var nameEl = card ? card.querySelector('.card-name') : null;
+        window.hdTrack('portrait_audio_play', {
+          portrait: nameEl ? nameEl.textContent.trim() : 'unknown'
+        });
+      }
       // Stop any other playing audio
       if (currentAudio && currentAudio !== audio) {
         currentAudio.pause();
@@ -717,6 +725,18 @@ document.querySelectorAll('.portrait-img-frame img').forEach(function(img) {
       + '<path d="M12 54 Q30 42 48 54" stroke="#C8A83C" stroke-width="1"/></svg>'
       + '<span style="font-family:\'Courier New\',monospace;font-size:0.5em;letter-spacing:0.18em;color:rgba(200,168,60,0.3);text-transform:uppercase;line-height:1.8;">No likeness<br>survives</span>';
     frame.appendChild(ph);
+  });
+});
+
+document.querySelectorAll('.card-link').forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (!window.hdTrack) return;
+    var card = this.closest('.portrait-card');
+    var nameEl = card ? card.querySelector('.card-name') : null;
+    window.hdTrack('portrait_open_era', {
+      portrait: nameEl ? nameEl.textContent.trim() : 'unknown',
+      href: this.getAttribute('href') || ''
+    });
   });
 });
 </script>

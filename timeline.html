@@ -977,6 +977,9 @@
     buttons.forEach(function(btn) {
       btn.addEventListener('click', function() {
         var filter = btn.dataset.filter;
+        if (window.hdTrack) {
+          window.hdTrack('timeline_filter_change', { filter: filter });
+        }
 
         // Update active button
         buttons.forEach(function(b) { b.classList.remove('active'); });
@@ -998,9 +1001,21 @@
       });
     });
   })();
+
+  document.querySelectorAll('.tl-event-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.hdTrack) {
+        window.hdTrack('timeline_event_open', {
+          label: (this.textContent || '').trim(),
+          href: this.getAttribute('href') || ''
+        });
+      }
+    });
+  });
   </script>
 
-  <script src="transitions.js"></script>
+  <script defer src="analytics.js"></script>
+<script src="transitions.js"></script>
   <script src="features.js"></script>
 <script src="inquiry.js"></script>
 </body>

@@ -1836,7 +1836,11 @@ function setTreeMode(mode) {
 document.getElementById('view-toggle').addEventListener('click', function() {
   const lv = document.getElementById('list-view');
   const isVisible = lv.classList.contains('visible');
-  setTreeMode(isVisible ? 'tree' : 'list');
+  const nextMode = isVisible ? 'tree' : 'list';
+  setTreeMode(nextMode);
+  if (window.hdTrack) {
+    window.hdTrack('family_tree_view_toggle', { mode: nextMode });
+  }
 });
 
 // ── PROFILE PANEL ────────────────────────────────────────────────────────
@@ -1909,6 +1913,9 @@ profileBackdrop.addEventListener('click', closeProfile);
 // "Consult Eleanor" — opens inquiry panel with a pre-filled research prompt
 ppAskEleanor.addEventListener('click', function() {
   const name = this.dataset.personName || 'this person';
+  if (window.hdTrack) {
+    window.hdTrack('family_tree_consult_eleanor', { person: name });
+  }
   closeProfile();
   // inquiry.js creates #hd-inq-panel and #hd-inq-input
   const panel = document.getElementById('hd-inq-panel');
@@ -1929,13 +1936,23 @@ document.getElementById('list-view').addEventListener('click', function(e) {
   if (!el) return;
   e.preventDefault();
   const person = personById(el.dataset.personId);
-  if (person) openProfile(person);
+  if (person) {
+    if (window.hdTrack) {
+      window.hdTrack('family_tree_list_open_profile', { person: person.name, id: person.id });
+    }
+    openProfile(person);
+  }
 });
 
 document.querySelectorAll('[data-person-jump]').forEach(function(btn) {
   btn.addEventListener('click', function() {
     const personId = this.getAttribute('data-person-jump');
-    if (personId) focusPersonInTree(personId);
+    if (personId) {
+      if (window.hdTrack) {
+        window.hdTrack('family_tree_jump', { target: personId });
+      }
+      focusPersonInTree(personId);
+    }
   });
 });
 
@@ -1958,6 +1975,9 @@ window.addEventListener('DOMContentLoaded', () => {
 if (treeHeaderToggle && treeHeader) {
   treeHeaderToggle.addEventListener('click', function() {
     const compact = treeHeader.classList.toggle('compact');
+    if (window.hdTrack) {
+      window.hdTrack('family_tree_guide_toggle', { state: compact ? 'compact' : 'expanded' });
+    }
     this.textContent = compact ? 'Open guide' : 'Hide guide';
     this.setAttribute('aria-expanded', compact ? 'false' : 'true');
     const vp = document.getElementById('treeViewport');
@@ -1968,6 +1988,14 @@ if (treeHeaderToggle && treeHeader) {
       buildTree();
       vp.scrollLeft = prevLeft;
       vp.scrollTop = prevTop;
+    }
+  });
+}
+if (treeSearchInput) {
+  treeSearchInput.addEventListener('input', function() {
+    var value = (this.value || '').trim();
+    if (window.hdTrack && value.length >= 2) {
+      window.hdTrack('family_tree_search', { query_length: value.length });
     }
   });
 }
