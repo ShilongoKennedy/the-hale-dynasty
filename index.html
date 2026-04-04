@@ -2543,71 +2543,120 @@
       .splash { inset: 0; }
       .splash-sphere-stage { inset: 0; border: none; }
       .splash-topline {
-        top: 18px;
+        top: 16px;
         left: 18px;
         right: 18px;
         justify-content: center;
-        gap: 14px;
+        gap: 10px;
         text-align: center;
-        font-size: 8px;
-        letter-spacing: 0.18em;
+        font-size: 7px;
+        letter-spacing: 0.16em;
       }
       .splash-topline span:nth-child(2) { display: none; }
       .splash-briefing-panel {
-        top: 112px;
+        top: 164px;
         left: 16px;
         right: 16px;
         width: auto;
         bottom: auto;
-        height: 286px;
+        height: 252px;
       }
-      .splash-briefing-header { padding: 20px 18px 16px; }
-      .splash-briefing-title { font-size: 1.48rem; }
-      .splash-briefing-scroll { padding: 16px 18px 18px; }
-      .splash-briefing-lead { font-size: 1.04rem; }
-      .splash-briefing-caption { font-size: 9px; letter-spacing: 0.18em; }
-      .splash-briefing-copy { font-size: 12px; line-height: 1.52; }
-      .splash-briefing-list li { font-size: 11px; }
-      .splash-briefing-grid { margin-top: 14px; grid-template-columns: 1fr; }
-      .splash-briefing-card { padding: 14px 14px 14px 16px; }
-      .splash-briefing-card-copy { font-size: 11px; }
+      .splash-briefing-header { padding: 16px 16px 10px; }
+      .splash-briefing-kicker { font-size: 8px; letter-spacing: 0.24em; }
+      .splash-briefing-title {
+        font-size: 1.08rem;
+        line-height: 1;
+        max-width: none;
+      }
+      .splash-briefing-caption {
+        margin-top: 8px;
+        font-size: 8px;
+        letter-spacing: 0.14em;
+      }
+      .splash-briefing-ribbon {
+        margin-top: 10px;
+        min-height: 20px;
+        padding: 0 10px;
+        font-size: 8px;
+        letter-spacing: 0.16em;
+      }
+      .splash-briefing-scroll { padding: 10px 16px 14px; }
+      .splash-briefing-lead {
+        font-size: 0.9rem;
+        line-height: 1.18;
+        max-width: none;
+      }
+      .splash-briefing-copy {
+        font-size: 11px;
+        line-height: 1.44;
+        max-width: none;
+      }
+      .splash-briefing-pull {
+        margin-top: 10px;
+        font-size: 0.78rem;
+        line-height: 1.22;
+        padding: 10px 12px 10px 12px;
+      }
+      .splash-briefing-list { gap: 6px; }
+      .splash-briefing-list li { font-size: 10px; line-height: 1.36; }
+      .splash-briefing-grid { display: none; }
       .splash-sphere-object {
-        width: min(94vw, 640px);
-        height: min(94vw, 640px);
-        transform: translateY(164px);
+        width: min(82vw, 520px);
+        height: min(82vw, 520px);
+        transform: translateY(280px) translateX(22vw);
       }
       .splash-title-shell {
-        top: 8px;
+        top: 34px;
         left: 50%;
         width: 100%;
         padding: 0 18px;
       }
       .splash-title-overline {
-        font-size: 8px;
-        letter-spacing: 0.22em;
-        gap: 8px;
-        min-height: 20px;
+        font-size: 7px;
+        letter-spacing: 0.16em;
+        gap: 6px;
+        min-height: 16px;
         padding: 0;
       }
       .splash-title-overline::before,
-      .splash-title-overline::after { width: 16px; }
-      .splash-title-shell h1 { font-size: clamp(3.9rem, 11.8vw, 5.2rem); }
-      .splash-title-shell p { font-size: 8px; letter-spacing: 0.18em; }
-      .splash-footer-note { bottom: 84px; gap: 10px; }
-      .splash-scene-progress { width: min(180px, 58vw); }
+      .splash-title-overline::after { width: 12px; }
+      .splash-title-shell h1 {
+        font-size: clamp(3rem, 10.4vw, 4.3rem);
+        line-height: 0.82;
+      }
+      .splash-title-shell p {
+        margin-top: 4px;
+        font-size: 7px;
+        letter-spacing: 0.14em;
+      }
+      .splash-footer-note {
+        left: 18px;
+        bottom: 98px;
+        transform: none;
+        justify-content: flex-start;
+        gap: 8px;
+        font-size: 8px;
+        letter-spacing: 0.14em;
+      }
+      .splash-sphere-stage.final-scene-active .splash-footer-note {
+        transform: translateY(4px);
+      }
+      .splash-scene-progress { width: min(128px, 34vw); }
       .splash-enter-shell {
         bottom: 24px;
-        width: calc(100% - 36px);
+        width: calc(100% - 32px);
         justify-content: center;
       }
       .splash-enter-link {
         width: 100%;
         min-width: 0;
-        min-height: 56px;
-        font-size: 11px;
-        letter-spacing: 0.28em;
+        min-height: 54px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        padding: 0 18px;
       }
       .splash-enter-link::after { margin-left: 12px; }
+      .splash-enter-key { display: none; }
       .splash-final-title { font-size: clamp(2.2rem, 8vw, 3.2rem); }
       .splash-final-sub,
       .splash-final-kicker { font-size: 9px; }
@@ -2617,14 +2666,20 @@
         font-size: 9px;
         letter-spacing: 0.22em;
       }
-      .splash-final-book { width: 56%; }
-      .splash-projection-copy { width: min(78%, 340px); bottom: 11%; }
-      .splash-projection-title { font-size: 1.3rem; }
+      .splash-final-book { width: 62%; }
+      .splash-projection-copy {
+        width: min(72%, 260px);
+        bottom: 8%;
+      }
+      .splash-projection-title {
+        font-size: 1rem;
+        line-height: 0.94;
+      }
       .splash-projection-sub,
-      .splash-projection-kicker { font-size: 8px; }
+      .splash-projection-kicker { font-size: 7px; }
       .splash-replay {
         right: 12px;
-        bottom: 12px;
+        bottom: 92px;
         min-height: 38px;
         padding: 0 12px;
         font-size: 9px;
