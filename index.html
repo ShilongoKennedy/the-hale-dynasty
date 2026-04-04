@@ -16,6 +16,7 @@
   <title>The Hale Dynasty — Archive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>html { font-size: 18px; }
 
     
@@ -389,6 +390,260 @@
       font-size: 0.7em;
       color: rgba(197, 178, 141, 0.62);
       letter-spacing: 0.1em;
+    }
+
+    /* ── HOMEPAGE THRESHOLD ─────────────────────────────── */
+    .threshold-section {
+      position: relative;
+      padding: 58px 30px 30px;
+      overflow: hidden;
+    }
+    .threshold-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 20%, rgba(164,89,70,0.18), transparent 26%),
+        radial-gradient(circle at 82% 14%, rgba(232,200,76,0.08), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 32%);
+      pointer-events: none;
+    }
+    .threshold-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 30px 30px 26px;
+      border: 1px solid rgba(111, 76, 39, 0.18);
+      background:
+        linear-gradient(180deg, rgba(14,12,10,0.94), rgba(9,8,7,0.98)),
+        radial-gradient(circle at 18% 12%, rgba(164,89,70,0.12), transparent 24%),
+        radial-gradient(circle at 82% 24%, rgba(232,200,76,0.06), transparent 18%);
+      box-shadow: 0 34px 84px rgba(0,0,0,0.34);
+      overflow: hidden;
+    }
+    .threshold-shell::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .threshold-shell::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 26px;
+      right: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,200,76,0.42), transparent);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .threshold-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(209,191,155,0.46);
+      margin-bottom: 22px;
+    }
+    .threshold-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+    .threshold-main {
+      padding: 10px 10px 12px;
+    }
+    .threshold-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.64em;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.78);
+      margin-bottom: 12px;
+    }
+    .threshold-title {
+      max-width: 11ch;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.9em, 6vw, 5.3em);
+      line-height: 0.88;
+      letter-spacing: -0.055em;
+      color: #f4ecdf;
+      text-shadow: 0 18px 48px rgba(0,0,0,0.38);
+      margin-bottom: 16px;
+    }
+    .threshold-lead {
+      max-width: 39rem;
+      font-size: 1.04em;
+      line-height: 1.82;
+      color: rgba(226,213,186,0.86);
+      margin-bottom: 18px;
+    }
+    .threshold-pull {
+      max-width: 38rem;
+      padding-left: 16px;
+      border-left: 2px solid rgba(164,89,70,0.48);
+      color: rgba(216,202,172,0.68);
+      font-size: 0.86em;
+      line-height: 1.74;
+      margin-bottom: 24px;
+    }
+    .threshold-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .threshold-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 24px;
+      border: 1px solid rgba(232,200,76,0.32);
+      background:
+        linear-gradient(135deg, rgba(24,21,17,0.98), rgba(10,9,8,1)),
+        radial-gradient(circle at top left, rgba(232,200,76,0.12), transparent 42%);
+      color: #f8f0e0;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s, color 0.18s;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.22);
+    }
+    .threshold-primary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(232,200,76,0.7);
+      box-shadow: 0 24px 52px rgba(0,0,0,0.3), 0 0 22px rgba(232,200,76,0.08);
+      color: #fff8eb;
+    }
+    .threshold-primary::after {
+      content: '→';
+      margin-left: 12px;
+      font-size: 1.05em;
+      letter-spacing: 0;
+    }
+    .threshold-support {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(216,202,172,0.46);
+    }
+    .threshold-support a {
+      color: rgba(232,200,76,0.82);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232,200,76,0.24);
+    }
+    .threshold-side {
+      position: relative;
+      padding: 22px 22px 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012)),
+        radial-gradient(circle at top right, rgba(232,200,76,0.05), transparent 24%);
+      border: 1px solid rgba(111,76,39,0.18);
+      overflow: hidden;
+    }
+    .threshold-side::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 28%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232,200,76,0.52), rgba(232,200,76,0.12), transparent);
+      pointer-events: none;
+    }
+    .threshold-side-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,200,76,0.76);
+      margin-bottom: 10px;
+    }
+    .threshold-side-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(1.44em, 2.6vw, 2.1em);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      color: #f3ecde;
+      max-width: 16ch;
+      margin-bottom: 12px;
+    }
+    .threshold-side-copy {
+      font-size: 0.88em;
+      line-height: 1.72;
+      color: rgba(216,202,172,0.72);
+      margin-bottom: 14px;
+      max-width: 34ch;
+    }
+    .threshold-route-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .threshold-route {
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.04);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        radial-gradient(circle at top right, rgba(232,200,76,0.05), transparent 36%);
+      padding: 12px 12px 12px 14px;
+      min-height: 112px;
+      transition: transform 0.16s, border-color 0.16s, background 0.16s;
+    }
+    .threshold-route:hover {
+      transform: translateY(-2px);
+      border-color: rgba(206,173,127,0.3);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.014)),
+        radial-gradient(circle at top right, rgba(232,200,76,0.06), transparent 40%);
+    }
+    .threshold-route-label {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(164,89,70,0.7);
+      margin-bottom: 8px;
+    }
+    .threshold-route-title {
+      display: block;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.92em;
+      color: #dbc796;
+      line-height: 1.25;
+      margin-bottom: 7px;
+    }
+    .threshold-route-copy {
+      display: block;
+      font-size: 0.74em;
+      line-height: 1.56;
+      color: rgba(216,202,172,0.66);
+    }
+    .threshold-note-band {
+      padding: 12px 14px 0;
+      border-top: 1px solid rgba(111,76,39,0.16);
+      font-size: 0.74em;
+      line-height: 1.68;
+      color: rgba(216,202,172,0.62);
+    }
+    .threshold-note-band strong {
+      color: #dcc58f;
+      font-weight: 600;
     }
 
     .section-intro {
@@ -1212,6 +1467,1168 @@
     @media (max-width: 600px) {
       .splash-sound-btn { width: 48px; height: 48px; bottom: max(22px, calc(22px + env(safe-area-inset-bottom))); right: 18px; left: auto; transform: none; }
       .splash-sound-label { bottom: max(38px, calc(38px + env(safe-area-inset-bottom))); left: 18px; max-width: 50vw; line-height: 1.5; }
+    }
+
+    /* ── SPHERE INTRO REPLACEMENT ─────────────────────────── */
+    .splash {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      overflow: hidden;
+      pointer-events: all;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(208, 174, 97, 0.08), transparent 22%),
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,0.03), transparent 16%),
+        linear-gradient(180deg, #0b0a09 0%, #050505 100%);
+      transition: opacity 0.8s ease;
+    }
+    .splash.out { opacity: 0; pointer-events: none; }
+    .splash::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%),
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+      mask: radial-gradient(circle at 50% 52%, black 14%, transparent 72%);
+      opacity: 0.4;
+    }
+    .splash-sphere-stage {
+      position: absolute;
+      inset: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(208, 174, 97, 0.06), transparent 24%),
+        linear-gradient(180deg, rgba(8,8,8,0.98), rgba(4,4,4,1));
+      box-shadow: 0 56px 160px rgba(0,0,0,0.58);
+    }
+    .splash-sphere-stage::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+    .splash-sphere-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(255,255,255,0.05), transparent 16%),
+        radial-gradient(circle at 50% 84%, rgba(208, 174, 97, 0.04), transparent 18%),
+        radial-gradient(circle at 62% 42%, rgba(232,200,76,0.06), transparent 22%);
+      opacity: 0.8;
+      transition: opacity 900ms ease;
+    }
+    .splash-sphere-stage.final-scene-active::after { opacity: 0.48; }
+    .splash-mural-video-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .splash-mural-video-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -8%;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(255,244,213,0.08), transparent 18%),
+        radial-gradient(circle at 74% 22%, rgba(231,164,88,0.08), transparent 22%),
+        radial-gradient(circle at 52% 68%, rgba(140,84,43,0.1), transparent 24%);
+      mix-blend-mode: screen;
+      opacity: 0.72;
+      animation: splashMuralBreath 18s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .splash-mural-video {
+      position: absolute;
+      inset: -4%;
+      width: 108%;
+      height: 108%;
+      object-fit: cover;
+      filter: saturate(0.72) contrast(1.02) brightness(0.42) blur(0.4px);
+      opacity: 0.84;
+      transform: scale(1.04);
+      transform-origin: center center;
+      animation: splashMuralDrift 28s ease-in-out infinite alternate;
+    }
+    .splash-mural-video-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5,5,5,0.88), rgba(5,5,5,0.48) 42%, rgba(5,5,5,0.6) 100%),
+        linear-gradient(180deg, rgba(5,5,5,0.74), rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.74) 100%),
+        radial-gradient(circle at 50% 36%, rgba(232,200,76,0.05), transparent 26%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .splash-ambient-atmosphere {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(232,200,76,0.06), transparent 18%),
+        radial-gradient(circle at 32% 74%, rgba(255,255,255,0.03), transparent 20%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 14px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      animation: splashAtmosphereDrift 16s ease-in-out infinite alternate;
+    }
+    .splash-topline {
+      position: absolute;
+      top: 24px;
+      left: 34px;
+      right: 34px;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(244, 236, 223, 0.3);
+      pointer-events: none;
+    }
+    .splash-sphere-wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 38%;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+    }
+    .splash-briefing-panel {
+      position: absolute;
+      left: 42px;
+      top: 118px;
+      bottom: 110px;
+      width: min(620px, calc(39vw + 96px));
+      z-index: 8;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at top left, rgba(8,8,8,0.52), transparent 56%),
+        linear-gradient(180deg, rgba(8,8,8,0.46), rgba(8,8,8,0.18) 24%, rgba(8,8,8,0.06) 100%);
+      opacity: 0;
+      animation: splashBriefingIn 1s cubic-bezier(.18,.82,.2,1) 0.95s forwards;
+      overflow: hidden;
+    }
+    .splash-briefing-panel::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      right: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.08) 16%, rgba(255,255,255,0.08) 84%, transparent);
+      pointer-events: none;
+    }
+    .splash-briefing-panel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 8px;
+      right: 24%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232,200,76,0.42), rgba(232,200,76,0.08), transparent);
+      opacity: 0.72;
+      pointer-events: none;
+    }
+    .splash-briefing-header {
+      position: relative;
+      padding: 20px 26px 12px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0)),
+        radial-gradient(circle at top right, rgba(232,200,76,0.05), transparent 42%);
+    }
+    .splash-briefing-kicker {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(232,200,76,0.8);
+    }
+    .splash-briefing-title {
+      margin-top: 8px;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(1.56rem, 1.72vw, 1.96rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: #f6efe4;
+      max-width: 24ch;
+      text-wrap: balance;
+    }
+    .splash-briefing-caption {
+      margin-top: 8px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(244,236,223,0.3);
+    }
+    .splash-briefing-ribbon {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 22px;
+      padding: 0 11px;
+      border: 1px solid rgba(232,200,76,0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(232,200,76,0.66);
+      width: fit-content;
+    }
+    .splash-briefing-ribbon::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(232,200,76,0.82);
+      box-shadow: 0 0 16px rgba(232,200,76,0.18);
+    }
+    .splash-briefing-scroll {
+      position: relative;
+      flex: 1;
+      padding: 14px 26px 18px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(232,200,76,0.58) transparent;
+    }
+    .splash-briefing-scroll::-webkit-scrollbar { width: 8px; }
+    .splash-briefing-scroll::-webkit-scrollbar-track { background: transparent; }
+    .splash-briefing-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(232,200,76,0.14), rgba(232,200,76,0.72), rgba(189,122,66,0.4));
+      border-radius: 999px;
+      border: 1px solid rgba(8,8,8,0.18);
+    }
+    .splash-briefing-lead {
+      margin: 0 0 10px;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.18rem;
+      line-height: 1.16;
+      letter-spacing: -0.03em;
+      color: rgba(246,239,228,0.96);
+      max-width: 28ch;
+    }
+    .splash-briefing-copy {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.48;
+      color: rgba(244,236,223,0.78);
+      max-width: 56ch;
+    }
+    .splash-briefing-copy + .splash-briefing-copy { margin-top: 7px; }
+    .splash-briefing-pull {
+      margin: 12px 0 0;
+      padding: 11px 13px 11px 15px;
+      border-left: 2px solid rgba(232,200,76,0.62);
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008) 68%, transparent);
+      color: rgba(246,239,228,0.84);
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 0.92rem;
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+      max-width: 52ch;
+    }
+    .splash-briefing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 10px;
+    }
+    .splash-briefing-card {
+      padding: 11px 11px 11px 13px;
+      border: 1px solid rgba(255,255,255,0.035);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008)),
+        radial-gradient(circle at top right, rgba(232,200,76,0.04), transparent 42%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.018);
+    }
+    .splash-briefing-card-label {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(232,200,76,0.72);
+      margin-bottom: 7px;
+    }
+    .splash-briefing-card-copy {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.38;
+      color: rgba(244,236,223,0.74);
+    }
+    .splash-briefing-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 6px;
+    }
+    .splash-briefing-list li {
+      position: relative;
+      padding-left: 18px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.42;
+      color: rgba(244,236,223,0.74);
+    }
+    .splash-briefing-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(232,200,76,0.84);
+      box-shadow: 0 0 12px rgba(232,200,76,0.2);
+    }
+    .splash-sphere-object {
+      position: relative;
+      width: min(76vmin, 860px);
+      height: min(76vmin, 860px);
+      display: grid;
+      place-items: center;
+      transform: translateY(-18px);
+    }
+    .splash-sphere-halo {
+      position: absolute;
+      width: min(102vmin, 1160px);
+      height: min(102vmin, 1160px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(208, 174, 97, 0.22), rgba(208, 174, 97, 0.08) 34%, transparent 72%);
+      filter: blur(42px);
+      opacity: 0;
+      animation: splashFadeIn 1.4s ease 0.3s forwards;
+    }
+    .splash-orbital,
+    .splash-orbital-two {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .splash-orbital {
+      width: 118%;
+      height: 118%;
+      animation: splashSpin 16s linear infinite;
+      opacity: 0.46;
+    }
+    .splash-orbital-two {
+      width: 138%;
+      height: 138%;
+      border-color: rgba(208,174,97,0.06);
+      transform: rotate(14deg);
+      animation: splashSpinReverse 22s linear infinite;
+      opacity: 0.36;
+    }
+    .splash-sphere {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px) scale(0.94);
+      animation: splashSphereIn 1.2s cubic-bezier(.18,.82,.2,1) 0.22s forwards;
+      box-shadow:
+        inset -80px -100px 140px rgba(0,0,0,0.52),
+        inset 78px 72px 110px rgba(255,255,255,0.06),
+        0 50px 130px rgba(0,0,0,0.46);
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.22), transparent 18%),
+        linear-gradient(180deg, #2b241d 0%, #171411 44%, #0e0d0c 100%);
+      transition: transform 1200ms cubic-bezier(.18,.82,.2,1), box-shadow 1200ms ease;
+    }
+    .splash-sphere-stage.final-scene-active .splash-sphere {
+      transform: scale(1.02);
+      box-shadow:
+        inset -80px -100px 140px rgba(0,0,0,0.52),
+        inset 78px 72px 110px rgba(255,255,255,0.06),
+        0 58px 160px rgba(0,0,0,0.56),
+        0 0 70px rgba(232,200,76,0.08);
+    }
+    .splash-sphere::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.06), transparent 24%, transparent 76%, rgba(0,0,0,0.18)),
+        radial-gradient(circle at 50% 112%, rgba(0,0,0,0.34), transparent 34%);
+      pointer-events: none;
+      z-index: 8;
+    }
+    .splash-sphere::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 0 14px rgba(255,255,255,0.05),
+        inset -90px -110px 140px rgba(0,0,0,0.36),
+        inset 60px 42px 90px rgba(255,255,255,0.08);
+      pointer-events: none;
+      z-index: 11;
+    }
+    .splash-sphere-display {
+      position: absolute;
+      inset: 5.2%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.3));
+      filter: contrast(1.1) saturate(1.04);
+    }
+    .splash-sphere-display-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(232, 200, 76, 0.14), transparent 38%),
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,0.08), transparent 18%);
+      mix-blend-mode: screen;
+      opacity: 0.42;
+      z-index: 7;
+      pointer-events: none;
+      transition: opacity 900ms ease, transform 1400ms cubic-bezier(.18,.82,.2,1);
+    }
+    .splash-sphere-display::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 20%, rgba(255,255,255,0.14), transparent 15%),
+        radial-gradient(circle at 70% 86%, rgba(0,0,0,0.2), transparent 24%),
+        linear-gradient(90deg, rgba(255,255,255,0.08), transparent 14%, transparent 82%, rgba(0,0,0,0.24)),
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+      mix-blend-mode: screen;
+      z-index: 9;
+      pointer-events: none;
+    }
+    .splash-sphere-display::after {
+      content: "";
+      position: absolute;
+      inset: -4%;
+      background:
+        radial-gradient(circle, transparent 58%, rgba(0,0,0,0.28) 83%, rgba(0,0,0,0.42) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 8px);
+      opacity: 0.32;
+      mix-blend-mode: soft-light;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .splash-projection {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.08);
+      filter: blur(18px) brightness(0.68);
+      transition:
+        opacity 1100ms cubic-bezier(.16,.84,.18,1),
+        transform 2200ms cubic-bezier(.16,.84,.18,1),
+        filter 1100ms cubic-bezier(.16,.84,.18,1);
+      will-change: opacity, transform, filter;
+    }
+    .splash-projection.active {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0) brightness(1);
+    }
+    .splash-projection::before,
+    .splash-projection::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .splash-projection::before {
+      opacity: 0.5;
+      transition: opacity 900ms ease;
+    }
+    .splash-projection.active::before { opacity: 0.92; }
+    .splash-projection-copy {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      z-index: 4;
+      width: min(72%, 420px);
+      transform: translateX(-50%);
+      text-align: center;
+      opacity: 0;
+      transition: opacity 900ms ease, transform 1400ms cubic-bezier(.16,.84,.18,1);
+      pointer-events: none;
+    }
+    .splash-projection.active .splash-projection-copy {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+    .splash-projection-kicker {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(244,236,223,0.48);
+    }
+    .splash-projection-title {
+      margin-top: 10px;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(1.5rem, 2.2vw, 2.05rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      color: rgba(248,241,231,0.95);
+      text-shadow: 0 10px 24px rgba(0,0,0,0.32);
+    }
+    .splash-projection-sub {
+      margin-top: 8px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      line-height: 1.45;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(244,236,223,0.46);
+    }
+    .splash-scene-book {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.28)),
+        linear-gradient(180deg, #241d17 0%, #130f0d 100%);
+    }
+    .splash-scene-book::before {
+      background:
+        radial-gradient(circle at 64% 62%, rgba(216,187,130,0.1), transparent 20%),
+        radial-gradient(circle at 26% 24%, rgba(255,255,255,0.12), transparent 16%);
+      mix-blend-mode: screen;
+    }
+    .splash-scene-eye { background: #080809; }
+    .splash-scene-eye::before {
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 18px),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      opacity: 0.32;
+    }
+    .splash-scene-eye::after {
+      background:
+        radial-gradient(circle at 24% 24%, rgba(255,255,255,0.1), transparent 14%),
+        radial-gradient(circle at 76% 74%, rgba(0,0,0,0.16), transparent 20%);
+      opacity: 0.8;
+    }
+    .splash-scene-crest {
+      background:
+        radial-gradient(circle at 50% 42%, rgba(216,187,130,0.26), transparent 20%),
+        radial-gradient(circle at 34% 18%, rgba(255,255,255,0.09), transparent 14%),
+        linear-gradient(180deg, #241a17 0%, #120d0b 100%);
+    }
+    .splash-scene-crest::before {
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.12), transparent 16%),
+        linear-gradient(90deg, rgba(255,255,255,0.08), transparent 18%, transparent 82%, rgba(0,0,0,0.16));
+      opacity: 0.42;
+    }
+    .splash-scene-crest::after {
+      background:
+        repeating-linear-gradient(0deg, rgba(216,187,130,0.05) 0 2px, transparent 2px 8px),
+        radial-gradient(circle at 50% 74%, rgba(0,0,0,0.12), transparent 24%);
+      opacity: 0.9;
+    }
+    .splash-scene-moon {
+      background:
+        radial-gradient(circle at 26% 18%, rgba(255,255,255,0.14), transparent 18%),
+        linear-gradient(180deg, #5b5148 0%, #2d2621 52%, #161310 100%);
+    }
+    .splash-scene-moon::before {
+      background:
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,0.12), transparent 18%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 18px);
+      opacity: 0.28;
+    }
+    .splash-scene-final {
+      background:
+        radial-gradient(circle at 50% 42%, rgba(232,200,76,0.2), transparent 28%),
+        radial-gradient(circle at 50% 54%, rgba(255,246,219,0.06), transparent 18%),
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,0.05), transparent 14%),
+        linear-gradient(180deg, #17120e 0%, #070606 100%);
+    }
+    .splash-scene-final::before {
+      background:
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%),
+        radial-gradient(circle at 50% 54%, rgba(232,200,76,0.14), transparent 18%);
+      opacity: 0.7;
+    }
+    .splash-scene-final::after {
+      background:
+        repeating-linear-gradient(0deg, rgba(232,200,76,0.035) 0 2px, transparent 2px 9px),
+        radial-gradient(circle at 50% 78%, rgba(0,0,0,0.22), transparent 22%);
+      opacity: 0.52;
+    }
+    .splash-projection-video {
+      position: absolute;
+      inset: -2%;
+      width: 104%;
+      height: 104%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 2;
+      filter: contrast(1.05) saturate(1.04);
+      transform: scale(1.03);
+      transition: transform 5200ms cubic-bezier(.12,.72,.14,1), filter 900ms ease;
+    }
+    .splash-projection.active .splash-projection-video { transform: scale(1); }
+    .splash-final-hit {
+      position: absolute;
+      inset: 12%;
+      z-index: 4;
+      border-radius: 50%;
+      text-indent: -9999px;
+      overflow: hidden;
+      pointer-events: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .splash-sphere-stage.final-scene-active .splash-final-hit { pointer-events: auto; }
+    .splash-final-aurora {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 54%, rgba(232,200,76,0.08), transparent 16%),
+        radial-gradient(circle at 52% 48%, rgba(255,243,211,0.05), transparent 10%);
+      opacity: 0;
+      transition: opacity 1200ms ease;
+    }
+    .splash-projection.active .splash-final-aurora { opacity: 1; }
+    .splash-final-book {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      width: 54%;
+      max-width: 320px;
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0;
+      filter:
+        saturate(0.92)
+        contrast(1.08)
+        brightness(0.9)
+        drop-shadow(0 30px 54px rgba(0,0,0,0.34))
+        drop-shadow(0 0 16px rgba(232,200,76,0.06));
+      transition:
+        opacity 1200ms ease,
+        transform 2000ms cubic-bezier(.16,.84,.18,1),
+        filter 1200ms ease;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .splash-projection.active .splash-final-book {
+      opacity: 0.94;
+      transform: translate(-50%, -55%) scale(1);
+    }
+    .splash-final-mark {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+      text-align: center;
+      padding: 19% 14% 14%;
+    }
+    .splash-final-mark-inner {
+      opacity: 0;
+      transform: translateY(22px) scale(0.98);
+      filter: blur(12px);
+      transition:
+        opacity 1200ms ease,
+        transform 1900ms cubic-bezier(.16,.84,.18,1),
+        filter 1200ms ease;
+      max-width: 420px;
+    }
+    .splash-projection.active .splash-final-mark-inner {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    .splash-final-kicker {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(242, 234, 220, 0.62);
+    }
+    .splash-final-title {
+      margin-top: 14px;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.45rem, 4.2vw, 3.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      color: #f6efe4;
+      text-shadow:
+        0 16px 38px rgba(0,0,0,0.34),
+        0 0 22px rgba(232,200,76,0.12);
+    }
+    .splash-final-rule {
+      width: min(290px, 58%);
+      height: 1px;
+      margin: 20px auto 0;
+      background: linear-gradient(90deg, rgba(232,200,76,0.08), rgba(232,200,76,0.94), rgba(232,200,76,0.08));
+    }
+    .splash-final-sub {
+      margin-top: 20px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(242, 234, 220, 0.58);
+    }
+    .splash-final-enter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 24px;
+      margin-top: 22px;
+      border: 1px solid rgba(232,200,76,0.64);
+      background:
+        linear-gradient(135deg, rgba(232,200,76,0.28), rgba(189,122,66,0.2)),
+        linear-gradient(180deg, rgba(23,19,15,0.96), rgba(10,9,8,0.98));
+      color: #f6efe4;
+      text-decoration: none;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      box-shadow:
+        0 0 0 1px rgba(232,200,76,0.12),
+        0 0 34px rgba(232,200,76,0.2),
+        0 20px 40px rgba(0,0,0,0.24);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .splash-final-enter:hover {
+      transform: translateY(-2px) scale(1.01);
+      border-color: rgba(236,211,157,0.94);
+      box-shadow:
+        0 0 0 1px rgba(232,200,76,0.16),
+        0 0 40px rgba(232,200,76,0.24),
+        0 22px 46px rgba(0,0,0,0.28);
+    }
+    .splash-title-shell {
+      position: absolute;
+      left: 58%;
+      top: 8px;
+      z-index: 7;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: splashFadeRise 1s cubic-bezier(.18,.82,.2,1) 0.72s forwards;
+      pointer-events: none;
+      width: min(1120px, calc(100% - 64px));
+    }
+    .splash-title-shell::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 56px;
+      width: min(460px, 42vw);
+      height: 46px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(232,200,76,0.16), transparent 72%);
+      filter: blur(24px);
+      opacity: 0.68;
+      pointer-events: none;
+      animation: splashTitleAura 9s ease-in-out infinite alternate;
+    }
+    .splash-sphere-stage.final-scene-active .splash-title-shell {
+      opacity: 0.72;
+      transition: opacity 800ms ease, transform 800ms ease;
+    }
+    .splash-title-overline {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      min-height: 24px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(244, 236, 223, 0.42);
+    }
+    .splash-title-overline::before,
+    .splash-title-overline::after {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232,200,76,0.02), rgba(232,200,76,0.68));
+      opacity: 0.68;
+    }
+    .splash-title-shell h1 {
+      margin: 0;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(5.8rem, 8.4vw, 9.8rem);
+      line-height: 0.8;
+      letter-spacing: -0.085em;
+      text-transform: uppercase;
+      text-align: center;
+      color: transparent;
+      background:
+        linear-gradient(90deg, #fff6e8 0%, #f7ead1 18%, #e7bc73 34%, #fff3df 50%, #e3b066 66%, #f7ead1 82%, #fff6e8 100%);
+      background-size: 180% 100%;
+      background-position: 0% 50%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow:
+        0 20px 44px rgba(0,0,0,0.48),
+        0 0 26px rgba(232,200,76,0.14);
+      position: relative;
+      animation: splashTitleShimmer 9s ease-in-out infinite alternate, splashTitleFloat 7s ease-in-out infinite alternate;
+    }
+    .splash-title-shell p {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(244, 236, 223, 0.46);
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      animation: splashSubtitleBreathe 8s ease-in-out infinite alternate;
+    }
+    .splash-enter-shell {
+      position: absolute;
+      left: 50%;
+      bottom: 34px;
+      z-index: 8;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: splashFadeRise 1s cubic-bezier(.18,.82,.2,1) 1.25s forwards;
+    }
+    .splash-enter-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+      min-width: 384px;
+      padding: 0 34px;
+      border: 1px solid rgba(232,200,76,0.42);
+      background:
+        linear-gradient(135deg, rgba(24,21,17,0.96), rgba(10,9,8,0.98)),
+        radial-gradient(circle at top left, rgba(232,200,76,0.16), transparent 42%);
+      color: rgba(248, 241, 231, 0.98);
+      text-decoration: none;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      transition: border-color 220ms ease, background 220ms ease, transform 220ms ease, box-shadow 220ms ease, color 220ms ease;
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 22px 52px rgba(0,0,0,0.34),
+        0 0 28px rgba(232,200,76,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+      animation: splashCtaBreathe 6s ease-in-out infinite alternate;
+      cursor: pointer;
+      border-radius: 0;
+    }
+    .splash-enter-link::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 18%, rgba(255,255,255,0.16) 48%, transparent 76%);
+      transform: translateX(-120%);
+      opacity: 0.8;
+      animation: splashCtaSweep 5.8s ease-in-out infinite;
+    }
+    .splash-enter-link::after {
+      content: "→";
+      position: relative;
+      margin-left: 16px;
+      font-size: 13px;
+      letter-spacing: 0;
+      opacity: 0.82;
+      transform: translateY(-1px);
+    }
+    .splash-enter-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(236,211,157,0.88);
+      background:
+        linear-gradient(135deg, rgba(29,25,20,0.98), rgba(11,10,9,1)),
+        radial-gradient(circle at top left, rgba(232,200,76,0.18), transparent 42%);
+      color: #fff8ec;
+      box-shadow:
+        0 24px 56px rgba(0,0,0,0.38),
+        0 0 34px rgba(232,200,76,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .splash-enter-link.ready {
+      border-color: rgba(232,200,76,0.82);
+      background:
+        linear-gradient(135deg, rgba(232,200,76,0.34), rgba(189,122,66,0.2)),
+        linear-gradient(180deg, rgba(23,19,15,0.98), rgba(8,8,8,1));
+      box-shadow:
+        0 0 0 1px rgba(232,200,76,0.16),
+        0 0 40px rgba(232,200,76,0.24),
+        0 24px 54px rgba(0,0,0,0.36);
+    }
+    .splash-enter-key {
+      min-width: 44px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      color: rgba(244,236,223,0.62);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .splash-footer-note {
+      position: absolute;
+      left: 50%;
+      bottom: 98px;
+      z-index: 7;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(244, 236, 223, 0.34);
+      opacity: 0;
+      animation: splashFadeRise 1s cubic-bezier(.18,.82,.2,1) 1s forwards;
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .splash-sphere-stage.final-scene-active .splash-footer-note {
+      opacity: 0.1;
+      transform: translateX(-50%) translateY(4px);
+    }
+    .splash-scene-progress {
+      position: relative;
+      width: min(220px, 28vw);
+      height: 1px;
+      background: rgba(244, 236, 223, 0.12);
+      overflow: hidden;
+    }
+    .splash-scene-progress-bar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(232,200,76,0.94), rgba(232,200,76,0.14));
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+    .splash-scene-progress-bar.animating {
+      animation: splashProgressFill var(--scene-duration, 7000ms) linear forwards;
+    }
+    .splash-replay {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 920;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8,8,8,0.78);
+      color: rgba(244,236,223,0.68);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+    }
+    @keyframes splashFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes splashMuralDrift {
+      from { transform: scale(1.04) translate3d(-1.2%, -0.6%, 0); }
+      to { transform: scale(1.1) translate3d(1.8%, 1%, 0); }
+    }
+    @keyframes splashMuralBreath {
+      from { opacity: 0.46; transform: scale(1) translate3d(0,0,0); }
+      to { opacity: 0.78; transform: scale(1.04) translate3d(1%, -1%, 0); }
+    }
+    @keyframes splashAtmosphereDrift {
+      from { opacity: 0.34; transform: translate3d(0,0,0); }
+      to { opacity: 0.56; transform: translate3d(0,-10px,0); }
+    }
+    @keyframes splashTitleAura {
+      from { opacity: 0.42; transform: translateX(-50%) scaleX(0.96); }
+      to { opacity: 0.78; transform: translateX(-50%) scaleX(1.04); }
+    }
+    @keyframes splashTitleShimmer {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
+    }
+    @keyframes splashTitleFloat {
+      from { transform: translateY(0); }
+      to { transform: translateY(-4px); }
+    }
+    @keyframes splashSubtitleBreathe {
+      from { opacity: 0.4; letter-spacing: 0.22em; }
+      to { opacity: 0.58; letter-spacing: 0.28em; }
+    }
+    @keyframes splashCtaSweep {
+      0%, 18% { transform: translateX(-120%); opacity: 0; }
+      28% { opacity: 0.8; }
+      46% { transform: translateX(120%); opacity: 0.9; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+    @keyframes splashCtaBreathe {
+      from { box-shadow: 0 22px 52px rgba(0,0,0,0.34), 0 0 18px rgba(232,200,76,0.06), inset 0 1px 0 rgba(255,255,255,0.05); }
+      to { box-shadow: 0 24px 58px rgba(0,0,0,0.38), 0 0 30px rgba(232,200,76,0.12), inset 0 1px 0 rgba(255,255,255,0.08); }
+    }
+    @keyframes splashFadeRise {
+      from { opacity: 0; transform: translateX(-50%) translateY(14px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes splashSphereIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.94); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes splashSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes splashSpinReverse { from { transform: rotate(14deg); } to { transform: rotate(-346deg); } }
+    @keyframes splashProgressFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes splashBriefingIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 980px) {
+      .splash-sphere-wrap { left: 41%; }
+      .splash-briefing-panel {
+        left: 24px;
+        width: min(500px, calc(41vw + 24px));
+      }
+      .splash-sphere-object {
+        width: min(86vw, 760px);
+        height: min(86vw, 760px);
+      }
+      .splash-title-shell { left: 60%; }
+      .splash-title-shell h1 { font-size: clamp(4rem, 9.4vw, 6rem); }
+      .splash-briefing-grid { grid-template-columns: 1fr; }
+      .splash-footer-note { bottom: 92px; }
+    }
+    @media (max-width: 760px) {
+      .splash { inset: 0; }
+      .splash-sphere-stage { inset: 0; border: none; }
+      .splash-topline {
+        top: 18px;
+        left: 18px;
+        right: 18px;
+        justify-content: center;
+        gap: 14px;
+        text-align: center;
+        font-size: 8px;
+        letter-spacing: 0.18em;
+      }
+      .splash-topline span:nth-child(2) { display: none; }
+      .splash-briefing-panel {
+        top: 112px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+        bottom: auto;
+        height: 286px;
+      }
+      .splash-briefing-header { padding: 20px 18px 16px; }
+      .splash-briefing-title { font-size: 1.48rem; }
+      .splash-briefing-scroll { padding: 16px 18px 18px; }
+      .splash-briefing-lead { font-size: 1.04rem; }
+      .splash-briefing-caption { font-size: 9px; letter-spacing: 0.18em; }
+      .splash-briefing-copy { font-size: 12px; line-height: 1.52; }
+      .splash-briefing-list li { font-size: 11px; }
+      .splash-briefing-grid { margin-top: 14px; grid-template-columns: 1fr; }
+      .splash-briefing-card { padding: 14px 14px 14px 16px; }
+      .splash-briefing-card-copy { font-size: 11px; }
+      .splash-sphere-object {
+        width: min(94vw, 640px);
+        height: min(94vw, 640px);
+        transform: translateY(164px);
+      }
+      .splash-title-shell {
+        top: 8px;
+        left: 50%;
+        width: 100%;
+        padding: 0 18px;
+      }
+      .splash-title-overline {
+        font-size: 8px;
+        letter-spacing: 0.22em;
+        gap: 8px;
+        min-height: 20px;
+        padding: 0;
+      }
+      .splash-title-overline::before,
+      .splash-title-overline::after { width: 16px; }
+      .splash-title-shell h1 { font-size: clamp(3.9rem, 11.8vw, 5.2rem); }
+      .splash-title-shell p { font-size: 8px; letter-spacing: 0.18em; }
+      .splash-footer-note { bottom: 84px; gap: 10px; }
+      .splash-scene-progress { width: min(180px, 58vw); }
+      .splash-enter-shell {
+        bottom: 24px;
+        width: calc(100% - 36px);
+        justify-content: center;
+      }
+      .splash-enter-link {
+        width: 100%;
+        min-width: 0;
+        min-height: 56px;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+      }
+      .splash-enter-link::after { margin-left: 12px; }
+      .splash-final-title { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+      .splash-final-sub,
+      .splash-final-kicker { font-size: 9px; }
+      .splash-final-enter {
+        min-height: 48px;
+        padding: 0 18px;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+      }
+      .splash-final-book { width: 56%; }
+      .splash-projection-copy { width: min(78%, 340px); bottom: 11%; }
+      .splash-projection-title { font-size: 1.3rem; }
+      .splash-projection-sub,
+      .splash-projection-kicker { font-size: 8px; }
+      .splash-replay {
+        right: 12px;
+        bottom: 12px;
+        min-height: 38px;
+        padding: 0 12px;
+        font-size: 9px;
+      }
     }
 
     /* ── MATILDA EASTER EGG OVERLAY ────────────────────────── */
@@ -2083,6 +3500,56 @@
       .access-header { flex-direction: column; gap: 3px; text-align: center; font-size: 0.56em; }
       .access-header span:nth-child(2),
       .access-header span:nth-child(3) { display: none; }
+      .threshold-section { padding: 34px 16px 22px; }
+      .threshold-shell { padding: 20px 16px 18px; }
+      .threshold-topline {
+        display: block;
+        font-size: 0.52em;
+        letter-spacing: 0.16em;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+      .threshold-topline span + span { display: block; margin-top: 4px; }
+      .threshold-grid { grid-template-columns: 1fr; gap: 18px; }
+      .threshold-main { padding: 2px 2px 0; }
+      .threshold-title {
+        max-width: none;
+        font-size: clamp(2.2em, 11.6vw, 3.3em);
+        line-height: 0.92;
+      }
+      .threshold-lead { font-size: 0.96em; line-height: 1.72; }
+      .threshold-pull {
+        padding-left: 12px;
+        font-size: 0.82em;
+        line-height: 1.68;
+        margin-bottom: 18px;
+      }
+      .threshold-actions { gap: 10px; margin-bottom: 0; }
+      .threshold-primary {
+        width: 100%;
+        min-height: 54px;
+        justify-content: center;
+      }
+      .threshold-support {
+        width: 100%;
+        line-height: 1.7;
+      }
+      .threshold-side { padding: 18px 16px 16px; }
+      .threshold-side-title {
+        max-width: none;
+        font-size: 1.34em;
+      }
+      .threshold-side-copy {
+        max-width: none;
+        font-size: 0.82em;
+        line-height: 1.66;
+      }
+      .threshold-route-grid { grid-template-columns: 1fr; gap: 10px; }
+      .threshold-route { min-height: 0; }
+      .threshold-note-band {
+        padding: 12px 0 0;
+        font-size: 0.72em;
+      }
       .hero { padding: 46px 20px 24px; }
       .hero-grid { grid-template-columns: 1fr; gap: 18px; }
       .hero-ledger { padding: 22px 18px 18px; }
@@ -2178,79 +3645,47 @@
     <span class="access-status access-clock">● Access granted</span>
   </header>
 
-  <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-ledger">
-        <div class="hero-ledger-top">
-          <div class="hero-ledger-meta">
-            <div class="hero-ledger-ref">
-              <div class="hero-kicker">MSS. Hale-Marsh 1-10 · Reading Room Copy</div>
-              <div class="hero-ledger-sub">Accession noted March 2026 · Restricted copy released</div>
-            </div>
-            <div class="hero-stamp" aria-hidden="true">
-              <div class="hero-stamp-inner">H·M</div>
-            </div>
-          </div>
-        </div>
-        <div class="hero-ledger-body">
-          <div class="hero-crest-frame">
-            <div class="site-crest-hero">
-              <img src="crests/main_family_crest.png" class="crest-hero-img" alt="Hale Family Coat of Arms — Per Saecula Manimus">
-            </div>
-          </div>
-          <div class="hero-ledger-copy">
-            <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
-            <h1 class="main-title">THE HALE DYNASTY</h1>
-            <p class="subtitle">An Archive of Inheritance in Ten Volumes</p>
-            <div class="hero-divider"></div>
-            <div class="dates-line">1066 &mdash; 2026</div>
-            <p class="tagline">958 Years &nbsp;&middot;&nbsp; Ten Volumes &nbsp;&middot;&nbsp; One Family</p>
-          </div>
-        </div>
+  <section class="threshold-section" aria-label="Enter the archive">
+    <div class="threshold-shell">
+      <div class="threshold-topline">
+        <span>MSS. Hale-Marsh 1-10 · Reading Room Copy</span>
+        <span>Accession noted March 2026 · Restricted copy released</span>
       </div>
-      <div class="hero-thesis">
-        <p class="hero-note">For nine and a half centuries they kept the land, buried their dead, made their bargains, withheld their tenderness, and left a record longer than memory.</p>
-        <h2 class="hero-thesis-title">An English family. A conquered estate. A record that refuses to stay closed.</h2>
-        <ul class="hero-thesis-list">
-          <li>Begin with a Norman chronicle, then watch inheritance harden into duty, secrecy, grief, and return.</li>
-          <li>Each volume changes century, voice, and pressure, but the line holds long enough to be read.</li>
-          <li>This archive is not a glossary to inspect from outside. It is an inheritance to enter.</li>
-        </ul>
-        <div class="hero-context">
-          <p class="matilda-quote">&ldquo;Keep asking. Keep the land. See to the pig.&rdquo;</p>
-          <p class="matilda-attr">— Matilda of Halecroft, c. 1390</p>
-          <div class="hero-context-note">Whole generations vanished. The instruction remained.</div>
+      <div class="threshold-grid">
+        <div class="threshold-main">
+          <div class="threshold-kicker">Archive Threshold</div>
+          <h2 class="threshold-title">An English family. A conquered estate. A record that refuses to stay closed.</h2>
+          <p class="threshold-lead">For nine and a half centuries they kept the land, buried their dead, made their bargains, withheld their tenderness, and left a record longer than memory.</p>
+          <div class="threshold-pull">
+            Begin with a Norman chronicle, then follow the line forward through plague, ambition, law, war, scholarship, and the reader who discovers the archive has been waiting for her.
+          </div>
+          <div class="threshold-actions">
+            <a href="era-I.html" class="threshold-primary" data-track="start_story_click" data-track-label="threshold_begin_volume_i">Begin With Volume I</a>
+            <div class="threshold-support">Or support the project at <a href="https://buymeacoffee.com/haledynasty" target="_blank" rel="noopener noreferrer" data-track="support_archive_click" data-track-label="threshold_buy_me_a_coffee">Buy Me a Coffee</a></div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="start-here-section" aria-label="Start here">
-    <div class="start-here-box">
-      <div class="start-here-kicker">First Visit</div>
-      <h2 class="start-here-title">Start Here: the opening path through the archive</h2>
-      <p class="start-here-copy">Start with the founding chronicle, continue into the next century, then use the family tree once the line of descent is already familiar.</p>
-      <a href="era-I.html" class="start-here-main" data-track="start_story_click" data-track-label="start_here_main">Start the story (3-5 min)</a>
-      <ul class="start-here-steps">
-        <li>
-          <a href="era-I.html" data-track="guided_path_click" data-track-label="step_1_era_i">
-            <span class="start-here-step-label">Step 1</span>
-            <span class="start-here-step-title">Vol. I - The Chronicle</span>
-          </a>
-        </li>
-        <li>
-          <a href="era-II.html" data-track="guided_path_click" data-track-label="step_2_era_ii">
-            <span class="start-here-step-label">Step 2</span>
-            <span class="start-here-step-title">Vol. II - The House of Hale</span>
-          </a>
-        </li>
-        <li>
-          <a href="family-tree.html" data-track="guided_path_click" data-track-label="step_3_tree">
-            <span class="start-here-step-label">Step 3</span>
-            <span class="start-here-step-title">Family Tree - Follow the line</span>
-          </a>
-        </li>
-      </ul>
+        <aside class="threshold-side" aria-label="How to move through the archive">
+          <div class="threshold-side-kicker">Before you continue</div>
+          <h3 class="threshold-side-title">Read it like an inheritance opening, not a database.</h3>
+          <p class="threshold-side-copy">The cleanest path is Volume I first, then Volume II. After that, use the family tree or the timeline whenever you want the archive to widen back out around the line of descent.</p>
+          <div class="threshold-route-grid">
+            <a href="family-tree.html" class="threshold-route" data-track="guided_path_click" data-track-label="threshold_family_tree">
+              <span class="threshold-route-label">Track the line</span>
+              <span class="threshold-route-title">Family Tree</span>
+              <span class="threshold-route-copy">See who belongs to whom and where the branches split before returning to the volumes.</span>
+            </a>
+            <a href="timeline.html" class="threshold-route" data-track="guided_path_click" data-track-label="threshold_timeline">
+              <span class="threshold-route-label">See the whole record</span>
+              <span class="threshold-route-title">Chronicle Timeline</span>
+              <span class="threshold-route-copy">Step back and scan the full archive from 1066 to 2026 in a single chronological path.</span>
+            </a>
+          </div>
+          <div class="threshold-note-band">
+            <strong>Matilda’s instruction remains the best guide:</strong> keep asking, keep the land, see to the pig. If a page feels dense, cross between the volumes, the tree, the timeline, and the documents until the record starts speaking in the right order.
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -2959,45 +4394,163 @@
     </p>
   </footer>
 
-  <!-- Confession audio — plays softly during splash -->
-  <audio id="confessionAudio" preload="auto">
-    <source src="audio/confession.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Cinematic intro splash -->
+  <!-- Homepage intro splash -->
   <div class="splash" id="splash">
-    <div class="splash-backdrop" aria-hidden="true">
-      <div class="splash-cathedral"></div>
-      <div class="splash-pillars"></div>
-      <div class="splash-rings"></div>
-      <div class="splash-axis"></div>
+    <div class="splash-sphere-stage">
+      <div class="splash-mural-video-wrap" aria-hidden="true">
+        <video class="splash-mural-video" src="portraits/Family_dynasty_mural_video.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </div>
+
+      <div class="splash-ambient-atmosphere" aria-hidden="true"></div>
+
+      <div class="splash-topline">
+        <span>MSS. Hale-Marsh Collection</span>
+        <span>Reading Room Release</span>
+      </div>
+
+      <div class="splash-sphere-wrap">
+        <div class="splash-sphere-object">
+          <div class="splash-sphere-halo"></div>
+          <div class="splash-orbital"></div>
+          <div class="splash-orbital-two"></div>
+
+          <div class="splash-sphere">
+            <div class="splash-sphere-display">
+              <div class="splash-sphere-display-glow"></div>
+
+              <div class="splash-projection splash-scene-book active">
+                <video
+                  class="splash-projection-video"
+                  src="portraits/Ranulf_crossing_English.mp4"
+                  autoplay
+                  muted
+                  playsinline
+                  preload="auto"
+                ></video>
+                <div class="splash-projection-copy">
+                  <div class="splash-projection-kicker">Volume I</div>
+                  <div class="splash-projection-title">The line crosses into England.</div>
+                  <div class="splash-projection-sub">Conquest · Claim · Landing</div>
+                </div>
+              </div>
+
+              <div class="splash-projection splash-scene-eye">
+                <video
+                  class="splash-projection-video"
+                  src="portraits/Ranulf_de_la_Hale_confession.mp4"
+                  autoplay
+                  muted
+                  playsinline
+                  preload="auto"
+                ></video>
+                <div class="splash-projection-copy">
+                  <div class="splash-projection-kicker">Witness</div>
+                  <div class="splash-projection-title">The first record is spoken under watch.</div>
+                  <div class="splash-projection-sub">Confession · Oath · Chronicle</div>
+                </div>
+              </div>
+
+              <div class="splash-projection splash-scene-crest">
+                <video
+                  class="splash-projection-video"
+                  src="portraits/Giant_red_wax.mp4"
+                  autoplay
+                  muted
+                  playsinline
+                  preload="auto"
+                ></video>
+                <div class="splash-projection-copy">
+                  <div class="splash-projection-kicker">Transmission</div>
+                  <div class="splash-projection-title">What the family keeps, the record seals.</div>
+                  <div class="splash-projection-sub">Seal · Memory · Inheritance</div>
+                </div>
+              </div>
+
+              <div class="splash-projection splash-scene-moon">
+                <video
+                  class="splash-projection-video"
+                  src="portraits/Halecroft_manor.mp4"
+                  autoplay
+                  muted
+                  playsinline
+                  preload="auto"
+                ></video>
+                <div class="splash-projection-copy">
+                  <div class="splash-projection-kicker">Halecroft</div>
+                  <div class="splash-projection-title">The house remains longer than those who claim it.</div>
+                  <div class="splash-projection-sub">Estate · Weather · Return</div>
+                </div>
+              </div>
+
+              <div class="splash-projection splash-scene-final">
+                <button class="splash-final-hit" type="button" aria-label="Open Archive">Open Archive</button>
+                <div class="splash-final-aurora"></div>
+                <img class="splash-final-book" src="portraits/hale-book-mockup.png" alt="">
+                <div class="splash-final-mark">
+                  <div class="splash-final-mark-inner">
+                    <div class="splash-final-kicker">The record is open</div>
+                    <div class="splash-final-title">Enter The Archive</div>
+                    <div class="splash-final-rule"></div>
+                    <div class="splash-final-sub">The Hale Dynasty · 1066—2026</div>
+                    <button class="splash-final-enter" type="button">Open Archive</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="splash-briefing-panel" aria-label="What to expect">
+        <div class="splash-briefing-header">
+          <div class="splash-briefing-kicker">Before you enter</div>
+          <div class="splash-briefing-title">What this archive is, and how to begin without getting lost.</div>
+          <div class="splash-briefing-caption">Reading room guidance for first-time visitors</div>
+          <div class="splash-briefing-ribbon">Recommended first route</div>
+        </div>
+        <div class="splash-briefing-scroll">
+          <p class="splash-briefing-lead">One English family. Ten volumes. Nearly a thousand years of land, witness, concealment, return, and record.</p>
+          <p class="splash-briefing-copy">The Hale Dynasty is a fictional archive rather than a conventional story site. It unfolds through chronicles, recovered papers, portraits, genealogies, maps, and the people who keep reading after they should have stopped.</p>
+          <p class="splash-briefing-copy">If you want the clearest entrance, open the archive and begin with Volume I. If you prefer to orient yourself first, step into the family tree or the chronicle timeline once you are inside.</p>
+          <div class="splash-briefing-pull">Read it like an inheritance opening. Clarity arrives by degrees.</div>
+          <div class="splash-briefing-grid">
+            <div class="splash-briefing-card">
+              <div class="splash-briefing-card-label">Start here</div>
+              <div class="splash-briefing-card-copy">Begin with Volume I. It gives you the line, the estate, and the first pressure placed upon the name.</div>
+            </div>
+            <div class="splash-briefing-card">
+              <div class="splash-briefing-card-label">If you feel lost</div>
+              <div class="splash-briefing-card-copy">Step sideways into the family tree or the timeline, then return. This archive is designed for crossing between forms of evidence.</div>
+            </div>
+          </div>
+          <ul class="splash-briefing-list">
+            <li>Each volume changes century, pressure, and voice, but the line of descent keeps pulling forward.</li>
+            <li>If a page feels dense, move between the books, the tree, the timeline, and the documents.</li>
+            <li>You do not need to master the archive. You only need a way in.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="splash-title-shell">
+        <div class="splash-title-overline">The Hale-Marsh Collection</div>
+        <h1>The Hale Dynasty</h1>
+        <p>A complete chronicle in ten volumes · 1066—2026</p>
+      </div>
+
+      <div class="splash-footer-note">
+        <span id="splashSceneReadout">Crossing into England</span>
+        <div class="splash-scene-progress">
+          <div class="splash-scene-progress-bar" id="splashSceneProgress"></div>
+        </div>
+      </div>
+
+      <div class="splash-enter-shell">
+        <button class="splash-enter-link" type="button" id="enterArchive">Open The Archive</button>
+        <span class="splash-enter-key">Enter</span>
+      </div>
+
+      <button class="splash-replay" type="button">Replay Intro</button>
     </div>
-    <div class="splash-stage">
-      <svg class="splash-crest" viewBox="0 0 72 80" aria-hidden="true">
-        <path d="M36 4 L66 16 L66 46 Q66 66 36 76 Q6 66 6 46 L6 16 Z" fill="rgba(7,6,4,0.72)" stroke="rgba(216,192,136,0.88)" stroke-width="2.2"/>
-        <path d="M36 10 L60 20 L60 46 Q60 62 36 70 Q12 62 12 46 L12 20 Z" fill="none" stroke="rgba(216,192,136,0.28)" stroke-width="0.9"/>
-        <line x1="15" y1="24" x2="57" y2="56" stroke="rgba(111,47,36,0.35)" stroke-width="1.1"/>
-        <circle cx="24" cy="28" r="3" fill="rgba(216,192,136,0.45)"/>
-        <circle cx="48" cy="28" r="3" fill="rgba(216,192,136,0.45)"/>
-        <circle cx="36" cy="58" r="3" fill="rgba(216,192,136,0.45)"/>
-        <text x="36" y="47" text-anchor="middle" font-family="'Cinzel', Georgia, serif" font-size="26" fill="rgba(225,193,92,0.98)" font-weight="700">H</text>
-      </svg>
-      <div class="splash-overline">Bodleian Library &nbsp;·&nbsp; Hale-Marsh Collection &nbsp;·&nbsp; Opening of the Record</div>
-      <div class="splash-era">1066 &nbsp;—&nbsp; 2026</div>
-      <div class="splash-title">THE HALE<br>DYNASTY</div>
-      <div class="splash-deck">A house of inheritance, oath, grief, and record.</div>
-      <div class="splash-line"></div>
-      <div class="splash-thesis">Step beneath the vault of the archive</div>
-      <div class="splash-begin">Open the archive</div>
-    </div>
-    <button class="splash-sound-btn" id="splashSoundBtn" title="Play ambient sound" aria-label="Toggle ambient sound">
-      <svg id="soundIcon" viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-        <line x1="23" y1="9" x2="17" y2="15" class="sound-x-1"/>
-        <line x1="17" y1="9" x2="23" y2="15" class="sound-x-2"/>
-      </svg>
-    </button>
-    <div class="splash-sound-label">A confession. Press when alone.</div>
   </div>
 
   <!-- Hidden source note — for those who read the source -->
@@ -3035,136 +4588,159 @@
   </div>
 
   <script>
-  // ── CINEMATIC INTRO SPLASH ────────────────────────────────────────────────
   (function() {
     var splash = document.getElementById('splash');
     if (!splash) return;
-    // Kick off animations on next frame
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() { splash.classList.add('go'); });
+
+    var stage = splash.querySelector('.splash-sphere-stage');
+    var enterArchive = document.getElementById('enterArchive');
+    var projections = Array.prototype.slice.call(splash.querySelectorAll('.splash-projection'));
+    var videos = Array.prototype.slice.call(splash.querySelectorAll('.splash-projection-video'));
+    var replay = splash.querySelector('.splash-replay');
+    var sceneReadout = document.getElementById('splashSceneReadout');
+    var sceneProgress = document.getElementById('splashSceneProgress');
+    var sphereGlow = splash.querySelector('.splash-sphere-display-glow');
+    var primaryAction = splash.querySelector('.splash-enter-link');
+    var finalHit = splash.querySelector('.splash-final-hit');
+    var finalEnter = splash.querySelector('.splash-final-enter');
+
+    var sceneMeta = [
+      { title: 'Crossing into England', duration: 7800, glow: 0.46 },
+      { title: 'Confession under witness', duration: 7200, glow: 0.34 },
+      { title: 'The sealed record', duration: 7000, glow: 0.48 },
+      { title: 'Halecroft remembered', duration: 7600, glow: 0.4 },
+      { title: 'The archive opens', duration: 7600, glow: 0.74, final: true }
+    ];
+
+    var currentScene = 0;
+    var sceneAdvanceTimer = null;
+
+    function dismissIntro() {
+      if (!splash || splash.classList.contains('out')) return;
+      clearSceneAdvance();
+      splash.classList.add('out');
+      window.setTimeout(function() {
+        splash.style.display = 'none';
+      }, 700);
+    }
+
+    function clearSceneAdvance() {
+      if (sceneAdvanceTimer) {
+        window.clearTimeout(sceneAdvanceTimer);
+        sceneAdvanceTimer = null;
+      }
+    }
+
+    function queueNextScene(delay) {
+      clearSceneAdvance();
+      sceneAdvanceTimer = window.setTimeout(function() {
+        renderScene((currentScene + 1) % projections.length);
+      }, delay);
+    }
+
+    function restartProgress(duration) {
+      sceneProgress.style.setProperty('--scene-duration', duration + 'ms');
+      sceneProgress.classList.remove('animating');
+      void sceneProgress.offsetWidth;
+      sceneProgress.classList.add('animating');
+    }
+
+    function renderScene(index) {
+      currentScene = index;
+      clearSceneAdvance();
+      var meta = sceneMeta[index] || sceneMeta[0];
+
+      projections.forEach(function(projection, projectionIndex) {
+        projection.classList.toggle('active', projectionIndex === index);
+      });
+
+      primaryAction.classList.toggle('ready', Boolean(meta.final));
+      stage.classList.toggle('final-scene-active', Boolean(meta.final));
+      if (finalHit) {
+        finalHit.style.pointerEvents = meta.final ? 'auto' : 'none';
+        finalHit.setAttribute('aria-hidden', meta.final ? 'false' : 'true');
+      }
+
+      sceneReadout.style.opacity = '0';
+      sceneReadout.style.transform = 'translateY(6px)';
+      window.setTimeout(function() {
+        sceneReadout.textContent = meta.title;
+        sceneReadout.style.opacity = '1';
+        sceneReadout.style.transform = 'translateY(0)';
+      }, 180);
+
+      sphereGlow.style.opacity = String(meta.glow);
+      restartProgress(meta.duration);
+
+      videos.forEach(function(video) {
+        video.pause();
+        video.currentTime = 0;
+      });
+
+      var activeVideo = projections[index].querySelector('.splash-projection-video');
+      if (activeVideo) {
+        activeVideo.play().catch(function() {});
+      }
+
+      queueNextScene(meta.duration);
+    }
+
+    videos.forEach(function(video) {
+      var projectionIndex = projections.findIndex(function(projection) {
+        return projection.contains(video);
+      });
+      video.addEventListener('ended', function() {
+        if (projectionIndex !== currentScene) return;
+        clearSceneAdvance();
+        renderScene((currentScene + 1) % projections.length);
+      });
     });
-    // Dismiss after 3.8s — fade out, then remove
-    setTimeout(function() {
-      splash.classList.add('out');
-      setTimeout(function() { splash.style.display = 'none'; }, 1300);
-    }, 8500);
-    // ── CONFESSION AUDIO ──────────────────────────────────────────────────
-    var confAudio = document.getElementById('confessionAudio');
-    var audioPlaying = false;
 
-    function fadeAudioIn(){
-      confAudio.volume = 0;
-      confAudio.play().then(function(){
-        audioPlaying = true;
-        var vol = 0;
-        var fadeIn = setInterval(function(){
-          vol = Math.min(vol + 0.015, 0.72);
-          confAudio.volume = vol;
-          if(vol >= 0.72) clearInterval(fadeIn);
-        }, 60);
-      }).catch(function(){});
-    }
+    [enterArchive, finalHit, finalEnter].forEach(function(control) {
+      if (!control) return;
+      control.addEventListener('click', function(event) {
+        event.preventDefault();
+        dismissIntro();
+      });
+    });
 
-    function fadeAudioOut(cb){
-      if(!confAudio || confAudio.paused){ if(cb) cb(); return; }
-      var fadeOut = setInterval(function(){
-        confAudio.volume = Math.max(0, confAudio.volume - 0.06);
-        if(confAudio.volume <= 0){
-          clearInterval(fadeOut);
-          confAudio.pause();
-          audioPlaying = false;
-          if(cb) cb();
-        }
-      }, 80);
-    }
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' && splash.style.display !== 'none') {
+        dismissIntro();
+      }
+    });
 
-    // Sound toggle button on splash
-    var soundBtn = document.getElementById('splashSoundBtn');
-    var soundIcon = document.getElementById('soundIcon');
-    if(soundBtn && confAudio){
-      soundBtn.addEventListener('click', function(e){
-        e.stopPropagation(); // don't trigger splash skip
-        if(audioPlaying){
-          fadeAudioOut();
-          soundBtn.classList.remove('playing');
-          // Switch icon back to muted (X lines)
-          soundIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
-        } else {
-          fadeAudioIn();
-          soundBtn.classList.add('playing');
-          // Switch icon to sound waves
-          soundIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';
-        }
+    if (replay) {
+      replay.addEventListener('click', function() {
+        clearSceneAdvance();
+        videos.forEach(function(video) {
+          video.pause();
+          video.currentTime = 0;
+        });
+        var sphere = splash.querySelector('.splash-sphere');
+        var halo = splash.querySelector('.splash-sphere-halo');
+        var title = splash.querySelector('.splash-title-shell');
+        var footer = splash.querySelector('.splash-footer-note');
+        var enter = splash.querySelector('.splash-enter-shell');
+
+        [sphere, halo, title, footer, enter].forEach(function(node) {
+          if (!node) return;
+          node.style.animation = 'none';
+        });
+        void document.body.offsetWidth;
+        [sphere, halo, title, footer, enter].forEach(function(node) {
+          if (!node) return;
+          node.style.animation = '';
+        });
+
+        primaryAction.classList.remove('ready');
+        sceneReadout.style.opacity = '1';
+        sceneReadout.style.transform = 'translateY(0)';
+        renderScene(0);
       });
     }
 
-    // Also dismiss on any click/keypress (skip intro)
-    function skip() {
-      fadeAudioOut();
-      splash.classList.add('out');
-      setTimeout(function() { splash.style.display = 'none'; }, 600);
-      document.removeEventListener('keydown', skip);
-      splash.removeEventListener('click', skip);
-    }
-
-    setTimeout(function() {
-      document.addEventListener('keydown', skip);
-      splash.addEventListener('click', skip);
-    }, 800);
-
-    // ── PERSISTENT CONFESSION BUTTON (survives splash dismissal) ──────
-    // Appears bottom-left after splash fades, mirroring the candle FX btn
-    setTimeout(function() {
-      var persistBtn = document.createElement('button');
-      persistBtn.id = 'hd-confession-btn';
-      persistBtn.title = 'A confession — play or pause';
-      persistBtn.setAttribute('aria-label', 'Toggle confession audio');
-      persistBtn.innerHTML = '&#x266B;';
-      var isMobile = window.innerWidth <= 600;
-      persistBtn.style.cssText = [
-        'position:fixed;',
-        isMobile ? 'bottom:max(80px,calc(80px + env(safe-area-inset-bottom)));left:50%;transform:translateX(-50%);' : 'bottom:22px;left:22px;',
-        isMobile ? 'width:48px;height:48px;' : 'width:34px;height:34px;',
-        'background:rgba(10,7,4,0.85);',
-        'border:1px solid rgba(200,168,60,0.3);',
-        'border-radius:50%;',
-        'color:rgba(200,168,60,0.6);',
-        isMobile ? 'font-size:18px;' : 'font-size:15px;',
-        'line-height:1;',
-        'cursor:pointer;z-index:9995;',
-        'display:flex;align-items:center;justify-content:center;',
-        'transition:border-color 0.3s,color 0.3s,opacity 0.6s;',
-        '-webkit-tap-highlight-color:transparent;touch-action:manipulation;',
-        'padding:0;opacity:0;'
-      ].join('');
-      document.body.appendChild(persistBtn);
-      // Fade in after a moment
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() { persistBtn.style.opacity = '1'; });
-      });
-      persistBtn.addEventListener('mouseenter', function() {
-        persistBtn.style.borderColor = 'rgba(200,168,60,0.7)';
-        persistBtn.style.color = 'rgba(200,168,60,1)';
-      });
-      persistBtn.addEventListener('mouseleave', function() {
-        var playing = confAudio && !confAudio.paused;
-        persistBtn.style.borderColor = playing ? 'rgba(200,168,60,0.5)' : 'rgba(200,168,60,0.25)';
-        persistBtn.style.color = playing ? 'rgba(200,168,60,0.9)' : 'rgba(200,168,60,0.55)';
-      });
-      persistBtn.addEventListener('click', function() {
-        if (!confAudio) return;
-        if (confAudio.paused) {
-          fadeAudioIn();
-          persistBtn.style.borderColor = 'rgba(200,168,60,0.5)';
-          persistBtn.style.color = 'rgba(200,168,60,0.9)';
-        } else {
-          fadeAudioOut();
-          persistBtn.style.borderColor = 'rgba(200,168,60,0.25)';
-          persistBtn.style.color = 'rgba(200,168,60,0.55)';
-        }
-      });
-    }, 10200); // appear after splash is fully hidden (8500ms fade-out + 1300ms display:none = 9800ms)
-
+    renderScene(0);
   })();
   </script>
 
