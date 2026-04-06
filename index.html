@@ -2543,24 +2543,24 @@
       .splash { inset: 0; }
       .splash-sphere-stage { inset: 0; border: none; }
       .splash-topline {
-        top: 16px;
+        top: 10px;
         left: 18px;
         right: 18px;
         justify-content: center;
         gap: 10px;
         text-align: center;
-        font-size: 7px;
-        letter-spacing: 0.16em;
+        font-size: 6px;
+        letter-spacing: 0.14em;
       }
       .splash-topline span:nth-child(2) { display: none; }
       .splash-briefing-panel {
-        top: 180px;
+        top: 168px;
         left: 16px;
         right: 16px;
         width: auto;
         bottom: auto;
-        height: min(270px, calc(100vh - 430px));
-        min-height: 214px;
+        height: min(236px, calc(100vh - 444px));
+        min-height: 188px;
         background:
           radial-gradient(circle at top left, rgba(8,8,8,0.36), transparent 58%),
           linear-gradient(180deg, rgba(8,8,8,0.28), rgba(8,8,8,0.08) 28%, rgba(8,8,8,0.03) 100%);
@@ -2572,102 +2572,87 @@
         opacity: 0.46;
       }
       .splash-briefing-header { padding: 12px 14px 8px; }
-      .splash-briefing-kicker { font-size: 8px; letter-spacing: 0.24em; }
+      .splash-briefing-kicker { font-size: 8px; letter-spacing: 0.22em; }
       .splash-briefing-title {
-        font-size: 0.98rem;
-        line-height: 0.96;
+        font-size: 0.92rem;
+        line-height: 0.94;
         max-width: none;
       }
       .splash-briefing-caption {
-        margin-top: 6px;
-        font-size: 7px;
-        letter-spacing: 0.12em;
+        margin-top: 5px;
+        font-size: 6px;
+        letter-spacing: 0.1em;
       }
       .splash-briefing-ribbon {
-        margin-top: 8px;
+        margin-top: 7px;
         min-height: 18px;
         padding: 0 8px;
-        font-size: 7px;
-        letter-spacing: 0.14em;
+        font-size: 6px;
+        letter-spacing: 0.12em;
       }
-      .splash-briefing-scroll { padding: 8px 14px 12px; }
+      .splash-briefing-scroll { padding: 8px 14px 10px; }
       .splash-briefing-lead {
-        font-size: 0.84rem;
-        line-height: 1.18;
+        font-size: 0.8rem;
+        line-height: 1.14;
         max-width: none;
       }
       .splash-briefing-copy {
-        font-size: 10px;
-        line-height: 1.42;
+        font-size: 9px;
+        line-height: 1.38;
         max-width: none;
       }
       .splash-briefing-copy + .splash-briefing-copy { display: none; }
       .splash-briefing-pull {
-        margin-top: 8px;
-        font-size: 0.72rem;
-        line-height: 1.18;
-        padding: 8px 10px;
+        margin-top: 7px;
+        font-size: 0.68rem;
+        line-height: 1.14;
+        padding: 7px 9px;
       }
-      .splash-briefing-list { gap: 6px; }
-      .splash-briefing-list li { font-size: 9px; line-height: 1.32; }
+      .splash-briefing-list { display: none; }
       .splash-briefing-grid { display: none; }
       .splash-sphere-object {
         width: min(84vw, 500px);
         height: min(84vw, 500px);
-        transform: translateY(390px) translateX(20vw);
+        transform: translateY(414px) translateX(21vw);
       }
       .splash-title-shell {
-        top: 42px;
+        top: 26px;
         left: 50%;
         width: 100%;
         padding: 0 18px;
       }
       .splash-title-overline {
-        font-size: 7px;
-        letter-spacing: 0.16em;
+        font-size: 6px;
+        letter-spacing: 0.12em;
         gap: 6px;
-        min-height: 16px;
+        min-height: 14px;
         padding: 0;
       }
       .splash-title-overline::before,
-      .splash-title-overline::after { width: 12px; }
+      .splash-title-overline::after { width: 10px; }
       .splash-title-shell h1 {
-        font-size: clamp(2.45rem, 9.1vw, 3.55rem);
+        font-size: clamp(2.1rem, 8vw, 3rem);
         line-height: 0.78;
-        max-width: 90vw;
+        max-width: 86vw;
       }
-      .splash-title-shell p {
-        margin-top: 2px;
-        font-size: 7px;
-        letter-spacing: 0.12em;
-        max-width: 84vw;
-      }
-      .splash-footer-note {
-        left: 18px;
-        bottom: 100px;
-        transform: none;
-        justify-content: flex-start;
-        gap: 8px;
-        font-size: 7px;
-        letter-spacing: 0.14em;
-      }
-      .splash-footer-note .splash-scene-label { display: none; }
+      .splash-title-shell p { display: none; }
+      .splash-footer-note { display: none; }
       .splash-sphere-stage.final-scene-active .splash-footer-note {
         transform: translateY(4px);
       }
-      .splash-scene-progress { width: min(112px, 30vw); }
+      .splash-scene-progress { width: min(96px, 26vw); }
       .splash-enter-shell {
-        bottom: 24px;
+        bottom: 18px;
         width: calc(100% - 32px);
         justify-content: center;
       }
       .splash-enter-link {
         width: 100%;
         min-width: 0;
-        min-height: 54px;
+        min-height: 56px;
         font-size: 10px;
-        letter-spacing: 0.2em;
-        padding: 0 18px;
+        letter-spacing: 0.18em;
+        padding: 0 20px;
       }
       .splash-enter-link::after { margin-left: 12px; }
       .splash-enter-key { display: none; }
@@ -2690,11 +2675,36 @@
       .splash-projection-kicker { font-size: 7px; }
       .splash-replay {
         right: 12px;
-        bottom: 92px;
-        min-height: 38px;
-        padding: 0 12px;
+        top: 116px;
+        bottom: auto;
+        min-height: 34px;
+        padding: 0 10px;
+        font-size: 8px;
+      }
+    }
+    @media (max-width: 420px) {
+      .splash-briefing-panel {
+        top: 154px;
+        height: min(214px, calc(100vh - 452px));
+        min-height: 174px;
+      }
+      .splash-title-shell h1 {
+        font-size: clamp(1.92rem, 7.8vw, 2.56rem);
+      }
+      .splash-sphere-object {
+        width: min(88vw, 420px);
+        height: min(88vw, 420px);
+        transform: translateY(396px) translateX(22vw);
+      }
+      .splash-enter-shell {
+        bottom: 16px;
+        width: calc(100% - 24px);
+      }
+      .splash-enter-link {
+        min-height: 52px;
         font-size: 9px;
       }
+      .splash-replay { top: 104px; }
     }
 
     /* ── MATILDA EASTER EGG OVERLAY ────────────────────────── */
@@ -3567,65 +3577,80 @@
       .access-header { flex-direction: column; gap: 3px; text-align: center; font-size: 0.56em; }
       .access-header span:nth-child(2),
       .access-header span:nth-child(3) { display: none; }
-      .threshold-section { padding: 28px 16px 18px; }
-      .threshold-shell { padding: 18px 14px 16px; }
+      .threshold-section { padding: 22px 16px 16px; }
+      .threshold-shell {
+        padding: 16px 14px 14px;
+        box-shadow: 0 22px 56px rgba(0,0,0,0.26);
+      }
       .threshold-topline {
         display: block;
-        font-size: 0.48em;
-        letter-spacing: 0.14em;
+        font-size: 0.46em;
+        letter-spacing: 0.12em;
         line-height: 1.6;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
       .threshold-topline span + span { display: block; margin-top: 4px; }
       .threshold-grid { grid-template-columns: 1fr; gap: 18px; }
       .threshold-main { padding: 0; }
       .threshold-title {
         max-width: none;
-        font-size: clamp(1.9em, 10vw, 2.75em);
+        font-size: clamp(1.72em, 8.6vw, 2.35em);
         line-height: 0.94;
+        margin-bottom: 12px;
       }
-      .threshold-lead { font-size: 0.9em; line-height: 1.64; }
+      .threshold-lead {
+        font-size: 0.84em;
+        line-height: 1.56;
+        margin-bottom: 12px;
+      }
       .threshold-pull {
         padding-left: 10px;
-        font-size: 0.76em;
-        line-height: 1.56;
-        margin-bottom: 14px;
+        font-size: 0.72em;
+        line-height: 1.48;
+        margin-bottom: 12px;
       }
-      .threshold-actions { gap: 10px; margin-bottom: 0; }
+      .threshold-actions { gap: 8px; margin-bottom: 0; }
       .threshold-primary {
         width: 100%;
-        min-height: 54px;
+        min-height: 52px;
         justify-content: center;
+        font-size: 0.64em;
+        letter-spacing: 0.18em;
       }
       .threshold-support {
         width: 100%;
-        line-height: 1.7;
+        font-size: 0.72em;
+        line-height: 1.58;
       }
       .threshold-side { padding: 16px 14px 14px; }
       .threshold-side-title {
         max-width: none;
-        font-size: 1.14em;
+        font-size: 1.02em;
         line-height: 1.04;
       }
       .threshold-side-copy {
         max-width: none;
-        font-size: 0.78em;
-        line-height: 1.56;
-      }
-      .threshold-route-grid { grid-template-columns: 1fr; gap: 10px; }
-      .threshold-route {
-        min-height: 0;
-        padding: 12px 12px 11px;
-      }
-      .threshold-route-title { font-size: 1.1em; }
-      .threshold-route-copy {
-        font-size: 0.75em;
+        font-size: 0.74em;
         line-height: 1.48;
       }
+      .threshold-route-grid { grid-template-columns: 1fr; gap: 8px; }
+      .threshold-route {
+        min-height: 0;
+        padding: 11px 11px 10px;
+      }
+      .threshold-route-label {
+        font-size: 0.48em;
+        letter-spacing: 0.22em;
+      }
+      .threshold-route-title { font-size: 1.02em; }
+      .threshold-route-copy {
+        font-size: 0.72em;
+        line-height: 1.4;
+      }
       .threshold-note-band {
-        padding: 12px 0 0;
-        font-size: 0.68em;
-        line-height: 1.6;
+        padding: 10px 0 0;
+        font-size: 0.64em;
+        line-height: 1.5;
       }
       .hero { padding: 46px 20px 24px; }
       .hero-grid { grid-template-columns: 1fr; gap: 18px; }
