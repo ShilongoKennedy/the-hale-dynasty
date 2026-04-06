@@ -2542,6 +2542,14 @@
     @media (max-width: 760px) {
       .splash { inset: 0; }
       .splash-sphere-stage { inset: 0; border: none; }
+      .splash-sphere-wrap {
+        left: 0;
+        right: 0;
+        top: auto;
+        bottom: 94px;
+        height: 42vh;
+        place-items: end center;
+      }
       .splash-topline {
         top: 10px;
         left: 18px;
@@ -2611,9 +2619,21 @@
       .splash-briefing-list { display: none; }
       .splash-briefing-grid { display: none; }
       .splash-sphere-object {
-        width: min(84vw, 500px);
-        height: min(84vw, 500px);
-        transform: translateY(414px) translateX(21vw);
+        width: min(78vw, 420px);
+        height: min(78vw, 420px);
+        transform: none;
+      }
+      .splash-sphere-display {
+        inset: 3.6%;
+      }
+      .splash-projection-video {
+        inset: -10%;
+        width: 120%;
+        height: 120%;
+        transform: scale(1.08);
+      }
+      .splash-projection.active .splash-projection-video {
+        transform: scale(1.03);
       }
       .splash-title-shell {
         top: 26px;
@@ -2645,6 +2665,7 @@
         bottom: 18px;
         width: calc(100% - 32px);
         justify-content: center;
+        z-index: 12;
       }
       .splash-enter-link {
         width: 100%;
@@ -2680,6 +2701,7 @@
         min-height: 34px;
         padding: 0 10px;
         font-size: 8px;
+        z-index: 12;
       }
     }
     @media (max-width: 420px) {
@@ -2691,10 +2713,13 @@
       .splash-title-shell h1 {
         font-size: clamp(1.92rem, 7.8vw, 2.56rem);
       }
+      .splash-sphere-wrap {
+        bottom: 88px;
+        height: 38vh;
+      }
       .splash-sphere-object {
-        width: min(88vw, 420px);
-        height: min(88vw, 420px);
-        transform: translateY(396px) translateX(22vw);
+        width: min(82vw, 360px);
+        height: min(82vw, 360px);
       }
       .splash-enter-shell {
         bottom: 16px;
