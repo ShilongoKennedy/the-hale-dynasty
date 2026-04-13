@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Hale Dynasty — Hall Of Inheritance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060608;
+      --bg-soft: #0d0d12;
+      --text: #f4ecda;
+      --muted: rgba(244, 236, 218, 0.72);
+      --line: rgba(213, 176, 104, 0.22);
+      --panel: rgba(11, 11, 14, 0.56);
+      --gold: #d5b068;
+      --gold-soft: rgba(213, 176, 104, 0.72);
+      --oxblood: #7c2c2e;
+      --shadow: 0 30px 90px rgba(0,0,0,0.44);
+      --room-shadow: 0 30px 100px rgba(0,0,0,0.34);
+      --room-border: rgba(213,176,104,0.09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(124, 44, 46, 0.1), transparent 22%),
+        linear-gradient(180deg, #0a0a0d 0%, #050507 55%, #08080c 100%);
+      font-family: "Manrope", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0, rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(180deg, transparent 0, rgba(255,255,255,0.012) 1px, transparent 1px);
+      background-size: 220px 220px;
+      opacity: 0.12;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 28px;
+      background: linear-gradient(180deg, rgba(8,8,11,0.94), rgba(8,8,11,0.74));
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(213, 176, 104, 0.08);
+      color: rgba(244, 236, 218, 0.68);
+      font-size: 0.72rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+    }
+
+    .topbar a {
+      text-decoration: none;
+      border-bottom: 1px solid rgba(213, 176, 104, 0.26);
+      padding-bottom: 4px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 46vh;
+      display: grid;
+      place-items: end start;
+      padding: 28px 28px 34px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(213, 176, 104, 0.05);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8,8,11,0.88), rgba(8,8,11,0.56) 48%, rgba(8,8,11,0.88) 100%),
+        radial-gradient(circle at 50% 50%, rgba(213,176,104,0.08), transparent 30%);
+      filter: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 38%, rgba(213,176,104,0.12), transparent 24%),
+        linear-gradient(180deg, transparent 0%, rgba(8,8,11,0.14) 42%, rgba(8,8,11,0.66) 100%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1160px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 26px;
+      align-items: end;
+    }
+
+    .hero-main {
+      max-width: 720px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: rgba(213,176,104,0.92);
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(213,176,104,0.36);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(2.9rem, 6vw, 5.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+      max-width: 8ch;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 14px 0 0;
+      font-size: 0.98rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .hero-note {
+      align-self: end;
+      justify-self: end;
+      max-width: 360px;
+      padding: 18px 18px 0;
+      border-top: 1px solid rgba(213,176,104,0.2);
+      color: rgba(244,236,218,0.68);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .hero-note strong {
+      display: block;
+      margin-bottom: 8px;
+      color: rgba(244,236,218,0.92);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      text-decoration: none;
+      border: 1px solid rgba(213,176,104,0.24);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .btn.primary {
+      background: linear-gradient(180deg, rgba(124,44,46,0.28), rgba(124,44,46,0.1));
+      border-color: rgba(213,176,104,0.42);
+    }
+
+    .rooms {
+      width: min(1380px, calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 18px 0 120px;
+    }
+
+    .hall-nav {
+      position: sticky;
+      top: 72px;
+      z-index: 8;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 0 22px;
+      justify-content: center;
+    }
+
+    .hall-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid rgba(213,176,104,0.16);
+      background: rgba(8,8,11,0.56);
+      backdrop-filter: blur(14px);
+      text-decoration: none;
+      color: rgba(244,236,218,0.78);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .line-glance {
+      position: relative;
+      margin: 0 0 18px;
+      padding: 14px 0 22px;
+      border: 0;
+      background: none;
+      box-shadow: none;
+    }
+
+    .line-glance-kicker {
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .line-glance-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      color: rgba(244,236,218,0.84);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .line-glance-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .line-glance-row span + span::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: rgba(213,176,104,0.34);
+    }
+
+    .rooms-intro {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-bottom: 26px;
+      color: rgba(244,236,218,0.7);
+      font-size: 0.88rem;
+      line-height: 1.72;
+    }
+
+    .rooms-intro strong {
+      color: rgba(244,236,218,0.96);
+      font-weight: 500;
+    }
+
+    .room {
+      position: relative;
+      min-height: 84vh;
+      display: grid;
+      grid-template-columns: minmax(320px, 0.86fr) minmax(0, 1.14fr);
+      gap: 0;
+      align-items: stretch;
+      margin: 0 0 42px;
+      border: 1px solid var(--room-border);
+      background: linear-gradient(180deg, rgba(12,12,16,0.68), rgba(8,8,11,0.48));
+      box-shadow: var(--room-shadow);
+      border-radius: 28px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .room.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .room::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.014) 0, rgba(255,255,255,0.014) 1px, transparent 1px);
+      background-size: 220px 220px;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .room::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .room-founders::after {
+      background:
+        radial-gradient(circle at 76% 26%, rgba(213,176,104,0.1), transparent 18%),
+        linear-gradient(135deg, rgba(117,85,35,0.12), transparent 42%),
+        linear-gradient(180deg, rgba(34,26,18,0.35), rgba(8,8,11,0));
+    }
+
+    .room-keepers::after {
+      background:
+        radial-gradient(circle at 18% 34%, rgba(124,44,46,0.14), transparent 20%),
+        linear-gradient(140deg, rgba(154,132,93,0.08), transparent 42%),
+        linear-gradient(180deg, rgba(18,14,12,0.32), rgba(8,8,11,0));
+    }
+
+    .room-departure::after {
+      background:
+        radial-gradient(circle at 78% 20%, rgba(74,92,122,0.16), transparent 18%),
+        linear-gradient(90deg, rgba(18,30,48,0.16), transparent 46%),
+        linear-gradient(180deg, rgba(14,17,23,0.34), rgba(8,8,11,0));
+    }
+
+    .room-return::after {
+      background:
+        radial-gradient(circle at 26% 24%, rgba(213,176,104,0.12), transparent 18%),
+        linear-gradient(120deg, rgba(213,176,104,0.08), transparent 44%),
+        linear-gradient(180deg, rgba(22,18,13,0.28), rgba(8,8,11,0));
+    }
+
+    .room-founders .room-copy {
+      background:
+        linear-gradient(180deg, rgba(49,35,18,0.18), transparent 36%),
+        linear-gradient(90deg, rgba(255,255,255,0.03), transparent 44%);
+    }
+
+    .room-founders .room-media {
+      background:
+        radial-gradient(circle at 70% 30%, rgba(213,176,104,0.18), transparent 22%),
+        linear-gradient(180deg, rgba(26,18,12,0.18), rgba(8,8,11,0.02));
+    }
+
+    .room-founders .figure-chip {
+      border-color: rgba(213,176,104,0.18);
+      background: linear-gradient(180deg, rgba(86,58,18,0.16), rgba(255,255,255,0.02));
+    }
+
+    .room-keepers .room-copy {
+      background:
+        linear-gradient(180deg, rgba(68,47,19,0.12), transparent 36%),
+        repeating-linear-gradient(90deg, rgba(255,244,220,0.022) 0 1px, transparent 1px 56px);
+    }
+
+    .room-keepers .room-media {
+      background:
+        radial-gradient(circle at 26% 26%, rgba(255,224,174,0.12), transparent 22%),
+        linear-gradient(180deg, rgba(26,20,12,0.12), rgba(8,8,11,0.02));
+    }
+
+    .room-keepers .figure-chip {
+      border-color: rgba(190,159,101,0.18);
+      background: linear-gradient(180deg, rgba(120,88,38,0.14), rgba(255,255,255,0.018));
+    }
+
+    .room-departure .room-copy {
+      background:
+        linear-gradient(180deg, rgba(16,24,38,0.2), transparent 34%),
+        linear-gradient(90deg, rgba(114,137,176,0.06), transparent 42%);
+    }
+
+    .room-departure .room-media {
+      background:
+        radial-gradient(circle at 72% 20%, rgba(88,110,148,0.16), transparent 22%),
+        linear-gradient(180deg, rgba(10,17,28,0.18), rgba(8,8,11,0.02));
+    }
+
+    .room-departure .figure-chip {
+      border-color: rgba(145,167,204,0.16);
+      background: linear-gradient(180deg, rgba(39,52,78,0.22), rgba(255,255,255,0.016));
+    }
+
+    .room-return .room-copy {
+      background:
+        linear-gradient(180deg, rgba(64,50,18,0.16), transparent 34%),
+        linear-gradient(90deg, rgba(213,176,104,0.05), transparent 42%);
+    }
+
+    .room-return .room-media {
+      background:
+        radial-gradient(circle at 26% 24%, rgba(223,191,129,0.18), transparent 20%),
+        linear-gradient(180deg, rgba(24,18,10,0.16), rgba(8,8,11,0.02));
+    }
+
+    .room-return .figure-chip {
+      border-color: rgba(213,176,104,0.2);
+      background: linear-gradient(180deg, rgba(88,64,22,0.16), rgba(255,255,255,0.02));
+    }
+
+    .room.media-right {
+      grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
+    }
+
+    .room-copy,
+    .room-media {
+      position: relative;
+      z-index: 2;
+    }
+
+    .room-copy {
+      padding: 42px 38px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .room-kicker {
+      color: var(--gold);
+      font-size: 0.74rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .room-watermark {
+      position: absolute;
+      right: 28px;
+      top: 20px;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(2.6rem, 6vw, 5.8rem);
+      letter-spacing: -0.04em;
+      line-height: 0.88;
+      color: rgba(244,236,218,0.06);
+      pointer-events: none;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+    .room-title {
+      margin: 0;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(2.3rem, 4.4vw, 4.3rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      max-width: 12ch;
+    }
+
+    .room-text {
+      margin-top: 18px;
+      max-width: 560px;
+      font-size: 0.96rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .figure-chip {
+      display: grid;
+      gap: 4px;
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(213,176,104,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      border-radius: 18px;
+    }
+
+    .figure-chip small {
+      color: rgba(213,176,104,0.9);
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .figure-chip strong {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.38rem;
+      line-height: 0.95;
+      font-weight: 400;
+    }
+
+    .figure-chip span {
+      color: rgba(244,236,218,0.66);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .room-media {
+      display: grid;
+      align-items: stretch;
+      justify-items: stretch;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top, rgba(124,44,46,0.1), transparent 24%),
+        linear-gradient(180deg, rgba(14,14,18,0.08), rgba(8,8,11,0.02));
+    }
+
+    .portrait-stack {
+      position: relative;
+      min-height: 100%;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 42px;
+    }
+
+    .portrait-stack::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(213,176,104,0.08), transparent 28%),
+        linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.22));
+      pointer-events: none;
+    }
+
+    .portrait-stack::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(213,176,104,0.08);
+      border-radius: 28px;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    .room-founders .portrait-stack::after {
+      border-color: rgba(213,176,104,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,214,140,0.03);
+    }
+
+    .room-keepers .portrait-stack::after {
+      border-color: rgba(187,154,96,0.1);
+      background:
+        linear-gradient(180deg, rgba(255,246,226,0.022), transparent 20%);
+    }
+
+    .room-departure .portrait-stack::after {
+      border-color: rgba(124,145,184,0.12);
+    }
+
+    .room-return .portrait-stack::after {
+      border-color: rgba(213,176,104,0.12);
+      box-shadow: 0 0 60px rgba(213,176,104,0.06) inset;
+    }
+
+    .portrait-card {
+      position: absolute;
+      width: clamp(180px, 24vw, 320px);
+      aspect-ratio: 0.76;
+      border: 1px solid rgba(213,176,104,0.14);
+      background: rgba(255,255,255,0.02);
+      border-radius: 22px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.34);
+      overflow: hidden;
+    }
+
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(1.04);
+    }
+
+    .portrait-card.main {
+      width: clamp(260px, 36vw, 450px);
+      z-index: 3;
+    }
+
+    .portrait-card.one {
+      transform: translate(-26%, -8%) rotate(-6deg);
+      z-index: 1;
+      opacity: 0.74;
+    }
+
+    .portrait-card.two {
+      transform: translate(24%, 18%) rotate(7deg);
+      z-index: 2;
+      opacity: 0.82;
+    }
+
+    .portrait-caption {
+      position: absolute;
+      left: 34px;
+      bottom: 30px;
+      z-index: 4;
+      max-width: 280px;
+      font-family: "Instrument Serif", serif;
+      font-size: 1.48rem;
+      line-height: 1;
+      color: rgba(244,236,218,0.92);
+      text-shadow: 0 8px 20px rgba(0,0,0,0.46);
+    }
+
+    .lineage-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      color: rgba(244,236,218,0.76);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .lineage-strip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lineage-strip span + span::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(213,176,104,0.34);
+    }
+
+    .register {
+      margin-top: 42px;
+      border: 1px solid rgba(213,176,104,0.08);
+      background: linear-gradient(180deg, rgba(11,11,14,0.76), rgba(7,7,10,0.58));
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .register-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      padding: 26px 26px 18px;
+      border-bottom: 1px solid rgba(213,176,104,0.1);
+    }
+
+    .register-kicker {
+      color: var(--gold);
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .register-title {
+      margin: 0 0 10px;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 0.96;
+    }
+
+    .register-copy {
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: 0.96rem;
+    }
+
+    .register-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: start;
+      justify-content: flex-end;
+    }
+
+    .filter-btn {
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid rgba(213,176,104,0.16);
+      background: rgba(255,255,255,0.02);
+      color: rgba(244,236,218,0.76);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      border-color: rgba(213,176,104,0.38);
+      background: linear-gradient(180deg, rgba(124,44,46,0.24), rgba(124,44,46,0.08));
+      color: rgba(244,236,218,0.96);
+    }
+
+    .register-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .register-card {
+      min-height: 148px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(213,176,104,0.08);
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1.5fr) minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.016), rgba(255,255,255,0.008)),
+        radial-gradient(circle at left center, rgba(213,176,104,0.03), transparent 28%);
+    }
+
+    .register-thumb {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(213,176,104,0.18);
+      background: rgba(255,255,255,0.03);
+      display: grid;
+      place-items: center;
+      font-family: "Instrument Serif", serif;
+      font-size: 1.8rem;
+      color: rgba(244,236,218,0.82);
+    }
+
+    .register-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .register-card small {
+      display: block;
+      color: var(--gold);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .register-card strong {
+      display: block;
+      font-family: "Instrument Serif", serif;
+      font-size: 1.58rem;
+      line-height: 0.94;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .register-card .meta {
+      color: rgba(244,236,218,0.62);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+
+    .register-card p {
+      margin: 0;
+      color: rgba(244,236,218,0.68);
+      line-height: 1.55;
+      font-size: 0.88rem;
+      max-width: 44ch;
+    }
+
+    .register-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(244,236,218,0.7);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .register-eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: rgba(213,176,104,0.36);
+    }
+
+    .register-summary {
+      display: grid;
+      gap: 6px;
+    }
+
+    .register-branch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(213,176,104,0.12);
+      border-radius: 999px;
+      color: rgba(244,236,218,0.74);
+      font-size: 0.64rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.018);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .hero-note {
+        justify-self: start;
+        max-width: 620px;
+        padding: 12px 0 0;
+      }
+
+      .rooms-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .room,
+      .room.media-right {
+        grid-template-columns: 1fr;
+      }
+
+      .room-media {
+        min-height: 520px;
+      }
+
+      .register-head {
+        grid-template-columns: 1fr;
+      }
+
+      .register-filters {
+        justify-content: flex-start;
+      }
+
+      .register-card {
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .register-summary {
+        grid-column: 2;
+      }
+
+      .register-branch {
+        justify-self: start;
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar {
+        padding: 16px;
+        font-size: 0.64rem;
+        letter-spacing: 0.16em;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 26px 18px 24px;
+      }
+
+      .hero-kicker {
+        margin-bottom: 12px;
+      }
+
+      .hero-title {
+        font-size: 2.4rem;
+        max-width: 11ch;
+      }
+
+      .hero-note {
+        font-size: 0.86rem;
+      }
+
+      .rooms {
+        width: min(100vw - 24px, 100%);
+        padding: 28px 0 110px;
+      }
+
+      .hall-nav {
+        top: 62px;
+        padding-bottom: 18px;
+      }
+
+      .line-glance-row {
+        gap: 8px;
+        font-size: 0.66rem;
+      }
+
+      .room {
+        min-height: auto;
+      }
+
+      .room-copy {
+        padding: 24px 20px 22px;
+      }
+
+      .room-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .room-watermark {
+        font-size: 2rem;
+        right: 16px;
+      }
+
+      .portrait-stack {
+        min-height: 400px;
+        padding: 26px;
+      }
+
+      .portrait-card.main {
+        width: min(76vw, 320px);
+      }
+
+      .portrait-card.one,
+      .portrait-card.two {
+        width: min(48vw, 220px);
+      }
+
+      .register-card,
+      .register-card:nth-child(2n) {
+        grid-template-columns: 72px 1fr;
+        padding: 16px;
+        gap: 12px;
+        border-right: 0;
+      }
+
+      .register-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+      }
+
+      .register-card strong {
+        font-size: 1.3rem;
+      }
+
+      .register-card p {
+        font-size: 0.82rem;
+      }
+
+      .register-summary,
+      .register-branch {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html">Archive Home</a>
+    <span>Hall Of Inheritance · Experiment</span>
+    <a href="family-tree.html">Current Family Tree</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-main">
+        <div class="hero-kicker">The Hale Line, 1066—2026</div>
+        <h1 class="hero-title">The people who carry the dynasty forward.</h1>
+        <p class="hero-copy">This page does not treat the family as software. It stages the line as a hall of inheritance: founders, keepers, departures, recoveries, and return. If you understand these chambers, you understand the dynasty.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#room-founders">Enter The Hall</a>
+          <a class="btn" href="timeline.html">Open Timeline</a>
+        </div>
+      </div>
+      <div class="hero-note">
+        <strong>How To Read It</strong>
+        Start with the chambers, not the full roll. The line survives here through the people who change what the archive means: the founder, the keeper, the branch that vanishes, and the last reader who makes it legible again.
+      </div>
+    </div>
+  </section>
+
+  <main class="rooms">
+    <nav class="hall-nav" aria-label="Hall rooms">
+      <a href="#room-founders">Founders</a>
+      <a href="#room-keepers">Keepers</a>
+      <a href="#room-departure">Departed Line</a>
+      <a href="#room-return">Return</a>
+    </nav>
+
+    <section class="line-glance" aria-label="Line at a glance">
+      <div class="line-glance-kicker">The Line At A Glance</div>
+      <div class="line-glance-row">
+        <span>Ranulf</span>
+        <span>Aelswith</span>
+        <span>Leofric</span>
+        <span>Matilda</span>
+        <span>Margery</span>
+        <span>Augusta</span>
+        <span>Thomas M-H</span>
+        <span>James</span>
+        <span>Eleanor</span>
+      </div>
+    </section>
+
+    <section class="rooms-intro">
+      <div><strong>The Hale Dynasty is not held together by simple descent.</strong> It persists because certain people found the estate, made it livable, wrote what could survive them, carried the line away, kept the papers, and finally learned how to read the whole thing back into focus.</div>
+      <div><strong>Read this page as a gallery, not a census.</strong> Each chamber isolates the figures who alter the meaning of the archive. Together they form the inheritance that a normal tree can only diagram.</div>
+    </section>
+
+    <section id="room-founders" class="room room-founders">
+      <div class="room-watermark">Founders</div>
+      <div class="room-copy">
+        <div>
+          <div class="room-kicker">Room I · The Founders</div>
+          <h2 class="room-title">The line begins with conquest, but it becomes real through habitation.</h2>
+          <div class="room-text">Ranulf brings the name into England, but Aelswith and Leofric give it land, language, settlement, and continuity. This room is not about simple origin. It is about the moment a claim becomes a lived inheritance.</div>
+          <div class="room-grid">
+            <div class="figure-chip">
+              <small>Origin</small>
+              <strong>Ranulf de la Hale</strong>
+              <span>Norman soldier. Crossed in 1066. Given Halecroft by royal writ.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Continuity</small>
+              <strong>Aelswith</strong>
+              <span>Widow of Wulfric. Makes the estate inhabitable, not just owned.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Settlement</small>
+              <strong>Leofric Hale</strong>
+              <span>Founds the Hale in the wood east of Halecroft.</span>
+            </div>
+          </div>
+        </div>
+        <div class="lineage-strip">
+          <span>Ranulf</span>
+          <span>Aelswith</span>
+          <span>Leofric</span>
+        </div>
+      </div>
+      <div class="room-media">
+        <div class="portrait-stack">
+          <div class="portrait-card one"><img src="portraits/aelswith.png" alt="Aelswith"></div>
+          <div class="portrait-card two"><img src="portraits/leofric.png" alt="Leofric Hale"></div>
+          <div class="portrait-card main"><img src="portraits/ranulf.png" alt="Ranulf de la Hale"></div>
+          <div class="portrait-caption">Claim, language, and settlement arrive together.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="room-keepers" class="room room-keepers media-right">
+      <div class="room-watermark">Keepers</div>
+      <div class="room-media">
+        <div class="portrait-stack">
+          <div class="portrait-card one"><img src="portraits/augusta.png" alt="Augusta Hale"></div>
+          <div class="portrait-card two"><img src="portraits/thomas.png" alt="Thomas Marsh-Hale"></div>
+          <div class="portrait-card main"><img src="portraits/matilda.png" alt="Matilda of Halecroft"></div>
+          <div class="portrait-caption">The archive survives because someone keeps it when no one has to.</div>
+        </div>
+      </div>
+      <div class="room-copy">
+        <div>
+          <div class="room-kicker">Room II · The Keepers</div>
+          <h2 class="room-title">The line persists because some people preserve what others would have let go dark.</h2>
+          <div class="room-text">Matilda writes the clearest instruction. Augusta keeps the estate under legal denial. Thomas Marsh-Hale begins the modern recovery. James holds the papers long enough for their last reader to arrive. This room is the true spine of the archive.</div>
+          <div class="room-grid">
+            <div class="figure-chip">
+              <small>Letter</small>
+              <strong>Matilda of Halecroft</strong>
+              <span>c.1390. The archive’s deepest instruction and most persistent voice.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Stewardship</small>
+              <strong>Augusta Hale</strong>
+              <span>Manages the estate under an entail that refuses to name her as owner.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Recovery</small>
+              <strong>Thomas Marsh-Hale</strong>
+              <span>Finds the archive in Oxford in 1919.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Custody</small>
+              <strong>James Marsh-Hale</strong>
+              <span>Historian, donor of the papers, co-author of the final volume.</span>
+            </div>
+          </div>
+        </div>
+        <div class="lineage-strip">
+          <span>Matilda</span>
+          <span>Augusta</span>
+          <span>Thomas M-H</span>
+          <span>James</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="room-departure" class="room room-departure">
+      <div class="room-watermark">Departure</div>
+      <div class="room-copy">
+        <div>
+          <div class="room-kicker">Room III · The Departed Line</div>
+          <h2 class="room-title">The branch that seems to leave the dynasty is the one that lets it return.</h2>
+          <div class="room-text">Margery Hale carries the line out of Halecroft under another surname. For centuries the branch disappears from the name without leaving the blood. This room is the family’s missing corridor: invisible in one register, decisive in another.</div>
+          <div class="room-grid">
+            <div class="figure-chip">
+              <small>Departure</small>
+              <strong>Margery Hale</strong>
+              <span>Marries Thomas Voss in 1373 and carries the line into Pershore.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Concealment</small>
+              <strong>The Voss Branch</strong>
+              <span>Holds for six centuries, unaware that the name was grafted onto a Hale root.</span>
+            </div>
+          </div>
+        </div>
+        <div class="lineage-strip">
+          <span>Margery</span>
+          <span>Thomas Voss</span>
+          <span>Pershore</span>
+        </div>
+      </div>
+      <div class="room-media">
+        <div class="portrait-stack">
+          <div class="portrait-card one"><img src="portraits/matilda.png" alt="Matilda"></div>
+          <div class="portrait-card two"><img src="portraits/eleanor.png" alt="Eleanor Voss"></div>
+          <div class="portrait-card main"><img src="portraits/margery.png" alt="Margery Hale"></div>
+          <div class="portrait-caption">The hidden branch is not lost. It is only unread for a time.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="room-return" class="room room-return media-right">
+      <div class="room-watermark">Return</div>
+      <div class="room-media">
+        <div class="portrait-stack">
+          <div class="portrait-card one"><img src="portraits/james.png" alt="James Marsh-Hale"></div>
+          <div class="portrait-card two"><img src="portraits/margery.png" alt="Margery Hale"></div>
+          <div class="portrait-card main"><img src="portraits/eleanor.png" alt="Eleanor Voss"></div>
+          <div class="portrait-caption">The archive’s final reader is also part of the line she is reading.</div>
+        </div>
+      </div>
+      <div class="room-copy">
+        <div>
+          <div class="room-kicker">Room IV · The Return</div>
+          <h2 class="room-title">The line does not end in survival alone. It ends in recognition.</h2>
+          <div class="room-text">Eleanor Voss recovers Matilda’s letter in January 2024 and, by 2026, understands her descent from Margery Hale. The dynasty becomes legible to itself in the same moment it reaches its last reader. This is not only an ending. It is the archive naming the person it was always moving toward.</div>
+          <div class="room-grid">
+            <div class="figure-chip">
+              <small>Final Reader</small>
+              <strong>Eleanor Voss</strong>
+              <span>Medievalist at the Bodleian Library. The hidden branch becomes visible in her.</span>
+            </div>
+            <div class="figure-chip">
+              <small>Return</small>
+              <strong>Margery Remembered</strong>
+              <span>The departure in 1373 becomes readable again through Eleanor in 2026.</span>
+            </div>
+          </div>
+        </div>
+        <div class="lineage-strip">
+          <span>Margery</span>
+          <span>Voss Branch</span>
+          <span>Eleanor</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="register" aria-label="Complete dynasty register">
+      <div class="register-head">
+        <div>
+          <div class="register-kicker">Complete Dynasty Register</div>
+          <h2 class="register-title">Every figure from the current family tree, gathered in one place.</h2>
+          <div class="register-copy">The hall gives you the inheritance chambers. This register gives you the full roll call. Use it when you want everyone at once: founders, side figures, compressed generations, and the Voss return.</div>
+        </div>
+        <div class="register-filters">
+          <button class="filter-btn active" type="button" data-filter="all">All</button>
+          <button class="filter-btn" type="button" data-filter="main">Main Line</button>
+          <button class="filter-btn" type="button" data-filter="voss">Voss Branch</button>
+          <button class="filter-btn" type="button" data-filter="keepers">Keepers</button>
+        </div>
+      </div>
+      <div class="register-grid" id="registerGrid"></div>
+    </section>
+  </main>
+
+  <script>
+    const REGISTER = [
+      { name:'Ranulf de la Hale', dates:'c.1040–c.1115', era:'Era I · Norman', branch:'main', portrait:'portraits/ranulf.png', desc:'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ.' },
+      { name:'Aelswith', dates:'c.1045–c.1110', era:'Era I · Norman', branch:'main', portrait:'portraits/aelswith.png', desc:'English widow of Halecroft. Married Ranulf in 1068 and taught him the practical life of the estate.' },
+      { name:'Leofric de la Hale', dates:'c.1072–c.1135', era:'Era I · Norman', branch:'main', portrait:'portraits/leofric.png', desc:'Founded the Hale — the woodland settlement that became the family’s primary holding.' },
+      { name:'Robert Hale', dates:'c.1140–c.1195', era:'Early Medieval', branch:'main', portrait:null, desc:'Free tenant of the Hale holding. Early yeoman continuity after the founding generation.' },
+      { name:'William Hale the Elder', dates:'c.1165–c.1248', era:'Early Medieval', branch:'main', portrait:'portraits/william.png', desc:'Purchased the freehold in 1214 — the first Hale to own rather than merely hold the land.' },
+      { name:'Edmund Hale', dates:'c.1227–1287', era:'Early Medieval', branch:'main', portrait:'portraits/edmund.png', desc:'Returned from Worcester Priory with literacy and legal reasoning.' },
+      { name:'William Hale the Younger', dates:'c.1260–c.1310', era:'Famine Era', branch:'main', portrait:'portraits/william.png', desc:'Held the Hale through famine without defaulting or requiring assistance.' },
+      { name:'Richard Hale', dates:'c.1304–1348', era:'Era II · Plague', branch:'main', portrait:'portraits/richard.png', desc:'Freeholder of the Hale. His household perished within fourteen months of plague.' },
+      { name:'Thomas Hale', dates:'1338–1395', era:'Era II · Plague Survivor', branch:'main', portrait:'portraits/thomas.png', desc:'Returned at eleven to find everyone dead. Saw to the pig. Inheritance confirmed in 1351.' },
+      { name:'Matilda of Halecroft', dates:'c.1310–c.1395', era:'Era II · Keeper', branch:'keepers', portrait:'portraits/matilda.png', desc:'Beekeeper, witness, letter-writer. The archive’s clearest instruction survives through her.' },
+      { name:'John Hale', dates:'1376–c.1440', era:'Late Medieval', branch:'main', portrait:'portraits/john.png', desc:'Held the Hale through the Wars of the Roses without disturbance.' },
+      { name:'The Lancastrian & Tudor Hales', dates:'c.1420–c.1490', era:'Era III · Tudor', branch:'main', portrait:null, desc:'Three generations who held the Hale quietly through dynastic upheaval.' },
+      { name:'John Hale', dates:'1498–1558', era:'Era III · Tudor', branch:'main', portrait:'portraits/john.png', desc:'Author of the archive’s most candid Tudor letters.' },
+      { name:'William Hale', dates:'1522–c.1585', era:'Era III · Tudor', branch:'main', portrait:'portraits/william.png', desc:'Purchased former priory land in 1545 — a decisive commercial rather than feudal acquisition.' },
+      { name:'The Civil War Hales', dates:'1595–1689', era:'Era IV · Civil War', branch:'main', portrait:null, desc:'Prepared the deed-box and held the line through national fracture.' },
+      { name:'Sir Nathaniel Hale', dates:'1671–1744', era:'Era V · Restoration', branch:'main', portrait:'portraits/nathaniel.png', desc:'Left Worcestershire, made himself in London, bought a baronetcy, survived ruin.' },
+      { name:'Augusta Hale', dates:'1771–1858', era:'Era VI · Regency', branch:'keepers', portrait:'portraits/augusta.png', desc:'Managed the estate for decades under an entail that refused to name her as owner.' },
+      { name:'Edmund Hale', dates:'c.1774–1842', era:'Era VI · Regency', branch:'main', portrait:'portraits/edmund.png', desc:'The locked escritoire, the sealed knowledge, the confession never publicly made.' },
+      { name:'Edmund Hale II', dates:'1841–1882', era:'Era VII · Victorian', branch:'main', portrait:'portraits/edmund.png', desc:'Victorian pressure, secrecy, and the obscure knowledge sealed away.' },
+      { name:'Thomas Marsh-Hale', dates:'1873–1951', era:'Era VIII · Edwardian / WWI', branch:'keepers', portrait:'portraits/thomas.png', desc:'Journalist, soldier, archivist. Modern recovery begins to cohere around him.' },
+      { name:'Edmund Marsh-Hale', dates:'1910–1978', era:'Era IX · WWII', branch:'main', portrait:'portraits/edmundmarsh.png', desc:'Structural engineer. Kept the family papers intact and passed them on.' },
+      { name:'James Marsh-Hale', dates:'1945–', era:'Era X · Contemporary', branch:'keepers', portrait:'portraits/james.png', desc:'Historian, donor of the papers, co-author of the final volume.' },
+      { name:'Margery Hale + Thomas Voss', dates:'c.1352–? · c.1350–c.1402', era:'Voss Branch Begins · 1373', branch:'voss', portrait:'portraits/margery.png', desc:'Margery leaves Halecroft for Pershore and carries the line under another surname.' },
+      { name:'Alice Voss', dates:'c.1378–c.1445', era:'Voss · Late Medieval', branch:'voss', portrait:null, desc:'Early continuity in Pershore after the branch leaves Halecroft.' },
+      { name:'Thomas · Margaret · William · Anne Voss', dates:'c.1400–1568', era:'Voss · Tudor', branch:'voss', portrait:null, desc:'Four generations in Pershore through the same upheavals as the Hales.' },
+      { name:'John Fletcher-Voss', dates:'c.1522–c.1625', era:'Voss · Jacobean', branch:'voss', portrait:null, desc:'Schoolmaster who keeps the Voss name and the line through marriage.' },
+      { name:'Mary Voss', dates:'c.1592–c.1685', era:'Voss · Restoration', branch:'voss', portrait:null, desc:'Held in Pershore through Restoration and the Glorious Revolution.' },
+      { name:'George Voss', dates:'c.1648–c.1720', era:'Voss · Restoration', branch:'voss', portrait:null, desc:'Held in Pershore through the same broad political weather the Hales survived elsewhere.' },
+      { name:'Hannah Voss', dates:'c.1820–c.1890', era:'Voss · Victorian', branch:'voss', portrait:'portraits/hannah.png', desc:'Schoolmistress who made children feel that the past was not past but continuous.' },
+      { name:'Edmund Voss', dates:'1852–1921', era:'Voss · Victorian', branch:'voss', portrait:'portraits/edmund.png', desc:'Wondered where the name came from, then never looked into it.' },
+      { name:'Harold Voss', dates:'1891–1967', era:'Voss · Edwardian / WWI', branch:'voss', portrait:null, desc:'Veteran, grower, careful breeder — the Hale instinct under different conditions.' },
+      { name:'David Voss', dates:'1941–2019', era:'Voss · Contemporary', branch:'voss', portrait:'portraits/david.png', desc:'Assembled the shoebox of papers and wrote Property: keep on the note.' },
+      { name:'Eleanor Voss', dates:'1983–', era:'Era X · Contemporary', branch:'voss', portrait:'portraits/eleanor.png', desc:'Recovered Matilda’s letter and, by 2026, understood her descent from Margery Hale.' }
+    ];
+
+    const rooms = document.querySelectorAll('.room');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.16 });
+    rooms.forEach((room) => observer.observe(room));
+
+    const registerGrid = document.getElementById('registerGrid');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    function initials(name) {
+      return name.split(/[ +&]+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+    }
+
+    function renderRegister(filter) {
+      const items = REGISTER.filter((item) => {
+        if (filter === 'all') return true;
+        return item.branch === filter;
+      });
+      registerGrid.innerHTML = items.map((item) => `
+        <article class="register-card">
+          <div class="register-thumb">${item.portrait ? `<img src="${item.portrait}" alt="${item.name}">` : initials(item.name)}</div>
+          <div class="register-summary">
+            <small>${item.branch === 'keepers' ? 'keepers' : item.era}</small>
+            <strong>${item.name}</strong>
+            <div class="meta">${item.dates}</div>
+          </div>
+          <div>
+            <div class="register-eyebrow">${item.era}</div>
+            <p>${item.desc}</p>
+          </div>
+          <div class="register-branch">${item.branch === 'main' ? 'Main Line' : item.branch === 'voss' ? 'Voss Branch' : 'Keepers'}</div>
+        </article>
+      `).join('');
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        renderRegister(button.dataset.filter);
+      });
+    });
+
+    renderRegister('all');
+  </script>
+</body>
+</html>

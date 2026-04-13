@@ -1,0 +1,1963 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>The Hale Dynasty — Celestial Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #020202;
+      --gold: #e8b560;
+      --ivory: rgba(255, 248, 236, 0.95);
+      --muted: rgba(255, 248, 236, 0.58);
+      --line: rgba(232, 181, 96, 0.22);
+      --glass: rgba(7, 7, 10, 0.62);
+      --glass-strong: rgba(6, 6, 9, 0.82);
+      --main: #e8b560;
+      --voss: #c45a4a;
+      --keepers: #7b9e87;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% 24%, rgba(232,181,96,0.08), transparent 26%),
+        radial-gradient(circle at 15% 75%, rgba(196,90,74,0.08), transparent 26%),
+        linear-gradient(180deg, #020202 0%, #050507 100%);
+      overflow: hidden;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--ivory);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(180deg, transparent 0, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 160px 160px;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.86)),
+        url("portraits/background%20.jpg") center center / cover no-repeat;
+      opacity: 0.16;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .branch-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 320ms ease;
+      background:
+        radial-gradient(circle at 60% 40%, rgba(232,181,96,0.16), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(232,181,96,0.08), transparent 36%);
+    }
+
+    body.branch-main .branch-vignette {
+      opacity: 0.28;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(232,181,96,0.22), transparent 40%),
+        radial-gradient(circle at 18% 82%, rgba(232,181,96,0.12), transparent 36%);
+    }
+
+    body.branch-voss .branch-vignette {
+      opacity: 0.3;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(196,90,74,0.24), transparent 42%),
+        radial-gradient(circle at 18% 82%, rgba(196,90,74,0.12), transparent 36%);
+    }
+
+    body.branch-keepers .branch-vignette {
+      opacity: 0.28;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(123,158,135,0.22), transparent 42%),
+        radial-gradient(circle at 18% 82%, rgba(123,158,135,0.12), transparent 36%);
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .ui {
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+      min-height: 100vh;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.35rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.82) 0%, transparent 100%);
+      pointer-events: auto;
+      z-index: 20;
+    }
+
+    .top-bar::after {
+      content: "";
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,181,96,0.18), transparent);
+      pointer-events: none;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav a,
+    .nav button {
+      background: none;
+      border: 0;
+      color: rgba(255,255,255,0.62);
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 180ms ease;
+    }
+
+    .nav a:hover,
+    .nav button:hover {
+      color: var(--gold);
+    }
+
+    .hero-overlay {
+      position: fixed;
+      top: 5.6rem;
+      left: 2rem;
+      max-width: 20rem;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    .hero-overlay::before {
+      content: "";
+      position: absolute;
+      inset: -1.2rem -1.4rem -1.4rem;
+      background: radial-gradient(circle at 20% 20%, rgba(232,181,96,0.08), transparent 36%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+      content: "";
+      width: 2.4rem;
+      height: 1px;
+      background: rgba(232,181,96,0.34);
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.65rem, 3.9vw, 3rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.96);
+      text-shadow: 0 20px 70px rgba(0,0,0,0.65);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 1rem;
+      max-width: 18rem;
+      font-size: 0.72rem;
+      line-height: 1.52;
+      color: var(--muted);
+      text-wrap: balance;
+    }
+
+    .hero-meta {
+      margin-top: 0.7rem;
+      font-size: 0.56rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.44);
+    }
+
+    .node-labels {
+      position: fixed;
+      inset: 0;
+      z-index: 14;
+      pointer-events: none;
+    }
+
+    .portrait-orbit-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 13;
+      pointer-events: none;
+    }
+
+    .portrait-orbit {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(232,181,96,0.45);
+      background: rgba(10,10,12,0.7);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.45),
+        0 0 18px rgba(232,181,96,0.18);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 240ms ease, box-shadow 240ms ease;
+    }
+
+    .portrait-orbit::after {
+      content: "";
+      position: absolute;
+      inset: -12%;
+      border-radius: 50%;
+      border: 1px solid rgba(232,181,96,0.28);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .portrait-orbit img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .portrait-orbit.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: portraitPulse 3.8s ease-in-out infinite;
+    }
+
+    .portrait-orbit.active {
+      border-color: rgba(232,181,96,0.9);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.55),
+        0 0 26px rgba(232,181,96,0.28);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    @keyframes portraitPulse {
+      0%, 100% { box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 18px rgba(232,181,96,0.18); }
+      50% { box-shadow: 0 14px 34px rgba(0,0,0,0.55), 0 0 30px rgba(232,181,96,0.28); }
+    }
+
+    .node-label {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: grid;
+      gap: 0.14rem;
+      min-width: 5rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .node-label.visible {
+      opacity: 1;
+      transform: translate(-50%, calc(-50% - 6px));
+      animation: labelPulse 2.4s ease-in-out infinite;
+    }
+
+    .node-label strong {
+      color: rgba(255,248,236,0.94);
+      font-family: "Playfair Display", serif;
+      font-size: 0.9rem;
+      line-height: 0.94;
+      font-weight: 500;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .node-label span {
+      color: rgba(232,181,96,0.86);
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    @keyframes labelPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.78; }
+    }
+
+    .archive-markers {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .marker {
+      position: absolute;
+      display: grid;
+      gap: 0.35rem;
+      max-width: 13rem;
+      color: rgba(255,248,236,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.58rem;
+    }
+
+    .marker strong {
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: 0.24em;
+    }
+
+    .marker span {
+      color: rgba(255,248,236,0.4);
+      letter-spacing: 0.08em;
+      text-transform: none;
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    .marker-origin { top: 10rem; right: 9rem; text-align: right; }
+    .marker-keepers { bottom: 13rem; left: 3rem; }
+    .marker-departure { top: 50%; right: 3rem; transform: translateY(-50%); text-align: right; }
+    .marker-return { bottom: 8.2rem; right: 13rem; text-align: right; }
+
+    .sigil-chip {
+      position: fixed;
+      top: 7rem;
+      right: 2rem;
+      z-index: 16;
+      width: 92px;
+      height: 116px;
+      border-radius: 28px;
+      border: 1px solid rgba(232,181,96,0.16);
+      background:
+        linear-gradient(180deg, rgba(13,13,18,0.82), rgba(7,7,10,0.6)),
+        radial-gradient(circle at top, rgba(232,181,96,0.08), transparent 40%);
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.42);
+    }
+
+    .sigil-chip::before {
+      content: "H";
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(232,181,96,0.12);
+      color: var(--gold);
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      line-height: 1;
+      box-shadow: inset 0 0 0 1px rgba(232,181,96,0.12);
+    }
+
+    .sigil-chip::after {
+      content: "Hale Marsh Collection";
+      position: absolute;
+      bottom: 0.9rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      text-align: center;
+      color: rgba(255,248,236,0.4);
+      font-size: 0.44rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .side-panel {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.54);
+      backdrop-filter: blur(14px);
+      border-radius: 999px;
+      padding: 0.75rem;
+      border: 1px solid rgba(232,181,96,0.14);
+      pointer-events: auto;
+      z-index: 20;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .panel-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .panel-btn button {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.62);
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      width: 42px;
+      height: 42px;
+    }
+
+    .panel-btn button:hover {
+      background: rgba(232,181,96,0.14);
+      color: var(--gold);
+    }
+
+    .info-card {
+      position: fixed;
+      bottom: 1.75rem;
+      left: 1.75rem;
+      width: min(24rem, calc(100vw - 3.5rem));
+      background: linear-gradient(180deg, rgba(8,8,10,0.74), rgba(5,5,7,0.9));
+      backdrop-filter: blur(24px);
+      border-radius: 26px;
+      padding: 1.3rem 1.35rem 1.2rem;
+      border: 1px solid rgba(232,181,96,0.16);
+      pointer-events: auto;
+      z-index: 20;
+      transform: translateX(0);
+      transition: transform 280ms ease, opacity 280ms ease;
+      box-shadow: 0 26px 80px rgba(0,0,0,0.46);
+      --branch-accent: var(--gold);
+    }
+
+    .info-card.minimized {
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+
+    .info-kicker {
+      color: var(--gold);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-accent {
+      width: 38px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--branch-accent);
+      box-shadow: 0 0 18px rgba(232,181,96,0.5);
+      margin-bottom: 0.6rem;
+    }
+
+    .info-figure {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-portrait {
+      width: 84px;
+      height: 104px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(232,181,96,0.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        radial-gradient(circle at top, rgba(232,181,96,0.08), transparent 44%);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .info-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(1.04);
+    }
+
+    .info-portrait-fallback {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: rgba(255,248,236,0.82);
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .info-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.7rem;
+      line-height: 0.95;
+      font-weight: 500;
+      margin-bottom: 0.45rem;
+      color: var(--ivory);
+      max-width: 12ch;
+    }
+
+    .info-card .dates {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.46);
+      margin-bottom: 0.85rem;
+    }
+
+    .info-card .desc {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.74);
+      line-height: 1.62;
+      margin-bottom: 0.9rem;
+    }
+
+    .info-card .branch {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.2rem 0.65rem;
+      background: rgba(232,181,96,0.12);
+      border-radius: 999px;
+      color: var(--gold);
+    }
+
+    .info-thread {
+      margin-top: 0.95rem;
+      padding-top: 0.95rem;
+      border-top: 1px solid rgba(232,181,96,0.12);
+    }
+
+    .info-thread-label {
+      color: rgba(255,255,255,0.42);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .related-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .related-chip {
+      min-height: 30px;
+      padding: 0 0.72rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232,181,96,0.16);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.78);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .related-chip:hover {
+      border-color: rgba(232,181,96,0.3);
+      color: var(--gold);
+    }
+
+    .info-close {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.85rem;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.38);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .intro-fade {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.42) 44%, rgba(0,0,0,0.88) 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 8;
+      transition: opacity 1400ms ease;
+    }
+
+    body.intro-running .intro-fade {
+      opacity: 1;
+    }
+
+    body.intro-complete .intro-fade {
+      opacity: 0;
+    }
+
+    .constellation-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 320ms ease;
+      background:
+        radial-gradient(circle at 25% 35%, rgba(232,181,96,0.12), transparent 26%),
+        radial-gradient(circle at 70% 62%, rgba(123,158,135,0.1), transparent 28%),
+        radial-gradient(circle at 78% 28%, rgba(196,90,74,0.12), transparent 30%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='900' viewBox='0 0 1400 900' fill='none'><path d='M120 200 C280 120 480 120 640 200' stroke='rgba(232,181,96,0.15)' stroke-width='1.4'/><path d='M760 260 C940 160 1160 180 1290 260' stroke='rgba(232,181,96,0.12)' stroke-width='1.2'/><path d='M180 540 C320 420 520 420 680 520' stroke='rgba(232,181,96,0.1)' stroke-width='1.2'/><path d='M840 620 C980 520 1180 520 1320 620' stroke='rgba(232,181,96,0.1)' stroke-width='1.2'/><circle cx='120' cy='200' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='640' cy='200' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='760' cy='260' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='1290' cy='260' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='180' cy='540' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='680' cy='520' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='840' cy='620' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='1320' cy='620' r='3' fill='rgba(232,181,96,0.3)'/></svg>") center / cover no-repeat;
+    }
+
+    body.orbits-on .constellation-overlay {
+      opacity: 0.38;
+    }
+
+    .legend {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.75rem;
+      background: rgba(0,0,0,0.52);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      padding: 0.65rem 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      pointer-events: auto;
+      z-index: 20;
+      font-size: 0.58rem;
+      border: 1px solid rgba(232,181,96,0.12);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.4);
+    }
+
+    .legend strong {
+      color: rgba(255,255,255,0.84);
+      font-weight: 500;
+      margin-right: 0.45rem;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .instructions {
+      position: fixed;
+      bottom: 1.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.58rem;
+      color: rgba(255,255,255,0.32);
+      background: rgba(0,0,0,0.42);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 960px) {
+      .hero-overlay {
+        top: 5.3rem;
+        left: 1.25rem;
+        right: 1.25rem;
+        max-width: 16.5rem;
+      }
+
+      .legend {
+        left: 1.25rem;
+        right: 1.25rem;
+        bottom: 1rem;
+        justify-content: center;
+        gap: 0.7rem;
+      }
+
+      .instructions {
+        display: none;
+      }
+
+      .marker-origin { top: 9rem; right: 2rem; }
+      .marker-keepers { left: 1.25rem; bottom: 15rem; }
+      .marker-departure { right: 1.25rem; top: auto; bottom: 18rem; transform: none; }
+      .marker-return { right: 7rem; bottom: 9.5rem; }
+      .sigil-chip { display: none; }
+      .node-labels { display: none; }
+      .portrait-orbit { width: 54px; height: 54px; }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 1rem;
+        align-items: flex-start;
+      }
+
+      .logo {
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        max-width: 9rem;
+        line-height: 1.4;
+      }
+
+      .nav {
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: 11rem;
+      }
+
+      .nav a,
+      .nav button {
+        font-size: 0.56rem;
+      }
+
+      .hero-overlay {
+        top: 5rem;
+        left: 1rem;
+        right: 1rem;
+        max-width: 12.5rem;
+      }
+
+      .hero-title {
+        font-size: clamp(1.3rem, 8vw, 1.95rem);
+      }
+
+      .hero-sub {
+        display: none;
+      }
+
+      .hero-meta {
+        font-size: 0.54rem;
+        max-width: 12rem;
+      }
+
+      .side-panel {
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        bottom: 1rem;
+        transform: none;
+        border-radius: 22px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .panel-btn {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .info-card {
+        left: 1rem;
+        bottom: 5.9rem;
+        width: calc(100vw - 2rem);
+        max-width: none;
+        padding: 1rem 1rem 0.95rem;
+        border-radius: 20px;
+      }
+
+      .legend {
+        display: none;
+      }
+
+      .archive-markers {
+        display: none;
+      }
+
+      .portrait-orbit { width: 46px; height: 46px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-overlay {
+        top: 4.8rem;
+        max-width: 10.6rem;
+      }
+
+      .hero-meta {
+        margin-top: 0.7rem;
+      }
+
+      .info-card h3 {
+        font-size: 1.42rem;
+      }
+
+      .info-card .desc {
+        font-size: 0.8rem;
+      }
+
+      .info-figure {
+        grid-template-columns: 64px 1fr;
+        gap: 0.8rem;
+      }
+
+      .info-portrait {
+        width: 64px;
+        height: 84px;
+        border-radius: 14px;
+      }
+
+      .portrait-orbit { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div class="intro-fade"></div>
+  <div class="branch-vignette" aria-hidden="true"></div>
+  <div class="constellation-overlay" aria-hidden="true"></div>
+  <div class="node-labels" id="nodeLabels"></div>
+  <div class="portrait-orbit-layer" id="portraitOrbitLayer" aria-hidden="true"></div>
+
+  <div class="ui">
+    <div class="top-bar">
+      <div class="logo">HALE · CELESTIAL ARCHIVE</div>
+      <div class="nav">
+        <a href="index.html">Archive Home</a>
+        <a href="timeline.html">Timeline</a>
+        <button id="reset-view" type="button">Reset</button>
+        <button id="toggle-orbits" type="button">Orbits</button>
+      </div>
+    </div>
+
+    <div class="hero-overlay">
+      <div class="hero-kicker">Hall Of Inheritance · Experiment</div>
+      <div class="hero-title">The Hale <span>Dynasty</span> read as an <em>orbit</em> of inheritance.</div>
+      <div class="hero-sub">Not a chart. Not a census. A thousand years of founders, keepers, departures, and return arranged as one moving celestial record.</div>
+      <div class="hero-meta">1066 — 2026 · drag to orbit · click stars for stories</div>
+    </div>
+
+    <div class="archive-markers">
+      <div class="marker marker-origin">
+        <strong>Origin</strong>
+        <span>Claim, crossing, settlement. The line enters England and takes root.</span>
+      </div>
+      <div class="marker marker-keepers">
+        <strong>Keepers</strong>
+        <span>The archive survives because some figures preserve what others would let go dark.</span>
+      </div>
+      <div class="marker marker-departure">
+        <strong>Departure</strong>
+        <span>The branch that leaves the name keeps the blood and makes the return possible.</span>
+      </div>
+      <div class="marker marker-return">
+        <strong>Return</strong>
+        <span>The line becomes legible to itself in Eleanor.</span>
+      </div>
+    </div>
+
+    <div class="sigil-chip" aria-hidden="true"></div>
+
+    <div class="side-panel">
+      <div class="panel-btn">
+        <button id="zoom-in" title="Zoom In" type="button">+</button>
+        <button id="zoom-out" title="Zoom Out" type="button">−</button>
+        <button id="rotate-left" title="Rotate Left" type="button">↺</button>
+        <button id="rotate-right" title="Rotate Right" type="button">↻</button>
+      </div>
+    </div>
+
+    <div class="info-card" id="infoCard">
+      <button class="info-close" id="closeInfo" type="button">✕</button>
+      <div class="info-kicker">Selected Figure</div>
+      <div class="info-accent" id="infoAccent"></div>
+      <div class="info-figure">
+        <div class="info-portrait" id="infoPortrait">
+          <div class="info-portrait-fallback" id="infoPortraitFallback">HD</div>
+        </div>
+        <div>
+          <h3 id="infoName">The Hale Dynasty</h3>
+          <div class="dates" id="infoDates">1066 – 2026</div>
+        </div>
+      </div>
+      <div class="desc" id="infoDesc">Click any star to learn about the figures who carried this line through conquest, estate, concealment, stewardship, and return.</div>
+      <div class="branch" id="infoBranch">Celestial Archive</div>
+      <div class="info-thread">
+        <div class="info-thread-label">Related Figures</div>
+        <div class="related-list" id="relatedList">
+          <button class="related-chip" type="button" data-related="0">Ranulf</button>
+          <button class="related-chip" type="button" data-related="8">Matilda</button>
+          <button class="related-chip" type="button" data-related="21">Eleanor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><strong>Branches</strong></div>
+      <div class="legend-item"><span class="legend-dot" style="background: #e8b560;"></span>Main Line</div>
+      <div class="legend-item"><span class="legend-dot" style="background: #c45a4a;"></span>Voss Branch</div>
+      <div class="legend-item"><span class="legend-dot" style="background: #7b9e87;"></span>Keepers</div>
+    </div>
+
+    <div class="instructions">Drag to orbit · Scroll to zoom · Click stars for stories</div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    const figures = [
+      { id: 0, name: 'Ranulf de la Hale', dates: 'c.1040–c.1115', era: 'Norman Conquest', branch: 'main', desc: 'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ.', radius: 2.8, angle: 0, speed: 0.002, generation: 0 },
+      { id: 1, name: 'Aelswith', dates: 'c.1045–c.1110', era: 'Norman', branch: 'main', desc: 'English widow of Halecroft. Married Ranulf in 1068 and made the estate inhabitable rather than merely won.', radius: 3.5, angle: 1.2, speed: 0.0018, generation: 1 },
+      { id: 2, name: 'Leofric Hale', dates: 'c.1072–c.1135', era: 'Norman', branch: 'main', desc: 'Founded the Hale woodland settlement and gave the line its first true local shape.', radius: 3.5, angle: 4.5, speed: 0.0018, generation: 1 },
+      { id: 3, name: 'Robert Hale', dates: 'c.1140–c.1195', era: 'Early Medieval', branch: 'main', desc: 'Free tenant. Early yeoman continuity after the first generation.', radius: 4.2, angle: 2.8, speed: 0.0015, generation: 2 },
+      { id: 4, name: 'William Hale the Elder', dates: 'c.1165–c.1248', era: 'Early Medieval', branch: 'main', desc: 'Purchased the freehold in 1214 — the first Hale to own rather than merely hold.', radius: 4.2, angle: 5.0, speed: 0.0015, generation: 2 },
+      { id: 5, name: 'Edmund Hale', dates: 'c.1227–1287', era: 'High Medieval', branch: 'main', desc: 'Returned from Worcester Priory with literacy, legal reasoning, and a changed sense of land.', radius: 5.0, angle: 1.5, speed: 0.0013, generation: 3 },
+      { id: 6, name: 'Richard Hale', dates: 'c.1304–1348', era: 'Plague Era', branch: 'main', desc: 'His household perished in the plague years; the line nearly went dark with him.', radius: 5.8, angle: 3.2, speed: 0.0011, generation: 4 },
+      { id: 7, name: 'Thomas Hale', dates: '1338–1395', era: 'Plague Survivor', branch: 'main', desc: 'Returned at eleven to find everyone dead. Inheritance, in this line, begins by seeing what remains.', radius: 5.8, angle: 5.8, speed: 0.0011, generation: 5 },
+      { id: 8, name: 'Matilda of Halecroft', dates: 'c.1310–c.1395', era: 'Medieval Keeper', branch: 'keepers', desc: 'Beekeeper, witness, letter-writer. The archive’s clearest instruction survives through her.', radius: 6.5, angle: 0.8, speed: 0.001, generation: 5 },
+      { id: 9, name: 'Margery Hale', dates: 'c.1352–?', era: 'Departure', branch: 'voss', desc: 'Marries Thomas Voss in 1373 and carries the line out of Halecroft under another surname.', radius: 6.5, angle: 4.2, speed: 0.001, generation: 5 },
+      { id: 10, name: 'John Hale', dates: '1376–c.1440', era: 'Late Medieval', branch: 'main', desc: 'Held through the Wars of the Roses without disturbance.', radius: 7.2, angle: 2.0, speed: 0.0009, generation: 6 },
+      { id: 11, name: 'John Hale (Tudor)', dates: '1498–1558', era: 'Tudor', branch: 'main', desc: 'Author of the archive’s most candid Tudor letters.', radius: 8.0, angle: 1.0, speed: 0.0008, generation: 7 },
+      { id: 12, name: 'William Hale', dates: '1522–c.1585', era: 'Tudor', branch: 'main', desc: 'Purchased former priory land in 1545 — a commercial acquisition that altered the estate forever.', radius: 8.0, angle: 4.5, speed: 0.0008, generation: 7 },
+      { id: 13, name: 'Sir Nathaniel Hale', dates: '1671–1744', era: 'Restoration', branch: 'main', desc: 'Left Worcestershire, made himself in London, bought a baronetcy, survived ruin.', radius: 8.8, angle: 3.0, speed: 0.0007, generation: 8 },
+      { id: 14, name: 'Augusta Hale', dates: '1771–1858', era: 'Regency Keeper', branch: 'keepers', desc: 'Managed the estate under an entail that refused to name her as owner.', radius: 9.5, angle: 5.5, speed: 0.0006, generation: 9 },
+      { id: 15, name: 'Edmund Hale', dates: 'c.1774–1842', era: 'Regency', branch: 'main', desc: 'The locked escritoire, the sealed knowledge, the confession never made public.', radius: 9.5, angle: 1.8, speed: 0.0006, generation: 9 },
+      { id: 16, name: 'Thomas Marsh-Hale', dates: '1873–1951', era: 'Edwardian Recovery', branch: 'keepers', desc: 'Journalist, soldier, finder of the archive in Oxford in 1919.', radius: 10.2, angle: 4.0, speed: 0.0005, generation: 10 },
+      { id: 17, name: 'James Marsh-Hale', dates: '1945–', era: 'Contemporary Keeper', branch: 'keepers', desc: 'Historian, donor of the papers, and one of the final custodians of the line.', radius: 10.2, angle: 6.2, speed: 0.0005, generation: 10 },
+      { id: 18, name: 'Alice Voss', dates: 'c.1378–c.1445', era: 'Voss Medieval', branch: 'voss', desc: 'Early continuity in Pershore after the branch leaves Halecroft.', radius: 7.5, angle: 3.5, speed: 0.00085, generation: 6 },
+      { id: 19, name: 'Hannah Voss', dates: 'c.1820–c.1890', era: 'Voss Victorian', branch: 'voss', desc: 'Schoolmistress who made children feel that the past was not gone, only waiting.', radius: 9.0, angle: 2.5, speed: 0.00065, generation: 8 },
+      { id: 20, name: 'David Voss', dates: '1941–2019', era: 'Voss Contemporary', branch: 'voss', desc: 'Assembled the shoebox of papers and wrote Property: keep on the note.', radius: 10.5, angle: 5.0, speed: 0.00045, generation: 10 },
+      { id: 21, name: 'Eleanor Voss', dates: '1983–', era: 'The Return', branch: 'voss', desc: 'Recovered Matilda’s letter and, by 2026, understood her descent from Margery Hale.', radius: 11.0, angle: 0.5, speed: 0.0004, generation: 11 }
+    ];
+
+    const branchLabel = {
+      main: 'Main Line',
+      voss: 'Voss Branch',
+      keepers: 'Keepers Of The Archive'
+    };
+
+    const relatedMap = {
+      0: [1, 2, 7],
+      1: [0, 2, 7],
+      2: [0, 1, 7],
+      7: [8, 9, 10],
+      8: [7, 9, 21],
+      9: [8, 20, 21],
+      14: [15, 16, 17],
+      16: [17, 20, 21],
+      17: [16, 21, 9],
+      20: [9, 21, 17],
+      21: [9, 17, 8]
+    };
+
+    const branchConfig = {
+      main: { color: 0xe8b560, inclination: 0.18, yShift: 0.12, wobble: 1.8, ringColor: 0x453218 },
+      voss: { color: 0xc45a4a, inclination: -0.42, yShift: -0.28, wobble: 1.35, ringColor: 0x4c2222 },
+      keepers: { color: 0x7b9e87, inclination: 0.86, yShift: 0.44, wobble: 2.2, ringColor: 0x23332b }
+    };
+
+    const keyFigures = new Set([0, 8, 9, 14, 16, 17, 21]);
+    const portraitMap = {
+      0: 'portraits/ranulf.png',
+      1: 'portraits/aelswith.png',
+      2: 'portraits/leofric.png',
+      5: 'portraits/edmund.png',
+      6: 'portraits/richard.png',
+      7: 'portraits/thomas.png',
+      8: 'portraits/matilda.png',
+      9: 'portraits/margery.png',
+      10: 'portraits/john.png',
+      11: 'portraits/john.png',
+      12: 'portraits/william.png',
+      13: 'portraits/nathaniel.png',
+      14: 'portraits/augusta.png',
+      15: 'portraits/edmund.png',
+      16: 'portraits/thomas.png',
+      17: 'portraits/james.png',
+      19: 'portraits/hannah.png',
+      20: 'portraits/david.png',
+      21: 'portraits/eleanor.png'
+    };
+
+    const orbitPortraits = [
+      { id: 0, src: 'portraits/ranulf.png' },
+      { id: 7, src: 'portraits/thomas.png' },
+      { id: 8, src: 'portraits/matilda.png' },
+      { id: 14, src: 'portraits/augusta.png' },
+      { id: 15, src: 'portraits/edmund.png' },
+      { id: 21, src: 'portraits/eleanor.png' }
+    ];
+
+    const figureById = new Map(figures.map((figure) => [figure.id, figure]));
+
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
+    scene.fog = new THREE.FogExp2(0x000000, 0.0076);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 8, 22);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let cameraTheta = 0;
+    let cameraPhi = 0.5;
+    let cameraRadius = 22;
+    let targetTheta = 0;
+    let targetPhi = 0.5;
+    let targetRadius = 22;
+    let autoRotate = true;
+    let showOrbits = true;
+    let activeFigureId = null;
+    let hoverFigureId = null;
+    let introProgress = 0;
+    let introRunning = true;
+    document.body.classList.add('intro-running');
+
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 2200;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * 2000;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 500 - 220;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.18, transparent: true, opacity: 0.56 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    const coreGeometry = new THREE.CylinderGeometry(0.98, 0.98, 0.34, 64, 1);
+    const coreMaterial = new THREE.MeshStandardMaterial({
+      color: 0xe8b560,
+      emissive: 0x4a3010,
+      emissiveIntensity: 0.58,
+      metalness: 0.82,
+      roughness: 0.28
+    });
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+    core.rotation.x = Math.PI / 2;
+    scene.add(core);
+
+    const glowGeometry = new THREE.SphereGeometry(1.4, 32, 32);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xe8b560,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.BackSide
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    scene.add(glow);
+
+    const coreRingGeometry = new THREE.TorusGeometry(1.22, 0.05, 18, 100);
+    const coreRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xe8b560,
+      transparent: true,
+      opacity: 0.28
+    });
+    const coreRing = new THREE.Mesh(coreRingGeometry, coreRingMaterial);
+    coreRing.rotation.x = Math.PI / 2;
+    scene.add(coreRing);
+
+    const activeRingGeometry = new THREE.TorusGeometry(0.76, 0.022, 18, 80);
+    const activeRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xf5d08a,
+      transparent: true,
+      opacity: 0.86
+    });
+    const activeRing = new THREE.Mesh(activeRingGeometry, activeRingMaterial);
+    activeRing.visible = false;
+    scene.add(activeRing);
+
+    const activeHaloGeometry = new THREE.SphereGeometry(0.92, 20, 20);
+    const activeHaloMaterial = new THREE.MeshBasicMaterial({
+      color: 0xf0c46b,
+      transparent: true,
+      opacity: 0.2,
+      side: THREE.BackSide
+    });
+    const activeHalo = new THREE.Mesh(activeHaloGeometry, activeHaloMaterial);
+    activeHalo.visible = false;
+    scene.add(activeHalo);
+
+    const relationLines = [];
+    for (let i = 0; i < 3; i++) {
+      const geometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3()
+      ]);
+      const material = new THREE.LineBasicMaterial({
+        color: 0xf0c46b,
+        transparent: true,
+        opacity: 0.58
+      });
+      const line = new THREE.Line(geometry, material);
+      line.visible = false;
+      scene.add(line);
+      relationLines.push(line);
+    }
+
+    const sealSpikeMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd6a24f,
+      emissive: 0x4a3010,
+      emissiveIntensity: 0.34,
+      metalness: 0.66,
+      roughness: 0.26
+    });
+    const sealSpikes = [];
+    for (let i = 0; i < 6; i++) {
+      const spike = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.62, 5), sealSpikeMaterial);
+      const angle = (Math.PI * 2 * i) / 6;
+      spike.position.set(Math.cos(angle) * 1.14, 0, Math.sin(angle) * 1.14);
+      spike.rotation.z = Math.PI / 2;
+      spike.rotation.y = -angle;
+      scene.add(spike);
+      sealSpikes.push(spike);
+    }
+
+    const rings = [];
+    const ringGlows = [];
+    for (let i = 0; i < 12; i++) {
+      const radius = 2.45 + i * 0.8;
+      const ringGeometry = new THREE.TorusGeometry(radius, 0.018, 24, 420);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: i % 4 === 0 ? 0x9b6a28 : 0x4a4d64,
+        transparent: true,
+        opacity: i % 4 === 0 ? 0.68 : 0.46
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.rotation.x = Math.PI / 2;
+      ring.rotation.z = i * 0.1;
+      scene.add(ring);
+      rings.push(ring);
+
+      const glowGeometry = new THREE.TorusGeometry(radius, 0.055, 10, 240);
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: i % 4 === 0 ? 0xb37a2d : 0x6a7284,
+        transparent: true,
+        opacity: i % 4 === 0 ? 0.22 : 0.14,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      glow.rotation.x = Math.PI / 2;
+      glow.rotation.z = i * 0.1 + 0.04;
+      glow.userData.baseOpacity = glowMaterial.opacity;
+      scene.add(glow);
+      ringGlows.push(glow);
+    }
+
+    const branchRings = [];
+    const branchRingGlows = [];
+    Object.entries(branchConfig).forEach(([branch, config]) => {
+      const ringGeometry = new THREE.TorusGeometry(branch === 'main' ? 7.4 : branch === 'voss' ? 8.9 : 10.4, 0.032, 24, 480);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: config.ringColor,
+        transparent: true,
+        opacity: 0.68
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.rotation.x = Math.PI / 2 + config.inclination;
+      ring.rotation.z = branch === 'main' ? 0.12 : branch === 'voss' ? -0.4 : 0.65;
+      scene.add(ring);
+      branchRings.push(ring);
+
+      const glowGeometry = new THREE.TorusGeometry(branch === 'main' ? 7.4 : branch === 'voss' ? 8.9 : 10.4, 0.09, 10, 320);
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: config.color,
+        transparent: true,
+        opacity: 0.24,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      glow.rotation.x = Math.PI / 2 + config.inclination;
+      glow.rotation.z = branch === 'main' ? 0.12 : branch === 'voss' ? -0.4 : 0.65;
+      glow.userData.baseOpacity = glowMaterial.opacity;
+      scene.add(glow);
+      branchRingGlows.push(glow);
+    });
+
+    const nodeMeshes = [];
+    const figureMeshMap = new Map();
+    const colorMap = {
+      main: 0xe8b560,
+      voss: 0xc45a4a,
+      keepers: 0x7b9e87
+    };
+    const branchVisibleLimit = {
+      main: 5,
+      voss: 3,
+      keepers: 3
+    };
+
+    figures.forEach((figure) => {
+      const hiddenAtStart = figure.generation > branchVisibleLimit[figure.branch];
+      const size = keyFigures.has(figure.id)
+        ? (figure.generation === 11 ? 0.46 : 0.42)
+        : (figure.generation === 0 ? 0.5 : 0.28);
+      const geometry = new THREE.IcosahedronGeometry(size, keyFigures.has(figure.id) ? 2 : 1);
+      const material = new THREE.MeshStandardMaterial({
+        color: colorMap[figure.branch],
+        emissive: colorMap[figure.branch],
+        emissiveIntensity: keyFigures.has(figure.id) ? 0.34 : 0.22,
+        metalness: 0.5,
+        roughness: 0.22,
+        flatShading: true
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+
+      mesh.userData = { ...figure, x: 0, z: 0, hiddenAtStart };
+
+      scene.add(mesh);
+      nodeMeshes.push(mesh);
+      figureMeshMap.set(figure.id, mesh);
+
+      if (hiddenAtStart) {
+        mesh.visible = false;
+      }
+
+      const haloGeo = new THREE.SphereGeometry(size + (keyFigures.has(figure.id) ? 0.16 : 0.08), 18, 18);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: colorMap[figure.branch],
+        transparent: true,
+        opacity: keyFigures.has(figure.id) ? 0.22 : 0.16,
+        side: THREE.BackSide
+      });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      mesh.add(halo);
+
+      if (keyFigures.has(figure.id)) {
+        const sigilGeometry = new THREE.TorusGeometry(size + 0.18, 0.012, 12, 80);
+        const sigilMaterial = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: 0.34
+        });
+        const sigil = new THREE.Mesh(sigilGeometry, sigilMaterial);
+        sigil.rotation.x = Math.PI / 2;
+        mesh.add(sigil);
+
+        const outerHaloGeo = new THREE.SphereGeometry(size + 0.34, 20, 20);
+        const outerHaloMat = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: 0.08,
+          side: THREE.BackSide
+        });
+        const outerHalo = new THREE.Mesh(outerHaloGeo, outerHaloMat);
+        mesh.add(outerHalo);
+      }
+
+      const shardCount = keyFigures.has(figure.id) ? 4 : 2;
+      for (let i = 0; i < shardCount; i++) {
+        const shardGeometry = new THREE.OctahedronGeometry(size * (keyFigures.has(figure.id) ? 0.18 : 0.12), 0);
+        const shardMaterial = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: keyFigures.has(figure.id) ? 0.34 : 0.16
+        });
+        const shard = new THREE.Mesh(shardGeometry, shardMaterial);
+        const angle = (Math.PI * 2 * i) / shardCount;
+        shard.position.set(Math.cos(angle) * (size + 0.22), Math.sin(angle * 1.7) * 0.12, Math.sin(angle) * (size + 0.22));
+        shard.userData.rotationSpeed = 0.01 + i * 0.004;
+        mesh.add(shard);
+      }
+    });
+
+    const trailLines = [];
+    const trailLength = 34;
+    const trailHistory = new Map();
+    figures.forEach((figure) => {
+      trailHistory.set(figure.id, []);
+      const points = Array.from({ length: trailLength + 1 }, () => new THREE.Vector3(0, 0, 0));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color: colorMap[figure.branch],
+        transparent: true,
+        opacity: 0.42
+      });
+      const line = new THREE.Line(geometry, material);
+      if (figure.generation > branchVisibleLimit[figure.branch]) {
+        line.visible = false;
+      }
+      scene.add(line);
+      trailLines.push({ line, figureId: figure.id });
+    });
+
+    const particleCount = 900;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const r = 1.5 + Math.random() * 2;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      particlePositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      particlePositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      particlePositions[i * 3 + 2] = r * Math.cos(phi);
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({ color: 0xe8b560, size: 0.028, transparent: true, opacity: 0.44 });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    function makeRadialTexture(stops) {
+      const size = 256;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      stops.forEach((stop) => gradient.addColorStop(stop[0], stop[1]));
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      return texture;
+    }
+
+    const hazeTexture = makeRadialTexture([
+      [0, 'rgba(232,181,96,0.28)'],
+      [0.45, 'rgba(232,181,96,0.12)'],
+      [1, 'rgba(0,0,0,0)']
+    ]);
+    const hazeSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: hazeTexture,
+      transparent: true,
+      opacity: 0.32,
+      depthWrite: false
+    }));
+    hazeSprite.scale.set(46, 46, 1);
+    scene.add(hazeSprite);
+
+    const coolHazeTexture = makeRadialTexture([
+      [0, 'rgba(100,140,180,0.18)'],
+      [0.5, 'rgba(100,140,180,0.08)'],
+      [1, 'rgba(0,0,0,0)']
+    ]);
+    const coolHaze = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: coolHazeTexture,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false
+    }));
+    coolHaze.scale.set(62, 62, 1);
+    coolHaze.position.set(0, 0, -8);
+    scene.add(coolHaze);
+
+    const ambientLight = new THREE.AmbientLight(0x16161b, 0.9);
+    scene.add(ambientLight);
+
+    const mainLight = new THREE.DirectionalLight(0xf7e2be, 1.08);
+    mainLight.position.set(5, 11, 8);
+    scene.add(mainLight);
+
+    const backLight = new THREE.PointLight(0x4a3010, 0.55);
+    backLight.position.set(-3, 2, -5);
+    scene.add(backLight);
+
+    const fillLight = new THREE.PointLight(0x2c334c, 0.34);
+    fillLight.position.set(3, 4, 6);
+    scene.add(fillLight);
+
+    function updatePositions(deltaTime) {
+      nodeMeshes.forEach((mesh) => {
+        const data = mesh.userData;
+        if (data.hiddenAtStart && introRunning) return;
+        data.angle += data.speed * deltaTime * 60;
+        if (data.angle > Math.PI * 2) data.angle -= Math.PI * 2;
+
+        const cfg = branchConfig[data.branch];
+        const orbitX = Math.cos(data.angle) * data.radius;
+        const orbitZ = Math.sin(data.angle) * data.radius;
+        const tiltCos = Math.cos(cfg.inclination);
+        const tiltSin = Math.sin(cfg.inclination);
+        const x = orbitX;
+        const z = orbitZ * tiltCos - cfg.yShift;
+        const y = orbitZ * tiltSin + Math.sin(data.angle * cfg.wobble) * 0.28 + cfg.yShift;
+
+        mesh.position.set(x, y, z);
+        data.x = x;
+        data.z = z;
+        mesh.rotation.y += 0.006;
+        mesh.rotation.x += 0.002;
+        mesh.children.forEach((child) => {
+          if (child.userData && child.userData.rotationSpeed) {
+            child.rotation.y += child.userData.rotationSpeed;
+            child.rotation.x += child.userData.rotationSpeed * 0.45;
+          }
+        });
+
+        const trail = trailHistory.get(data.id);
+        trail.push({ x, y, z });
+        if (trail.length > trailLength) trail.shift();
+
+        const trailLine = trailLines.find((t) => t.figureId === data.id);
+        if (trailLine && trail.length > 1) {
+          const points = trail.map((p) => new THREE.Vector3(p.x, p.y, p.z));
+          trailLine.line.geometry.dispose();
+          trailLine.line.geometry = new THREE.BufferGeometry().setFromPoints(points);
+        }
+      });
+    }
+
+    function updateCamera() {
+      const x = Math.sin(cameraTheta) * Math.cos(cameraPhi) * cameraRadius;
+      const y = Math.sin(cameraPhi) * cameraRadius;
+      const z = Math.cos(cameraTheta) * Math.cos(cameraPhi) * cameraRadius;
+      camera.position.set(x, y, z);
+      camera.lookAt(0, 0, 0);
+    }
+
+    function setCameraTarget(theta, phi, radius) {
+      targetTheta = theta;
+      targetPhi = phi;
+      targetRadius = radius;
+    }
+
+    let lastTime = performance.now();
+
+    function animate(now) {
+      const delta = Math.min(0.033, (now - lastTime) / 1000);
+      lastTime = now;
+
+      if (introRunning) {
+        introProgress = Math.min(1, introProgress + delta / 4.8);
+        const eased = 1 - Math.pow(1 - introProgress, 3);
+        setCameraTarget(-0.52 + eased * 0.52, 0.72 - eased * 0.2, 30 - eased * 8);
+        if (introProgress >= 1) {
+          introRunning = false;
+          document.body.classList.remove('intro-running');
+          document.body.classList.add('intro-complete');
+          cameraTheta = targetTheta;
+          cameraPhi = targetPhi;
+          cameraRadius = targetRadius;
+          nodeMeshes.forEach((mesh) => {
+            if (mesh.userData.hiddenAtStart) {
+              mesh.visible = true;
+            }
+          });
+          trailLines.forEach(({ line, figureId }) => {
+            const figure = figures.find((item) => item.id === figureId);
+            if (figure && figure.generation > branchVisibleLimit[figure.branch]) {
+              line.visible = true;
+            }
+          });
+        }
+      }
+
+      if (!introRunning && autoRotate && !isDragging) {
+        targetTheta += 0.0026;
+      }
+
+      if (!isDragging) {
+        cameraTheta += (targetTheta - cameraTheta) * 0.08;
+        cameraPhi += (targetPhi - cameraPhi) * 0.08;
+        cameraRadius += (targetRadius - cameraRadius) * 0.08;
+      }
+
+      updateCamera();
+      updatePositions(delta);
+
+      const scale = 1 + Math.sin(now * 0.003) * 0.03;
+      core.scale.set(scale, scale, scale);
+      glow.scale.set(scale, scale, scale);
+      core.rotation.z += 0.004;
+      coreRing.rotation.z += 0.0016;
+      sealSpikes.forEach((spike, index) => {
+        const angle = (Math.PI * 2 * index) / 6 + now * 0.0002;
+        spike.position.set(Math.cos(angle) * 1.14, Math.sin(now * 0.0018 + index) * 0.02, Math.sin(angle) * 1.14);
+        spike.rotation.y = -angle;
+      });
+
+      if (activeFigureId !== null) {
+        const activeMesh = figureMeshMap.get(activeFigureId);
+        if (activeMesh && activeMesh.visible) {
+          const pulse = 1 + Math.sin(now * 0.005) * 0.06;
+          activeRing.visible = true;
+          activeHalo.visible = true;
+          activeRing.position.copy(activeMesh.position);
+          activeHalo.position.copy(activeMesh.position);
+          activeRing.rotation.x = Math.PI / 2;
+          activeRing.rotation.z += 0.01;
+          activeRing.scale.setScalar(pulse);
+          activeHalo.scale.setScalar(1.02 + Math.sin(now * 0.004) * 0.08);
+          activeRing.material.opacity = 0.62 + Math.sin(now * 0.006) * 0.16;
+          activeHalo.material.opacity = 0.18 + Math.sin(now * 0.004) * 0.08;
+        }
+      } else {
+        activeRing.visible = false;
+        activeHalo.visible = false;
+      }
+
+      stars.rotation.y += 0.00036;
+      stars.rotation.x += 0.00016;
+      particles.rotation.y += 0.007;
+      particles.rotation.x += 0.0034;
+      branchRings.forEach((ring, index) => {
+        ring.rotation.z += 0.00045 * (index % 2 === 0 ? 1 : -1);
+      });
+      ringGlows.forEach((glow, index) => {
+        glow.rotation.z += 0.00032 * (index % 2 === 0 ? 1 : -1);
+        const base = glow.userData.baseOpacity || 0.16;
+        glow.material.opacity = showOrbits ? base + Math.sin(now * 0.0016 + index) * 0.06 : 0;
+      });
+      branchRingGlows.forEach((glow, index) => {
+        glow.rotation.z += 0.00038 * (index % 2 === 0 ? 1 : -1);
+        const base = glow.userData.baseOpacity || 0.22;
+        glow.material.opacity = showOrbits ? base + Math.sin(now * 0.0012 + index) * 0.05 : 0;
+      });
+      updateLabels();
+      updateRelationLines();
+      updatePortraitPositions();
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const relatedList = document.getElementById('relatedList');
+    const labelLayer = document.getElementById('nodeLabels');
+    const labelMap = new Map();
+    const portraitOrbitLayer = document.getElementById('portraitOrbitLayer');
+    const portraitOrbitNodes = [];
+
+    keyFigures.forEach((id) => {
+      const figure = figureById.get(id);
+      const label = document.createElement('div');
+      label.className = 'node-label';
+      label.innerHTML = `<strong>${figure.name}</strong><span>${figure.era}</span>`;
+      labelLayer.appendChild(label);
+      labelMap.set(id, label);
+    });
+
+    orbitPortraits.forEach((entry) => {
+      const figure = figureById.get(entry.id);
+      if (!figure) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'portrait-orbit';
+      button.setAttribute('aria-label', `${figure.name} portrait`);
+      button.innerHTML = `<img src="${entry.src}" alt="${figure.name}">`;
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        focusFigure(entry.id);
+      });
+      portraitOrbitLayer.appendChild(button);
+      portraitOrbitNodes.push({ id: entry.id, el: button });
+    });
+
+    let viewportWidth = window.innerWidth;
+    let viewportHeight = window.innerHeight;
+
+    function projectToScreen(mesh) {
+      const vector = mesh.position.clone().project(camera);
+      return {
+        x: (vector.x * 0.5 + 0.5) * viewportWidth,
+        y: (-vector.y * 0.5 + 0.5) * viewportHeight,
+        visible: vector.z > -1 && vector.z < 1
+      };
+    }
+
+    function updatePortraitPositions() {
+      portraitOrbitNodes.forEach(({ id, el }) => {
+        const mesh = figureMeshMap.get(id);
+        if (!mesh || !mesh.visible) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
+        const vector = mesh.position.clone().project(camera);
+        const x = (vector.x * 0.5 + 0.5) * viewportWidth;
+        const y = (-vector.y * 0.5 + 0.5) * viewportHeight;
+        const within = vector.z > -1 && vector.z < 1 && x > -120 && x < viewportWidth + 120 && y > -120 && y < viewportHeight + 120;
+        if (!within) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        el.classList.add('visible');
+        el.classList.toggle('active', id === activeFigureId);
+      });
+    }
+
+    function updateLabels() {
+      if (viewportWidth <= 960) return;
+      labelMap.forEach((label, id) => {
+        const mesh = figureMeshMap.get(id);
+        if (!mesh || !mesh.visible) {
+          label.classList.remove('visible');
+          return;
+        }
+        const pos = projectToScreen(mesh);
+        label.style.left = `${pos.x}px`;
+        label.style.top = `${pos.y - 46}px`;
+        const shouldShow = (activeFigureId === id) || (hoverFigureId === id);
+        label.classList.toggle('visible', pos.visible && shouldShow);
+      });
+    }
+
+    function updateRelationLines() {
+      if (activeFigureId === null) {
+        relationLines.forEach((line) => { line.visible = false; });
+        return;
+      }
+      const relatedIds = relatedMap[activeFigureId] || [];
+      const activeMesh = figureMeshMap.get(activeFigureId);
+      if (!activeMesh) return;
+      relationLines.forEach((line, index) => {
+        const targetId = relatedIds[index];
+        if (!targetId) {
+          line.visible = false;
+          return;
+        }
+        const targetMesh = figureMeshMap.get(targetId);
+        if (!targetMesh || !targetMesh.visible) {
+          line.visible = false;
+          return;
+        }
+        const start = activeMesh.position.clone();
+        const end = targetMesh.position.clone();
+        const mid = start.clone().lerp(end, 0.5);
+        mid.y += 1.4;
+        const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+        const points = curve.getPoints(36);
+        line.geometry.dispose();
+        line.geometry = new THREE.BufferGeometry().setFromPoints(points);
+        line.visible = true;
+      });
+    }
+
+    function renderRelated(figureId) {
+      const ids = relatedMap[figureId] || [];
+      if (!ids.length) {
+        relatedList.innerHTML = '<button class="related-chip" type="button" data-related="0">Ranulf</button><button class="related-chip" type="button" data-related="21">Eleanor</button>';
+        return;
+      }
+
+      relatedList.innerHTML = ids.map((id) => {
+        const figure = figures.find((item) => item.id === id);
+        return `<button class="related-chip" type="button" data-related="${id}">${figure.name}</button>`;
+      }).join('');
+    }
+
+    function updateInfo(data) {
+      activeFigureId = data.id;
+      const portrait = portraitMap[data.id];
+      const portraitContainer = document.getElementById('infoPortrait');
+      const initials = data.name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase();
+      portraitContainer.innerHTML = portrait
+        ? `<img src="${portrait}" alt="${data.name}">`
+        : `<div class="info-portrait-fallback">${initials}</div>`;
+      const accent = document.getElementById('infoAccent');
+      accent.style.background = data.branch === 'main' ? 'var(--main)' : data.branch === 'voss' ? 'var(--voss)' : 'var(--keepers)';
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      document.body.classList.add(data.branch === 'main' ? 'branch-main' : data.branch === 'voss' ? 'branch-voss' : 'branch-keepers');
+      document.getElementById('infoName').textContent = data.name;
+      document.getElementById('infoDates').textContent = `${data.dates} · ${data.era}`;
+      document.getElementById('infoDesc').textContent = data.desc;
+      document.getElementById('infoBranch').textContent = branchLabel[data.branch];
+      document.getElementById('infoCard').classList.remove('minimized');
+      renderRelated(data.id);
+    }
+
+    function focusFigure(id) {
+      const mesh = figureMeshMap.get(id);
+      if (!mesh) return;
+      activeFigureId = id;
+      const data = mesh.userData;
+      const nextTheta = Math.atan2(data.x, data.z);
+      const nextPhi = 0.46;
+      const nextRadius = keyFigures.has(id) ? 16 : 18.5;
+      setCameraTarget(nextTheta, nextPhi, nextRadius);
+      updateInfo(data);
+      mesh.material.emissiveIntensity = 0.78;
+      setTimeout(() => {
+        mesh.material.emissiveIntensity = keyFigures.has(id) ? 0.34 : 0.22;
+      }, 360);
+      updateLabels();
+      updateRelationLines();
+    }
+
+    function onPointerSelect(clientX, clientY) {
+      const rect = container.getBoundingClientRect();
+      mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(nodeMeshes);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object;
+        const data = hit.userData;
+        focusFigure(data.id);
+      }
+    }
+
+    function onMouseDown(event) {
+      isDragging = true;
+      lastMouseX = event.clientX;
+      lastMouseY = event.clientY;
+      autoRotate = false;
+    }
+
+    function onMouseMove(event) {
+      if (!isDragging) {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        const hits = raycaster.intersectObjects(nodeMeshes);
+        const newHoverId = hits.length ? hits[0].object.userData.id : null;
+        if (newHoverId !== hoverFigureId) {
+          if (hoverFigureId !== null) {
+            const prev = figureMeshMap.get(hoverFigureId);
+            if (prev) prev.material.emissiveIntensity = keyFigures.has(hoverFigureId) ? 0.34 : 0.22;
+          }
+          hoverFigureId = newHoverId;
+          if (hoverFigureId !== null && hoverFigureId !== activeFigureId) {
+            const next = figureMeshMap.get(hoverFigureId);
+            if (next) next.material.emissiveIntensity = 0.5;
+          }
+          updateLabels();
+        }
+        return;
+      }
+      const deltaX = event.clientX - lastMouseX;
+      const deltaY = event.clientY - lastMouseY;
+      cameraTheta += deltaX * 0.01;
+      cameraPhi += deltaY * 0.01;
+      cameraPhi = Math.min(Math.PI / 2.2, Math.max(0.2, cameraPhi));
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      lastMouseX = event.clientX;
+      lastMouseY = event.clientY;
+    }
+
+    function onMouseUp() {
+      isDragging = false;
+      window.clearTimeout(onMouseUp._timer);
+      onMouseUp._timer = window.setTimeout(() => {
+        autoRotate = true;
+      }, 2800);
+    }
+
+    function onWheel(event) {
+      cameraRadius -= event.deltaY * 0.02;
+      cameraRadius = Math.min(35, Math.max(8, cameraRadius));
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      autoRotate = false;
+      window.clearTimeout(onWheel._timer);
+      onWheel._timer = window.setTimeout(() => {
+        autoRotate = true;
+      }, 1800);
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', () => {
+      cameraRadius = Math.max(8, cameraRadius - 1);
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+      cameraRadius = Math.min(35, cameraRadius + 1);
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('rotate-left').addEventListener('click', () => {
+      cameraTheta += 0.22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('rotate-right').addEventListener('click', () => {
+      cameraTheta -= 0.22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('reset-view').addEventListener('click', (event) => {
+      event.preventDefault();
+      cameraTheta = 0;
+      cameraPhi = 0.5;
+      cameraRadius = 22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      autoRotate = true;
+      activeFigureId = null;
+      document.getElementById('infoCard').classList.add('minimized');
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      updateLabels();
+      updateRelationLines();
+    });
+
+    document.getElementById('toggle-orbits').addEventListener('click', (event) => {
+      event.preventDefault();
+      showOrbits = !showOrbits;
+      document.body.classList.toggle('orbits-on', showOrbits);
+      rings.forEach((ring) => {
+        ring.material.opacity = showOrbits ? (ring.material.color.getHex() === 0x9b6a28 ? 0.68 : 0.46) : 0;
+      });
+      branchRings.forEach((ring) => {
+        ring.material.opacity = showOrbits ? 0.68 : 0;
+      });
+      ringGlows.forEach((glow) => {
+        glow.material.opacity = showOrbits ? (glow.userData.baseOpacity || 0.16) : 0;
+      });
+      branchRingGlows.forEach((glow) => {
+        glow.material.opacity = showOrbits ? (glow.userData.baseOpacity || 0.22) : 0;
+      });
+      trailLines.forEach(({ line }) => {
+        line.material.opacity = showOrbits ? 0.42 : 0.04;
+      });
+    });
+
+    document.getElementById('closeInfo').addEventListener('click', () => {
+      document.getElementById('infoCard').classList.add('minimized');
+      activeFigureId = null;
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      updateLabels();
+      updateRelationLines();
+    });
+
+    relatedList.addEventListener('click', (event) => {
+      const button = event.target.closest('.related-chip');
+      if (!button) return;
+      const id = Number(button.dataset.related);
+      if (Number.isNaN(id)) return;
+      focusFigure(id);
+    });
+
+    container.addEventListener('click', (event) => onPointerSelect(event.clientX, event.clientY));
+    container.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    container.addEventListener('wheel', onWheel, { passive: true });
+
+    container.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 1) {
+        const touch = event.touches[0];
+        isDragging = true;
+        lastMouseX = touch.clientX;
+        lastMouseY = touch.clientY;
+        autoRotate = false;
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (event) => {
+      if (!isDragging || event.touches.length !== 1) return;
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - lastMouseX;
+      const deltaY = touch.clientY - lastMouseY;
+      cameraTheta += deltaX * 0.01;
+      cameraPhi += deltaY * 0.01;
+      cameraPhi = Math.min(Math.PI / 2.2, Math.max(0.2, cameraPhi));
+      updateCamera();
+      lastMouseX = touch.clientX;
+      lastMouseY = touch.clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (event) => {
+      if (!isDragging) return;
+      if (event.changedTouches.length === 1) {
+        const touch = event.changedTouches[0];
+        onPointerSelect(touch.clientX, touch.clientY);
+      }
+      onMouseUp();
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      updateLabels();
+    });
+
+    updateCamera();
+    renderRelated(0);
+    updateLabels();
+  </script>
+</body>
+</html>
