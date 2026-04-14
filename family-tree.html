@@ -1,2031 +1,2490 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Hale Lineage — Family Tree — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="features.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>The Hale Dynasty — Celestial Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    :root {
-      --ink-bg: #14100c;
-      --paper-line: rgba(111, 76, 39, 0.24);
-      --paper-line-soft: rgba(214, 188, 143, 0.08);
-      --text-bright: #ebd8b7;
-      --text-mid: rgba(229,211,178,0.74);
-      --text-dim: rgba(183,145,75,0.34);
-      --accent-oxblood: rgba(164,89,70,0.82);
-      --accent-brass: #C8A83C;
-      --accent-blue: rgba(116,145,165,0.78);
-      --tree-panel-bg: linear-gradient(180deg, rgba(236,223,198,0.94), rgba(209,184,145,0.94));
-      --tree-panel-line: rgba(100, 72, 43, 0.2);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    :root {
+      --bg: #020202;
+      --gold: #e8b560;
+      --ivory: rgba(255, 248, 236, 0.95);
+      --muted: rgba(255, 248, 236, 0.58);
+      --line: rgba(232, 181, 96, 0.22);
+      --glass: rgba(7, 7, 10, 0.62);
+      --glass-strong: rgba(6, 6, 9, 0.82);
+      --main: #e8b560;
+      --voss: #c45a4a;
+      --keepers: #7b9e87;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       background:
-        radial-gradient(circle at 12% 12%, rgba(111,47,36,0.08), transparent 18%),
-        radial-gradient(circle at 86% 10%, rgba(79,102,125,0.07), transparent 20%),
-        linear-gradient(180deg, #17110c 0%, #0e0b08 100%);
-      color: #C8A050;
-      font-family: Georgia, 'Times New Roman', serif;
-    }
-
-    /* ── NAVIGATION ──────────────────────────────────────────── */
-    .top-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(244,236,220,0.84);
-      border-bottom: 1px solid rgba(82,57,33,0.14);
-      padding: 10px 30px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-family: 'Courier New', monospace;
-      font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase;
-      backdrop-filter: blur(8px);
-    }
-    .top-nav a { color: rgba(94,66,38,0.68); text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #6f2f24; }
-    .top-nav .center { color: rgba(94,66,38,0.34); font-size: 0.9em; }
-
-    /* ── HEADER ──────────────────────────────────────────────── */
-    .tree-header {
-      position: fixed; top: 96px; right: 16px; left: auto; z-index: 190;
-      width: min(360px, calc(100vw - 32px));
-      padding: 0;
-      text-align: left;
-      pointer-events: none;
-    }
-    .tree-header.compact {
-      width: min(320px, calc(100vw - 32px));
-    }
-    .tree-header-inner {
-      margin: 0;
-      padding: 16px 18px 14px;
-      background:
-        var(--tree-panel-bg),
-        radial-gradient(circle at 88% 14%, rgba(164,89,70,0.08), transparent 18%);
-      border: 1px solid var(--tree-panel-line);
-      box-shadow: 0 18px 34px rgba(0,0,0,0.22);
-      position: relative;
-      pointer-events: auto;
-    }
-    .tree-header.compact .tree-header-inner {
-      padding-bottom: 12px;
-    }
-    .tree-header-inner::before {
-      content: '';
-      position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      pointer-events: none;
-    }
-    .tree-header-inner::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 18px;
-      right: 18px;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(164,89,70,0.85), rgba(215,186,134,0.18), transparent 78%);
-    }
-    .tree-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.45em, 2.7vw, 2.25em);
-      color: #4a3320;
-      letter-spacing: 0.06em;
-      text-shadow: none;
-      margin-bottom: 8px;
-      font-weight: 600;
-      line-height: 1.1;
-    }
-    .tree-header.compact .tree-title {
-      font-size: clamp(1.08em, 2.1vw, 1.45em);
-      margin-bottom: 4px;
-      letter-spacing: 0.05em;
-    }
-    .tree-subtitle {
-      color: rgba(70,49,30,0.78);
-      font-size: 0.83em;
-      letter-spacing: 0.03em;
-      line-height: 1.58;
-      max-width: 30ch;
-    }
-    .tree-header.compact .tree-subtitle {
-      font-size: 0.72em;
-      max-width: 28ch;
-      margin: 0;
-    }
-    .tree-legend {
-      margin-top: 12px;
-      display: flex; justify-content: flex-start; gap: 10px;
-      flex-wrap: wrap;
-      font-family: 'Courier New', monospace;
-      font-size: 0.58em; letter-spacing: 0.08em; text-transform: uppercase;
-      color: rgba(94,66,38,0.48);
-      pointer-events: auto;
-    }
-    .tree-header.compact .tree-legend {
-      margin-top: 8px;
-      gap: 8px;
-      font-size: 0.54em;
-    }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .tree-guide {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      text-align: left;
-      pointer-events: auto;
-    }
-    .tree-header.compact .tree-guide {
-      display: none;
-    }
-    .tree-guide-card {
-      border: 1px solid rgba(82,57,33,0.14);
-      background: rgba(255,255,255,0.22);
-      padding: 10px 12px;
-    }
-    .tree-guide-kicker {
-      display: block;
-      font-family: 'Courier New', monospace;
-      font-size: 0.54em;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(164,89,70,0.72);
-      margin-bottom: 6px;
-    }
-    .tree-guide-copy {
-      display: block;
-      font-size: 0.76em;
-      line-height: 1.55;
-      color: rgba(55,38,22,0.78);
-    }
-    .tree-header-actions {
-      margin-top: 10px;
-      display: flex;
-      justify-content: flex-start;
-      gap: 10px;
-      pointer-events: auto;
-    }
-    .tree-jump-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .tree-route-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 10px;
-      pointer-events: auto;
-    }
-    .tree-route-card {
-      border: 1px solid rgba(82,57,33,0.14);
-      background: rgba(255,255,255,0.16);
-      padding: 10px 11px;
-      text-align: left;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s, transform 0.18s;
-    }
-    .tree-route-card:hover {
-      border-color: rgba(111,47,36,0.26);
-      background: rgba(255,255,255,0.24);
-      transform: translateY(-1px);
-    }
-    .tree-route-kicker {
-      display: block;
-      font-family: 'Courier New', monospace;
-      font-size: 0.5em;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(164,89,70,0.66);
-      margin-bottom: 5px;
-    }
-    .tree-route-copy {
-      display: block;
-      font-size: 0.72em;
-      line-height: 1.45;
-      color: rgba(55,38,22,0.82);
-    }
-    .tree-jump-chip {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(82,57,33,0.16);
-      color: rgba(70,49,30,0.72);
-      font-family: 'Courier New', monospace;
-      font-size: 0.54em;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 7px 10px;
-      cursor: pointer;
-      transition: border-color 0.18s, color 0.18s, background 0.18s, transform 0.18s;
-    }
-    .tree-jump-chip:hover {
-      color: var(--text-bright);
-      border-color: rgba(206,173,127,0.3);
-      background: rgba(111,47,36,0.05);
-      transform: translateY(-1px);
-    }
-    .tree-header-btn {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(82,57,33,0.18);
-      color: rgba(70,49,30,0.74);
-      font-family: 'Courier New', monospace;
-      font-size: 0.56em;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 8px 12px;
-      cursor: pointer;
-      transition: border-color 0.18s, color 0.18s, background 0.18s;
-    }
-    .tree-header-btn:hover {
-      color: var(--text-bright);
-      border-color: rgba(206,173,127,0.3);
-      background: rgba(111,47,36,0.05);
-    }
-    .tree-header.compact .tree-header-btn {
-      padding: 7px 11px;
-    }
-
-    /* ── TREE VIEWPORT ───────────────────────────────────────── */
-    #treeViewport {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      overflow: auto;
-      cursor: grab;
-    }
-    #treeViewport:active { cursor: grabbing; }
-    #treeViewport svg { display: block; }
-
-    /* ── SCROLL HINT ──────────────────────────────────────────── */
-    .scroll-hint {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-family: 'Courier New', monospace;
-      font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(200,168,60,0.28);
-      pointer-events: none;
-      z-index: 100;
-    }
-
-    /* ── TOOLTIP ──────────────────────────────────────────────── */
-    #tooltip {
-      position: fixed;
-      width: 270px;
-      background:
-        linear-gradient(180deg, rgba(236,223,198,0.96), rgba(209,184,145,0.96)),
-        radial-gradient(circle at top right, rgba(111,47,36,0.08), transparent 20%);
-      border: 1px solid rgba(82,57,33,0.18);
-      padding: 14px 16px;
-      pointer-events: none;
-      z-index: 300;
-      opacity: 0;
-      transition: opacity 0.15s;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.24);
-    }
-    #tooltip.visible { opacity: 1; }
-    #tt-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.9em; color: #4a3320; letter-spacing: 0.06em;
-      margin-bottom: 4px;
-    }
-    #tt-era {
-      font-family: 'Courier New', monospace;
-      font-size: 0.66em; letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(111,47,36,0.56); margin-bottom: 10px;
-    }
-    #tt-desc {
-      font-size: 0.82em; line-height: 1.7; color: rgba(55,38,22,0.78);
-    }
-    #tt-link {
-      display: block; margin-top: 10px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.66em; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(82,57,33,0.58);
-    }
-    #tt-portrait {
-      display: none;
-      float: right;
-      width: 68px; height: 68px;
-      border-radius: 50%;
-      border: 1px solid rgba(82,57,33,0.18);
-      object-fit: cover;
-      margin: 0 0 10px 12px;
-      filter: sepia(60%) brightness(0.8) contrast(1.1);
-      shape-outside: circle();
-    }
-    #tt-portrait.visible { display: block; }
-
-    /* ── HOME BUTTON ─────────────────────────────────────────── */
-    .home-float {
-      position: fixed; bottom: 28px; right: 28px; z-index: 400;
-      width: 44px; height: 44px;
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.18);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      transition: all 0.22s;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.24);
-    }
-    .home-float:hover { border-color: #C8A83C; transform: scale(1.1); }
-    .home-float svg { width: 20px; height: 20px; }
-
-    /* ── SECRET LINK ─────────────────────────────────────────── */
-    #secret-nav-link { display: none; }
-
-    /* ── VIEW TOGGLE BUTTON ───────────────────────────────────── */
-    #view-toggle {
-      position: fixed; top: 52px; right: 16px; z-index: 210;
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.18);
-      color: rgba(82,57,33,0.64);
-      font-family: 'Courier New', monospace;
-      font-size: 0.6em; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
-      backdrop-filter: blur(6px);
-    }
-    #view-toggle:hover { color: #6f2f24; border-color: rgba(111,47,36,0.34); }
-
-    /* ── LIST VIEW ────────────────────────────────────────────── */
-    #list-view {
-      display: none;
-      position: fixed;
-      top: 40px; left: 0; right: 0; bottom: 0;
-      overflow-y: auto;
-      background:
-        radial-gradient(circle at 12% 10%, rgba(164,89,70,0.08), transparent 24%),
-        linear-gradient(180deg, #17110c 0%, #0e0b08 100%);
-      z-index: 150;
-      padding: 60px 20px 100px;
-    }
-    #list-view.visible { display: block; }
-    .lv-intro {
-      max-width: 980px;
-      margin: 0 auto 28px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .lv-mobile-banner {
-      max-width: 980px;
-      margin: 0 auto 18px;
-      padding: 16px 18px;
-      border: 1px solid rgba(200,168,60,0.12);
-      background: rgba(244,236,220,0.08);
-      display: none;
-    }
-    .lv-mobile-kicker {
-      display: block;
-      margin-bottom: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.56em;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(221,194,140,0.5);
-    }
-    .lv-mobile-copy {
-      display: block;
-      font-size: 0.84em;
-      line-height: 1.7;
-      color: rgba(235,216,183,0.84);
-    }
-    .lv-intro-card {
-      background: rgba(244,236,220,0.07);
-      border: 1px solid rgba(200,168,60,0.12);
-      padding: 14px 16px;
-    }
-    .lv-intro-kicker {
-      display: block;
-      font-family: 'Courier New', monospace;
-      font-size: 0.54em;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(221,194,140,0.44);
-      margin-bottom: 8px;
-    }
-    .lv-intro-copy {
-      display: block;
-      font-size: 0.8em;
-      line-height: 1.65;
-      color: rgba(235,216,183,0.82);
-    }
-    .lv-era-block {
-      margin-bottom: 36px;
-      max-width: 980px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .lv-era-heading {
-      font-family: 'Courier New', monospace;
-      font-size: 0.62em; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(221,194,140,0.42);
-      border-bottom: 1px solid rgba(200,168,60,0.08);
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-    }
-    .lv-person {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(200,168,60,0.06);
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.15s;
-    }
-    .lv-person:hover { background: rgba(200,168,60,0.05); }
-    .lv-portrait {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(28,21,15,0.94);
-      border: 1px solid rgba(200,168,60,0.16);
+        radial-gradient(circle at 50% 24%, rgba(232,181,96,0.08), transparent 26%),
+        radial-gradient(circle at 15% 75%, rgba(196,90,74,0.08), transparent 26%),
+        linear-gradient(180deg, #020202 0%, #050507 100%);
       overflow: hidden;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--ivory);
     }
-    .lv-portrait img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: sepia(40%) brightness(0.85);
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(180deg, transparent 0, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 160px 160px;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 1;
     }
-    .lv-dot {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(28,21,15,0.94);
-      border: 1px solid rgba(200,168,60,0.14);
-      display: flex; align-items: center; justify-content: center;
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.86)),
+        url("portraits/background%20.jpg") center center / cover no-repeat;
+      opacity: 0.16;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
     }
-    .lv-dot-inner {
-      width: 8px; height: 8px; border-radius: 50%;
+
+    .branch-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 320ms ease;
+      background:
+        radial-gradient(circle at 60% 40%, rgba(232,181,96,0.16), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(232,181,96,0.08), transparent 36%);
     }
-    .lv-text { flex: 1; min-width: 0; }
-    .lv-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.84em; color: #ebd8b7;
+
+    body.branch-main .branch-vignette {
+      opacity: 0.28;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(232,181,96,0.22), transparent 40%),
+        radial-gradient(circle at 18% 82%, rgba(232,181,96,0.12), transparent 36%);
+    }
+
+    body.branch-voss .branch-vignette {
+      opacity: 0.3;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(196,90,74,0.24), transparent 42%),
+        radial-gradient(circle at 18% 82%, rgba(196,90,74,0.12), transparent 36%);
+    }
+
+    body.branch-keepers .branch-vignette {
+      opacity: 0.28;
+      background:
+        radial-gradient(circle at 62% 38%, rgba(123,158,135,0.22), transparent 42%),
+        radial-gradient(circle at 18% 82%, rgba(123,158,135,0.12), transparent 36%);
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .ui {
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+      min-height: 100vh;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.35rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.82) 0%, transparent 100%);
+      pointer-events: auto;
+      z-index: 20;
+    }
+
+    .top-bar::after {
+      content: "";
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,181,96,0.18), transparent);
+      pointer-events: none;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav a,
+    .nav button {
+      background: none;
+      border: 0;
+      color: rgba(255,255,255,0.62);
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 180ms ease;
+    }
+
+    .nav a:hover,
+    .nav button:hover {
+      color: var(--gold);
+    }
+
+    .connect-toggle.active {
+      color: rgba(255,255,255,0.95);
+      text-shadow: 0 0 18px rgba(232,181,96,0.5);
+    }
+
+    .hero-overlay {
+      position: fixed;
+      top: 5.6rem;
+      left: 2rem;
+      max-width: 20rem;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    .hero-overlay::before {
+      content: "";
+      position: absolute;
+      inset: -1.2rem -1.4rem -1.4rem;
+      background: radial-gradient(circle at 20% 20%, rgba(232,181,96,0.08), transparent 36%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+      content: "";
+      width: 2.4rem;
+      height: 1px;
+      background: rgba(232,181,96,0.34);
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.65rem, 3.9vw, 3rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.96);
+      text-shadow: 0 20px 70px rgba(0,0,0,0.65);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 1rem;
+      max-width: 18rem;
+      font-size: 0.72rem;
+      line-height: 1.52;
+      color: var(--muted);
+      text-wrap: balance;
+    }
+
+    .hero-meta {
+      margin-top: 0.7rem;
+      font-size: 0.56rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.44);
+    }
+
+    .node-labels {
+      position: fixed;
+      inset: 0;
+      z-index: 14;
+      pointer-events: none;
+    }
+
+    .portrait-orbit-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 13;
+      pointer-events: none;
+    }
+
+    .portrait-orbit {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(232,181,96,0.45);
+      background: rgba(10,10,12,0.7);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.45),
+        0 0 18px rgba(232,181,96,0.18);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 240ms ease, box-shadow 240ms ease;
+    }
+
+    .portrait-orbit::after {
+      content: "";
+      position: absolute;
+      inset: -12%;
+      border-radius: 50%;
+      border: 1px solid rgba(232,181,96,0.28);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .portrait-orbit img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .portrait-orbit.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: portraitPulse 3.8s ease-in-out infinite;
+    }
+
+    .portrait-orbit.active {
+      border-color: rgba(232,181,96,0.9);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.55),
+        0 0 26px rgba(232,181,96,0.28);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    @keyframes portraitPulse {
+      0%, 100% { box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 18px rgba(232,181,96,0.18); }
+      50% { box-shadow: 0 14px 34px rgba(0,0,0,0.55), 0 0 30px rgba(232,181,96,0.28); }
+    }
+
+    .node-label {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: grid;
+      gap: 0.14rem;
+      min-width: 5rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .node-label.visible {
+      opacity: 1;
+      transform: translate(-50%, calc(-50% - 6px));
+      animation: labelPulse 2.4s ease-in-out infinite;
+    }
+
+    .node-label strong {
+      color: rgba(255,248,236,0.94);
+      font-family: "Playfair Display", serif;
+      font-size: 0.9rem;
+      line-height: 0.94;
+      font-weight: 500;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .node-label span {
+      color: rgba(232,181,96,0.86);
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    @keyframes labelPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.78; }
+    }
+
+    .archive-markers {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .marker {
+      position: absolute;
+      display: grid;
+      gap: 0.35rem;
+      max-width: 13rem;
+      color: rgba(255,248,236,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.58rem;
+    }
+
+    .marker strong {
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: 0.24em;
+    }
+
+    .marker span {
+      color: rgba(255,248,236,0.4);
+      letter-spacing: 0.08em;
+      text-transform: none;
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    .marker-origin { top: 10rem; right: 9rem; text-align: right; }
+    .marker-keepers { bottom: 13rem; left: 3rem; }
+    .marker-departure { top: 50%; right: 3rem; transform: translateY(-50%); text-align: right; }
+    .marker-return { bottom: 8.2rem; right: 13rem; text-align: right; }
+
+    .sigil-chip {
+      position: fixed;
+      top: 7rem;
+      right: 2rem;
+      z-index: 16;
+      width: 92px;
+      height: 116px;
+      border-radius: 28px;
+      border: 1px solid rgba(232,181,96,0.16);
+      background:
+        linear-gradient(180deg, rgba(13,13,18,0.82), rgba(7,7,10,0.6)),
+        radial-gradient(circle at top, rgba(232,181,96,0.08), transparent 40%);
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.42);
+    }
+
+    .sigil-chip::before {
+      content: "H";
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(232,181,96,0.12);
+      color: var(--gold);
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      line-height: 1;
+      box-shadow: inset 0 0 0 1px rgba(232,181,96,0.12);
+    }
+
+    .sigil-chip::after {
+      content: "Hale Marsh Collection";
+      position: absolute;
+      bottom: 0.9rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      text-align: center;
+      color: rgba(255,248,236,0.4);
+      font-size: 0.44rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .side-panel {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.54);
+      backdrop-filter: blur(14px);
+      border-radius: 999px;
+      padding: 0.75rem;
+      border: 1px solid rgba(232,181,96,0.14);
+      pointer-events: auto;
+      z-index: 20;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .panel-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .panel-btn button {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.62);
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      width: 42px;
+      height: 42px;
+    }
+
+    .panel-btn button:hover {
+      background: rgba(232,181,96,0.14);
+      color: var(--gold);
+    }
+
+    .info-card {
+      position: fixed;
+      bottom: 1.75rem;
+      left: 1.75rem;
+      width: min(24rem, calc(100vw - 3.5rem));
+      background: linear-gradient(180deg, rgba(8,8,10,0.74), rgba(5,5,7,0.9));
+      backdrop-filter: blur(24px);
+      border-radius: 26px;
+      padding: 1.3rem 1.35rem 1.2rem;
+      border: 1px solid rgba(232,181,96,0.16);
+      pointer-events: auto;
+      z-index: 20;
+      transform: translateX(0);
+      transition: transform 280ms ease, opacity 280ms ease;
+      box-shadow: 0 26px 80px rgba(0,0,0,0.46);
+      --branch-accent: var(--gold);
+    }
+
+    .info-card.minimized {
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+
+    .info-kicker {
+      color: var(--gold);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-accent {
+      width: 38px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--branch-accent);
+      box-shadow: 0 0 18px rgba(232,181,96,0.5);
+      margin-bottom: 0.6rem;
+    }
+
+    .info-figure {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-portrait {
+      width: 84px;
+      height: 104px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(232,181,96,0.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        radial-gradient(circle at top, rgba(232,181,96,0.08), transparent 44%);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .info-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(1.04);
+    }
+
+    .info-portrait-fallback {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: rgba(255,248,236,0.82);
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
       letter-spacing: 0.04em;
     }
-    .lv-name.lv-key { color: #C8A83C; }
-    .lv-dates {
-      font-family: 'Courier New', monospace;
-      font-size: 0.58em; letter-spacing: 0.1em;
-      color: rgba(221,194,140,0.4);
-      margin-top: 2px;
-    }
-    .lv-arrow {
-      font-family: 'Courier New', monospace;
-      font-size: 0.75em; color: rgba(221,194,140,0.26);
-      flex-shrink: 0;
+
+    .info-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.7rem;
+      line-height: 0.95;
+      font-weight: 500;
+      margin-bottom: 0.45rem;
+      color: var(--ivory);
+      max-width: 12ch;
     }
 
-    /* ── TREE SEARCH ─────────────────────────────────────────── */
-    #tree-search-wrap {
+    .info-card .dates {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.46);
+      margin-bottom: 0.85rem;
+    }
+
+    .info-card .desc {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.74);
+      line-height: 1.62;
+      margin-bottom: 0.9rem;
+    }
+
+    .info-card .branch {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.2rem 0.65rem;
+      background: rgba(232,181,96,0.12);
+      border-radius: 999px;
+      color: var(--gold);
+    }
+
+    .info-thread {
+      margin-top: 0.95rem;
+      padding-top: 0.95rem;
+      border-top: 1px solid rgba(232,181,96,0.12);
+    }
+
+    .info-thread-label {
+      color: rgba(255,255,255,0.42);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .related-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .related-chip {
+      min-height: 30px;
+      padding: 0 0.72rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232,181,96,0.16);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.78);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .related-chip:hover {
+      border-color: rgba(232,181,96,0.3);
+      color: var(--gold);
+    }
+
+    .info-close {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.85rem;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.38);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .intro-fade {
       position: fixed;
-      top: 52px;
-      right: 118px;
-      z-index: 210;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.42) 44%, rgba(0,0,0,0.88) 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 8;
+      transition: opacity 1400ms ease;
+    }
+
+    body.intro-running .intro-fade {
+      opacity: 1;
+    }
+
+    body.intro-complete .intro-fade {
+      opacity: 0;
+    }
+
+    .constellation-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 320ms ease;
+      background:
+        radial-gradient(circle at 25% 35%, rgba(232,181,96,0.12), transparent 26%),
+        radial-gradient(circle at 70% 62%, rgba(123,158,135,0.1), transparent 28%),
+        radial-gradient(circle at 78% 28%, rgba(196,90,74,0.12), transparent 30%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='900' viewBox='0 0 1400 900' fill='none'><path d='M120 200 C280 120 480 120 640 200' stroke='rgba(232,181,96,0.15)' stroke-width='1.4'/><path d='M760 260 C940 160 1160 180 1290 260' stroke='rgba(232,181,96,0.12)' stroke-width='1.2'/><path d='M180 540 C320 420 520 420 680 520' stroke='rgba(232,181,96,0.1)' stroke-width='1.2'/><path d='M840 620 C980 520 1180 520 1320 620' stroke='rgba(232,181,96,0.1)' stroke-width='1.2'/><circle cx='120' cy='200' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='640' cy='200' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='760' cy='260' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='1290' cy='260' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='180' cy='540' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='680' cy='520' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='840' cy='620' r='3' fill='rgba(232,181,96,0.3)'/><circle cx='1320' cy='620' r='3' fill='rgba(232,181,96,0.3)'/></svg>") center / cover no-repeat;
+    }
+
+    body.orbits-on .constellation-overlay {
+      opacity: 0.38;
+    }
+
+    .legend {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.75rem;
+      background: rgba(0,0,0,0.52);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      padding: 0.65rem 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      pointer-events: auto;
+      z-index: 20;
+      font-size: 0.58rem;
+      border: 1px solid rgba(232,181,96,0.12);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.4);
+    }
+
+    .legend strong {
+      color: rgba(255,255,255,0.84);
+      font-weight: 500;
+      margin-right: 0.45rem;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+
+    .legend-item {
       display: flex;
       align-items: center;
-      gap: 4px;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    #tree-search {
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.18);
-      color: rgba(70,49,30,0.82);
-      font-family: 'Courier New', monospace;
-      font-size: 0.6em;
-      letter-spacing: 0.1em;
-      padding: 6px 10px;
-      width: 200px;
-      outline: none;
-      backdrop-filter: blur(6px);
-      -webkit-appearance: none;
-    }
-    #tree-search::placeholder { color: rgba(82,57,33,0.34); }
-    #tree-search:focus { border-color: rgba(111,47,36,0.34); }
-    #tree-search-clear {
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.16);
-      color: rgba(82,57,33,0.54);
-      font-size: 0.65em;
-      padding: 5px 8px;
+
+    .legend-branch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232,181,96,0.2);
+      background: rgba(8,8,12,0.55);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       cursor: pointer;
-      backdrop-filter: blur(6px);
+      transition: all 180ms ease;
     }
-    #tree-search-clear:hover { color: #6f2f24; border-color: rgba(111,47,36,0.32); }
 
-    /* ── PAGE OVERLAY ────────────────────────────────────────── */
-    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .legend-branch:hover {
+      color: rgba(255,255,255,0.9);
+      border-color: rgba(232,181,96,0.5);
+    }
 
-    /* ── PROFILE PANEL ───────────────────────────────────────── */
-    #profile-panel {
+    .legend-branch.active {
+      background: rgba(232,181,96,0.18);
+      color: rgba(255,255,255,0.95);
+      border-color: rgba(232,181,96,0.8);
+      box-shadow: 0 0 16px rgba(232,181,96,0.28);
+    }
+
+    .instructions {
       position: fixed;
-      top: 0; right: 0; bottom: 0;
-      width: 360px;
-      background:
-        linear-gradient(180deg, rgba(236,223,198,0.96), rgba(209,184,145,0.96)),
-        radial-gradient(circle at top right, rgba(111,47,36,0.08), transparent 22%);
-      border-left: 1px solid rgba(82,57,33,0.16);
-      z-index: 500;
-      transform: translateX(100%);
-      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
-      display: flex; flex-direction: column;
-      overflow: hidden;
+      bottom: 1.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.58rem;
+      color: rgba(255,255,255,0.32);
+      background: rgba(0,0,0,0.42);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
-    #profile-panel.open { transform: translateX(0); }
-    #profile-panel-close {
-      position: absolute; top: 14px; right: 16px;
-      background: none; border: none;
-      color: rgba(82,57,33,0.44);
-      font-size: 1.3em; cursor: pointer;
-      font-family: 'Courier New', monospace;
-      transition: color 0.2s;
-      z-index: 10;
-    }
-    #profile-panel-close:hover { color: #6f2f24; }
-    #pp-portrait-wrap {
-      flex-shrink: 0;
-      width: 100%; height: 260px;
-      overflow: hidden;
-      position: relative;
-    }
-    #pp-portrait-wrap::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-      background: linear-gradient(transparent, rgba(209,184,145,0.94));
-    }
-    #pp-portrait-img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      filter: sepia(55%) brightness(0.75) contrast(1.15);
-      display: block;
-    }
-    #pp-portrait-placeholder {
-      width: 100%; height: 100%;
-      background: rgba(58,44,31,0.18);
-      display: flex; align-items: center; justify-content: center;
-    }
-    #pp-portrait-placeholder svg { opacity: 0.08; }
-    #pp-era-bar {
-      height: 2px;
-      flex-shrink: 0;
-      background: rgba(111,47,36,0.12);
-      position: relative;
-    }
-    #pp-era-stripe {
-      position: absolute; top: 0; left: 0;
-      height: 2px; width: 100%;
-      opacity: 0.6;
-    }
-    #pp-body {
-      flex: 1; overflow-y: auto;
-      padding: 20px 24px 28px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(200,168,60,0.1) transparent;
-    }
-    #pp-era-label {
-      font-family: 'Courier New', monospace;
-      font-size: 0.6em; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(111,47,36,0.54);
-      margin-bottom: 6px;
-    }
-    #pp-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 1.35em; color: #4a3320;
-      letter-spacing: 0.04em; line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    #pp-dates {
-      font-family: Georgia, serif;
-      font-size: 0.78em; font-style: italic;
-      color: rgba(82,57,33,0.5);
-      margin-bottom: 16px;
-    }
-    #pp-divider {
-      height: 1px;
-      background: rgba(82,57,33,0.08);
-      margin-bottom: 16px;
-    }
-    #pp-desc {
-      font-size: 0.88em; line-height: 1.92;
-      color: rgba(55,38,22,0.82);
-      font-family: Georgia, serif;
-    }
-    #pp-actions {
-      flex-shrink: 0;
-      padding: 14px 24px 22px;
-      display: flex; flex-direction: column; gap: 8px;
-      border-top: 1px solid rgba(82,57,33,0.08);
-    }
-    .pp-btn {
-      width: 100%;
-      padding: 10px 16px;
-      background: transparent;
-      border: 1px solid rgba(82,57,33,0.16);
-      color: rgba(82,57,33,0.7);
-      font-family: 'Courier New', monospace;
-      font-size: 0.65em; letter-spacing: 0.14em; text-transform: uppercase;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .pp-btn:hover {
-      border-color: rgba(111,47,36,0.34);
-      color: #6f2f24;
-      background: rgba(111,47,36,0.05);
-    }
-    .pp-btn.primary {
-      border-color: rgba(111,47,36,0.26);
-      color: rgba(82,57,33,0.82);
-    }
-    #profile-backdrop {
-      position: fixed; inset: 0; z-index: 499;
-      display: none;
-    }
-    #profile-backdrop.open { display: block; }
-    @media (max-width: 600px) {
-      /* Profile panel slides from bottom on mobile */
-      #profile-panel {
-        top: auto;
-        right: 0; left: 0; bottom: 0;
-        width: 100%;
-        height: 72vh;
-        transform: translateY(100%);
-        border-left: none;
-        border-top: 1px solid rgba(200,168,60,0.18);
-        border-radius: 16px 16px 0 0;
-      }
-      #profile-panel.open { transform: translateY(0); }
-      #pp-portrait-wrap { height: 180px; }
-      #profile-panel { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
 
-      .top-nav { padding: 8px 14px; font-size: 0.6em; }
-      .top-nav .center { display: none; }
-      #view-toggle {
-        top: 52px;
-        right: 14px;
-        width: 122px;
-        padding: 7px 10px;
-        text-align: center;
+    .connect-hint {
+      position: fixed;
+      bottom: 4.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.75);
+      background: rgba(6,6,8,0.7);
+      border: 1px solid rgba(232,181,96,0.28);
+      border-radius: 999px;
+      padding: 0.3rem 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms ease, transform 240ms ease;
+      z-index: 20;
+    }
+
+    .connect-hint.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .connection-reveal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 40%, rgba(8,8,10,0.4), rgba(2,2,3,0.86));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      transition: opacity 320ms ease;
+    }
+
+    .connection-reveal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .connection-card {
+      width: min(520px, 88vw);
+      padding: 1.6rem 1.8rem 1.8rem;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(232,181,96,0.16), transparent 46%),
+        linear-gradient(180deg, rgba(10,10,12,0.96), rgba(4,4,6,0.95));
+      border-radius: 22px;
+      border: 1px solid rgba(232,181,96,0.28);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.55);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .connection-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at center, rgba(232,181,96,0.16), transparent 62%);
+      opacity: 0.6;
+      transform: rotate(18deg);
+      pointer-events: none;
+    }
+
+    .connection-header {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.72);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .connection-header::before,
+    .connection-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(232,181,96,0.3);
+    }
+
+    .connection-names {
+      margin-top: 1rem;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+      line-height: 1.05;
+      color: rgba(255,255,255,0.96);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .connection-link {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin: 0 0.35rem;
+    }
+
+    .connection-text {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: rgba(255,248,236,0.76);
+    }
+
+    .connection-meta {
+      margin-top: 0.9rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.6);
+    }
+
+    .connection-close {
+      position: absolute;
+      top: 0.9rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+      .hero-overlay {
+        top: 5.3rem;
+        left: 1.25rem;
+        right: 1.25rem;
+        max-width: 16.5rem;
       }
-      #tree-search-wrap {
-        left: 14px;
-        right: 148px;
-        top: 52px;
+
+      .legend {
+        left: 1.25rem;
+        right: 1.25rem;
+        bottom: 1rem;
+        justify-content: center;
+        gap: 0.7rem;
       }
-      #tree-search { width: 100%; }
-      .tree-header {
-        top: 94px;
-        left: 0;
-        right: 0;
-        width: auto;
-        padding: 0 12px 14px;
-        text-align: center;
-      }
-      .tree-header.compact { width: auto; }
-      .tree-header-inner { padding: 12px 12px 10px; }
-      .tree-title { font-size: 1.18em; margin-bottom: 2px; }
-      .tree-subtitle { font-size: 0.68em; letter-spacing: 0.04em; max-width: none; }
-      .tree-legend { flex-wrap: wrap; justify-content: center; gap: 5px; font-size: 0.52em; padding: 0 10px; }
-      .tree-guide { grid-template-columns: 1fr; }
-      .tree-header-actions { flex-wrap: wrap; justify-content: center; }
-      .tree-route-row { grid-template-columns: 1fr; }
-      .tree-header.compact .tree-subtitle,
-      .tree-header.compact .tree-legend,
-      .tree-header.compact .tree-route-row,
-      .tree-header.compact .tree-jump-row,
-      .tree-header.compact .tree-guide {
+
+      .instructions {
         display: none;
       }
-      .tree-header.compact .tree-header-inner { padding-bottom: 8px; }
-      .tree-header.compact .tree-header-actions { margin-top: 6px; }
 
-      /* Viewport gets full screen */
-      #treeViewport { touch-action: pan-x pan-y; }
-      /* Tooltip hidden on touch devices */
-      #tooltip { display: none !important; }
-      #list-view {
-        top: 86px;
-        padding: 24px 14px 110px;
+      .marker-origin { top: 9rem; right: 2rem; }
+      .marker-keepers { left: 1.25rem; bottom: 15rem; }
+      .marker-departure { right: 1.25rem; top: auto; bottom: 18rem; transform: none; }
+      .marker-return { right: 7rem; bottom: 9.5rem; }
+      .sigil-chip { display: none; }
+      .node-labels { display: none; }
+      .portrait-orbit { width: 54px; height: 54px; }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 1rem;
+        align-items: flex-start;
       }
-      .lv-mobile-banner { display: block; }
-      .lv-intro { grid-template-columns: 1fr; }
+
+      .logo {
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        max-width: 9rem;
+        line-height: 1.4;
+      }
+
+      .nav {
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: 11rem;
+      }
+
+      .nav a,
+      .nav button {
+        font-size: 0.56rem;
+      }
+
+      .hero-overlay {
+        top: 5rem;
+        left: 1rem;
+        right: 1rem;
+        max-width: 12.5rem;
+      }
+
+      .hero-title {
+        font-size: clamp(1.3rem, 8vw, 1.95rem);
+      }
+
+      .hero-sub {
+        display: none;
+      }
+
+      .hero-meta {
+        font-size: 0.54rem;
+        max-width: 12rem;
+      }
+
+      .side-panel {
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        bottom: 1rem;
+        transform: none;
+        border-radius: 22px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .panel-btn {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .info-card {
+        left: 1rem;
+        bottom: 5.9rem;
+        width: calc(100vw - 2rem);
+        max-width: none;
+        padding: 1rem 1rem 0.95rem;
+        border-radius: 20px;
+      }
+
+      .legend {
+        display: none;
+      }
+
+      .archive-markers {
+        display: none;
+      }
+
+      .portrait-orbit { width: 46px; height: 46px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-overlay {
+        top: 4.8rem;
+        max-width: 10.6rem;
+      }
+
+      .hero-meta {
+        margin-top: 0.7rem;
+      }
+
+      .info-card h3 {
+        font-size: 1.42rem;
+      }
+
+      .info-card .desc {
+        font-size: 0.8rem;
+      }
+
+      .info-figure {
+        grid-template-columns: 64px 1fr;
+        gap: 0.8rem;
+      }
+
+      .info-portrait {
+        width: 64px;
+        height: 84px;
+        border-radius: 14px;
+      }
+
+      .portrait-orbit { width: 40px; height: 40px; }
     }
   </style>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script defer src="analytics.js"></script>
 </head>
-<body data-vol="">
-<div class="page-transition-overlay" id="pageOverlay"></div>
+<body>
+  <div id="canvas-container"></div>
+  <div class="intro-fade"></div>
+  <div class="branch-vignette" aria-hidden="true"></div>
+  <div class="constellation-overlay" aria-hidden="true"></div>
+  <div class="node-labels" id="nodeLabels"></div>
+  <div class="portrait-orbit-layer" id="portraitOrbitLayer" aria-hidden="true"></div>
 
-<nav class="top-nav">
-  <a href="index.html">← Archive Home</a>
-  <span class="center">The Hale Dynasty · Family Tree</span>
-  <a href="portraits.html">Portraits →</a>
-</nav>
-
-<div class="tree-header compact" id="treeHeader">
-  <div class="tree-header-inner">
-    <div class="tree-title">The Hale Family Tree</div>
-    <div class="tree-subtitle">Ranulf de la Hale, 1066 — Eleanor Voss, 2026 · A guide to the people, branches, and recurrences that hold the archive together.</div>
-    <div class="tree-legend">
-      <span class="legend-item"><span class="legend-dot" style="background:#C8A83C;border:1px solid rgba(200,168,60,0.4)"></span> Key figures</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#6B1212"></span> Plague era</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#1C2E4A"></span> Civil War</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#5C1828"></span> Victorian</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#3A5820;border:1px solid #3A5820"></span> Voss branch</span>
-      <span class="legend-item hd-hover-hint" style="color:rgba(200,168,60,0.2)">Hover for detail · Click to open</span>
-      <span class="legend-item hd-touch-hint" style="color:rgba(200,168,60,0.2);display:none">Tap any name to open</span>
-    </div>
-    <div class="tree-guide">
-      <div class="tree-guide-card">
-        <span class="tree-guide-kicker">Use this page for</span>
-        <span class="tree-guide-copy">Seeing who belongs to whom, where the line divides, and which figures matter most to the archive.</span>
-      </div>
-      <div class="tree-guide-card">
-        <span class="tree-guide-kicker">Best after</span>
-        <span class="tree-guide-copy">Vol. I or Vol. II, once the first names in the record have started to settle in your mind.</span>
-      </div>
-      <div class="tree-guide-card">
-        <span class="tree-guide-kicker">How to read it</span>
-        <span class="tree-guide-copy">Start at Ranulf, follow the main line downward, then branch outward to Matilda, Augusta, Thomas, and Eleanor.</span>
+  <div class="ui">
+    <div class="top-bar">
+      <div class="logo">HALE · CELESTIAL ARCHIVE</div>
+      <div class="nav">
+        <a href="index.html">Archive Home</a>
+        <a href="timeline.html">Timeline</a>
+        <button id="reset-view" type="button">Reset</button>
+        <button id="toggle-orbits" type="button">Orbits</button>
+        <button id="connect-mode" class="connect-toggle" type="button">Connect</button>
       </div>
     </div>
-    <div class="tree-header-actions">
-      <button id="tree-header-toggle" class="tree-header-btn" type="button" aria-expanded="false">Open guide</button>
+
+    <div class="hero-overlay">
+      <div class="hero-kicker">Hall Of Inheritance · Experiment</div>
+      <div class="hero-title">The Hale <span>Dynasty</span> read as an <em>orbit</em> of inheritance.</div>
+      <div class="hero-sub">Not a chart. Not a census. A thousand years of founders, keepers, departures, and return arranged as one moving celestial record.</div>
+      <div class="hero-meta">1066 — 2026 · drag to orbit · click stars for stories</div>
     </div>
-    <div class="tree-route-row" aria-label="Reading lanes">
-      <button class="tree-route-card" type="button" data-person-jump="ranulf">
-        <span class="tree-route-kicker">Main line</span>
-        <span class="tree-route-copy">Begin at Ranulf and follow the direct descent through Halecroft.</span>
-      </button>
-      <button class="tree-route-card" type="button" data-person-jump="margery">
-        <span class="tree-route-kicker">Voss branch</span>
-        <span class="tree-route-copy">Jump to Margery to see where the line divides and reappears in Eleanor.</span>
-      </button>
-      <button class="tree-route-card" type="button" data-person-jump="matilda_bk">
-        <span class="tree-route-kicker">Key keeper</span>
-        <span class="tree-route-copy">Go straight to Matilda if you want the archive’s deepest instruction first.</span>
-      </button>
-      <button class="tree-route-card" type="button" data-person-jump="james">
-        <span class="tree-route-kicker">Modern custodians</span>
-        <span class="tree-route-copy">Skip to James and Eleanor to see who finally reads the whole line back together.</span>
-      </button>
+
+    <div class="archive-markers">
+      <div class="marker marker-origin">
+        <strong>Origin</strong>
+        <span>Claim, crossing, settlement. The line enters England and takes root.</span>
+      </div>
+      <div class="marker marker-keepers">
+        <strong>Keepers</strong>
+        <span>The archive survives because some figures preserve what others would let go dark.</span>
+      </div>
+      <div class="marker marker-departure">
+        <strong>Departure</strong>
+        <span>The branch that leaves the name keeps the blood and makes the return possible.</span>
+      </div>
+      <div class="marker marker-return">
+        <strong>Return</strong>
+        <span>The line becomes legible to itself in Eleanor.</span>
+      </div>
     </div>
-    <div class="tree-jump-row" aria-label="Quick jumps">
-      <button class="tree-jump-chip" type="button" data-person-jump="ranulf">Ranulf</button>
-      <button class="tree-jump-chip" type="button" data-person-jump="thomas_survivor">Thomas</button>
-      <button class="tree-jump-chip" type="button" data-person-jump="augusta">Augusta</button>
-      <button class="tree-jump-chip" type="button" data-person-jump="eleanor_voss">Eleanor</button>
+
+    <div class="sigil-chip" aria-hidden="true"></div>
+
+    <div class="side-panel">
+      <div class="panel-btn">
+        <button id="zoom-in" title="Zoom In" type="button">+</button>
+        <button id="zoom-out" title="Zoom Out" type="button">−</button>
+        <button id="rotate-left" title="Rotate Left" type="button">↺</button>
+        <button id="rotate-right" title="Rotate Right" type="button">↻</button>
+      </div>
+    </div>
+
+    <div class="info-card" id="infoCard">
+      <button class="info-close" id="closeInfo" type="button">✕</button>
+      <div class="info-kicker">Selected Figure</div>
+      <div class="info-accent" id="infoAccent"></div>
+      <div class="info-figure">
+        <div class="info-portrait" id="infoPortrait">
+          <div class="info-portrait-fallback" id="infoPortraitFallback">HD</div>
+        </div>
+        <div>
+          <h3 id="infoName">The Hale Dynasty</h3>
+          <div class="dates" id="infoDates">1066 – 2026</div>
+        </div>
+      </div>
+      <div class="desc" id="infoDesc">Click any star to learn about the figures who carried this line through conquest, estate, concealment, stewardship, and return.</div>
+      <div class="branch" id="infoBranch">Celestial Archive</div>
+      <div class="info-thread">
+        <div class="info-thread-label">Related Figures</div>
+        <div class="related-list" id="relatedList">
+          <button class="related-chip" type="button" data-related="0">Ranulf</button>
+          <button class="related-chip" type="button" data-related="8">Matilda</button>
+          <button class="related-chip" type="button" data-related="21">Eleanor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend" id="branchLegend">
+      <div class="legend-item"><strong>Branches</strong></div>
+      <button class="legend-branch active" type="button" data-branch="all">All</button>
+      <button class="legend-branch" type="button" data-branch="main"><span class="legend-dot" style="background: #e8b560;"></span>Main Line</button>
+      <button class="legend-branch" type="button" data-branch="voss"><span class="legend-dot" style="background: #c45a4a;"></span>Voss Branch</button>
+      <button class="legend-branch" type="button" data-branch="keepers"><span class="legend-dot" style="background: #7b9e87;"></span>Keepers</button>
+    </div>
+
+    <div class="instructions">Drag to orbit · Scroll to zoom · Click stars for stories</div>
+    <div class="connect-hint" id="connectHint">Connect mode · select two figures</div>
+  </div>
+
+  <div class="connection-reveal" id="connectionReveal" aria-hidden="true">
+    <div class="connection-card">
+      <button class="connection-close" id="connectionClose" type="button">✕</button>
+      <div class="connection-header">Archive Thread</div>
+      <div class="connection-names">
+        <span id="connNameA">Ranulf de la Hale</span>
+        <span class="connection-link">✶</span>
+        <span id="connNameB">Aelswith</span>
+      </div>
+      <div class="connection-text" id="connText">Their marriage in 1068 binds conquest to settlement: a claim made real by a household that endures.</div>
+      <div class="connection-meta" id="connMeta">Recorded Connection</div>
     </div>
   </div>
-</div>
 
-<div id="treeViewport"></div>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+      }
+    }
+  </script>
 
-<div id="tooltip">
-  <img id="tt-portrait" src="" alt="">
-  <div id="tt-name"></div>
-  <div id="tt-era"></div>
-  <div id="tt-desc"></div>
-  <span id="tt-link"></span>
-</div>
+  <script type="module">
+    import * as THREE from 'three';
 
-<div class="scroll-hint" id="scrollHint">Scroll to navigate · Click nodes to open</div>
+    const figures = [
+      { id: 0, name: 'Ranulf de la Hale', dates: 'c.1040–c.1115', era: 'Norman Conquest', branch: 'main', desc: 'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ.', radius: 2.8, angle: 0, speed: 0.002, generation: 0 },
+      { id: 1, name: 'Aelswith', dates: 'c.1045–c.1110', era: 'Norman', branch: 'main', desc: 'English widow of Halecroft. Married Ranulf in 1068 and made the estate inhabitable rather than merely won.', radius: 3.5, angle: 1.2, speed: 0.0018, generation: 1 },
+      { id: 2, name: 'Leofric Hale', dates: 'c.1072–c.1135', era: 'Norman', branch: 'main', desc: 'Founded the Hale woodland settlement and gave the line its first true local shape.', radius: 3.5, angle: 4.5, speed: 0.0018, generation: 1 },
+      { id: 3, name: 'Robert Hale', dates: 'c.1140–c.1195', era: 'Early Medieval', branch: 'main', desc: 'Free tenant. Early yeoman continuity after the first generation.', radius: 4.2, angle: 2.8, speed: 0.0015, generation: 2 },
+      { id: 4, name: 'William Hale the Elder', dates: 'c.1165–c.1248', era: 'Early Medieval', branch: 'main', desc: 'Purchased the freehold in 1214 — the first Hale to own rather than merely hold.', radius: 4.2, angle: 5.0, speed: 0.0015, generation: 2 },
+      { id: 5, name: 'Edmund Hale', dates: 'c.1227–1287', era: 'High Medieval', branch: 'main', desc: 'Returned from Worcester Priory with literacy, legal reasoning, and a changed sense of land.', radius: 5.0, angle: 1.5, speed: 0.0013, generation: 3 },
+      { id: 6, name: 'Richard Hale', dates: 'c.1304–1348', era: 'Plague Era', branch: 'main', desc: 'His household perished in the plague years; the line nearly went dark with him.', radius: 5.8, angle: 3.2, speed: 0.0011, generation: 4 },
+      { id: 7, name: 'Thomas Hale', dates: '1338–1395', era: 'Plague Survivor', branch: 'main', desc: 'Returned at eleven to find everyone dead. Inheritance, in this line, begins by seeing what remains.', radius: 5.8, angle: 5.8, speed: 0.0011, generation: 5 },
+      { id: 8, name: 'Matilda of Halecroft', dates: 'c.1310–c.1395', era: 'Medieval Keeper', branch: 'keepers', desc: 'Beekeeper, witness, letter-writer. The archive’s clearest instruction survives through her.', radius: 6.5, angle: 0.8, speed: 0.001, generation: 5 },
+      { id: 9, name: 'Margery Hale', dates: 'c.1352–?', era: 'Departure', branch: 'voss', desc: 'Marries Thomas Voss in 1373 and carries the line out of Halecroft under another surname.', radius: 6.5, angle: 4.2, speed: 0.001, generation: 5 },
+      { id: 10, name: 'John Hale', dates: '1376–c.1440', era: 'Late Medieval', branch: 'main', desc: 'Held through the Wars of the Roses without disturbance.', radius: 7.2, angle: 2.0, speed: 0.0009, generation: 6 },
+      { id: 11, name: 'John Hale (Tudor)', dates: '1498–1558', era: 'Tudor', branch: 'main', desc: 'Author of the archive’s most candid Tudor letters.', radius: 8.0, angle: 1.0, speed: 0.0008, generation: 7 },
+      { id: 12, name: 'William Hale', dates: '1522–c.1585', era: 'Tudor', branch: 'main', desc: 'Purchased former priory land in 1545 — a commercial acquisition that altered the estate forever.', radius: 8.0, angle: 4.5, speed: 0.0008, generation: 7 },
+      { id: 13, name: 'Sir Nathaniel Hale', dates: '1671–1744', era: 'Restoration', branch: 'main', desc: 'Left Worcestershire, made himself in London, bought a baronetcy, survived ruin.', radius: 8.8, angle: 3.0, speed: 0.0007, generation: 8 },
+      { id: 14, name: 'Augusta Hale', dates: '1771–1858', era: 'Regency Keeper', branch: 'keepers', desc: 'Managed the estate under an entail that refused to name her as owner.', radius: 9.5, angle: 5.5, speed: 0.0006, generation: 9 },
+      { id: 15, name: 'Edmund Hale', dates: 'c.1774–1842', era: 'Regency', branch: 'main', desc: 'The locked escritoire, the sealed knowledge, the confession never made public.', radius: 9.5, angle: 1.8, speed: 0.0006, generation: 9 },
+      { id: 16, name: 'Thomas Marsh-Hale', dates: '1873–1951', era: 'Edwardian Recovery', branch: 'keepers', desc: 'Journalist, soldier, finder of the archive in Oxford in 1919.', radius: 10.2, angle: 4.0, speed: 0.0005, generation: 10 },
+      { id: 17, name: 'James Marsh-Hale', dates: '1945–', era: 'Contemporary Keeper', branch: 'keepers', desc: 'Historian, donor of the papers, and one of the final custodians of the line.', radius: 10.2, angle: 6.2, speed: 0.0005, generation: 10 },
+      { id: 18, name: 'Alice Voss', dates: 'c.1378–c.1445', era: 'Voss Medieval', branch: 'voss', desc: 'Early continuity in Pershore after the branch leaves Halecroft.', radius: 7.5, angle: 3.5, speed: 0.00085, generation: 6 },
+      { id: 19, name: 'Hannah Voss', dates: 'c.1820–c.1890', era: 'Voss Victorian', branch: 'voss', desc: 'Schoolmistress who made children feel that the past was not gone, only waiting.', radius: 9.0, angle: 2.5, speed: 0.00065, generation: 8 },
+      { id: 20, name: 'David Voss', dates: '1941–2019', era: 'Voss Contemporary', branch: 'voss', desc: 'Assembled the shoebox of papers and wrote Property: keep on the note.', radius: 10.5, angle: 5.0, speed: 0.00045, generation: 10 },
+      { id: 21, name: 'Eleanor Voss', dates: '1983–', era: 'The Return', branch: 'voss', desc: 'Recovered Matilda’s letter and, by 2026, understood her descent from Margery Hale.', radius: 11.0, angle: 0.5, speed: 0.0004, generation: 11 }
+    ];
 
-<button id="view-toggle" aria-label="Toggle list view">☰ List View</button>
+    const branchLabel = {
+      main: 'Main Line',
+      voss: 'Voss Branch',
+      keepers: 'Keepers Of The Archive'
+    };
 
-<div id="tree-search-wrap">
-  <input id="tree-search" type="search" placeholder="Search names, eras, dates…" aria-label="Search family tree" autocomplete="off" spellcheck="false">
-  <button id="tree-search-clear" aria-label="Clear search" style="display:none">✕</button>
-</div>
+    const relatedMap = {
+      0: [1, 2, 7],
+      1: [0, 2, 7],
+      2: [0, 1, 7],
+      7: [8, 9, 10],
+      8: [7, 9, 21],
+      9: [8, 20, 21],
+      14: [15, 16, 17],
+      16: [17, 20, 21],
+      17: [16, 21, 9],
+      20: [9, 21, 17],
+      21: [9, 17, 8]
+    };
 
-<div id="list-view" role="region" aria-label="Family tree list view"></div>
+    const branchConfig = {
+      main: { color: 0xe8b560, inclination: 0.18, yShift: 0.12, wobble: 1.8, ringColor: 0x453218 },
+      voss: { color: 0xc45a4a, inclination: -0.42, yShift: -0.28, wobble: 1.35, ringColor: 0x4c2222 },
+      keepers: { color: 0x7b9e87, inclination: 0.86, yShift: 0.44, wobble: 2.2, ringColor: 0x23332b }
+    };
 
-<!-- ── PROFILE PANEL ── -->
-<div id="profile-backdrop"></div>
-<aside id="profile-panel" role="complementary" aria-label="Person profile">
-  <button id="profile-panel-close" aria-label="Close profile">✕</button>
-  <div id="pp-portrait-wrap">
-    <img id="pp-portrait-img" src="" alt="" style="display:none">
-    <div id="pp-portrait-placeholder">
-      <svg width="80" height="80" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#C8A83C" stroke-width="1"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#C8A83C" stroke-width="1" stroke-linecap="round"/></svg>
-    </div>
-  </div>
-  <div id="pp-era-bar"><div id="pp-era-stripe"></div></div>
-  <div id="pp-body">
-    <div id="pp-era-label"></div>
-    <div id="pp-name"></div>
-    <div id="pp-dates"></div>
-    <div id="pp-divider"></div>
-    <div id="pp-desc"></div>
-  </div>
-  <div id="pp-actions">
-    <a id="pp-era-link" href="#" class="pp-btn primary" style="display:none">→ Open Era Page</a>
-    <button id="pp-ask-eleanor" class="pp-btn">✦ Consult Eleanor on this figure</button>
-  </div>
-</aside>
+    const connectionMap = {
+      '0-1': {
+        text: 'Married in 1068. Aelswith teaches Ranulf the language and practical life of Halecroft, turning conquest into household.',
+        meta: 'Marriage · 1068'
+      },
+      '0-2': {
+        text: 'Leofric is Ranulf’s son. He establishes the Hale settlement in the woodland and carries the name into a local line.',
+        meta: 'Father and Son'
+      },
+      '1-2': {
+        text: 'Aelswith’s youngest son is named Leofric, honoring the fallen thegn and binding the new line to the old land.',
+        meta: 'Mother and Son'
+      },
+      '7-8': {
+        text: 'Matilda of Halecroft speaks for Thomas at the Inquest of 1351, securing his inheritance after the plague.',
+        meta: 'Inquest of 1351'
+      },
+      '7-9': {
+        text: 'Margery is the daughter of Thomas Hale, the plague survivor, and her marriage begins the Voss branch.',
+        meta: 'Father and Daughter'
+      },
+      '8-9': {
+        text: 'Matilda tracks Margery’s departure from Halecroft and follows the Voss line for six centuries.',
+        meta: 'Departure Tracked'
+      },
+      '8-21': {
+        text: 'Matilda’s letter is recovered and read by Eleanor Voss in 2024, completing the arc of the archive.',
+        meta: 'Letter Recovered'
+      },
+      '9-20': {
+        text: 'David Voss belongs to the Voss branch descended from Margery Hale and Thomas Voss of Pershore.',
+        meta: 'Voss Branch'
+      },
+      '9-21': {
+        text: 'Eleanor is a descendant of Margery Hale and Thomas Voss, returning the line to the Hale record.',
+        meta: 'Voss Return'
+      },
+      '14-15': {
+        text: 'Augusta Hale and Edmund Hale are siblings; she managed the estate while he inherited the title.',
+        meta: 'Brother and Sister'
+      },
+      '15-16': {
+        text: 'Thomas Marsh-Hale is the illegitimate son of Edmund Hale II and takes the hyphenated name.',
+        meta: 'Father and Son'
+      },
+      '20-21': {
+        text: 'David Voss assembled the shoebox of papers and left it to Eleanor, who reads it as inheritance.',
+        meta: 'Shoebox Legacy'
+      }
+    };
 
-<a href="index.html" class="home-float" aria-label="Return to archive home">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
-</a>
+    const keyFigures = new Set([0, 8, 9, 14, 16, 17, 21]);
+    const portraitMap = {
+      0: 'portraits/ranulf.png',
+      1: 'portraits/aelswith.png',
+      2: 'portraits/leofric.png',
+      5: 'portraits/edmund.png',
+      6: 'portraits/richard.png',
+      7: 'portraits/thomas.png',
+      8: 'portraits/matilda.png',
+      9: 'portraits/margery.png',
+      10: 'portraits/john.png',
+      11: 'portraits/john.png',
+      12: 'portraits/william.png',
+      13: 'portraits/nathaniel.png',
+      14: 'portraits/augusta.png',
+      15: 'portraits/edmund.png',
+      16: 'portraits/thomas.png',
+      17: 'portraits/james.png',
+      19: 'portraits/hannah.png',
+      20: 'portraits/david.png',
+      21: 'portraits/eleanor.png'
+    };
 
-<span id="secret-nav-link"><a href="the-email.html" style="display:none" id="secret-inner-link">✦ A letter found</a></span>
+    const orbitPortraits = [
+      { id: 0, src: 'portraits/ranulf.png' },
+      { id: 7, src: 'portraits/thomas.png' },
+      { id: 8, src: 'portraits/matilda.png' },
+      { id: 9, src: 'portraits/margery.png' },
+      { id: 14, src: 'portraits/augusta.png' },
+      { id: 15, src: 'portraits/edmund.png' },
+      { id: 20, src: 'portraits/david.png' },
+      { id: 21, src: 'portraits/eleanor.png' }
+    ];
 
-<script src="transitions.js"></script>
-<script src="features.js"></script>
-<script>
-// ── FAMILY TREE DATA ──────────────────────────────────────────────────────────
-const W = 920, H = 3160;
-const MX = 380;   // main Hale line X
-const SX = 180;   // side characters (Matilda, Aelswith, siblings) X
-const VX = 680;   // Voss branch X
+    const figureById = new Map(figures.map((figure) => [figure.id, figure]));
 
-// ── PORTRAIT MAP ─────────────────────────────────────────────────────────────
-const PORTRAIT_MAP = {
-  'ranulf':       'portraits/ranulf.png',
-  'aelswith':     'portraits/aelswith.png',
-  'leofric':      'portraits/leofric.png',
-  'matilda_bk':   'portraits/matilda.png',
-  'richard_plague': 'portraits/richard.png',
-  'william_mon':  'portraits/william.png',
-  'civil_war':    'portraits/john.png',
-  'nathaniel':    'portraits/nathaniel.png',
-  'augusta':      'portraits/augusta.png',
-  'edmund_vict':  'portraits/edmund.png',
-  'thomas_mh':    'portraits/thomas.png',
-  'edmund_mh':    'portraits/edmundmarsh.png',
-  'james':        'portraits/james.png',
-  'margery':      'portraits/margery.png',
-  'hannah_voss':  'portraits/hannah.png',
-  'david_voss':   'portraits/david.png',
-  'eleanor_voss': 'portraits/eleanor.png',
-};
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
+    scene.fog = new THREE.FogExp2(0x000000, 0.0076);
 
-const PEOPLE = [
-  // ── MAIN HALE LINE ──────────────────────────────────────────────────────
-  {
-    id:'ranulf', x:MX, y:100,
-    name:'Ranulf de la Hale', dates:'c.1040–c.1115',
-    era:'Era I · Norman', eraColor:'#C8A83C', link:'era-I.html', key:true,
-    desc:'Norman soldier. Crossed with William in 1066. Given Halecroft by royal writ. Dismounted in a Worcestershire yard and asked what he had been given. Asked his priest to help him frame the right question before he died: "Ask for justice. Not mercy."',
-    branch:'main'
-  },
-  {
-    id:'aelswith', x:MX+170, y:100,
-    name:'Aelswith', dates:'c.1045–c.1110',
-    era:'Era I · Norman (spouse)', eraColor:'#A8882C', link:'era-I.html', key:false,
-    desc:'English widow of Halecroft. Married Ranulf de la Hale in 1068 and taught him the language, customs, and practical life of the estate. One of the people who made the line legible to itself.',
-    branch:'main', spouse:true
-  },
-  {
-    id:'leofric', x:MX, y:250,
-    name:'Leofric de la Hale', dates:'c.1072–c.1135',
-    era:'Era I · Norman', eraColor:'#A8882C', link:'era-I.html', key:false,
-    desc:'Youngest son of Ranulf and Aelswith. Named for the English thegn Leofric of Halecroft. Went into the wood east of Halecroft, built a house at the spring with his own hands (1100–1103), and founded the Hale — the woodland settlement that became the family\'s primary holding for nine centuries. Married Godiva of Worcester, 1104. Brother William inherited the manor; sister Maud married Roger de Beaumont.',
-    branch:'main'
-  },
-  {
-    id:'robert_hale', x:MX, y:400,
-    name:'Robert Hale', dates:'c.1140–c.1195',
-    era:'Early Medieval', eraColor:'#8A6820', link:'era-II.html', key:false,
-    desc:'Free tenant of the Hale holding. 12 acres woodland and 4 arable. Owed suit of court twice yearly and a hen at Christmas. Married Edith, formerly Edith atte Pond of Pershore. "The English yeoman in his early form." Their son William was baptised Michaelmas 1189.',
-    branch:'main'
-  },
-  {
-    id:'william_elder', x:MX, y:550,
-    name:'William Hale the Elder', dates:'c.1165–c.1248',
-    era:'Early Medieval', eraColor:'#7A5818', link:'era-II.html', key:false,
-    desc:'Son of Robert. Purchased the freehold of the Hale from the lord of the manor in 1214 — the first Hale to own rather than hold the land. Served on the manorial jury in 1231 and 1244. Built a second barn. Sent his son Edmund to the priory school at Worcester. Held fourteen acres freehold for fifty-one years.',
-    branch:'main'
-  },
-  {
-    id:'edmund_med', x:MX, y:700,
-    name:'Edmund Hale', dates:'c.1227–1287',
-    era:'Early Medieval', eraColor:'#7A5818', link:'era-II.html', key:false,
-    desc:'Educated at Worcester Priory 1235–1244. Returned with literacy, legal reasoning, and a tendency to quote Ovid. In 1254 his reading of the Latin deed settled a contested boundary dispute in the family\'s favour — his education was, in practical terms, the most valuable thing his father had ever purchased. Married Agnes, Pershore tanner\'s daughter.',
-    branch:'main'
-  },
-  {
-    id:'william_younger', x:MX, y:850,
-    name:'William Hale the Younger', dates:'c.1260–c.1310',
-    era:'Famine era', eraColor:'#7A5818', link:'era-II.html', key:false,
-    desc:'Held the Hale through the Great Famine (1315–1322) without defaulting or requiring assistance. His woodland acres were better-drained than the open fields. Served as jury foreman in 1320. His wife Margaret gave bread from their oven to starving tenants in 1318. "The Hales had survived. The Hale had held."',
-    branch:'main'
-  },
-  {
-    id:'richard_plague', x:MX, y:1000,
-    name:'Richard Hale', dates:'c.1304–November 1348',
-    era:'Era II · Plague', eraColor:'#6B1212', link:'era-II.html', key:false, plague:true,
-    desc:'Freeholder of the Hale. Served as jury foreman seven times — his grandfather Edmund\'s office, now his. Died of plague at the feast of St Martin, November 1348, aged approximately forty-four. His wife Maud, his three sons Edmund, William, Thomas, his youngest son Walter — all gone by Christmas. The household of the Hale perished in fourteen months.',
-    branch:'main'
-  },
-  {
-    id:'thomas_survivor', x:MX, y:1160,
-    name:'Thomas Hale', dates:'1338–1395',
-    era:'Era II · Plague Survivor', eraColor:'#C8A83C', link:'era-II.html', key:true,
-    desc:'Son of William, grandson of Richard. Aged eleven when the plague came. Had been sent to stay with his mother\'s aunt in Pershore; returned in April 1349 to find everyone dead. Set down the cooking pot. Looked about him. Said: I had better see to the pig. Brother Anselm, who waited for him: "I watched him go into the yard and I thought: this one will not break." His inheritance confirmed by inquest, 1351.',
-    branch:'main'
-  },
-  {
-    id:'matilda_bk', x:SX, y:1160,
-    name:'Matilda of Halecroft', dates:'c.1310–c.1395',
-    era:'Era II · Keeper', eraColor:'#C8A83C', link:'era-II.html', key:true, matilda:true,
-    desc:'Free woman of Halecroft. Kept bees. Testified uninvited at the Inquest of 1351 to secure Thomas Hale\'s inheritance: "Give him his land. He is eleven years old and he came home and he saw to the pig. That is a Hale." Left a paper in the deed-box, c.1390: "Keep asking. Keep the land. See to the pig." Recovered in 2024 from beneath the box lining.',
-    branch:'side'
-  },
-  {
-    id:'john_hale_1', x:MX, y:1320,
-    name:'John Hale', dates:'1376–c.1440',
-    era:'Late Medieval', eraColor:'#7A5818', link:'era-III.html', key:false,
-    desc:'Thomas\'s youngest son, named for Eleanor\'s brother John Claines. Held the Hale through the Wars of the Roses without disturbance. Married twice: first Isabel (died 1408, no issue); then Margaret (died 1421), who gave him three children. Held the Hale for forty-four years.',
-    branch:'main'
-  },
-  {
-    id:'tudor_comp', x:MX, y:1480,
-    name:'The Lancastrian & Tudor Hales', dates:'c.1420–c.1490',
-    era:'Era III · Tudor', eraColor:'#7A5818', link:'era-III.html', key:false,
-    desc:'William Hale (inherited 1440), Robert Hale (1478), Thomas Hale III (1503): three generations who held the Hale quietly through the dynastic wars. Robert Hale\'s inventory of 1490 lists the deed of freehold, dated 1214, as [priceless]. The deed-box — unmolested through plague, famine, and rising — is the only item he marks beyond price.',
-    branch:'main', compressed:true
-  },
-  {
-    id:'john_tudor', x:MX, y:1640,
-    name:'John Hale', dates:'1498–1558',
-    era:'Era III · Tudor', eraColor:'#7A1C1C', link:'era-III.html', key:true,
-    desc:'Son of Thomas III. The Letters of John Hale (1532–1549) are the archive\'s most candid documents. Signed the Act of Supremacy (1534): "I have signed. I keep my land. I say my prayers in the same church I was christened in." Watched the Dissolution (1538): "Our family has taken its troubles there since before there was writing to record it." Father of William (1522).',
-    branch:'main'
-  },
-  {
-    id:'william_mon', x:MX, y:1800,
-    name:'William Hale', dates:'1522–c.1585',
-    era:'Era III · Tudor', eraColor:'#7A1C1C', link:'era-III.html', key:false,
-    desc:'Son of John. Educated partly by Brother Anselm, a displaced Benedictine monk who lodged at the Hale three months. In 1545, aged twenty-three, purchased twelve acres of former priory land for four pounds — the first Hale to buy land from a commercial transaction rather than a feudal lord. His father: "You have done either a very clever thing or a very foolish one, and I cannot tell which."',
-    branch:'main'
-  },
-  {
-    id:'civil_war', x:MX, y:1960,
-    name:'The Civil War Hales', dates:'1595–1689',
-    era:'Era IV · Civil War', eraColor:'#1C2E4A', link:'era-IV.html', key:false,
-    desc:'Robert Hale (father) prepared the deed-box. Three sons: John (Parliament), Thomas, and William the youngest. Family strategy: sign what requires signing, hold what you hold. The two sons who fought came home. "The King is dead. Both my sons came home." The missing year, 1381, is the most eloquent document in the family archive.',
-    branch:'main', compressed:true
-  },
-  {
-    id:'nathaniel', x:MX, y:2120,
-    name:'Sir Nathaniel Hale', dates:'1671–1744',
-    era:'Era V · Restoration', eraColor:'#6A5818', link:'era-V.html', key:false,
-    desc:'Left Worcestershire. Made himself in London. Purchased a baronetcy. Lost a considerable portion in the South Sea Bubble (1720). His wife Dorothea: "Then we have sufficient to begin again." The first Hale to acquire a title; not the first to demonstrate that Hale resilience is more durable than social elevation.',
-    branch:'main'
-  },
-  {
-    id:'augusta', x:MX-160, y:2260,
-    name:'Augusta Hale', dates:'1771–1858',
-    era:'Era VI · Regency', eraColor:'#5C1828', link:'era-VI.html', key:true,
-    desc:'Managed the Hale estate for thirty-seven years under an entail that prevented her inheriting it in her own name. Married at fifty-seven to Henry Alderton, who proposed: "I find I am looking forward to it rather more than timber rights warrant." A woman of considerable force who ran the estate without title or compensation for nearly four decades. Her letters are the archive\'s sharpest pleasure.',
-    branch:'main'
-  },
-  {
-    id:'edmund_reg', x:MX+140, y:2260,
-    name:'Edmund Hale', dates:'c.1774–1842',
-    era:'Era VI · Regency', eraColor:'#4A3820', link:'era-VI.html', key:false,
-    desc:"Augusta's brother. Inherited the baronetcy. Held the estate, maintained the deed-box. Described in Augusta's correspondence as competent and uninspiring — which, given the alternatives the family archive presents, is not entirely without honour.",
-    branch:'main'
-  },
-  {
-    id:'edmund_vict', x:MX, y:2410,
-    name:'Edmund Hale II', dates:'1841–1882',
-    era:'Era VII · Victorian', eraColor:'#3A0A18', link:'era-VII.html', key:true,
-    desc:'The performance. The locked escritoire. The confession never made publicly. Two words on a folded paper in the deepest compartment: "I know." He sealed the escritoire in Shropshire in 1882, aged forty-one. What he knew, and whether the knowing was relief or weight, the archive cannot say. He is forty-one. The door is locked.',
-    branch:'main'
-  },
-  {
-    id:'thomas_mh', x:MX, y:2560,
-    name:'Thomas Marsh-Hale', dates:'1873–1951',
-    era:'Era VIII · Edwardian / WWI', eraColor:'#7A6A40', link:'era-VIII.html', key:true,
-    desc:'Illegitimate son who claimed the hyphenated name, combining both lines of his descent. Journalist, soldier, archivist. Carried Clara\'s ledger arithmetic in his head all his life. Witnessed the First World War. The archive\'s most persistent instruction, passed to him: "Keep asking."',
-    branch:'main'
-  },
-  {
-    id:'edmund_mh', x:MX, y:2710,
-    name:'Edmund Marsh-Hale', dates:'1910–1978',
-    era:'Era IX · WWII', eraColor:'#1A2E48', link:'era-IX.html', key:false,
-    desc:'Structural engineer. Ministry of Supply, 1939–1945. Added the names to bridges the specification did not require him to name. His wife Dorothy, when asked: "Specification does not call for it. Physics does." Kept the family papers. Passed them intact.',
-    branch:'main'
-  },
-  {
-    id:'james', x:MX, y:2860,
-    name:'James Marsh-Hale', dates:'1945–',
-    era:'Era X · Contemporary', eraColor:'#C8A83C', link:'era-X.html', key:true,
-    james:true,
-    desc:'Historian. Donated the family papers and co-authored the final volume. Has been reading the archive since he was nine.',
-    branch:'main'
-  },
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 8, 22);
+    camera.lookAt(0, 0, 0);
 
-  // ── VOSS BRANCH ─────────────────────────────────────────────────────────
-  {
-    id:'margery', x:VX, y:1160,
-    name:'Margery Hale + Thomas Voss', dates:'c.1352–?  ·  c.1350–c.1402',
-    era:'Voss Branch Begins · 1373', eraColor:'#3A5820', link:'era-II.html', key:false,
-    desc:'Margery: daughter of Thomas Hale, the plague survivor. Married Thomas Voss of Pershore, 1373, and left Halecroft. Matilda the beekeeper tracked her departure. Thomas Voss: from Pershore, origins unrecorded. His descendants would hold in Pershore for six centuries, unaware that the name Voss was grafted onto a Hale root in 1373.',
-    branch:'voss'
-  },
-  {
-    id:'alice_voss', x:VX, y:1320,
-    name:'Alice Voss', dates:'c.1378–c.1445',
-    era:'Voss · Late Medieval', eraColor:'#3A5820', link:null, key:false,
-    desc:"Daughter of Margery Hale and Thomas Voss. Matilda's recovered letter, 2024: 'Has her grandmother Aelswith\'s eyes.' Married Robert Carpenter, 1399. Held in Pershore.",
-    branch:'voss'
-  },
-  {
-    id:'voss_early', x:VX, y:1480,
-    name:'Thomas · Margaret · William · Anne Voss', dates:'c.1400–1568',
-    era:'Voss · Tudor', eraColor:'#3A5820', link:null, key:false,
-    desc:'Four generations in Pershore through the same religious upheavals as the Hales. William Voss became a draper — literate, a man of standing. The line held quietly in Pershore as the Hales held quietly in Halecroft, thirty miles east, asking the same question in a different register.',
-    branch:'voss', compressed:true
-  },
-  {
-    id:'john_fletcher', x:VX, y:1640,
-    name:'John Fletcher-Voss', dates:'c.1522–c.1625',
-    era:'Voss · Jacobean', eraColor:'#3A5820', link:null, key:false,
-    desc:'Schoolmaster who kept the Voss name through marriage. His son held Pershore through the Civil War: neutral. The same strategy as the Hales, thirty miles west. The parallel goes unremarked for another four centuries.',
-    branch:'voss'
-  },
-  {
-    id:'mary_voss', x:VX, y:1800,
-    name:'Mary Voss', dates:'c.1592–c.1685',
-    era:'Voss · Restoration', eraColor:'#3A5820', link:null, key:false,
-    desc:"Acquitted at Worcester assizes, 1623 — the charge and nature of the case are unrecorded, which is either a mercy or a testimony. Her son Samuel took her name: Samuel Partridge-Voss. The Voss line holds in Pershore.",
-    branch:'voss'
-  },
-  {
-    id:'george_voss', x:VX, y:1960,
-    name:'George Voss', dates:'c.1648–c.1720',
-    era:'Voss · Restoration', eraColor:'#3A5820', link:null, key:false,
-    desc:'Held in Pershore through the Restoration and Glorious Revolution. The Voss family\'s strategy was the same as the Hales\': survive the politics, tend the land.',
-    branch:'voss'
-  },
-  {
-    id:'hannah_voss', x:VX, y:2120,
-    name:'Hannah Voss', dates:'c.1820–c.1890',
-    era:'Voss · Victorian', eraColor:'#3A5820', link:null, key:false,
-    desc:"Schoolmistress at Pershore National School, 1847–1883. Inspector's report: 'makes the children feel that the past was not past but continuous.' The most Hale-like sentence written by anyone in the Voss line.",
-    branch:'voss'
-  },
-  {
-    id:'edmund_voss_p', x:VX, y:2260,
-    name:'Edmund Voss', dates:'1852–1921',
-    era:'Voss · Victorian', eraColor:'#3A5820', link:null, key:false,
-    desc:"Solicitor's clerk, Worcester. His diary, January 1888: 'I have been thinking about where the name comes from. I should look into this.' He did not look into it. The archive treats this with a gentle irony it does not permit itself in many places.",
-    branch:'voss'
-  },
-  {
-    id:'harold_voss', x:VX, y:2410,
-    name:'Harold Voss', dates:'1891–1967',
-    era:'Voss · Edwardian / WWI', eraColor:'#3A5820', link:null, key:false,
-    desc:'Served in the First World War, 1914–1918. Came home. Grew dahlias. Developed a sweet pea variety over thirty years of careful crossing — each year slightly different, the final form never declared finished. The Hale instinct under different conditions.',
-    branch:'voss'
-  },
-  {
-    id:'david_voss', x:VX, y:2560,
-    name:'David Voss', dates:'1941–2019',
-    era:'Voss · Contemporary', eraColor:'#3A5820', link:null, key:false,
-    desc:"History teacher, Harrogate. Assembled the shoebox of family papers. Wrote 'Property: keep' on the Post-it note. Did not know why it needed keeping. Kept it anyway. Left the shoebox to Eleanor.",
-    branch:'voss'
-  },
-  {
-    id:'eleanor_voss', x:VX, y:2710,
-    name:'Eleanor Voss', dates:'1983–',
-    era:'Era X · Contemporary', eraColor:'#C8A83C', link:'era-X.html', key:true, eleanor:true,
-    desc:"Medievalist at the Bodleian Library, Oxford. Recovered Matilda's letter in January 2024 and, by 2026, understood her descent from Margery Hale.",
-    branch:'voss'
-  },
-];
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
 
-// ── CONNECTIONS ───────────────────────────────────────────────────────────
-const CONNECTIONS = [
-  // Ranulf + Aelswith → Leofric (spouse connection then descent)
-  { from:'ranulf', to:'aelswith', style:'spouse' },
-  { from:'ranulf', to:'leofric', style:'line' },
-  // Leofric line descent
-  { from:'leofric', to:'robert_hale', style:'line' },
-  { from:'robert_hale', to:'william_elder', style:'line' },
-  { from:'william_elder', to:'edmund_med', style:'line' },
-  { from:'edmund_med', to:'william_younger', style:'line' },
-  { from:'william_younger', to:'richard_plague', style:'line' },
-  { from:'richard_plague', to:'thomas_survivor', style:'line' },
-  // Matilda connection (advocacy)
-  { from:'thomas_survivor', to:'matilda_bk', style:'advocacy' },
-  // Thomas → Voss branch
-  { from:'thomas_survivor', to:'margery', style:'branch' },
-  // Main line continues
-  { from:'thomas_survivor', to:'john_hale_1', style:'line' },
-  { from:'john_hale_1', to:'tudor_comp', style:'line' },
-  { from:'tudor_comp', to:'john_tudor', style:'line' },
-  { from:'john_tudor', to:'william_mon', style:'line' },
-  { from:'william_mon', to:'civil_war', style:'line' },
-  { from:'civil_war', to:'nathaniel', style:'line' },
-  { from:'nathaniel', to:'augusta', style:'line' },
-  { from:'nathaniel', to:'edmund_reg', style:'line' },
-  { from:'edmund_reg', to:'edmund_vict', style:'line' },
-  { from:'edmund_vict', to:'thomas_mh', style:'line' },
-  { from:'thomas_mh', to:'edmund_mh', style:'line' },
-  { from:'edmund_mh', to:'james', style:'line' },
-  // Voss descent
-  { from:'margery', to:'alice_voss', style:'voss' },
-  { from:'alice_voss', to:'voss_early', style:'voss' },
-  { from:'voss_early', to:'john_fletcher', style:'voss' },
-  { from:'john_fletcher', to:'mary_voss', style:'voss' },
-  { from:'mary_voss', to:'george_voss', style:'voss' },
-  { from:'george_voss', to:'hannah_voss', style:'voss' },
-  { from:'hannah_voss', to:'edmund_voss_p', style:'voss' },
-  { from:'edmund_voss_p', to:'harold_voss', style:'voss' },
-  { from:'harold_voss', to:'david_voss', style:'voss' },
-  { from:'david_voss', to:'eleanor_voss', style:'voss' },
-  // Discovery arc: Eleanor → Margery (the moment the lines re-join)
-  { from:'eleanor_voss', to:'margery', style:'discovery' },
-];
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let cameraTheta = 0;
+    let cameraPhi = 0.5;
+    let cameraRadius = 22;
+    let targetTheta = 0;
+    let targetPhi = 0.5;
+    let targetRadius = 22;
+    let focusSweepStart = 0;
+    let focusSweepDuration = 0;
+    let focusSweepFrom = { theta: 0, phi: 0.5, radius: 22 };
+    let focusSweepTo = { theta: 0, phi: 0.5, radius: 22 };
+    let branchFocus = 'all';
+    let connectMode = false;
+    let connectionAnchorId = null;
+    let connectionPair = null;
+    let autoRotate = true;
+    let showOrbits = true;
+    let activeFigureId = null;
+    let hoverFigureId = null;
+    let introProgress = 0;
+    let introRunning = true;
+    document.body.classList.add('intro-running');
 
-// ── SVG BUILDER ───────────────────────────────────────────────────────────
-const NODE_R = 26;
-const KEY_R  = 34;
-const MAT_R  = 40;
-const SP_R   = 18;
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 2200;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * 2000;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 500 - 220;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.18, transparent: true, opacity: 0.56 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
 
-function personById(id) { return PEOPLE.find(p => p.id === id); }
-function getTreeContentOffset() {
-  const topNav = document.querySelector('.top-nav');
-  const treeHeader = document.getElementById('treeHeader');
-  const navH = topNav ? topNav.offsetHeight : 40;
-  const headerH = treeHeader ? treeHeader.offsetHeight : 120;
-  if (window.innerWidth <= 600) {
-    return Math.max(96, navH + headerH + 14);
-  }
-  return Math.max(90, navH + 26);
-}
+    const coreGeometry = new THREE.CylinderGeometry(0.98, 0.98, 0.34, 64, 1);
+    const coreMaterial = new THREE.MeshStandardMaterial({
+      color: 0xe8b560,
+      emissive: 0x4a3010,
+      emissiveIntensity: 0.58,
+      metalness: 0.82,
+      roughness: 0.28
+    });
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+    core.rotation.x = Math.PI / 2;
+    scene.add(core);
 
-function getR(p) {
-  if (p.matilda) return MAT_R;
-  if (p.spouse)  return SP_R;
-  if (p.key)     return KEY_R;
-  return NODE_R;
-}
+    const glowGeometry = new THREE.SphereGeometry(1.4, 32, 32);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xe8b560,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.BackSide
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    scene.add(glow);
 
-function buildTree() {
-  const viewport = document.getElementById('treeViewport');
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.setAttribute('width', W);
-  svg.setAttribute('height', H);
-  svg.style.display = 'block';
-  svg.style.minWidth = W + 'px';
+    const coreRingGeometry = new THREE.TorusGeometry(1.22, 0.05, 18, 100);
+    const coreRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xe8b560,
+      transparent: true,
+      opacity: 0.28
+    });
+    const coreRing = new THREE.Mesh(coreRingGeometry, coreRingMaterial);
+    coreRing.rotation.x = Math.PI / 2;
+    scene.add(coreRing);
 
-  // ── DEFS ──
-  const defs = document.createElementNS(svgNS, 'defs');
+    const activeRingGeometry = new THREE.TorusGeometry(0.76, 0.022, 18, 80);
+    const activeRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xf5d08a,
+      transparent: true,
+      opacity: 0.86
+    });
+    const activeRing = new THREE.Mesh(activeRingGeometry, activeRingMaterial);
+    activeRing.visible = false;
+    scene.add(activeRing);
 
-  // Gold glow for Matilda
-  function makeGlow(id, stdDev, color) {
-    const f = document.createElementNS(svgNS, 'filter');
-    f.setAttribute('id', id);
-    f.setAttribute('x','-50%'); f.setAttribute('y','-50%');
-    f.setAttribute('width','200%'); f.setAttribute('height','200%');
-    const blur = document.createElementNS(svgNS, 'feGaussianBlur');
-    blur.setAttribute('stdDeviation', stdDev); blur.setAttribute('result','blur');
-    const colorM = document.createElementNS(svgNS, 'feFlood');
-    colorM.setAttribute('flood-color', color); colorM.setAttribute('result','color');
-    const comp = document.createElementNS(svgNS, 'feComposite');
-    comp.setAttribute('in','color'); comp.setAttribute('in2','blur'); comp.setAttribute('operator','in'); comp.setAttribute('result','colorBlur');
-    const merge = document.createElementNS(svgNS, 'feMerge');
-    const mn1 = document.createElementNS(svgNS, 'feMergeNode'); mn1.setAttribute('in','colorBlur');
-    const mn2 = document.createElementNS(svgNS, 'feMergeNode'); mn2.setAttribute('in','SourceGraphic');
-    merge.appendChild(mn1); merge.appendChild(mn2);
-    f.appendChild(blur); f.appendChild(colorM); f.appendChild(comp); f.appendChild(merge);
-    return f;
-  }
-  defs.appendChild(makeGlow('goldGlow', '7', 'rgba(200,168,60,0.6)'));
-  defs.appendChild(makeGlow('eleanorGlow', '5', 'rgba(200,168,60,0.4)'));
+    const anchorRingGeometry = new THREE.TorusGeometry(0.74, 0.028, 16, 120);
+    const anchorRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffd98a,
+      transparent: true,
+      opacity: 0.0
+    });
+    const anchorRing = new THREE.Mesh(anchorRingGeometry, anchorRingMaterial);
+    anchorRing.visible = false;
+    scene.add(anchorRing);
 
-  // Add a sepia filter for portraits
-  const sepiaFilter = document.createElementNS(svgNS, 'filter');
-  sepiaFilter.setAttribute('id', 'portraitSepia');
-  sepiaFilter.setAttribute('color-interpolation-filters', 'sRGB');
-  const cm = document.createElementNS(svgNS, 'feColorMatrix');
-  cm.setAttribute('type', 'matrix');
-  cm.setAttribute('values', '0.40 0.35 0.10 0 0.05  0.28 0.28 0.08 0 0.03  0.10 0.10 0.05 0 0.01  0 0 0 0.85 0');
-  sepiaFilter.appendChild(cm);
-  defs.appendChild(sepiaFilter);
+    const anchorHaloGeometry = new THREE.SphereGeometry(0.84, 18, 18);
+    const anchorHaloMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffd98a,
+      transparent: true,
+      opacity: 0.0,
+      side: THREE.BackSide
+    });
+    const anchorHalo = new THREE.Mesh(anchorHaloGeometry, anchorHaloMaterial);
+    anchorHalo.visible = false;
+    scene.add(anchorHalo);
 
-  // Clip paths for portrait nodes
-  PEOPLE.forEach(p => {
-    if (!PORTRAIT_MAP[p.id]) return;
-    const r = getR(p);
-    const clip = document.createElementNS(svgNS, 'clipPath');
-    clip.setAttribute('id', 'clip-' + p.id);
-    const cc = document.createElementNS(svgNS, 'circle');
-    cc.setAttribute('r', String(r - 2));
-    clip.appendChild(cc);
-    defs.appendChild(clip);
-  });
+    const activeHaloGeometry = new THREE.SphereGeometry(0.92, 20, 20);
+    const activeHaloMaterial = new THREE.MeshBasicMaterial({
+      color: 0xf0c46b,
+      transparent: true,
+      opacity: 0.2,
+      side: THREE.BackSide
+    });
+    const activeHalo = new THREE.Mesh(activeHaloGeometry, activeHaloMaterial);
+    activeHalo.visible = false;
+    scene.add(activeHalo);
 
-  svg.appendChild(defs);
-
-  // ── BACKGROUND ──
-  const bg = document.createElementNS(svgNS, 'rect');
-  bg.setAttribute('width', W); bg.setAttribute('height', H); bg.setAttribute('fill', '#080604');
-  svg.appendChild(bg);
-
-  // Push content below the fixed controls/header without wasting vertical space.
-  const contentG = document.createElementNS(svgNS, 'g');
-  contentG.setAttribute('transform', 'translate(0, ' + getTreeContentOffset() + ')');
-  svg.appendChild(contentG);
-
-  // Era section dividers (subtle horizontal lines)
-  const ERAS = [
-    { y:170, label:'NORMAN · 1066–1150', color:'#C8A83C' },
-    { y:670, label:'EARLY MEDIEVAL · 1150–1300', color:'#7A5818' },
-    { y:920, label:'FAMINE ERA · 1300–1348', color:'#8A6820' },
-    { y:1080, label:'ERA II · THE PESTILENCE · 1348', color:'#6B1212' },
-    { y:1295, label:'ERA III · TUDOR · 1400–1560', color:'#7A1C1C' },
-    { y:1930, label:'ERA IV · CIVIL WAR · 1640–1660', color:'#1C2E4A' },
-    { y:2080, label:'ERA V · RESTORATION', color:'#6A5818' },
-    { y:2230, label:'ERA VI · REGENCY', color:'#5C1828' },
-    { y:2380, label:'ERA VII · VICTORIAN', color:'#3A0A18' },
-    { y:2530, label:'ERA VIII–IX · THE WORLD WARS', color:'#1A2E48' },
-    { y:2820, label:'ERA X · CONTEMPORARY · 2024–2026', color:'#C8A83C' },
-  ];
-  ERAS.forEach(era => {
-    const line = document.createElementNS(svgNS, 'line');
-    line.setAttribute('x1', '30'); line.setAttribute('x2', W - 30);
-    line.setAttribute('y1', era.y); line.setAttribute('y2', era.y);
-    line.setAttribute('stroke', era.color.replace(')', ',0.08)').replace('rgb','rgba').replace('#', '').replace(/^/,'rgba(').replace(/^rgba\(([0-9a-f]{6})/i, (m,h) => {
-      const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
-      return `rgba(${r},${g},${b}`;
-    }) );
-    // Simple approach: just hardcode stroke color
-    line.setAttribute('stroke', 'rgba(200,168,60,0.05)');
-    line.setAttribute('stroke-width', '1');
-    contentG.appendChild(line);
-    // Era label
-    const et = document.createElementNS(svgNS, 'text');
-    et.setAttribute('x', W - 32); et.setAttribute('y', era.y - 5);
-    et.setAttribute('text-anchor', 'end');
-    et.setAttribute('font-family', "'Courier New', monospace");
-    et.setAttribute('font-size', '7.5');
-    et.setAttribute('fill', 'rgba(200,168,60,0.2)');
-    et.setAttribute('letter-spacing', '1.5');
-    et.textContent = era.label;
-    contentG.appendChild(et);
-  });
-
-  // Column headers
-  function addText(x, y, txt, opts={}) {
-    const t = document.createElementNS(svgNS, 'text');
-    t.setAttribute('x', x); t.setAttribute('y', y);
-    t.setAttribute('text-anchor', opts.anchor || 'middle');
-    t.setAttribute('font-family', opts.font || 'Georgia, serif');
-    t.setAttribute('font-size', opts.size || '11');
-    t.setAttribute('fill', opts.fill || '#4A3A20');
-    t.setAttribute('letter-spacing', opts.ls || '2');
-    if (opts.style) t.setAttribute('font-style', opts.style);
-    if (opts.weight) t.setAttribute('font-weight', opts.weight);
-    t.textContent = txt;
-    return t;
-  }
-  contentG.appendChild(addText(MX, 48, 'THE HALE LINE', { font:"'Cinzel', Georgia, serif", size:'12', fill:'rgba(200,168,60,0.4)', weight:'600', ls:'3' }));
-  contentG.appendChild(addText(VX, 48, 'VOSS BRANCH', { font:"'Cinzel', Georgia, serif", size:'10', fill:'rgba(58,88,32,0.6)', weight:'600', ls:'3' }));
-  contentG.appendChild(addText(VX, 1100, 'DISCOVERED 2024', { font:"'Courier New', monospace", size:'7', fill:'rgba(58,88,32,0.35)', ls:'2' }));
-
-  // Guide lines
-  [[MX, 60, H-20, '#1A1610'], [VX, 1120, H-20, '#141A0E']].forEach(([x, y1, y2, stroke]) => {
-    const gl = document.createElementNS(svgNS, 'line');
-    gl.setAttribute('x1', x); gl.setAttribute('y1', y1);
-    gl.setAttribute('x2', x); gl.setAttribute('y2', y2);
-    gl.setAttribute('stroke', stroke); gl.setAttribute('stroke-width', '1');
-    gl.setAttribute('stroke-dasharray', '3,9');
-    contentG.appendChild(gl);
-  });
-
-  const mainLane = document.createElementNS(svgNS, 'rect');
-  mainLane.setAttribute('x', String(MX - 118));
-  mainLane.setAttribute('y', '68');
-  mainLane.setAttribute('width', '236');
-  mainLane.setAttribute('height', String(H - 110));
-  mainLane.setAttribute('fill', 'rgba(200,168,60,0.028)');
-  mainLane.setAttribute('stroke', 'rgba(200,168,60,0.05)');
-  mainLane.setAttribute('stroke-width', '1');
-  contentG.insertBefore(mainLane, contentG.firstChild);
-
-  const vossLane = document.createElementNS(svgNS, 'rect');
-  vossLane.setAttribute('x', String(VX - 104));
-  vossLane.setAttribute('y', '1100');
-  vossLane.setAttribute('width', '208');
-  vossLane.setAttribute('height', String(H - 1150));
-  vossLane.setAttribute('fill', 'rgba(58,88,32,0.035)');
-  vossLane.setAttribute('stroke', 'rgba(58,88,32,0.08)');
-  vossLane.setAttribute('stroke-width', '1');
-  contentG.insertBefore(vossLane, contentG.firstChild);
-
-  // ── CONNECTIONS ──
-  CONNECTIONS.forEach(conn => {
-    const a = personById(conn.from);
-    const b = personById(conn.to);
-    if (!a || !b) return;
-
-    const ra = getR(a), rb = getR(b);
-    const x1 = a.x, y1 = a.y, x2 = b.x, y2 = b.y;
-
-    if (conn.style === 'discovery') {
-      // Dramatic arc from Eleanor Voss back up to Margery (where branch started)
-      const path = document.createElementNS(svgNS, 'path');
-      path.setAttribute('id', 'discoveryPath');
-      const cp1x = x1 + 100, cp1y = (y1 + y2) / 2 + 100;
-      const cp2x = x2 + 100, cp2y = (y1 + y2) / 2 - 100;
-      path.setAttribute('d', `M ${x1} ${y1 - rb} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2 + rb}`);
-      path.setAttribute('stroke', 'rgba(200,168,60,0.4)');
-      path.setAttribute('stroke-width', '1.5');
-      path.setAttribute('stroke-dasharray', '5,5');
-      path.setAttribute('fill', 'none');
-      contentG.appendChild(path);
-
-      const arcLabel = document.createElementNS(svgNS, 'text');
-      arcLabel.setAttribute('font-family', 'Georgia, serif');
-      arcLabel.setAttribute('font-size', '9');
-      arcLabel.setAttribute('fill', 'rgba(200,168,60,0.45)');
-      arcLabel.setAttribute('font-style', 'italic');
-      arcLabel.setAttribute('letter-spacing', '1');
-      const tp = document.createElementNS(svgNS, 'textPath');
-      tp.setAttribute('href', '#discoveryPath');
-      tp.setAttribute('startOffset', '40%');
-      tp.setAttribute('text-anchor', 'middle');
-      tp.textContent = 'Discovered 2024';
-      arcLabel.appendChild(tp);
-      contentG.appendChild(arcLabel);
-      return;
+    const relationLines = [];
+    for (let i = 0; i < 3; i++) {
+      const geometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3()
+      ]);
+      const material = new THREE.LineBasicMaterial({
+        color: 0xf0c46b,
+        transparent: true,
+        opacity: 0.58
+      });
+      const line = new THREE.Line(geometry, material);
+      line.visible = false;
+      scene.add(line);
+      relationLines.push(line);
     }
 
-    if (conn.style === 'spouse') {
-      // Horizontal spouse link
-      const line = document.createElementNS(svgNS, 'line');
-      line.setAttribute('x1', x1 + ra); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2 - rb); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', 'rgba(200,168,60,0.15)');
-      line.setAttribute('stroke-width', '1');
-      contentG.appendChild(line);
-      return;
+    const connectionGeometry = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3()
+    ]);
+    const connectionMaterial = new THREE.LineBasicMaterial({
+      color: 0xf3d07a,
+      transparent: true,
+      opacity: 0.72
+    });
+    const connectionLine = new THREE.Line(connectionGeometry, connectionMaterial);
+    connectionLine.visible = false;
+    scene.add(connectionLine);
+
+    const sealSpikeMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd6a24f,
+      emissive: 0x4a3010,
+      emissiveIntensity: 0.34,
+      metalness: 0.66,
+      roughness: 0.26
+    });
+    const sealSpikes = [];
+    for (let i = 0; i < 6; i++) {
+      const spike = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.62, 5), sealSpikeMaterial);
+      const angle = (Math.PI * 2 * i) / 6;
+      spike.position.set(Math.cos(angle) * 1.14, 0, Math.sin(angle) * 1.14);
+      spike.rotation.z = Math.PI / 2;
+      spike.rotation.y = -angle;
+      scene.add(spike);
+      sealSpikes.push(spike);
     }
 
-    if (conn.style === 'advocacy') {
-      // Dotted advocacy line from Thomas to Matilda
-      const line = document.createElementNS(svgNS, 'line');
-      line.setAttribute('x1', x1 - ra); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2 + rb); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', 'rgba(200,168,60,0.2)');
-      line.setAttribute('stroke-width', '1');
-      line.setAttribute('stroke-dasharray', '3,5');
-      contentG.appendChild(line);
-      return;
+    const rings = [];
+    const ringGlows = [];
+    for (let i = 0; i < 12; i++) {
+      const radius = 2.45 + i * 0.8;
+      const ringGeometry = new THREE.TorusGeometry(radius, 0.018, 24, 420);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: i % 4 === 0 ? 0x9b6a28 : 0x4a4d64,
+        transparent: true,
+        opacity: i % 4 === 0 ? 0.68 : 0.46
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.rotation.x = Math.PI / 2;
+      ring.rotation.z = i * 0.1;
+      ring.userData.baseOpacity = ringMaterial.opacity;
+      scene.add(ring);
+      rings.push(ring);
+
+      const glowGeometry = new THREE.TorusGeometry(radius, 0.055, 10, 240);
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: i % 4 === 0 ? 0xb37a2d : 0x6a7284,
+        transparent: true,
+        opacity: i % 4 === 0 ? 0.22 : 0.14,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      glow.rotation.x = Math.PI / 2;
+      glow.rotation.z = i * 0.1 + 0.04;
+      glow.userData.baseOpacity = glowMaterial.opacity;
+      scene.add(glow);
+      ringGlows.push(glow);
     }
 
-    const mid = (y1 + y2) / 2;
-    const path = document.createElementNS(svgNS, 'path');
-    const startY = y1 + ra;
-    const endY = y2 - rb;
-    const d = `M ${x1} ${startY} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${endY}`;
-    path.setAttribute('d', d);
-    path.setAttribute('fill', 'none');
+    const branchRings = [];
+    const branchRingGlows = [];
+    Object.entries(branchConfig).forEach(([branch, config]) => {
+      const ringGeometry = new THREE.TorusGeometry(branch === 'main' ? 7.4 : branch === 'voss' ? 8.9 : 10.4, 0.032, 24, 480);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: config.ringColor,
+        transparent: true,
+        opacity: 0.68
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.rotation.x = Math.PI / 2 + config.inclination;
+      ring.rotation.z = branch === 'main' ? 0.12 : branch === 'voss' ? -0.4 : 0.65;
+      ring.userData.branch = branch;
+      ring.userData.baseOpacity = ringMaterial.opacity;
+      scene.add(ring);
+      branchRings.push(ring);
 
-    if (conn.style === 'voss') {
-      path.setAttribute('stroke', '#1A2E10'); path.setAttribute('stroke-width', '1.2');
-    } else if (conn.style === 'branch') {
-      path.setAttribute('stroke', 'rgba(58,88,32,0.5)'); path.setAttribute('stroke-width', '1.2');
-      path.setAttribute('stroke-dasharray', '4,4');
-    } else {
-      path.setAttribute('stroke', '#2A2010'); path.setAttribute('stroke-width', '1.5');
+      const glowGeometry = new THREE.TorusGeometry(branch === 'main' ? 7.4 : branch === 'voss' ? 8.9 : 10.4, 0.09, 10, 320);
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: config.color,
+        transparent: true,
+        opacity: 0.24,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      glow.rotation.x = Math.PI / 2 + config.inclination;
+      glow.rotation.z = branch === 'main' ? 0.12 : branch === 'voss' ? -0.4 : 0.65;
+      glow.userData.baseOpacity = glowMaterial.opacity;
+      scene.add(glow);
+      branchRingGlows.push(glow);
+    });
+
+    const nodeMeshes = [];
+    const figureMeshMap = new Map();
+    const colorMap = {
+      main: 0xe8b560,
+      voss: 0xc45a4a,
+      keepers: 0x7b9e87
+    };
+    const branchVisibleLimit = {
+      main: 5,
+      voss: 3,
+      keepers: 3
+    };
+
+    figures.forEach((figure) => {
+      const hiddenAtStart = figure.generation > branchVisibleLimit[figure.branch];
+      const size = keyFigures.has(figure.id)
+        ? (figure.generation === 11 ? 0.46 : 0.42)
+        : (figure.generation === 0 ? 0.5 : 0.28);
+      const geometry = new THREE.IcosahedronGeometry(size, keyFigures.has(figure.id) ? 2 : 1);
+      const material = new THREE.MeshStandardMaterial({
+        color: colorMap[figure.branch],
+        emissive: colorMap[figure.branch],
+        emissiveIntensity: keyFigures.has(figure.id) ? 0.34 : 0.22,
+        metalness: 0.5,
+        roughness: 0.22,
+        flatShading: true,
+        transparent: true
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+
+      mesh.userData = { ...figure, x: 0, z: 0, hiddenAtStart, baseEmissive: keyFigures.has(figure.id) ? 0.34 : 0.22 };
+
+      scene.add(mesh);
+      nodeMeshes.push(mesh);
+      figureMeshMap.set(figure.id, mesh);
+
+      if (hiddenAtStart) {
+        mesh.visible = false;
+      }
+
+      const haloGeo = new THREE.SphereGeometry(size + (keyFigures.has(figure.id) ? 0.16 : 0.08), 18, 18);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: colorMap[figure.branch],
+        transparent: true,
+        opacity: keyFigures.has(figure.id) ? 0.22 : 0.16,
+        side: THREE.BackSide
+      });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.userData.baseOpacity = haloMat.opacity;
+      mesh.add(halo);
+
+      if (keyFigures.has(figure.id)) {
+        const sigilGeometry = new THREE.TorusGeometry(size + 0.18, 0.012, 12, 80);
+        const sigilMaterial = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: 0.34
+        });
+        const sigil = new THREE.Mesh(sigilGeometry, sigilMaterial);
+        sigil.rotation.x = Math.PI / 2;
+        sigil.userData.baseOpacity = sigilMaterial.opacity;
+        mesh.add(sigil);
+
+        const outerHaloGeo = new THREE.SphereGeometry(size + 0.34, 20, 20);
+        const outerHaloMat = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: 0.08,
+          side: THREE.BackSide
+        });
+        const outerHalo = new THREE.Mesh(outerHaloGeo, outerHaloMat);
+        outerHalo.userData.baseOpacity = outerHaloMat.opacity;
+        mesh.add(outerHalo);
+      }
+
+      const shardCount = keyFigures.has(figure.id) ? 4 : 2;
+      for (let i = 0; i < shardCount; i++) {
+        const shardGeometry = new THREE.OctahedronGeometry(size * (keyFigures.has(figure.id) ? 0.18 : 0.12), 0);
+        const shardMaterial = new THREE.MeshBasicMaterial({
+          color: colorMap[figure.branch],
+          transparent: true,
+          opacity: keyFigures.has(figure.id) ? 0.34 : 0.16
+        });
+        const shard = new THREE.Mesh(shardGeometry, shardMaterial);
+        shard.userData.baseOpacity = shardMaterial.opacity;
+        const angle = (Math.PI * 2 * i) / shardCount;
+        shard.position.set(Math.cos(angle) * (size + 0.22), Math.sin(angle * 1.7) * 0.12, Math.sin(angle) * (size + 0.22));
+        shard.userData.rotationSpeed = 0.01 + i * 0.004;
+        mesh.add(shard);
+      }
+    });
+
+    const trailLines = [];
+    const trailLength = 34;
+    const trailHistory = new Map();
+    figures.forEach((figure) => {
+      trailHistory.set(figure.id, []);
+      const points = Array.from({ length: trailLength + 1 }, () => new THREE.Vector3(0, 0, 0));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color: colorMap[figure.branch],
+        transparent: true,
+        opacity: 0.42
+      });
+      const line = new THREE.Line(geometry, material);
+      if (figure.generation > branchVisibleLimit[figure.branch]) {
+        line.visible = false;
+      }
+      scene.add(line);
+      trailLines.push({ line, figureId: figure.id });
+    });
+
+    const particleCount = 900;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const r = 1.5 + Math.random() * 2;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      particlePositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      particlePositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      particlePositions[i * 3 + 2] = r * Math.cos(phi);
     }
-    contentG.appendChild(path);
-  });
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({ color: 0xe8b560, size: 0.028, transparent: true, opacity: 0.44 });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
 
-  // ── NODES ──
-  PEOPLE.forEach(person => {
-    const r = getR(person);
-    const g = document.createElementNS(svgNS, 'g');
-    g.setAttribute('transform', `translate(${person.x}, ${person.y})`);
-    g.style.cursor = person.link ? 'pointer' : 'default';
-
-    // Glow for key characters
-    if (person.matilda) {
-      const glow = document.createElementNS(svgNS, 'circle');
-      glow.setAttribute('r', r + 12);
-      glow.setAttribute('fill', 'rgba(200,168,60,0.06)');
-      glow.setAttribute('stroke', 'rgba(200,168,60,0.12)');
-      glow.setAttribute('stroke-width', '1');
-      g.appendChild(glow);
-    }
-    if (person.eleanor || person.james) {
-      const glow = document.createElementNS(svgNS, 'circle');
-      glow.setAttribute('r', r + 8);
-      glow.setAttribute('fill', 'rgba(200,168,60,0.04)');
-      glow.setAttribute('stroke', 'rgba(200,168,60,0.1)');
-      glow.setAttribute('stroke-width', '1');
-      g.appendChild(glow);
+    function makeRadialTexture(stops) {
+      const size = 256;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      stops.forEach((stop) => gradient.addColorStop(stop[0], stop[1]));
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      return texture;
     }
 
-    // Node circle
-    const circle = document.createElementNS(svgNS, 'circle');
-    circle.setAttribute('r', r);
+    const hazeTexture = makeRadialTexture([
+      [0, 'rgba(232,181,96,0.28)'],
+      [0.45, 'rgba(232,181,96,0.12)'],
+      [1, 'rgba(0,0,0,0)']
+    ]);
+    const hazeSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: hazeTexture,
+      transparent: true,
+      opacity: 0.32,
+      depthWrite: false
+    }));
+    hazeSprite.scale.set(46, 46, 1);
+    scene.add(hazeSprite);
 
-    if (person.plague) {
-      circle.setAttribute('fill', '#10070A');
-      circle.setAttribute('stroke', '#6B1212');
-      circle.setAttribute('stroke-width', '1.5');
-    } else if (person.matilda) {
-      circle.setAttribute('fill', '#1A1408');
-      circle.setAttribute('stroke', '#C8A83C');
-      circle.setAttribute('stroke-width', '2.5');
-      circle.setAttribute('filter', 'url(#goldGlow)');
-    } else if (person.eleanor) {
-      circle.setAttribute('fill', '#0E1010');
-      circle.setAttribute('stroke', '#C8A83C');
-      circle.setAttribute('stroke-width', '2');
-      circle.setAttribute('filter', 'url(#eleanorGlow)');
-    } else if (person.key) {
-      circle.setAttribute('fill', '#141008');
-      circle.setAttribute('stroke', '#C8A83C');
-      circle.setAttribute('stroke-width', '2');
-    } else if (person.spouse) {
-      circle.setAttribute('fill', '#100E08');
-      circle.setAttribute('stroke', 'rgba(200,168,60,0.4)');
-      circle.setAttribute('stroke-width', '1');
-      circle.setAttribute('stroke-dasharray', '2,2');
-    } else if (person.branch === 'voss') {
-      circle.setAttribute('fill', '#090D09');
-      circle.setAttribute('stroke', '#2A4018');
-      circle.setAttribute('stroke-width', '1.5');
-    } else if (person.compressed) {
-      circle.setAttribute('fill', '#0E0C08');
-      circle.setAttribute('stroke', '#2A2010');
-      circle.setAttribute('stroke-width', '1');
-      circle.setAttribute('stroke-dasharray', '2,3');
-    } else {
-      circle.setAttribute('fill', '#0E0C08');
-      circle.setAttribute('stroke', '#2A2010');
-      circle.setAttribute('stroke-width', '1.5');
-    }
-    g.appendChild(circle);
+    const coolHazeTexture = makeRadialTexture([
+      [0, 'rgba(100,140,180,0.18)'],
+      [0.5, 'rgba(100,140,180,0.08)'],
+      [1, 'rgba(0,0,0,0)']
+    ]);
+    const coolHaze = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: coolHazeTexture,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false
+    }));
+    coolHaze.scale.set(62, 62, 1);
+    coolHaze.position.set(0, 0, -8);
+    scene.add(coolHaze);
 
-    // Portrait image (for key characters that have one)
-    if (PORTRAIT_MAP[person.id]) {
-      const img = document.createElementNS(svgNS, 'image');
-      img.setAttribute('href', PORTRAIT_MAP[person.id]);
-      img.setAttribute('x', String(-(r - 2)));
-      img.setAttribute('y', String(-(r - 2)));
-      img.setAttribute('width', String((r - 2) * 2));
-      img.setAttribute('height', String((r - 2) * 2));
-      img.setAttribute('clip-path', `url(#clip-${person.id})`);
-      img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-      img.setAttribute('filter', 'url(#portraitSepia)');
-      img.setAttribute('opacity', '0.75');
-      g.appendChild(img);
-    }
+    const ambientLight = new THREE.AmbientLight(0x16161b, 0.9);
+    scene.add(ambientLight);
 
-    // Inner ring for key figures
-    if (person.key && !person.spouse) {
-      const inner = document.createElementNS(svgNS, 'circle');
-      inner.setAttribute('r', r - 7);
-      inner.setAttribute('fill', 'none');
-      inner.setAttribute('stroke', person.matilda ? 'rgba(200,168,60,0.22)' : 'rgba(200,168,60,0.12)');
-      inner.setAttribute('stroke-width', '1');
-      g.appendChild(inner);
-    }
+    const mainLight = new THREE.DirectionalLight(0xf7e2be, 1.08);
+    mainLight.position.set(5, 11, 8);
+    scene.add(mainLight);
 
-    // Era colour dot
-    const dot = document.createElementNS(svgNS, 'circle');
-    dot.setAttribute('r', '3.5');
-    dot.setAttribute('cy', String(-r + 7));
-    dot.setAttribute('fill', person.eraColor);
-    g.appendChild(dot);
+    const backLight = new THREE.PointLight(0x4a3010, 0.55);
+    backLight.position.set(-3, 2, -5);
+    scene.add(backLight);
 
-    // Name text
-    const nameColor = person.matilda ? '#f0d67a'
-      : person.eleanor ? '#E8C84C'
-      : person.james ? '#e0bb62'
-      : person.key ? '#dbba63'
-      : person.plague ? '#a85d5d'
-      : person.branch === 'voss' ? '#7fa368'
-      : person.spouse ? '#b49a62'
-      : '#b8a16f';
+    const fillLight = new THREE.PointLight(0x2c334c, 0.34);
+    fillLight.position.set(3, 4, 6);
+    scene.add(fillLight);
 
-    const fontSize = person.matilda ? '11' : person.key ? '10.5' : person.spouse ? '8.75' : '9.4';
-    const fontWeight = person.key ? '600' : '400';
+    function updatePositions(deltaTime) {
+      nodeMeshes.forEach((mesh) => {
+        const data = mesh.userData;
+        if (data.hiddenAtStart && introRunning) return;
+        data.angle += data.speed * deltaTime * 60;
+        if (data.angle > Math.PI * 2) data.angle -= Math.PI * 2;
 
-    const nameParts = person.name.split(' ');
-    // For compressed nodes, show shorter version
-    const displayName = person.compressed ? (person.name.length > 22 ? person.name.substring(0,22) + '…' : person.name) : person.name;
-    const displayParts = displayName.split(' ');
+        const cfg = branchConfig[data.branch];
+        const orbitX = Math.cos(data.angle) * data.radius;
+        const orbitZ = Math.sin(data.angle) * data.radius;
+        const tiltCos = Math.cos(cfg.inclination);
+        const tiltSin = Math.sin(cfg.inclination);
+        const x = orbitX;
+        const z = orbitZ * tiltCos - cfg.yShift;
+        const y = orbitZ * tiltSin + Math.sin(data.angle * cfg.wobble) * 0.28 + cfg.yShift;
 
-    if (displayParts.length <= 2 || displayName.length < 16) {
-      const t = document.createElementNS(svgNS, 'text');
-      t.setAttribute('y', '4'); t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('font-family', "'Cinzel', Georgia, serif");
-      t.setAttribute('font-size', fontSize); t.setAttribute('fill', nameColor);
-      t.setAttribute('font-weight', fontWeight);
-      t.setAttribute('stroke', 'rgba(8,6,4,0.5)');
-      t.setAttribute('stroke-width', '0.45');
-      t.setAttribute('paint-order', 'stroke');
-      t.textContent = displayName;
-      g.appendChild(t);
-    } else {
-      const half = Math.ceil(displayParts.length / 2);
-      const line1 = displayParts.slice(0, half).join(' ');
-      const line2 = displayParts.slice(half).join(' ');
-      [line1, line2].forEach((line, i) => {
-        const t = document.createElementNS(svgNS, 'text');
-        t.setAttribute('y', String(-5 + i * 13)); t.setAttribute('text-anchor', 'middle');
-        t.setAttribute('font-family', "'Cinzel', Georgia, serif");
-        t.setAttribute('font-size', String(parseFloat(fontSize) - 0.5));
-        t.setAttribute('fill', nameColor); t.setAttribute('font-weight', fontWeight);
-        t.setAttribute('stroke', 'rgba(8,6,4,0.5)');
-        t.setAttribute('stroke-width', '0.45');
-        t.setAttribute('paint-order', 'stroke');
-        t.textContent = line;
-        g.appendChild(t);
+        mesh.position.set(x, y, z);
+        data.x = x;
+        data.z = z;
+        mesh.rotation.y += 0.006;
+        mesh.rotation.x += 0.002;
+        mesh.children.forEach((child) => {
+          if (child.userData && child.userData.rotationSpeed) {
+            child.rotation.y += child.userData.rotationSpeed;
+            child.rotation.x += child.userData.rotationSpeed * 0.45;
+          }
+        });
+
+        const trail = trailHistory.get(data.id);
+        trail.push({ x, y, z });
+        if (trail.length > trailLength) trail.shift();
+
+        const trailLine = trailLines.find((t) => t.figureId === data.id);
+        if (trailLine && trail.length > 1) {
+          const points = trail.map((p) => new THREE.Vector3(p.x, p.y, p.z));
+          trailLine.line.geometry.dispose();
+          trailLine.line.geometry = new THREE.BufferGeometry().setFromPoints(points);
+        }
       });
     }
 
-    // Dates
-    const dt = document.createElementNS(svgNS, 'text');
-    dt.setAttribute('y', String(r + 13)); dt.setAttribute('text-anchor', 'middle');
-    dt.setAttribute('font-family', 'Georgia, serif'); dt.setAttribute('font-size', '8');
-    dt.setAttribute('fill', '#8d774f'); dt.setAttribute('font-style', 'italic');
-    dt.textContent = person.dates;
-    g.appendChild(dt);
-
-    // Events
-    g.addEventListener('click', () => openProfile(person));
-    g.addEventListener('mouseenter', (e) => showTooltip(e, person));
-    g.addEventListener('mouseleave', hideTooltip);
-
-    // Store reference for search and quick jumps
-    svgNodeMap[person.id] = g;
-    svgNodePositions[person.id] = { x: person.x, y: person.y };
-
-    contentG.appendChild(g);
-  });
-
-  viewport.appendChild(svg);
-
-  // Scroll to show the Norman era at top (with header offset)
-  viewport.scrollTop = 0;
-  viewport.scrollLeft = Math.max(0, MX - viewport.clientWidth / 2);
-}
-
-// ── TOOLTIP ───────────────────────────────────────────────────────────────
-const tooltip    = document.getElementById('tooltip');
-const ttName     = document.getElementById('tt-name');
-const ttEra      = document.getElementById('tt-era');
-const ttDesc     = document.getElementById('tt-desc');
-const ttLink     = document.getElementById('tt-link');
-const ttPortrait = document.getElementById('tt-portrait');
-
-function showTooltip(e, p) {
-  ttName.textContent  = p.name;
-  ttEra.textContent   = p.dates + ' · ' + p.era;
-  ttDesc.textContent  = p.desc;
-  ttLink.textContent  = p.link ? '→ Open era page' : '';
-  const portraitSrc = PORTRAIT_MAP[p.id];
-  if (portraitSrc) {
-    ttPortrait.src = portraitSrc;
-    ttPortrait.alt = p.name;
-    ttPortrait.classList.add('visible');
-    tooltip.style.width = '290px';
-  } else {
-    ttPortrait.src = '';
-    ttPortrait.classList.remove('visible');
-    tooltip.style.width = '270px';
-  }
-  tooltip.classList.add('visible');
-  moveTooltip(e);
-}
-function hideTooltip() { tooltip.classList.remove('visible'); }
-document.addEventListener('mousemove', e => { if (tooltip.classList.contains('visible')) moveTooltip(e); });
-function moveTooltip(e) {
-  const x = e.clientX + 18, y = e.clientY + 12;
-  const tw = 270, th = 150;
-  tooltip.style.left = (x + tw > window.innerWidth ? x - tw - 36 : x) + 'px';
-  tooltip.style.top  = (y + th > window.innerHeight ? y - th - 24 : y) + 'px';
-}
-
-// ── KEYBOARD NAV ──────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  const vp = document.getElementById('treeViewport');
-  const step = 140;
-  if (e.key === 'ArrowDown')  { vp.scrollTop  += step; e.preventDefault(); }
-  if (e.key === 'ArrowUp')    { vp.scrollTop  -= step; e.preventDefault(); }
-  if (e.key === 'ArrowLeft')  { vp.scrollLeft -= step; e.preventDefault(); }
-  if (e.key === 'ArrowRight') { vp.scrollLeft += step; e.preventDefault(); }
-});
-
-// ── MATILDA LINK (when archive complete) ──────────────────────────────────
-function tryMatildaLink() {
-  try {
-    if (localStorage.getItem('hale_complete') === 'true') {
-      const link = document.getElementById('secret-inner-link');
-      if (link) link.style.display = '';
+    function updateCamera() {
+      const x = Math.sin(cameraTheta) * Math.cos(cameraPhi) * cameraRadius;
+      const y = Math.sin(cameraPhi) * cameraRadius;
+      const z = Math.cos(cameraTheta) * Math.cos(cameraPhi) * cameraRadius;
+      camera.position.set(x, y, z);
+      camera.lookAt(0, 0, 0);
     }
-  } catch(e) {}
-}
 
-// ── SEARCH ────────────────────────────────────────────────────────────────
-const svgNodeMap = {};
-const svgNodePositions = {};
-
-function matchesPerson(p, q) {
-  if (!q) return true;
-  const hay = (p.name + ' ' + p.dates + ' ' + p.era + ' ' + (p.desc || '')).toLowerCase();
-  return hay.includes(q.toLowerCase());
-}
-
-function applyTreeSearch(q) {
-  const isActive = q && q.length > 0;
-  PEOPLE.forEach(p => {
-    const g = svgNodeMap[p.id];
-    if (!g) return;
-    if (!isActive) {
-      g.style.opacity = '';
-      g.style.transition = 'opacity 0.3s';
-    } else if (matchesPerson(p, q)) {
-      g.style.opacity = '1';
-      g.style.transition = 'opacity 0.3s';
-    } else {
-      g.style.opacity = '0.07';
-      g.style.transition = 'opacity 0.3s';
+    function setCameraTarget(theta, phi, radius) {
+      targetTheta = theta;
+      targetPhi = phi;
+      targetRadius = radius;
     }
-  });
-}
 
-function applyListSearch(q) {
-  const container = document.getElementById('list-view');
-  if (!container) return;
-  const persons = container.querySelectorAll('.lv-person');
-  persons.forEach(el => {
-    const personId = el.dataset.personId;
-    const p = personId ? personById(personId) : null;
-    if (!q || !q.length) {
-      el.style.opacity = '';
-    } else if (p && matchesPerson(p, q)) {
-      el.style.opacity = '1';
-    } else {
-      el.style.opacity = '0.12';
+    function beginFocusSweep(mesh) {
+      const data = mesh.userData;
+      const desiredTheta = Math.atan2(data.x, data.z);
+      const desiredPhi = keyFigures.has(data.id) ? 0.42 : 0.48;
+      const desiredRadius = keyFigures.has(data.id) ? 15.5 : 18;
+      focusSweepStart = performance.now();
+      focusSweepDuration = 1200;
+      focusSweepFrom = { theta: targetTheta, phi: targetPhi, radius: targetRadius };
+      focusSweepTo = { theta: desiredTheta, phi: desiredPhi, radius: desiredRadius };
+      setCameraTarget(desiredTheta, desiredPhi, desiredRadius);
     }
-  });
-}
 
-const treeSearchInput = document.getElementById('tree-search');
-const treeSearchClear = document.getElementById('tree-search-clear');
+    let lastTime = performance.now();
 
-treeSearchInput.addEventListener('input', function() {
-  const q = this.value.trim();
-  treeSearchClear.style.display = q ? 'block' : 'none';
-  applyTreeSearch(q);
-  applyListSearch(q);
-});
+    function animate(now) {
+      const delta = Math.min(0.033, (now - lastTime) / 1000);
+      lastTime = now;
+      let sweepPower = 0;
 
-treeSearchClear.addEventListener('click', function() {
-  treeSearchInput.value = '';
-  this.style.display = 'none';
-  applyTreeSearch('');
-  applyListSearch('');
-  treeSearchInput.focus();
-});
+      if (focusSweepDuration > 0) {
+        const t = Math.min(1, (now - focusSweepStart) / focusSweepDuration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        targetTheta = focusSweepFrom.theta + (focusSweepTo.theta - focusSweepFrom.theta) * eased;
+        targetPhi = focusSweepFrom.phi + (focusSweepTo.phi - focusSweepFrom.phi) * eased;
+        targetRadius = focusSweepFrom.radius + (focusSweepTo.radius - focusSweepFrom.radius) * eased;
+        sweepPower = Math.sin(Math.PI * t);
+        if (t >= 1) {
+          focusSweepDuration = 0;
+        }
+      }
 
-// Prevent search input from triggering scroll when focused
-treeSearchInput.addEventListener('keydown', e => { e.stopPropagation(); });
+      if (introRunning) {
+        introProgress = Math.min(1, introProgress + delta / 4.8);
+        const eased = 1 - Math.pow(1 - introProgress, 3);
+        setCameraTarget(-0.52 + eased * 0.52, 0.72 - eased * 0.2, 30 - eased * 8);
+        if (introProgress >= 1) {
+          introRunning = false;
+          document.body.classList.remove('intro-running');
+          document.body.classList.add('intro-complete');
+          cameraTheta = targetTheta;
+          cameraPhi = targetPhi;
+          cameraRadius = targetRadius;
+          nodeMeshes.forEach((mesh) => {
+            if (mesh.userData.hiddenAtStart) {
+              mesh.visible = true;
+            }
+          });
+          trailLines.forEach(({ line, figureId }) => {
+            const figure = figures.find((item) => item.id === figureId);
+            if (figure && figure.generation > branchVisibleLimit[figure.branch]) {
+              line.visible = true;
+            }
+          });
+        }
+      }
 
-// ── LIST VIEW ─────────────────────────────────────────────────────────────
-const ERA_GROUPS = [
-  { label:'Era I · Norman · 1066–1150',         ids:['ranulf','aelswith','leofric'] },
-  { label:'Era II · Early Medieval & Plague',    ids:['robert_hale','william_elder','edmund_med','william_younger','richard_plague','thomas_survivor','matilda_bk'] },
-  { label:'Era III · Tudor · 1400–1560',         ids:['john_hale_1','tudor_comp','john_tudor','william_mon'] },
-  { label:'Era IV · Civil War · 1640–1689',      ids:['civil_war'] },
-  { label:'Era V · Restoration & Georgian',      ids:['nathaniel'] },
-  { label:'Era VI · Regency · 1771–1842',        ids:['augusta','edmund_reg'] },
-  { label:'Era VII · Victorian',                  ids:['edmund_vict'] },
-  { label:'Era VIII · Edwardian & WWI',          ids:['thomas_mh'] },
-  { label:'Era IX · WWII',                       ids:['edmund_mh'] },
-  { label:'Era X · Contemporary',                ids:['james','eleanor_voss'] },
-  { label:'Voss Branch · 1373–2026',             ids:['margery','alice_voss','voss_early','john_fletcher','mary_voss','george_voss','hannah_voss','edmund_voss_p','harold_voss','david_voss'] },
-];
+      if (!introRunning && autoRotate && !isDragging && focusSweepDuration === 0) {
+        targetTheta += 0.0026;
+      }
 
-function buildListView() {
-  const container = document.getElementById('list-view');
-  container.innerHTML = '';
-  const mobileBanner = document.createElement('div');
-  mobileBanner.className = 'lv-mobile-banner';
-  mobileBanner.innerHTML =
-    '<span class="lv-mobile-kicker">Mobile family tree</span>' +
-    '<span class="lv-mobile-copy">Start in the lineage view on phone. Follow the Hale line by era, then open the visual map only when you want the full branch structure.</span>';
-  container.appendChild(mobileBanner);
-  const intro = document.createElement('div');
-  intro.className = 'lv-intro';
-  intro.innerHTML =
-    '<div class="lv-intro-card"><span class="lv-intro-kicker">Read the line</span><span class="lv-intro-copy">Use the Hale blocks as the straight descent through the archive, then branch outward only when a figure starts to matter.</span></div>' +
-    '<div class="lv-intro-card"><span class="lv-intro-kicker">Read the break</span><span class="lv-intro-copy">The Voss branch is not extra lore. It is the family split that finally comes back into view in Era X.</span></div>' +
-    '<div class="lv-intro-card"><span class="lv-intro-kicker">Read the keepers</span><span class="lv-intro-copy">Matilda, Augusta, Thomas, James, and Eleanor are the fastest route through the archive\'s recurring questions.</span></div>';
-  container.appendChild(intro);
-  ERA_GROUPS.forEach(function(group) {
-    const block = document.createElement('div');
-    block.className = 'lv-era-block';
-    const heading = document.createElement('div');
-    heading.className = 'lv-era-heading';
-    heading.textContent = group.label;
-    block.appendChild(heading);
-    group.ids.forEach(function(id) {
-      const p = personById(id);
-      if (!p) return;
-      const el = p.link ? document.createElement('a') : document.createElement('div');
-      el.className = 'lv-person';
-      el.dataset.personId = p.id;
-      if (p.link) { el.href = p.link; }
-      // Portrait or dot
-      const portraitSrc = PORTRAIT_MAP[p.id];
-      if (portraitSrc) {
-        const wrap = document.createElement('div');
-        wrap.className = 'lv-portrait';
-        const img = document.createElement('img');
-        img.src = portraitSrc; img.alt = p.name;
-        img.loading = 'lazy';
-        wrap.appendChild(img);
-        el.appendChild(wrap);
+      if (!isDragging) {
+        cameraTheta += (targetTheta - cameraTheta) * 0.08;
+        cameraPhi += (targetPhi - cameraPhi) * 0.08;
+        cameraRadius += (targetRadius - cameraRadius) * 0.08;
+      }
+
+      updateCamera();
+      updatePositions(delta);
+
+      const scale = 1 + Math.sin(now * 0.003) * 0.03;
+      core.scale.set(scale, scale, scale);
+      glow.scale.set(scale, scale, scale);
+      core.rotation.z += 0.004;
+      coreRing.rotation.z += 0.0016;
+      sealSpikes.forEach((spike, index) => {
+        const angle = (Math.PI * 2 * index) / 6 + now * 0.0002;
+        spike.position.set(Math.cos(angle) * 1.14, Math.sin(now * 0.0018 + index) * 0.02, Math.sin(angle) * 1.14);
+        spike.rotation.y = -angle;
+      });
+
+      if (activeFigureId !== null) {
+        const activeMesh = figureMeshMap.get(activeFigureId);
+        if (activeMesh && activeMesh.visible) {
+          const pulse = 1 + Math.sin(now * 0.005) * 0.06;
+          activeRing.visible = true;
+          activeHalo.visible = true;
+          activeRing.position.copy(activeMesh.position);
+          activeHalo.position.copy(activeMesh.position);
+          activeRing.rotation.x = Math.PI / 2;
+          activeRing.rotation.z += 0.01;
+          activeRing.scale.setScalar(pulse);
+          activeHalo.scale.setScalar(1.02 + Math.sin(now * 0.004) * 0.08);
+          const sweepBoost = sweepPower * 0.35;
+          activeRing.material.opacity = 0.62 + Math.sin(now * 0.006) * 0.16 + sweepBoost;
+          activeHalo.material.opacity = 0.18 + Math.sin(now * 0.004) * 0.08 + sweepBoost * 0.6;
+        }
       } else {
-        const dot = document.createElement('div');
-        dot.className = 'lv-dot';
-        const inner = document.createElement('div');
-        inner.className = 'lv-dot-inner';
-        inner.style.background = p.eraColor || '#3A3020';
-        dot.appendChild(inner);
-        el.appendChild(dot);
+        activeRing.visible = false;
+        activeHalo.visible = false;
       }
-      // Text
-      const text = document.createElement('div');
-      text.className = 'lv-text';
-      const name = document.createElement('div');
-      name.className = 'lv-name' + (p.key ? ' lv-key' : '');
-      name.textContent = p.name;
-      const dates = document.createElement('div');
-      dates.className = 'lv-dates';
-      dates.textContent = p.dates + ' · ' + p.era;
-      text.appendChild(name);
-      text.appendChild(dates);
-      el.appendChild(text);
-      if (p.link) {
-        const arr = document.createElement('div');
-        arr.className = 'lv-arrow';
-        arr.textContent = '→';
-        el.appendChild(arr);
+
+      if (connectMode && connectionAnchorId !== null) {
+        const anchorMesh = figureMeshMap.get(connectionAnchorId);
+        if (anchorMesh && anchorMesh.visible) {
+          const pulse = 1 + Math.sin(now * 0.006) * 0.08;
+          anchorRing.visible = true;
+          anchorHalo.visible = true;
+          anchorRing.position.copy(anchorMesh.position);
+          anchorHalo.position.copy(anchorMesh.position);
+          anchorRing.rotation.x = Math.PI / 2;
+          anchorRing.rotation.z += 0.012;
+          anchorRing.scale.setScalar(pulse);
+          anchorHalo.scale.setScalar(1.03 + Math.sin(now * 0.004) * 0.1);
+          anchorRing.material.opacity = 0.55 + Math.sin(now * 0.006) * 0.2;
+          anchorHalo.material.opacity = 0.2 + Math.sin(now * 0.004) * 0.1;
+        } else {
+          anchorRing.visible = false;
+          anchorHalo.visible = false;
+        }
+      } else {
+        anchorRing.visible = false;
+        anchorHalo.visible = false;
       }
-      block.appendChild(el);
+
+      stars.rotation.y += 0.00036;
+      stars.rotation.x += 0.00016;
+      particles.rotation.y += 0.007;
+      particles.rotation.x += 0.0034;
+      branchRings.forEach((ring, index) => {
+        ring.rotation.z += 0.00045 * (index % 2 === 0 ? 1 : -1);
+      });
+      ringGlows.forEach((glow, index) => {
+        glow.rotation.z += 0.00032 * (index % 2 === 0 ? 1 : -1);
+        const base = glow.userData.baseOpacity || 0.16;
+        glow.material.opacity = showOrbits ? base + Math.sin(now * 0.0016 + index) * 0.06 : 0;
+      });
+      branchRingGlows.forEach((glow, index) => {
+        glow.rotation.z += 0.00038 * (index % 2 === 0 ? 1 : -1);
+        const base = glow.userData.baseOpacity || 0.22;
+        glow.material.opacity = showOrbits ? base + Math.sin(now * 0.0012 + index) * 0.05 : 0;
+      });
+      updateLabels();
+      updateRelationLines();
+      updatePortraitPositions();
+      applyBranchFocus();
+      updateConnectionLine();
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const relatedList = document.getElementById('relatedList');
+    const labelLayer = document.getElementById('nodeLabels');
+    const labelMap = new Map();
+    const portraitOrbitLayer = document.getElementById('portraitOrbitLayer');
+    const portraitOrbitNodes = [];
+    const connectToggle = document.getElementById('connect-mode');
+    const connectHint = document.getElementById('connectHint');
+    const connectionReveal = document.getElementById('connectionReveal');
+    const connectionClose = document.getElementById('connectionClose');
+    const connNameA = document.getElementById('connNameA');
+    const connNameB = document.getElementById('connNameB');
+    const connText = document.getElementById('connText');
+    const connMeta = document.getElementById('connMeta');
+
+    keyFigures.forEach((id) => {
+      const figure = figureById.get(id);
+      const label = document.createElement('div');
+      label.className = 'node-label';
+      label.innerHTML = `<strong>${figure.name}</strong><span>${figure.era}</span>`;
+      labelLayer.appendChild(label);
+      labelMap.set(id, label);
     });
-    container.appendChild(block);
-  });
-}
 
-function focusPersonInTree(personId) {
-  const vp = document.getElementById('treeViewport');
-  const pos = svgNodePositions[personId];
-  const node = svgNodeMap[personId];
-  if (!vp || !pos || !node) return;
+    orbitPortraits.forEach((entry) => {
+      const figure = figureById.get(entry.id);
+      if (!figure) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'portrait-orbit';
+      button.setAttribute('aria-label', `${figure.name} portrait`);
+      button.innerHTML = `<img src="${entry.src}" alt="${figure.name}">`;
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        focusFigure(entry.id);
+      });
+      portraitOrbitLayer.appendChild(button);
+      portraitOrbitNodes.push({ id: entry.id, el: button });
+    });
 
-  if (document.getElementById('list-view').classList.contains('visible')) {
-    document.getElementById('view-toggle').click();
-  }
+    let viewportWidth = window.innerWidth;
+    let viewportHeight = window.innerHeight;
 
-  const offset = getTreeContentOffset();
-  const targetLeft = Math.max(0, pos.x - (vp.clientWidth * 0.5));
-  const targetTop = Math.max(0, (pos.y + offset) - (vp.clientHeight * 0.32));
-  vp.scrollTo({ left: targetLeft, top: targetTop, behavior: 'smooth' });
-
-  node.style.transition = 'transform 0.28s ease, filter 0.28s ease';
-  node.style.transform = 'scale(1.08)';
-  node.style.filter = 'drop-shadow(0 0 18px rgba(200,168,60,0.38))';
-  window.setTimeout(function() {
-    node.style.transform = '';
-    node.style.filter = '';
-  }, 1100);
-}
-
-let listViewBuilt = false;
-function setTreeMode(mode) {
-  const lv = document.getElementById('list-view');
-  const vp = document.getElementById('treeViewport');
-  const hint = document.getElementById('scrollHint');
-  const toggle = document.getElementById('view-toggle');
-  const showList = mode === 'list';
-  if (showList) {
-    if (!listViewBuilt) { buildListView(); listViewBuilt = true; applyListSearch(treeSearchInput.value.trim()); }
-    lv.classList.add('visible');
-    vp.style.display = 'none';
-    if (hint) hint.style.display = 'none';
-    if (toggle) toggle.textContent = '⊞ Visual Map';
-  } else {
-    lv.classList.remove('visible');
-    vp.style.display = '';
-    if (hint) hint.style.display = '';
-    if (toggle) toggle.textContent = '☰ Lineage View';
-  }
-}
-
-document.getElementById('view-toggle').addEventListener('click', function() {
-  const lv = document.getElementById('list-view');
-  const isVisible = lv.classList.contains('visible');
-  const nextMode = isVisible ? 'tree' : 'list';
-  setTreeMode(nextMode);
-  if (window.hdTrack) {
-    window.hdTrack('family_tree_view_toggle', { mode: nextMode });
-  }
-});
-
-// ── PROFILE PANEL ────────────────────────────────────────────────────────
-const profilePanel    = document.getElementById('profile-panel');
-const profileBackdrop = document.getElementById('profile-backdrop');
-const ppPortraitImg   = document.getElementById('pp-portrait-img');
-const ppPortraitPH    = document.getElementById('pp-portrait-placeholder');
-const ppEraLabel      = document.getElementById('pp-era-label');
-const ppName          = document.getElementById('pp-name');
-const ppDates         = document.getElementById('pp-dates');
-const ppDesc          = document.getElementById('pp-desc');
-const ppEraLink       = document.getElementById('pp-era-link');
-const ppEraStripe     = document.getElementById('pp-era-stripe');
-const ppAskEleanor    = document.getElementById('pp-ask-eleanor');
-const treeHeader      = document.getElementById('treeHeader');
-const treeHeaderToggle = document.getElementById('tree-header-toggle');
-
-function openProfile(person) {
-  // Portrait
-  const src = PORTRAIT_MAP[person.id];
-  if (src) {
-    ppPortraitImg.src = src;
-    ppPortraitImg.alt = person.name;
-    ppPortraitImg.style.display = 'block';
-    ppPortraitPH.style.display = 'none';
-  } else {
-    ppPortraitImg.style.display = 'none';
-    ppPortraitPH.style.display = 'flex';
-  }
-
-  // Era colour stripe
-  ppEraStripe.style.background = person.eraColor || '#C8A83C';
-
-  // Text
-  ppEraLabel.textContent = person.era || '';
-  ppName.textContent     = person.name;
-  ppDates.textContent    = person.dates || '';
-  ppDesc.textContent     = person.desc || '';
-
-  // Era link
-  if (person.link) {
-    ppEraLink.href = person.link;
-    ppEraLink.style.display = 'block';
-    ppEraLink.textContent = '→ Open Era Page';
-  } else {
-    ppEraLink.style.display = 'none';
-  }
-
-  // Consult Eleanor button
-  ppAskEleanor.dataset.personName = person.name;
-
-  // Update URL hash for shareable deep-link
-  if (history.replaceState) history.replaceState(null, '', '#' + person.id);
-
-  // Open
-  profilePanel.classList.add('open');
-  profileBackdrop.classList.add('open');
-  hideTooltip();
-}
-
-function closeProfile() {
-  profilePanel.classList.remove('open');
-  profileBackdrop.classList.remove('open');
-  if (history.replaceState) history.replaceState(null, '', window.location.pathname);
-}
-
-document.getElementById('profile-panel-close').addEventListener('click', closeProfile);
-profileBackdrop.addEventListener('click', closeProfile);
-
-// "Consult Eleanor" — opens inquiry panel with a pre-filled research prompt
-ppAskEleanor.addEventListener('click', function() {
-  const name = this.dataset.personName || 'this person';
-  if (window.hdTrack) {
-    window.hdTrack('family_tree_consult_eleanor', { person: name });
-  }
-  closeProfile();
-  // inquiry.js creates #hd-inq-panel and #hd-inq-input
-  const panel = document.getElementById('hd-inq-panel');
-  const fab   = document.getElementById('hd-inq-fab');
-  const input = document.getElementById('hd-inq-input');
-  if (panel && input) {
-    panel.classList.add('open');
-    if (fab) fab.classList.add('open');
-    input.value = 'Place ' + name + ' in the Hale line and explain why they matter.';
-    input.dispatchEvent(new Event('input'));
-    input.focus();
-  }
-});
-
-// List view — clicking a person opens profile panel
-document.getElementById('list-view').addEventListener('click', function(e) {
-  const el = e.target.closest('[data-person-id]');
-  if (!el) return;
-  e.preventDefault();
-  const person = personById(el.dataset.personId);
-  if (person) {
-    if (window.hdTrack) {
-      window.hdTrack('family_tree_list_open_profile', { person: person.name, id: person.id });
+    function projectToScreen(mesh) {
+      const vector = mesh.position.clone().project(camera);
+      return {
+        x: (vector.x * 0.5 + 0.5) * viewportWidth,
+        y: (-vector.y * 0.5 + 0.5) * viewportHeight,
+        visible: vector.z > -1 && vector.z < 1
+      };
     }
-    openProfile(person);
-  }
-});
 
-document.querySelectorAll('[data-person-jump]').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    const personId = this.getAttribute('data-person-jump');
-    if (personId) {
-      if (window.hdTrack) {
-        window.hdTrack('family_tree_jump', { target: personId });
+    function updatePortraitPositions() {
+      portraitOrbitNodes.forEach(({ id, el }) => {
+        const mesh = figureMeshMap.get(id);
+        if (!mesh || !mesh.visible) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
+        const isFocus = branchFocus === 'all' || mesh.userData.branch === branchFocus;
+        if (!isFocus) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
+        const vector = mesh.position.clone().project(camera);
+        const x = (vector.x * 0.5 + 0.5) * viewportWidth;
+        const y = (-vector.y * 0.5 + 0.5) * viewportHeight;
+        const within = vector.z > -1 && vector.z < 1 && x > -120 && x < viewportWidth + 120 && y > -120 && y < viewportHeight + 120;
+        if (!within) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        el.classList.add('visible');
+        el.classList.toggle('active', id === activeFigureId);
+      });
+    }
+
+    function updateLabels() {
+      if (viewportWidth <= 960) return;
+      labelMap.forEach((label, id) => {
+        const mesh = figureMeshMap.get(id);
+        if (!mesh || !mesh.visible) {
+          label.classList.remove('visible');
+          return;
+        }
+        const isFocus = branchFocus === 'all' || mesh.userData.branch === branchFocus;
+        const pos = projectToScreen(mesh);
+        label.style.left = `${pos.x}px`;
+        label.style.top = `${pos.y - 46}px`;
+        const shouldShow = (activeFigureId === id) || (hoverFigureId === id);
+        label.classList.toggle('visible', pos.visible && shouldShow && isFocus);
+      });
+    }
+
+    function updateRelationLines() {
+      if (activeFigureId === null) {
+        relationLines.forEach((line) => { line.visible = false; });
+        return;
       }
-      focusPersonInTree(personId);
+      const relatedIds = relatedMap[activeFigureId] || [];
+      const activeMesh = figureMeshMap.get(activeFigureId);
+      if (!activeMesh) return;
+      relationLines.forEach((line, index) => {
+        const targetId = relatedIds[index];
+        if (!targetId) {
+          line.visible = false;
+          return;
+        }
+        const targetMesh = figureMeshMap.get(targetId);
+        if (!targetMesh || !targetMesh.visible) {
+          line.visible = false;
+          return;
+        }
+        const start = activeMesh.position.clone();
+        const end = targetMesh.position.clone();
+        const mid = start.clone().lerp(end, 0.5);
+        mid.y += 1.4;
+        const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+        const points = curve.getPoints(36);
+        line.geometry.dispose();
+        line.geometry = new THREE.BufferGeometry().setFromPoints(points);
+        line.visible = true;
+      });
     }
-  });
-});
 
-// ── INIT ─────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  buildTree();
-  tryMatildaLink();
-  if (window.matchMedia && window.matchMedia('(max-width: 600px)').matches) {
-    setTreeMode('list');
-  } else {
-    setTreeMode('tree');
-  }
-  // Open profile from URL hash on page load
-  const hash = window.location.hash.replace('#', '');
-  if (hash) {
-    const person = personById(hash);
-    if (person) setTimeout(() => openProfile(person), 600);
-  }
-});
-if (treeHeaderToggle && treeHeader) {
-  treeHeaderToggle.addEventListener('click', function() {
-    const compact = treeHeader.classList.toggle('compact');
-    if (window.hdTrack) {
-      window.hdTrack('family_tree_guide_toggle', { state: compact ? 'compact' : 'expanded' });
+    function applyBranchFocus() {
+      const focus = branchFocus;
+      nodeMeshes.forEach((mesh) => {
+        if (mesh.userData.hiddenAtStart && introRunning) {
+          mesh.visible = false;
+          return;
+        }
+        mesh.visible = true;
+        const isFocus = focus === 'all' || mesh.userData.branch === focus;
+        const baseEmissive = mesh.userData.baseEmissive || 0.22;
+        const hoverBoost = isFocus && hoverFigureId === mesh.userData.id ? 0.24 : 0;
+        const activeBoost = activeFigureId === mesh.userData.id ? 0.4 : 0;
+        const anchorBoost = connectMode && connectionAnchorId === mesh.userData.id ? 0.3 : 0;
+        mesh.material.opacity = isFocus ? 1 : 0.18;
+        mesh.material.emissiveIntensity = Math.min(0.95, baseEmissive * (isFocus ? 1 : 0.2) + hoverBoost + activeBoost + anchorBoost);
+        mesh.children.forEach((child) => {
+          if (child.material && child.material.opacity !== undefined) {
+            const base = child.userData.baseOpacity ?? child.material.opacity;
+            child.material.opacity = isFocus ? base : base * 0.22;
+          }
+        });
+      });
+
+      rings.forEach((ring) => {
+        const base = ring.userData.baseOpacity ?? ring.material.opacity;
+        ring.material.opacity = showOrbits ? base * (focus === 'all' ? 1 : 0.55) : 0;
+      });
+      ringGlows.forEach((glow) => {
+        const base = glow.userData.baseOpacity ?? glow.material.opacity;
+        glow.material.opacity = showOrbits ? base * (focus === 'all' ? 1 : 0.6) : 0;
+      });
+      branchRings.forEach((ring) => {
+        const isFocus = focus === 'all' || ring.userData.branch === focus;
+        const base = ring.userData.baseOpacity ?? ring.material.opacity;
+        ring.material.opacity = showOrbits ? base * (isFocus ? 1 : 0.18) : 0;
+      });
+      branchRingGlows.forEach((glow, index) => {
+        const branch = index === 0 ? 'main' : index === 1 ? 'voss' : 'keepers';
+        const isFocus = focus === 'all' || branch === focus;
+        const base = glow.userData.baseOpacity ?? glow.material.opacity;
+        glow.material.opacity = showOrbits ? base * (isFocus ? 1 : 0.18) : 0;
+      });
+      trailLines.forEach(({ line, figureId }) => {
+        const figure = figureById.get(figureId);
+        if (!figure) return;
+        const isFocus = focus === 'all' || figure.branch === focus;
+        const base = showOrbits ? 0.42 : 0.04;
+        line.material.opacity = base * (isFocus ? 1 : 0.2);
+      });
     }
-    this.textContent = compact ? 'Open guide' : 'Hide guide';
-    this.setAttribute('aria-expanded', compact ? 'false' : 'true');
-    const vp = document.getElementById('treeViewport');
-    if (vp) {
-      const prevLeft = vp.scrollLeft;
-      const prevTop = vp.scrollTop;
-      vp.innerHTML = '';
-      buildTree();
-      vp.scrollLeft = prevLeft;
-      vp.scrollTop = prevTop;
+
+    function connectionKey(a, b) {
+      return a < b ? `${a}-${b}` : `${b}-${a}`;
     }
-  });
-}
-if (treeSearchInput) {
-  treeSearchInput.addEventListener('input', function() {
-    var value = (this.value || '').trim();
-    if (window.hdTrack && value.length >= 2) {
-      window.hdTrack('family_tree_search', { query_length: value.length });
+
+    function showConnection(a, b) {
+      const figureA = figureById.get(a);
+      const figureB = figureById.get(b);
+      if (!figureA || !figureB) return;
+      const key = connectionKey(a, b);
+      const entry = connectionMap[key];
+      connNameA.textContent = figureA.name;
+      connNameB.textContent = figureB.name;
+      if (entry) {
+        connText.textContent = entry.text;
+        connMeta.textContent = entry.meta;
+      } else {
+        connText.textContent = 'The archive marks both names, but this connection is not annotated in the public record. The gap itself is part of the story.';
+        connMeta.textContent = 'Archive Note';
+      }
+      connectionPair = { a, b };
+      connectionReveal.classList.add('active');
+      connectionReveal.setAttribute('aria-hidden', 'false');
     }
-  });
-}
-window.addEventListener('resize', () => {
-  // Rebuild on resize for correct viewport sizing
-  const vp = document.getElementById('treeViewport');
-  vp.innerHTML = '';
-  buildTree();
-  if (window.matchMedia && window.matchMedia('(max-width: 600px)').matches) {
-    setTreeMode('list');
-  }
-});
-</script>
-<script src="inquiry.js"></script>
-<script>
-// Switch hint text and legend for touch devices
-(function() {
-  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (isTouch) {
-    var hoverHints = document.querySelectorAll('.hd-hover-hint');
-    var touchHints = document.querySelectorAll('.hd-touch-hint');
-    hoverHints.forEach(function(el) { el.style.display = 'none'; });
-    touchHints.forEach(function(el) { el.style.display = ''; });
-    var hint = document.getElementById('scrollHint');
-    if (hint) hint.textContent = 'Scroll to navigate · Tap names to open';
-    // Ensure viewport allows native touch scrolling
-    var vp = document.getElementById('treeViewport');
-    if (vp) vp.style.touchAction = 'pan-x pan-y';
-  }
-})();
-</script>
+
+    function hideConnection() {
+      connectionPair = null;
+      connectionReveal.classList.remove('active');
+      connectionReveal.setAttribute('aria-hidden', 'true');
+    }
+
+    function updateConnectionLine() {
+      if (!connectionPair) {
+        connectionLine.visible = false;
+        return;
+      }
+      const meshA = figureMeshMap.get(connectionPair.a);
+      const meshB = figureMeshMap.get(connectionPair.b);
+      if (!meshA || !meshB || !meshA.visible || !meshB.visible) {
+        connectionLine.visible = false;
+        return;
+      }
+      const start = meshA.position.clone();
+      const end = meshB.position.clone();
+      const mid = start.clone().lerp(end, 0.5);
+      mid.y += 2.2;
+      const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+      const points = curve.getPoints(48);
+      connectionLine.geometry.dispose();
+      connectionLine.geometry = new THREE.BufferGeometry().setFromPoints(points);
+      connectionLine.visible = true;
+    }
+
+    function setConnectMode(next) {
+      connectMode = next;
+      connectToggle.classList.toggle('active', next);
+      connectHint.classList.toggle('active', next);
+      if (!next) {
+        connectionAnchorId = null;
+        hideConnection();
+      }
+      applyBranchFocus();
+    }
+
+    function setBranchFocus(nextFocus) {
+      branchFocus = nextFocus;
+      document.querySelectorAll('.legend-branch').forEach((button) => {
+        button.classList.toggle('active', button.dataset.branch === nextFocus);
+      });
+      if (activeFigureId !== null) {
+        const active = figureById.get(activeFigureId);
+        if (active && nextFocus !== 'all' && active.branch !== nextFocus) {
+          activeFigureId = null;
+          document.getElementById('infoCard').classList.add('minimized');
+          document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+        }
+      }
+      applyBranchFocus();
+      updateLabels();
+      updateRelationLines();
+      updatePortraitPositions();
+    }
+
+    function renderRelated(figureId) {
+      const ids = relatedMap[figureId] || [];
+      if (!ids.length) {
+        relatedList.innerHTML = '<button class="related-chip" type="button" data-related="0">Ranulf</button><button class="related-chip" type="button" data-related="21">Eleanor</button>';
+        return;
+      }
+
+      relatedList.innerHTML = ids.map((id) => {
+        const figure = figures.find((item) => item.id === id);
+        return `<button class="related-chip" type="button" data-related="${id}">${figure.name}</button>`;
+      }).join('');
+    }
+
+    function updateInfo(data) {
+      activeFigureId = data.id;
+      const portrait = portraitMap[data.id];
+      const portraitContainer = document.getElementById('infoPortrait');
+      const initials = data.name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase();
+      portraitContainer.innerHTML = portrait
+        ? `<img src="${portrait}" alt="${data.name}">`
+        : `<div class="info-portrait-fallback">${initials}</div>`;
+      const accent = document.getElementById('infoAccent');
+      accent.style.background = data.branch === 'main' ? 'var(--main)' : data.branch === 'voss' ? 'var(--voss)' : 'var(--keepers)';
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      document.body.classList.add(data.branch === 'main' ? 'branch-main' : data.branch === 'voss' ? 'branch-voss' : 'branch-keepers');
+      document.getElementById('infoName').textContent = data.name;
+      document.getElementById('infoDates').textContent = `${data.dates} · ${data.era}`;
+      document.getElementById('infoDesc').textContent = data.desc;
+      document.getElementById('infoBranch').textContent = branchLabel[data.branch];
+      document.getElementById('infoCard').classList.remove('minimized');
+      renderRelated(data.id);
+    }
+
+    function focusFigure(id) {
+      const mesh = figureMeshMap.get(id);
+      if (!mesh) return;
+      activeFigureId = id;
+      const data = mesh.userData;
+      if (branchFocus !== 'all' && data.branch !== branchFocus) {
+        setBranchFocus(data.branch);
+      }
+      if (connectMode) {
+        if (connectionAnchorId === null) {
+          connectionAnchorId = data.id;
+        } else if (connectionAnchorId !== data.id) {
+          showConnection(connectionAnchorId, data.id);
+          connectionAnchorId = null;
+        } else {
+          connectionAnchorId = null;
+        }
+      }
+      beginFocusSweep(mesh);
+      updateInfo(data);
+      mesh.material.emissiveIntensity = 0.9;
+      setTimeout(() => {
+        mesh.material.emissiveIntensity = mesh.userData.baseEmissive || (keyFigures.has(id) ? 0.34 : 0.22);
+      }, 360);
+      updateLabels();
+      updateRelationLines();
+      updatePortraitPositions();
+    }
+
+    function onPointerSelect(clientX, clientY) {
+      const rect = container.getBoundingClientRect();
+      mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(nodeMeshes);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object;
+        const data = hit.userData;
+        focusFigure(data.id);
+      }
+    }
+
+    function onMouseDown(event) {
+      isDragging = true;
+      lastMouseX = event.clientX;
+      lastMouseY = event.clientY;
+      autoRotate = false;
+    }
+
+    function onMouseMove(event) {
+      if (!isDragging) {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        const hits = raycaster.intersectObjects(nodeMeshes);
+        const newHoverId = hits.length ? hits[0].object.userData.id : null;
+        if (newHoverId !== hoverFigureId) {
+          if (hoverFigureId !== null) {
+            const prev = figureMeshMap.get(hoverFigureId);
+            if (prev) prev.material.emissiveIntensity = keyFigures.has(hoverFigureId) ? 0.34 : 0.22;
+          }
+          hoverFigureId = newHoverId;
+          if (hoverFigureId !== null && hoverFigureId !== activeFigureId) {
+            const next = figureMeshMap.get(hoverFigureId);
+            if (next) next.material.emissiveIntensity = 0.5;
+          }
+          updateLabels();
+        }
+        return;
+      }
+      const deltaX = event.clientX - lastMouseX;
+      const deltaY = event.clientY - lastMouseY;
+      cameraTheta += deltaX * 0.01;
+      cameraPhi += deltaY * 0.01;
+      cameraPhi = Math.min(Math.PI / 2.2, Math.max(0.2, cameraPhi));
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      lastMouseX = event.clientX;
+      lastMouseY = event.clientY;
+    }
+
+    function onMouseUp() {
+      isDragging = false;
+      window.clearTimeout(onMouseUp._timer);
+      onMouseUp._timer = window.setTimeout(() => {
+        autoRotate = true;
+      }, 2800);
+    }
+
+    function onWheel(event) {
+      cameraRadius -= event.deltaY * 0.02;
+      cameraRadius = Math.min(35, Math.max(8, cameraRadius));
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      autoRotate = false;
+      window.clearTimeout(onWheel._timer);
+      onWheel._timer = window.setTimeout(() => {
+        autoRotate = true;
+      }, 1800);
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', () => {
+      cameraRadius = Math.max(8, cameraRadius - 1);
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+      cameraRadius = Math.min(35, cameraRadius + 1);
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    const branchLegend = document.getElementById('branchLegend');
+    if (branchLegend) {
+      branchLegend.addEventListener('click', (event) => {
+        const button = event.target.closest('.legend-branch');
+        if (!button) return;
+        setBranchFocus(button.dataset.branch || 'all');
+      });
+    }
+
+    document.getElementById('rotate-left').addEventListener('click', () => {
+      cameraTheta += 0.22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    document.getElementById('rotate-right').addEventListener('click', () => {
+      cameraTheta -= 0.22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+    });
+
+    if (connectToggle) {
+      connectToggle.addEventListener('click', () => {
+        setConnectMode(!connectMode);
+      });
+    }
+
+    document.getElementById('reset-view').addEventListener('click', (event) => {
+      event.preventDefault();
+      cameraTheta = 0;
+      cameraPhi = 0.5;
+      cameraRadius = 22;
+      setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
+      autoRotate = true;
+      activeFigureId = null;
+      connectionAnchorId = null;
+      hideConnection();
+      document.getElementById('infoCard').classList.add('minimized');
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      updateLabels();
+      updateRelationLines();
+    });
+
+    document.getElementById('toggle-orbits').addEventListener('click', (event) => {
+      event.preventDefault();
+      showOrbits = !showOrbits;
+      document.body.classList.toggle('orbits-on', showOrbits);
+      rings.forEach((ring) => {
+        ring.material.opacity = showOrbits ? (ring.material.color.getHex() === 0x9b6a28 ? 0.68 : 0.46) : 0;
+      });
+      branchRings.forEach((ring) => {
+        ring.material.opacity = showOrbits ? 0.68 : 0;
+      });
+      ringGlows.forEach((glow) => {
+        glow.material.opacity = showOrbits ? (glow.userData.baseOpacity || 0.16) : 0;
+      });
+      branchRingGlows.forEach((glow) => {
+        glow.material.opacity = showOrbits ? (glow.userData.baseOpacity || 0.22) : 0;
+      });
+      trailLines.forEach(({ line }) => {
+        line.material.opacity = showOrbits ? 0.42 : 0.04;
+      });
+    });
+
+    document.getElementById('closeInfo').addEventListener('click', () => {
+      document.getElementById('infoCard').classList.add('minimized');
+      activeFigureId = null;
+      connectionAnchorId = null;
+      document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+      updateLabels();
+      updateRelationLines();
+    });
+
+    if (connectionClose) {
+      connectionClose.addEventListener('click', () => {
+        hideConnection();
+      });
+    }
+    if (connectionReveal) {
+      connectionReveal.addEventListener('click', (event) => {
+        if (event.target === connectionReveal) hideConnection();
+      });
+    }
+
+    relatedList.addEventListener('click', (event) => {
+      const button = event.target.closest('.related-chip');
+      if (!button) return;
+      const id = Number(button.dataset.related);
+      if (Number.isNaN(id)) return;
+      focusFigure(id);
+    });
+
+    container.addEventListener('click', (event) => onPointerSelect(event.clientX, event.clientY));
+    container.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    container.addEventListener('wheel', onWheel, { passive: true });
+
+    container.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 1) {
+        const touch = event.touches[0];
+        isDragging = true;
+        lastMouseX = touch.clientX;
+        lastMouseY = touch.clientY;
+        autoRotate = false;
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (event) => {
+      if (!isDragging || event.touches.length !== 1) return;
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - lastMouseX;
+      const deltaY = touch.clientY - lastMouseY;
+      cameraTheta += deltaX * 0.01;
+      cameraPhi += deltaY * 0.01;
+      cameraPhi = Math.min(Math.PI / 2.2, Math.max(0.2, cameraPhi));
+      updateCamera();
+      lastMouseX = touch.clientX;
+      lastMouseY = touch.clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (event) => {
+      if (!isDragging) return;
+      if (event.changedTouches.length === 1) {
+        const touch = event.changedTouches[0];
+        onPointerSelect(touch.clientX, touch.clientY);
+      }
+      onMouseUp();
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+      camera.aspect = viewportWidth / viewportHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(viewportWidth, viewportHeight);
+      updateLabels();
+      updatePortraitPositions();
+      applyBranchFocus();
+    });
+
+    updateCamera();
+    renderRelated(0);
+    updateLabels();
+    updatePortraitPositions();
+    applyBranchFocus();
+    updateConnectionLine();
+  </script>
 </body>
 </html>

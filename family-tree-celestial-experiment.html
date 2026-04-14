@@ -174,6 +174,11 @@
       color: var(--gold);
     }
 
+    .connect-toggle.active {
+      color: rgba(255,255,255,0.95);
+      text-shadow: 0 0 18px rgba(232,181,96,0.5);
+    }
+
     .hero-overlay {
       position: fixed;
       top: 5.6rem;
@@ -720,6 +725,34 @@
       text-transform: uppercase;
     }
 
+    .legend-branch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232,181,96,0.2);
+      background: rgba(8,8,12,0.55);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+
+    .legend-branch:hover {
+      color: rgba(255,255,255,0.9);
+      border-color: rgba(232,181,96,0.5);
+    }
+
+    .legend-branch.active {
+      background: rgba(232,181,96,0.18);
+      color: rgba(255,255,255,0.95);
+      border-color: rgba(232,181,96,0.8);
+      box-shadow: 0 0 16px rgba(232,181,96,0.28);
+    }
+
     .instructions {
       position: fixed;
       bottom: 1.8rem;
@@ -735,6 +768,134 @@
       z-index: 20;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+    }
+
+    .connect-hint {
+      position: fixed;
+      bottom: 4.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.75);
+      background: rgba(6,6,8,0.7);
+      border: 1px solid rgba(232,181,96,0.28);
+      border-radius: 999px;
+      padding: 0.3rem 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms ease, transform 240ms ease;
+      z-index: 20;
+    }
+
+    .connect-hint.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .connection-reveal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 40%, rgba(8,8,10,0.4), rgba(2,2,3,0.86));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      transition: opacity 320ms ease;
+    }
+
+    .connection-reveal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .connection-card {
+      width: min(520px, 88vw);
+      padding: 1.6rem 1.8rem 1.8rem;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(232,181,96,0.16), transparent 46%),
+        linear-gradient(180deg, rgba(10,10,12,0.96), rgba(4,4,6,0.95));
+      border-radius: 22px;
+      border: 1px solid rgba(232,181,96,0.28);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.55);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .connection-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at center, rgba(232,181,96,0.16), transparent 62%);
+      opacity: 0.6;
+      transform: rotate(18deg);
+      pointer-events: none;
+    }
+
+    .connection-header {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.72);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .connection-header::before,
+    .connection-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(232,181,96,0.3);
+    }
+
+    .connection-names {
+      margin-top: 1rem;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+      line-height: 1.05;
+      color: rgba(255,255,255,0.96);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .connection-link {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin: 0 0.35rem;
+    }
+
+    .connection-text {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: rgba(255,248,236,0.76);
+    }
+
+    .connection-meta {
+      margin-top: 0.9rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232,181,96,0.6);
+    }
+
+    .connection-close {
+      position: absolute;
+      top: 0.9rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      cursor: pointer;
     }
 
     @media (max-width: 960px) {
@@ -895,6 +1056,7 @@
         <a href="timeline.html">Timeline</a>
         <button id="reset-view" type="button">Reset</button>
         <button id="toggle-orbits" type="button">Orbits</button>
+        <button id="connect-mode" class="connect-toggle" type="button">Connect</button>
       </div>
     </div>
 
@@ -960,14 +1122,30 @@
       </div>
     </div>
 
-    <div class="legend">
+    <div class="legend" id="branchLegend">
       <div class="legend-item"><strong>Branches</strong></div>
-      <div class="legend-item"><span class="legend-dot" style="background: #e8b560;"></span>Main Line</div>
-      <div class="legend-item"><span class="legend-dot" style="background: #c45a4a;"></span>Voss Branch</div>
-      <div class="legend-item"><span class="legend-dot" style="background: #7b9e87;"></span>Keepers</div>
+      <button class="legend-branch active" type="button" data-branch="all">All</button>
+      <button class="legend-branch" type="button" data-branch="main"><span class="legend-dot" style="background: #e8b560;"></span>Main Line</button>
+      <button class="legend-branch" type="button" data-branch="voss"><span class="legend-dot" style="background: #c45a4a;"></span>Voss Branch</button>
+      <button class="legend-branch" type="button" data-branch="keepers"><span class="legend-dot" style="background: #7b9e87;"></span>Keepers</button>
     </div>
 
     <div class="instructions">Drag to orbit · Scroll to zoom · Click stars for stories</div>
+    <div class="connect-hint" id="connectHint">Connect mode · select two figures</div>
+  </div>
+
+  <div class="connection-reveal" id="connectionReveal" aria-hidden="true">
+    <div class="connection-card">
+      <button class="connection-close" id="connectionClose" type="button">✕</button>
+      <div class="connection-header">Archive Thread</div>
+      <div class="connection-names">
+        <span id="connNameA">Ranulf de la Hale</span>
+        <span class="connection-link">✶</span>
+        <span id="connNameB">Aelswith</span>
+      </div>
+      <div class="connection-text" id="connText">Their marriage in 1068 binds conquest to settlement: a claim made real by a household that endures.</div>
+      <div class="connection-meta" id="connMeta">Recorded Connection</div>
+    </div>
   </div>
 
   <script type="importmap">
@@ -1032,6 +1210,57 @@
       keepers: { color: 0x7b9e87, inclination: 0.86, yShift: 0.44, wobble: 2.2, ringColor: 0x23332b }
     };
 
+    const connectionMap = {
+      '0-1': {
+        text: 'Married in 1068. Aelswith teaches Ranulf the language and practical life of Halecroft, turning conquest into household.',
+        meta: 'Marriage · 1068'
+      },
+      '0-2': {
+        text: 'Leofric is Ranulf’s son. He establishes the Hale settlement in the woodland and carries the name into a local line.',
+        meta: 'Father and Son'
+      },
+      '1-2': {
+        text: 'Aelswith’s youngest son is named Leofric, honoring the fallen thegn and binding the new line to the old land.',
+        meta: 'Mother and Son'
+      },
+      '7-8': {
+        text: 'Matilda of Halecroft speaks for Thomas at the Inquest of 1351, securing his inheritance after the plague.',
+        meta: 'Inquest of 1351'
+      },
+      '7-9': {
+        text: 'Margery is the daughter of Thomas Hale, the plague survivor, and her marriage begins the Voss branch.',
+        meta: 'Father and Daughter'
+      },
+      '8-9': {
+        text: 'Matilda tracks Margery’s departure from Halecroft and follows the Voss line for six centuries.',
+        meta: 'Departure Tracked'
+      },
+      '8-21': {
+        text: 'Matilda’s letter is recovered and read by Eleanor Voss in 2024, completing the arc of the archive.',
+        meta: 'Letter Recovered'
+      },
+      '9-20': {
+        text: 'David Voss belongs to the Voss branch descended from Margery Hale and Thomas Voss of Pershore.',
+        meta: 'Voss Branch'
+      },
+      '9-21': {
+        text: 'Eleanor is a descendant of Margery Hale and Thomas Voss, returning the line to the Hale record.',
+        meta: 'Voss Return'
+      },
+      '14-15': {
+        text: 'Augusta Hale and Edmund Hale are siblings; she managed the estate while he inherited the title.',
+        meta: 'Brother and Sister'
+      },
+      '15-16': {
+        text: 'Thomas Marsh-Hale is the illegitimate son of Edmund Hale II and takes the hyphenated name.',
+        meta: 'Father and Son'
+      },
+      '20-21': {
+        text: 'David Voss assembled the shoebox of papers and left it to Eleanor, who reads it as inheritance.',
+        meta: 'Shoebox Legacy'
+      }
+    };
+
     const keyFigures = new Set([0, 8, 9, 14, 16, 17, 21]);
     const portraitMap = {
       0: 'portraits/ranulf.png',
@@ -1059,8 +1288,10 @@
       { id: 0, src: 'portraits/ranulf.png' },
       { id: 7, src: 'portraits/thomas.png' },
       { id: 8, src: 'portraits/matilda.png' },
+      { id: 9, src: 'portraits/margery.png' },
       { id: 14, src: 'portraits/augusta.png' },
       { id: 15, src: 'portraits/edmund.png' },
+      { id: 20, src: 'portraits/david.png' },
       { id: 21, src: 'portraits/eleanor.png' }
     ];
 
@@ -1089,6 +1320,14 @@
     let targetTheta = 0;
     let targetPhi = 0.5;
     let targetRadius = 22;
+    let focusSweepStart = 0;
+    let focusSweepDuration = 0;
+    let focusSweepFrom = { theta: 0, phi: 0.5, radius: 22 };
+    let focusSweepTo = { theta: 0, phi: 0.5, radius: 22 };
+    let branchFocus = 'all';
+    let connectMode = false;
+    let connectionAnchorId = null;
+    let connectionPair = null;
     let autoRotate = true;
     let showOrbits = true;
     let activeFigureId = null;
@@ -1152,6 +1391,27 @@
     activeRing.visible = false;
     scene.add(activeRing);
 
+    const anchorRingGeometry = new THREE.TorusGeometry(0.74, 0.028, 16, 120);
+    const anchorRingMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffd98a,
+      transparent: true,
+      opacity: 0.0
+    });
+    const anchorRing = new THREE.Mesh(anchorRingGeometry, anchorRingMaterial);
+    anchorRing.visible = false;
+    scene.add(anchorRing);
+
+    const anchorHaloGeometry = new THREE.SphereGeometry(0.84, 18, 18);
+    const anchorHaloMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffd98a,
+      transparent: true,
+      opacity: 0.0,
+      side: THREE.BackSide
+    });
+    const anchorHalo = new THREE.Mesh(anchorHaloGeometry, anchorHaloMaterial);
+    anchorHalo.visible = false;
+    scene.add(anchorHalo);
+
     const activeHaloGeometry = new THREE.SphereGeometry(0.92, 20, 20);
     const activeHaloMaterial = new THREE.MeshBasicMaterial({
       color: 0xf0c46b,
@@ -1180,6 +1440,20 @@
       scene.add(line);
       relationLines.push(line);
     }
+
+    const connectionGeometry = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3()
+    ]);
+    const connectionMaterial = new THREE.LineBasicMaterial({
+      color: 0xf3d07a,
+      transparent: true,
+      opacity: 0.72
+    });
+    const connectionLine = new THREE.Line(connectionGeometry, connectionMaterial);
+    connectionLine.visible = false;
+    scene.add(connectionLine);
 
     const sealSpikeMaterial = new THREE.MeshStandardMaterial({
       color: 0xd6a24f,
@@ -1212,6 +1486,7 @@
       const ring = new THREE.Mesh(ringGeometry, ringMaterial);
       ring.rotation.x = Math.PI / 2;
       ring.rotation.z = i * 0.1;
+      ring.userData.baseOpacity = ringMaterial.opacity;
       scene.add(ring);
       rings.push(ring);
 
@@ -1243,6 +1518,8 @@
       const ring = new THREE.Mesh(ringGeometry, ringMaterial);
       ring.rotation.x = Math.PI / 2 + config.inclination;
       ring.rotation.z = branch === 'main' ? 0.12 : branch === 'voss' ? -0.4 : 0.65;
+      ring.userData.branch = branch;
+      ring.userData.baseOpacity = ringMaterial.opacity;
       scene.add(ring);
       branchRings.push(ring);
 
@@ -1287,11 +1564,12 @@
         emissiveIntensity: keyFigures.has(figure.id) ? 0.34 : 0.22,
         metalness: 0.5,
         roughness: 0.22,
-        flatShading: true
+        flatShading: true,
+        transparent: true
       });
       const mesh = new THREE.Mesh(geometry, material);
 
-      mesh.userData = { ...figure, x: 0, z: 0, hiddenAtStart };
+      mesh.userData = { ...figure, x: 0, z: 0, hiddenAtStart, baseEmissive: keyFigures.has(figure.id) ? 0.34 : 0.22 };
 
       scene.add(mesh);
       nodeMeshes.push(mesh);
@@ -1309,6 +1587,7 @@
         side: THREE.BackSide
       });
       const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.userData.baseOpacity = haloMat.opacity;
       mesh.add(halo);
 
       if (keyFigures.has(figure.id)) {
@@ -1320,6 +1599,7 @@
         });
         const sigil = new THREE.Mesh(sigilGeometry, sigilMaterial);
         sigil.rotation.x = Math.PI / 2;
+        sigil.userData.baseOpacity = sigilMaterial.opacity;
         mesh.add(sigil);
 
         const outerHaloGeo = new THREE.SphereGeometry(size + 0.34, 20, 20);
@@ -1330,6 +1610,7 @@
           side: THREE.BackSide
         });
         const outerHalo = new THREE.Mesh(outerHaloGeo, outerHaloMat);
+        outerHalo.userData.baseOpacity = outerHaloMat.opacity;
         mesh.add(outerHalo);
       }
 
@@ -1342,6 +1623,7 @@
           opacity: keyFigures.has(figure.id) ? 0.34 : 0.16
         });
         const shard = new THREE.Mesh(shardGeometry, shardMaterial);
+        shard.userData.baseOpacity = shardMaterial.opacity;
         const angle = (Math.PI * 2 * i) / shardCount;
         shard.position.set(Math.cos(angle) * (size + 0.22), Math.sin(angle * 1.7) * 0.12, Math.sin(angle) * (size + 0.22));
         shard.userData.rotationSpeed = 0.01 + i * 0.004;
@@ -1499,11 +1781,36 @@
       targetRadius = radius;
     }
 
+    function beginFocusSweep(mesh) {
+      const data = mesh.userData;
+      const desiredTheta = Math.atan2(data.x, data.z);
+      const desiredPhi = keyFigures.has(data.id) ? 0.42 : 0.48;
+      const desiredRadius = keyFigures.has(data.id) ? 15.5 : 18;
+      focusSweepStart = performance.now();
+      focusSweepDuration = 1200;
+      focusSweepFrom = { theta: targetTheta, phi: targetPhi, radius: targetRadius };
+      focusSweepTo = { theta: desiredTheta, phi: desiredPhi, radius: desiredRadius };
+      setCameraTarget(desiredTheta, desiredPhi, desiredRadius);
+    }
+
     let lastTime = performance.now();
 
     function animate(now) {
       const delta = Math.min(0.033, (now - lastTime) / 1000);
       lastTime = now;
+      let sweepPower = 0;
+
+      if (focusSweepDuration > 0) {
+        const t = Math.min(1, (now - focusSweepStart) / focusSweepDuration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        targetTheta = focusSweepFrom.theta + (focusSweepTo.theta - focusSweepFrom.theta) * eased;
+        targetPhi = focusSweepFrom.phi + (focusSweepTo.phi - focusSweepFrom.phi) * eased;
+        targetRadius = focusSweepFrom.radius + (focusSweepTo.radius - focusSweepFrom.radius) * eased;
+        sweepPower = Math.sin(Math.PI * t);
+        if (t >= 1) {
+          focusSweepDuration = 0;
+        }
+      }
 
       if (introRunning) {
         introProgress = Math.min(1, introProgress + delta / 4.8);
@@ -1530,7 +1837,7 @@
         }
       }
 
-      if (!introRunning && autoRotate && !isDragging) {
+      if (!introRunning && autoRotate && !isDragging && focusSweepDuration === 0) {
         targetTheta += 0.0026;
       }
 
@@ -1566,12 +1873,36 @@
           activeRing.rotation.z += 0.01;
           activeRing.scale.setScalar(pulse);
           activeHalo.scale.setScalar(1.02 + Math.sin(now * 0.004) * 0.08);
-          activeRing.material.opacity = 0.62 + Math.sin(now * 0.006) * 0.16;
-          activeHalo.material.opacity = 0.18 + Math.sin(now * 0.004) * 0.08;
+          const sweepBoost = sweepPower * 0.35;
+          activeRing.material.opacity = 0.62 + Math.sin(now * 0.006) * 0.16 + sweepBoost;
+          activeHalo.material.opacity = 0.18 + Math.sin(now * 0.004) * 0.08 + sweepBoost * 0.6;
         }
       } else {
         activeRing.visible = false;
         activeHalo.visible = false;
+      }
+
+      if (connectMode && connectionAnchorId !== null) {
+        const anchorMesh = figureMeshMap.get(connectionAnchorId);
+        if (anchorMesh && anchorMesh.visible) {
+          const pulse = 1 + Math.sin(now * 0.006) * 0.08;
+          anchorRing.visible = true;
+          anchorHalo.visible = true;
+          anchorRing.position.copy(anchorMesh.position);
+          anchorHalo.position.copy(anchorMesh.position);
+          anchorRing.rotation.x = Math.PI / 2;
+          anchorRing.rotation.z += 0.012;
+          anchorRing.scale.setScalar(pulse);
+          anchorHalo.scale.setScalar(1.03 + Math.sin(now * 0.004) * 0.1);
+          anchorRing.material.opacity = 0.55 + Math.sin(now * 0.006) * 0.2;
+          anchorHalo.material.opacity = 0.2 + Math.sin(now * 0.004) * 0.1;
+        } else {
+          anchorRing.visible = false;
+          anchorHalo.visible = false;
+        }
+      } else {
+        anchorRing.visible = false;
+        anchorHalo.visible = false;
       }
 
       stars.rotation.y += 0.00036;
@@ -1594,6 +1925,8 @@
       updateLabels();
       updateRelationLines();
       updatePortraitPositions();
+      applyBranchFocus();
+      updateConnectionLine();
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
@@ -1608,6 +1941,14 @@
     const labelMap = new Map();
     const portraitOrbitLayer = document.getElementById('portraitOrbitLayer');
     const portraitOrbitNodes = [];
+    const connectToggle = document.getElementById('connect-mode');
+    const connectHint = document.getElementById('connectHint');
+    const connectionReveal = document.getElementById('connectionReveal');
+    const connectionClose = document.getElementById('connectionClose');
+    const connNameA = document.getElementById('connNameA');
+    const connNameB = document.getElementById('connNameB');
+    const connText = document.getElementById('connText');
+    const connMeta = document.getElementById('connMeta');
 
     keyFigures.forEach((id) => {
       const figure = figureById.get(id);
@@ -1653,6 +1994,11 @@
           el.classList.remove('visible', 'active');
           return;
         }
+        const isFocus = branchFocus === 'all' || mesh.userData.branch === branchFocus;
+        if (!isFocus) {
+          el.classList.remove('visible', 'active');
+          return;
+        }
         const vector = mesh.position.clone().project(camera);
         const x = (vector.x * 0.5 + 0.5) * viewportWidth;
         const y = (-vector.y * 0.5 + 0.5) * viewportHeight;
@@ -1676,11 +2022,12 @@
           label.classList.remove('visible');
           return;
         }
+        const isFocus = branchFocus === 'all' || mesh.userData.branch === branchFocus;
         const pos = projectToScreen(mesh);
         label.style.left = `${pos.x}px`;
         label.style.top = `${pos.y - 46}px`;
         const shouldShow = (activeFigureId === id) || (hoverFigureId === id);
-        label.classList.toggle('visible', pos.visible && shouldShow);
+        label.classList.toggle('visible', pos.visible && shouldShow && isFocus);
       });
     }
 
@@ -1713,6 +2060,139 @@
         line.geometry = new THREE.BufferGeometry().setFromPoints(points);
         line.visible = true;
       });
+    }
+
+    function applyBranchFocus() {
+      const focus = branchFocus;
+      nodeMeshes.forEach((mesh) => {
+        if (mesh.userData.hiddenAtStart && introRunning) {
+          mesh.visible = false;
+          return;
+        }
+        mesh.visible = true;
+        const isFocus = focus === 'all' || mesh.userData.branch === focus;
+        const baseEmissive = mesh.userData.baseEmissive || 0.22;
+        const hoverBoost = isFocus && hoverFigureId === mesh.userData.id ? 0.24 : 0;
+        const activeBoost = activeFigureId === mesh.userData.id ? 0.4 : 0;
+        const anchorBoost = connectMode && connectionAnchorId === mesh.userData.id ? 0.3 : 0;
+        mesh.material.opacity = isFocus ? 1 : 0.18;
+        mesh.material.emissiveIntensity = Math.min(0.95, baseEmissive * (isFocus ? 1 : 0.2) + hoverBoost + activeBoost + anchorBoost);
+        mesh.children.forEach((child) => {
+          if (child.material && child.material.opacity !== undefined) {
+            const base = child.userData.baseOpacity ?? child.material.opacity;
+            child.material.opacity = isFocus ? base : base * 0.22;
+          }
+        });
+      });
+
+      rings.forEach((ring) => {
+        const base = ring.userData.baseOpacity ?? ring.material.opacity;
+        ring.material.opacity = showOrbits ? base * (focus === 'all' ? 1 : 0.55) : 0;
+      });
+      ringGlows.forEach((glow) => {
+        const base = glow.userData.baseOpacity ?? glow.material.opacity;
+        glow.material.opacity = showOrbits ? base * (focus === 'all' ? 1 : 0.6) : 0;
+      });
+      branchRings.forEach((ring) => {
+        const isFocus = focus === 'all' || ring.userData.branch === focus;
+        const base = ring.userData.baseOpacity ?? ring.material.opacity;
+        ring.material.opacity = showOrbits ? base * (isFocus ? 1 : 0.18) : 0;
+      });
+      branchRingGlows.forEach((glow, index) => {
+        const branch = index === 0 ? 'main' : index === 1 ? 'voss' : 'keepers';
+        const isFocus = focus === 'all' || branch === focus;
+        const base = glow.userData.baseOpacity ?? glow.material.opacity;
+        glow.material.opacity = showOrbits ? base * (isFocus ? 1 : 0.18) : 0;
+      });
+      trailLines.forEach(({ line, figureId }) => {
+        const figure = figureById.get(figureId);
+        if (!figure) return;
+        const isFocus = focus === 'all' || figure.branch === focus;
+        const base = showOrbits ? 0.42 : 0.04;
+        line.material.opacity = base * (isFocus ? 1 : 0.2);
+      });
+    }
+
+    function connectionKey(a, b) {
+      return a < b ? `${a}-${b}` : `${b}-${a}`;
+    }
+
+    function showConnection(a, b) {
+      const figureA = figureById.get(a);
+      const figureB = figureById.get(b);
+      if (!figureA || !figureB) return;
+      const key = connectionKey(a, b);
+      const entry = connectionMap[key];
+      connNameA.textContent = figureA.name;
+      connNameB.textContent = figureB.name;
+      if (entry) {
+        connText.textContent = entry.text;
+        connMeta.textContent = entry.meta;
+      } else {
+        connText.textContent = 'The archive marks both names, but this connection is not annotated in the public record. The gap itself is part of the story.';
+        connMeta.textContent = 'Archive Note';
+      }
+      connectionPair = { a, b };
+      connectionReveal.classList.add('active');
+      connectionReveal.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideConnection() {
+      connectionPair = null;
+      connectionReveal.classList.remove('active');
+      connectionReveal.setAttribute('aria-hidden', 'true');
+    }
+
+    function updateConnectionLine() {
+      if (!connectionPair) {
+        connectionLine.visible = false;
+        return;
+      }
+      const meshA = figureMeshMap.get(connectionPair.a);
+      const meshB = figureMeshMap.get(connectionPair.b);
+      if (!meshA || !meshB || !meshA.visible || !meshB.visible) {
+        connectionLine.visible = false;
+        return;
+      }
+      const start = meshA.position.clone();
+      const end = meshB.position.clone();
+      const mid = start.clone().lerp(end, 0.5);
+      mid.y += 2.2;
+      const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+      const points = curve.getPoints(48);
+      connectionLine.geometry.dispose();
+      connectionLine.geometry = new THREE.BufferGeometry().setFromPoints(points);
+      connectionLine.visible = true;
+    }
+
+    function setConnectMode(next) {
+      connectMode = next;
+      connectToggle.classList.toggle('active', next);
+      connectHint.classList.toggle('active', next);
+      if (!next) {
+        connectionAnchorId = null;
+        hideConnection();
+      }
+      applyBranchFocus();
+    }
+
+    function setBranchFocus(nextFocus) {
+      branchFocus = nextFocus;
+      document.querySelectorAll('.legend-branch').forEach((button) => {
+        button.classList.toggle('active', button.dataset.branch === nextFocus);
+      });
+      if (activeFigureId !== null) {
+        const active = figureById.get(activeFigureId);
+        if (active && nextFocus !== 'all' && active.branch !== nextFocus) {
+          activeFigureId = null;
+          document.getElementById('infoCard').classList.add('minimized');
+          document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
+        }
+      }
+      applyBranchFocus();
+      updateLabels();
+      updateRelationLines();
+      updatePortraitPositions();
     }
 
     function renderRelated(figureId) {
@@ -1753,17 +2233,28 @@
       if (!mesh) return;
       activeFigureId = id;
       const data = mesh.userData;
-      const nextTheta = Math.atan2(data.x, data.z);
-      const nextPhi = 0.46;
-      const nextRadius = keyFigures.has(id) ? 16 : 18.5;
-      setCameraTarget(nextTheta, nextPhi, nextRadius);
+      if (branchFocus !== 'all' && data.branch !== branchFocus) {
+        setBranchFocus(data.branch);
+      }
+      if (connectMode) {
+        if (connectionAnchorId === null) {
+          connectionAnchorId = data.id;
+        } else if (connectionAnchorId !== data.id) {
+          showConnection(connectionAnchorId, data.id);
+          connectionAnchorId = null;
+        } else {
+          connectionAnchorId = null;
+        }
+      }
+      beginFocusSweep(mesh);
       updateInfo(data);
-      mesh.material.emissiveIntensity = 0.78;
+      mesh.material.emissiveIntensity = 0.9;
       setTimeout(() => {
-        mesh.material.emissiveIntensity = keyFigures.has(id) ? 0.34 : 0.22;
+        mesh.material.emissiveIntensity = mesh.userData.baseEmissive || (keyFigures.has(id) ? 0.34 : 0.22);
       }, 360);
       updateLabels();
       updateRelationLines();
+      updatePortraitPositions();
     }
 
     function onPointerSelect(clientX, clientY) {
@@ -1849,6 +2340,15 @@
       setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
     });
 
+    const branchLegend = document.getElementById('branchLegend');
+    if (branchLegend) {
+      branchLegend.addEventListener('click', (event) => {
+        const button = event.target.closest('.legend-branch');
+        if (!button) return;
+        setBranchFocus(button.dataset.branch || 'all');
+      });
+    }
+
     document.getElementById('rotate-left').addEventListener('click', () => {
       cameraTheta += 0.22;
       setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
@@ -1859,6 +2359,12 @@
       setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
     });
 
+    if (connectToggle) {
+      connectToggle.addEventListener('click', () => {
+        setConnectMode(!connectMode);
+      });
+    }
+
     document.getElementById('reset-view').addEventListener('click', (event) => {
       event.preventDefault();
       cameraTheta = 0;
@@ -1867,6 +2373,8 @@
       setCameraTarget(cameraTheta, cameraPhi, cameraRadius);
       autoRotate = true;
       activeFigureId = null;
+      connectionAnchorId = null;
+      hideConnection();
       document.getElementById('infoCard').classList.add('minimized');
       document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
       updateLabels();
@@ -1897,10 +2405,22 @@
     document.getElementById('closeInfo').addEventListener('click', () => {
       document.getElementById('infoCard').classList.add('minimized');
       activeFigureId = null;
+      connectionAnchorId = null;
       document.body.classList.remove('branch-main', 'branch-voss', 'branch-keepers');
       updateLabels();
       updateRelationLines();
     });
+
+    if (connectionClose) {
+      connectionClose.addEventListener('click', () => {
+        hideConnection();
+      });
+    }
+    if (connectionReveal) {
+      connectionReveal.addEventListener('click', (event) => {
+        if (event.target === connectionReveal) hideConnection();
+      });
+    }
 
     relatedList.addEventListener('click', (event) => {
       const button = event.target.closest('.related-chip');
@@ -1949,15 +2469,22 @@
     }, { passive: true });
 
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+      camera.aspect = viewportWidth / viewportHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(viewportWidth, viewportHeight);
       updateLabels();
+      updatePortraitPositions();
+      applyBranchFocus();
     });
 
     updateCamera();
     renderRelated(0);
     updateLabels();
+    updatePortraitPositions();
+    applyBranchFocus();
+    updateConnectionLine();
   </script>
 </body>
 </html>
