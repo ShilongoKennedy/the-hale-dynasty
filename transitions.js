@@ -13,6 +13,8 @@
 (function () {
   'use strict';
 
+  var DISABLE_ERA_INTROS = true;
+
   // ── ERA DATA ───────────────────────────────────────────────────────────────
   var ERA_DATA = {
     'era-I.html': {
@@ -314,6 +316,11 @@
   styleEl.textContent = css;
   (document.head || document.documentElement).appendChild(styleEl);
 
+  if (document.body) {
+    document.body.classList.remove('hd-preintro-lock');
+    document.body.classList.remove('hd-era-intro-lock');
+  }
+
   // ── HELPERS ───────────────────────────────────────────────────────────────
   function getEraInfo(href) {
     var file = href.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
@@ -329,6 +336,7 @@
   }
 
   function createEraIntro(file, eraInfo) {
+    if (DISABLE_ERA_INTROS) return null;
     if (!isEraFile(file)) return null;
     if (!eraInfo || !eraInfo.title) return null;
 
