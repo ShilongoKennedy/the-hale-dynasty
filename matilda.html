@@ -28,13 +28,11 @@
     .provenance { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(139,100,40,0.2); font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(90,60,20,0.4); text-transform: uppercase; text-align: center; line-height: 1.9; }
     .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(42,30,14,0.9); border: 1px solid rgba(200,168,60,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; }
     .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
-    .page-transition-overlay { position: fixed; inset: 0; background: #F4ECD8; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
     @media (max-width: 600px) { .wrap { padding: 60px 20px 80px; } }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body data-vol="">
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <div class="wrap">
 
@@ -187,6 +185,5 @@
 </a>
 
 <script src="features.js"></script>
-<script src="transitions.js"></script>
 </body>
 </html>

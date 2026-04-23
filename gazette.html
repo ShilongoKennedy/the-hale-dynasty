@@ -307,30 +307,10 @@
       }
       .artifact-ribbon-mark { display: none; }
       .artifact-guide { grid-template-columns: 1fr; padding: 12px; }
-    }
-      .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-      to { opacity: 1; }
-    }
-    body {
-    }
-    </style>
+    }    </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div class="page-transition-overlay" id="pageOverlay"></div>
-
 <div class="artifact-ribbon">
   <a href="index.html">← Archive Home</a>
   <span class="artifact-ribbon-mark">Special Artifact · Vol. VIII Supplement</span>
@@ -480,23 +460,7 @@
   </svg>
 </a>
 
-<script>
-(function() {
-  document.querySelectorAll('a[href]').forEach(function(link) {
-    var href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('http')) return;
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      var overlay = document.getElementById('pageOverlay');
-      overlay.classList.add('fade-out');
-      setTimeout(function() { window.location.href = href; }, 480);
-    });
-  });
-})();
-</script>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
-
 </body>
 </html>

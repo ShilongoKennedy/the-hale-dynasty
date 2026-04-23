@@ -76,7 +76,6 @@
     .page-footer-note { text-align: center; margin-top: 80px; font-family: 'Courier New', monospace; font-size: 0.68em; letter-spacing: 0.16em; color: rgba(200,168,60,0.2); text-transform: uppercase; }
     .page-footer-note a { color: rgba(200,168,60,0.3); text-decoration: none; }
     .page-footer-note a:hover { color: rgba(200,168,60,0.6); }
-    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
     @media (max-width: 660px) {
       .two-col { grid-template-columns: 1fr; }
       .artifact-ribbon { font-size: 0.56em; padding: 10px 12px; }
@@ -87,7 +86,6 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body data-vol="">
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <div class="wrap">
 
@@ -172,6 +170,5 @@
 
 <script src="features.js"></script>
 <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 </body>
 </html>

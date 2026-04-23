@@ -269,17 +269,6 @@
       border-color: #C8A83C;
       transform: scale(1.12);
     }
-
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #F4ECD8;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.6s ease;
-    }
-
     @media (max-width: 580px) {
       .wrap { padding: 50px 20px 80px; }
       .certificate { padding: 24px 20px; }
@@ -288,7 +277,6 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <div class="wrap">
 
@@ -403,6 +391,5 @@
 </a>
 
 <script src="features.js"></script>
-<script src="transitions.js"></script>
 </body>
 </html>

@@ -1298,29 +1298,6 @@
       inset: 0;
       background: rgba(20, 10, 0, 0.55);
     }
-
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    to {
-      opacity: 1;
-    }
-    }
-
-    body {}
-
     /* ══ ERA-I CREATIVE OVERHAUL ════════════════════════════════════ */
 
     /* ── Timeline progress thread (left rail) ───────────────────── */
@@ -1609,7 +1586,7 @@
   <script defer src="analytics.js"></script>
 </head>
 
-<body class="hd-preintro-lock" data-era="i" data-vol="I">
+<body data-era="i" data-vol="I">
 
   <!-- ── Illuminated vine borders ───────────────────────── -->
   <svg class="hd-vine-left" viewBox="0 0 48 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -1690,8 +1667,6 @@
     <line x1="26" y1="42" x2="28" y2="40" stroke="#18100c" stroke-width="1" />
     <line x1="32" y1="42" x2="28" y2="41" stroke="#18100c" stroke-width="1" />
   </svg>
-
-  <div class="page-transition-overlay" id="pageOverlay"></div>
 
   <div class="era-banner">
     <img class="banner-img" src="banners/era-I.jpg" alt="" aria-hidden="true">
@@ -2496,8 +2471,6 @@
       });
     })();
   </script>
-
-  <script src="transitions.js"></script>
 
   <script src="features.js"></script>
 

@@ -872,23 +872,7 @@
       position: absolute;
       inset: 0;
       background: rgba(5, 5, 8, 0.60);
-    }
-
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .era-header {
+    }    .era-header {
       position: relative;
       overflow: hidden;
       background:
@@ -985,8 +969,7 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
-<body class="hd-preintro-lock" data-era="ix" data-vol="IX">
-  <div class="page-transition-overlay" id="pageOverlay"></div>
+<body data-era="ix" data-vol="IX">
 
   <div class="era-banner">
     <img class="banner-img" src="banners/era-IX.jpg" alt="" aria-hidden="true">
@@ -1418,7 +1401,7 @@
   <div class="hd-whathappened">
     <div class="hd-whn-heading">What Happened Next</div>
     <div class="hd-whn-body">
-      Edmund Marsh-Hale left signals work in 1946 and returned to civilian engineering. He married Dorothy in 1949. He and his brother James divided the family archive between them: James kept the deed-box and the medieval documents; Edmund kept the twentieth-century papers and the letter their father had written. In 1960 Edmund moved his family to Hackney, where he raised his children in a house with more books than furniture. His daughter — born 1968, named Eleanor after no one in particular — grew up knowing there was an archive. She grew up not knowing what it contained. She found out at Oxford, in January 2024, when the multispectral imaging came back. Continue with <a href="era-X.html">Vol. X: The Discovery →</a>
+      Edmund Marsh-Hale left signals work in 1946 and returned to civilian engineering. He married Dorothy in 1949. He and his brother James divided the family archive between them: James kept the deed-box and the medieval documents; Edmund kept the twentieth-century papers and the letter their father had written. In 1960 Edmund moved his family to Hackney, where he raised his children in a house with more books than furniture. His daughter — born 1968, named Eleanor after no one in particular — grew up knowing there was an archive. She grew up not knowing what it contained. The final movement begins at Oxford in January 2024, when the multispectral imaging comes back and the hidden branch starts to become legible. Continue with <a href="era-X.html">Vol. X: The Discovery →</a>
     </div>
   </div>
 
@@ -1593,7 +1576,6 @@
   </script>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
   <script src="features.js"></script>
 

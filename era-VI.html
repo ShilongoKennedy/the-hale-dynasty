@@ -384,26 +384,7 @@
     .evp-vi-play:hover { border-color:#C8A828; color:#C8A840; }
     .evp-vi-progress { background:rgba(200,168,40,0.1); height:4px; width:80px; border-radius:1px; overflow:hidden; position:relative; }
     .evp-vi-bar { background:#9A8060; height:100%; width:0%; transition:width 0.1s linear; }
-    .evp-vi-time { font-family:'Courier New',monospace; font-size:0.7em; color:#9A8060; min-width:28px; }
-
-        .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-      to { opacity: 1; }
-    }
-    body {
-    }
-    .era-header {
+    .evp-vi-time { font-family:'Courier New',monospace; font-size:0.7em; color:#9A8060; min-width:28px; }    .era-header {
       position: relative;
       overflow: hidden;
       background:
@@ -501,8 +482,7 @@
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body class="hd-preintro-lock" data-era="vi" data-vol="VI">
-<div class="page-transition-overlay" id="pageOverlay"></div>
+<body data-era="vi" data-vol="VI">
 
     <div class="era-banner">
     <img class="banner-img" src="banners/era-VI.jpg" alt="" aria-hidden="true">
@@ -948,7 +928,6 @@
   </script>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
 <script src="features.js"></script>
 

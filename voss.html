@@ -379,17 +379,6 @@
       transition: all 0.22s;
     }
     .home-float:hover { border-color: #5A9A3C; transform: scale(1.12); }
-
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #EFF4EC;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.6s ease;
-    }
-
     @media (max-width: 580px) {
       .wrap { padding: 40px 16px 80px; }
       .timeline::before { left: 18px; }
@@ -402,7 +391,6 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <nav class="top-nav">
   <a href="index.html">← Archive Home</a>
@@ -640,6 +628,5 @@
 
 <script src="features.js"></script>
 <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 </body>
 </html>

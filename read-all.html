@@ -286,29 +286,10 @@
       box-shadow: 0 3px 14px rgba(0,0,0,0.22);
     }
     .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.12); }
-    .home-float svg { width: 22px; height: 22px; }
-      .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-      to { opacity: 1; }
-    }
-    body {
-    }
-    </style>
+    .home-float svg { width: 22px; height: 22px; }    </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <div class="read-progress-bar" id="progressBar"></div>
 
@@ -624,7 +605,6 @@ blocks.forEach(function(b) { io.observe(b); });
   </a>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
 </body>
 </html>

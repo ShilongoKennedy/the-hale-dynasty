@@ -449,26 +449,7 @@
       font-size: 0.7em;
       color: #9A8A60;
       min-width: 28px;
-    }
-
-        .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-      to { opacity: 1; }
-    }
-    body {
-    }
-    
+    }    
     /* Reading comfort pass */
     body { background:#d5c09b !important; color:#24190f !important; }
     .era-header { background: linear-gradient(180deg, rgba(223,204,172,0.98), rgba(201,175,136,0.98)), repeating-linear-gradient(180deg, transparent 0, transparent 34px, rgba(95,72,42,0.05) 34px, rgba(95,72,42,0.05) 35px) !important; }
@@ -488,8 +469,7 @@
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body class="hd-preintro-lock" data-era="v" data-vol="V">
-<div class="page-transition-overlay" id="pageOverlay"></div>
+<body data-era="v" data-vol="V">
 
     <div class="era-banner">
     <img class="banner-img" src="banners/era-V.jpg" alt="" aria-hidden="true">
@@ -927,7 +907,6 @@
 
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
 <script src="features.js"></script>
 

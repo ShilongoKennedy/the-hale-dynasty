@@ -394,25 +394,6 @@
       inset: 0;
       background: rgba(15,10,5,0.55);
     }
-
-        .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-      to { opacity: 1; }
-    }
-    body {
-    }
-
     /* ── ERA VIII VOICE PLAYER ─────────────────────────────────── */
     .era-voice-player-viii {
       display: flex;
@@ -561,8 +542,7 @@
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body class="hd-preintro-lock" data-era="viii" data-vol="VIII">
-<div class="page-transition-overlay" id="pageOverlay"></div>
+<body data-era="viii" data-vol="VIII">
 
     <div class="era-banner">
     <img class="banner-img" src="banners/era-VIII.jpg" alt="" aria-hidden="true">
@@ -1155,7 +1135,6 @@ if (window.speechSynthesis) { window.speechSynthesis.onvoiceschanged = window.sp
   </script>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
 <script src="features.js"></script>
 

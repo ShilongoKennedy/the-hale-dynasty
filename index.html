@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Hale Dynasty - Living Wall Experiment</title>
+  <title>The Hale Dynasty • 1066–2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1905,8 +1905,12 @@
       }
 
       .hero {
+        min-height: max(100svh, 920px);
         padding: 128px 16px 132px;
-        background-position: center 24%;
+        background-color: #0a0806;
+        background-position: center top;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
       }
 
       .hero-copy {
@@ -1929,15 +1933,15 @@
       }
 
       .hero-side {
-        margin-top: 0.9rem;
+        margin-top: 0.85rem;
       }
 
       .hero-panel {
-        min-height: 486px;
+        min-height: 436px;
       }
 
       .hero-panel-orbit {
-        min-height: 300px;
+        min-height: 252px;
       }
 
       .orbit-node-track,
@@ -1953,7 +1957,7 @@
 
       .route-list {
         width: min(320px, 100%);
-        margin-top: 0.18rem;
+        margin-top: 0.2rem;
       }
 
       .route-name {
@@ -2157,7 +2161,7 @@
   <div class="shell">
     <header class="topbar">
       <div class="brand">THE HALE DYNASTY<span>Mss. Hale-Marsh · 1066-2026</span></div>
-      <nav class="topnav" aria-label="Experimental home navigation">
+      <nav class="topnav" aria-label="Primary home navigation">
         <a href="family-tree.html">The Bloodline</a>
         <a href="read-all.html">Ten Volumes</a>
         <a href="persons.html">Recovered Figures</a>
@@ -2402,7 +2406,7 @@
           </div>
           <div class="chapter-visual">
             <div class="visual-frame">
-              <video autoplay muted loop playsinline>
+              <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="portraits/knight.png">
                 <source src="portraits/Ranulf_crossing_English.mp4" type="video/mp4">
               </video>
               <div class="origin-geometry" aria-hidden="true">
@@ -2432,7 +2436,7 @@
           </div>
           <div class="chapter-visual">
             <div class="visual-frame">
-              <video autoplay muted loop playsinline>
+              <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="portraits/knight.png">
                 <source src="portraits/Ranulf_de_la_Hale_confession.mp4" type="video/mp4">
               </video>
               <div class="witness-geometry" aria-hidden="true">
@@ -2461,7 +2465,7 @@
           </div>
           <div class="chapter-visual">
             <div class="visual-frame">
-              <video autoplay muted loop playsinline>
+              <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="portraits/knight.png">
                 <source src="portraits/Halecroft_manor.mp4" type="video/mp4">
               </video>
               <div class="return-geometry" aria-hidden="true">
@@ -2561,6 +2565,83 @@
         node.addEventListener('mouseleave', () => setOrbitDescriptor());
         node.addEventListener('blur', () => setOrbitDescriptor());
       });
+
+      const chapterVideos = [...document.querySelectorAll('.chapter-visual video')];
+      if (chapterVideos.length) {
+        const prepVideo = (video) => {
+          video.muted = true;
+          video.defaultMuted = true;
+          video.autoplay = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.preload = 'metadata';
+          video.setAttribute('muted', '');
+          video.setAttribute('autoplay', '');
+          video.setAttribute('loop', '');
+          video.setAttribute('playsinline', '');
+          video.setAttribute('webkit-playsinline', 'true');
+        };
+
+        const markReady = (video, ready) => {
+          const visual = video.closest('.chapter-visual');
+          if (!visual) return;
+          if (ready) {
+            visual.setAttribute('data-video-ready', 'true');
+          } else {
+            visual.removeAttribute('data-video-ready');
+          }
+        };
+
+        const safePlay = (video) => {
+          prepVideo(video);
+          const playAttempt = video.play();
+          if (playAttempt && typeof playAttempt.catch === 'function') {
+            playAttempt.then(() => markReady(video, true)).catch(() => markReady(video, false));
+          } else {
+            markReady(video, !video.paused);
+          }
+        };
+
+        chapterVideos.forEach((video) => {
+          prepVideo(video);
+          video.addEventListener('loadeddata', () => markReady(video, true));
+          video.addEventListener('playing', () => markReady(video, true));
+          video.addEventListener('pause', () => {
+            if (document.visibilityState !== 'hidden') markReady(video, !video.paused);
+          });
+          video.addEventListener('error', () => markReady(video, false));
+          video.addEventListener('loadedmetadata', () => safePlay(video));
+          video.addEventListener('canplay', () => safePlay(video));
+        });
+
+        const videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+              safePlay(video);
+            } else {
+              video.pause();
+            }
+          });
+        }, { threshold: 0.2, rootMargin: '180px 0px' });
+
+        chapterVideos.forEach((video) => videoObserver.observe(video));
+
+        const resumeVisibleVideos = () => {
+          if (document.visibilityState === 'hidden') return;
+          chapterVideos.forEach((video) => {
+            const rect = video.getBoundingClientRect();
+            const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+            if (isVisible) safePlay(video);
+          });
+        };
+
+        window.addEventListener('pageshow', resumeVisibleVideos);
+        document.addEventListener('visibilitychange', resumeVisibleVideos);
+        window.addEventListener('touchstart', resumeVisibleVideos, { passive: true });
+        window.addEventListener('focus', resumeVisibleVideos);
+        window.addEventListener('scroll', resumeVisibleVideos, { passive: true });
+      }
     })();
   </script>
 </body>

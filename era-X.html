@@ -1116,23 +1116,7 @@
       position: absolute;
       inset: 0;
       background: rgba(8, 10, 15, 0.50);
-    }
-
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-
-    .page-transition-overlay.fade-out {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .era-header {
+    }    .era-header {
       position: relative;
       overflow: hidden;
       background:
@@ -1229,8 +1213,7 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
-<body class="hd-preintro-lock" data-era="x" data-vol="X">
-  <div class="page-transition-overlay" id="pageOverlay"></div>
+<body data-era="x" data-vol="X">
 
   <div class="sound-bar">
     <span class="sound-bar-label">Archive ambient sound</span>
@@ -2053,7 +2036,6 @@
   </script>
 
   <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 
   <script src="features.js"></script>
 

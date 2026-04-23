@@ -280,10 +280,6 @@
     }
     .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.1); }
     .home-float svg { width: 20px; height: 20px; }
-
-    /* ── PAGE OVERLAY ────────────────────────────────────────── */
-    .page-transition-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-
     @media (max-width: 640px) {
       .doc-guide { grid-template-columns: 1fr; padding: 16px 18px 0; }
       .doc-row { grid-template-columns: 60px 1fr; }
@@ -293,7 +289,6 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body data-vol="">
-<div class="page-transition-overlay" id="pageOverlay"></div>
 
 <nav class="top-nav">
   <a href="index.html">← Archive Home</a>
@@ -351,7 +346,6 @@
 </a>
 
 <script defer src="analytics.js"></script>
-<script src="transitions.js"></script>
 <script src="features.js"></script>
 <script>
 // ── DOCUMENT CATALOGUE ────────────────────────────────────────────────────
