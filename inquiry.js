@@ -299,18 +299,26 @@
   var CSS = [
     '#hd-inq-fab{',
       'position:fixed;bottom:20px;right:16px;',
-      'width:44px;height:44px;border-radius:50%;',
-      'background:#1A1008;border:1.5px solid rgba(200,168,40,0.45);',
+      'width:58px;height:58px;border-radius:50%;',
+      'background:radial-gradient(circle at 34% 30%, rgba(255,244,221,0.22), rgba(202,168,40,0.14) 16%, rgba(16,12,10,0.9) 40%, rgba(5,4,3,0.98) 72%);border:1.5px solid rgba(200,168,40,0.45);',
       'cursor:pointer;z-index:1000;',
       'display:flex;align-items:center;justify-content:center;',
       'font-size:1.3em;color:#C8A830;',
-      'box-shadow:0 4px 20px rgba(0,0,0,0.4);',
-      'transition:all 0.25s;font-family:serif;',
+      'box-shadow:0 10px 34px rgba(0,0,0,0.56), inset 0 0 28px rgba(0,0,0,0.72);',
+      'transition:transform 0.35s ease,border-color 0.25s ease,box-shadow 0.25s ease,background 0.25s ease;overflow:hidden;font-family:serif;appearance:none;-webkit-appearance:none;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;',
     '}',
-    '#hd-inq-fab:hover{background:#281808;border-color:rgba(200,168,40,0.75);transform:scale(1.06);}',
-    '#hd-inq-fab.open{border-color:rgba(200,168,40,0.8);background:#281808;}',
+    '#hd-inq-fab::before{content:"";position:absolute;inset:7px;border-radius:50%;background:conic-gradient(from 0deg, rgba(202,168,40,0.0), rgba(202,168,40,0.22), rgba(255,244,221,0.08), rgba(202,168,40,0.0));filter:blur(0.2px);animation:hd-vortex-spin 5.6s linear infinite;transition:transform 0.35s ease,opacity 0.25s ease,filter 0.25s ease;}',
+    '#hd-inq-fab::after{content:"";position:absolute;inset:18px;border-radius:50%;background:radial-gradient(circle at center, rgba(0,0,0,0.98) 0, rgba(0,0,0,0.94) 58%, rgba(0,0,0,0) 100%);box-shadow:0 0 18px rgba(0,0,0,0.82);transition:inset 0.3s ease,box-shadow 0.3s ease,opacity 0.3s ease;}',
+    '#hd-inq-fab:hover{border-color:rgba(200,168,40,0.82);transform:scale(1.1);box-shadow:0 18px 52px rgba(0,0,0,0.7),0 0 0 10px rgba(200,168,40,0.08),inset 0 0 38px rgba(0,0,0,0.84);}',
+    '#hd-inq-fab:hover::before{transform:scale(1.12) rotate(24deg);opacity:1;filter:blur(0.1px);}',
+    '#hd-inq-fab:hover::after{inset:15px;box-shadow:0 0 30px rgba(0,0,0,0.96);}',
+    '#hd-inq-fab:hover .hd-inq-core{transform:scale(0.82);box-shadow:0 0 26px rgba(202,168,40,0.28);}',
+    '#hd-inq-fab:hover .hd-inq-core span{transform:scale(1.14);}',
+    '#hd-inq-fab.open{border-color:rgba(255,230,170,0.86);box-shadow:0 18px 48px rgba(0,0,0,0.68),0 0 0 14px rgba(200,168,40,0.09),inset 0 0 40px rgba(0,0,0,0.82);}',
+    '#hd-inq-fab.open::before{animation-duration:2.2s;opacity:0.95;transform:scale(1.08);}',
+    '#hd-inq-fab.open::after{inset:13px;box-shadow:0 0 34px rgba(0,0,0,0.98);}',
     '#hd-inq-fab-tip{',
-      'position:fixed;bottom:70px;right:12px;',
+      'position:fixed;bottom:84px;right:10px;',
       'background:#100A04;border:1px solid rgba(200,168,40,0.3);',
       'color:#8B6820;font-family:"Courier New",monospace;',
       'font-size:0.6em;letter-spacing:0.14em;text-transform:uppercase;',
@@ -319,6 +327,12 @@
       'transition:opacity 0.2s;white-space:nowrap;',
     '}',
     '#hd-inq-fab:hover + #hd-inq-fab-tip,#hd-inq-fab-tip.show{opacity:1;}',
+    '.hd-inq-core{position:relative;z-index:2;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 28%, rgba(255,244,221,0.3), rgba(202,168,40,0.12) 24%, rgba(10,8,6,0.96) 62%, rgba(0,0,0,1) 100%);box-shadow:0 0 16px rgba(202,168,40,0.24);transition:transform 0.32s ease,box-shadow 0.32s ease;pointer-events:none;}',
+    '.hd-inq-core span{display:block;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at center, rgba(0,0,0,1), rgba(0,0,0,0.92) 72%, rgba(0,0,0,0) 100%);box-shadow:0 0 10px rgba(0,0,0,0.92);transition:transform 0.32s ease;}',
+    '.hd-inq-ring{position:absolute;inset:10px;border-radius:50%;border:1px solid rgba(202,168,40,0.26);z-index:1;animation:hd-vortex-spin-rev 8s linear infinite;transition:transform 0.3s ease,border-color 0.25s ease,opacity 0.25s ease;pointer-events:none;}',
+    '#hd-inq-fab:hover .hd-inq-ring{transform:scale(1.08);border-color:rgba(255,230,170,0.38);}',
+    '@keyframes hd-vortex-spin{from{transform:rotate(0deg) scale(1);}to{transform:rotate(360deg) scale(1);}}',
+    '@keyframes hd-vortex-spin-rev{from{transform:rotate(360deg);}to{transform:rotate(0deg);}}',
     '#hd-inq-panel{',
       'position:fixed;bottom:-600px;right:16px;',
       'width:min(420px,calc(100vw - 32px));',
@@ -436,7 +450,7 @@
     var fab = document.createElement('button');
     fab.id = 'hd-inq-fab';
     fab.setAttribute('aria-label', 'Open Inquiry Desk');
-    fab.innerHTML = '&#9993;';
+    fab.innerHTML = '<span class="hd-inq-ring" aria-hidden="true"></span><span class="hd-inq-core" aria-hidden="true"><span></span></span>'; 
     document.body.appendChild(fab);
 
     var homeFloat = document.querySelector('.home-float');

@@ -20,8 +20,8 @@
       --blue: #4f667d;
       --frame: rgba(82, 57, 33, 0.24);
     }
-    html, body { height:100%; background:#decdab; }
-    body { font-family:'IM Fell English',Georgia,serif; color:var(--ink); overflow:hidden; }
+    html, body { height:100%; background:#080705; }
+    body { font-family:'IM Fell English',Georgia,serif; color:var(--paper); overflow:hidden; }
 
     /* ── FULL-SCREEN MAP ── */
     #map {
@@ -37,8 +37,8 @@
 
     /* Remove Leaflet's default attribution styling conflicts */
     .leaflet-control-attribution {
-      background: rgba(228,216,192,0.86) !important;
-      color: rgba(82,57,33,0.52) !important;
+      background: rgba(10,9,8,0.86) !important;
+      color: rgba(202,163,95,0.68) !important;
       font-family: 'Courier New', monospace !important;
       font-size: 0.52em !important;
       letter-spacing: 0.05em !important;
@@ -50,8 +50,8 @@
       background: transparent !important;
     }
     .leaflet-control-zoom a {
-      background: rgba(228,216,192,0.94) !important;
-      color: rgba(82,57,33,0.76) !important;
+      background: rgba(11,10,8,0.94) !important;
+      color: rgba(239,230,216,0.8) !important;
       border-bottom: 1px solid rgba(94,66,38,0.12) !important;
       font-family: 'Cinzel', serif !important;
       font-size: 14px !important;
@@ -70,7 +70,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 10;
-      background: linear-gradient(to bottom, rgba(228,216,192,0.92) 62%, transparent 100%);
+      background: linear-gradient(to bottom, rgba(8,7,6,0.9) 62%, transparent 100%);
       padding: 0;
       pointer-events: none;
     }
@@ -82,14 +82,14 @@
       align-items: center;
       padding: 10px 24px;
       border-bottom: 1px solid rgba(94,66,38,0.14);
-      background: rgba(228,216,192,0.82);
+      background: rgba(9,8,6,0.82);
       backdrop-filter: blur(6px);
     }
     .map-nav a {
       font-family: 'Cinzel', serif;
       font-size: 0.65em;
       letter-spacing: 0.16em;
-      color: rgba(94,66,38,0.66);
+      color: rgba(239,230,216,0.74);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -99,14 +99,14 @@
       font-size: 0.75em;
       font-weight: 600;
       letter-spacing: 0.25em;
-      color: #3d2d1c;
+      color: #efe6d8;
       text-transform: uppercase;
     }
 
     /* ── ERA STRIP ── */
     .era-strip-wrap {
       padding: 8px 16px 0;
-      background: rgba(224,211,184,0.76);
+      background: rgba(12,10,8,0.7);
       backdrop-filter: blur(4px);
     }
     .era-strip {
@@ -122,8 +122,8 @@
       flex-shrink: 0;
       padding: 4px 10px;
       border: 1px solid rgba(94,66,38,0.2);
-      background: rgba(255,255,255,0.28);
-      color: rgba(94,66,38,0.6);
+      background: rgba(18,15,11,0.7);
+      color: rgba(239,230,216,0.72);
       font-family: 'Cinzel', serif;
       font-size: 0.55em;
       letter-spacing: 0.1em;
@@ -141,20 +141,20 @@
       font-style: italic;
       color: rgba(82,57,33,0.72);
       min-height: 26px;
-      background: rgba(224,211,184,0.68);
+      background: rgba(12,10,8,0.64);
     }
     .map-guide {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       padding: 10px 16px 14px;
-      background: rgba(219,205,178,0.78);
+      background: rgba(12,10,8,0.68);
       border-top: 1px solid rgba(82,57,33,0.08);
       border-bottom: 1px solid rgba(82,57,33,0.08);
     }
     .map-guide-card {
-      background: rgba(244,236,220,0.5);
-      border: 1px solid rgba(82,57,33,0.12);
+      background: rgba(15,12,9,0.72);
+      border: 1px solid rgba(202,163,95,0.16);
       padding: 12px 14px;
       min-height: 92px;
     }
@@ -172,7 +172,7 @@
       display: block;
       font-size: 0.72em;
       line-height: 1.68;
-      color: rgba(69,49,30,0.82);
+      color: rgba(239,230,216,0.78);
     }
 
     /* ── CUSTOM LEAFLET MARKERS ── */
@@ -198,8 +198,8 @@
       font-family: 'Cinzel', serif;
       font-size: 11px;
       letter-spacing: 0.08em;
-      color: #241a11;
-      background: rgba(244,233,212,0.97);
+      color: #efe6d8;
+      background: rgba(11,10,8,0.96);
       border: 1px solid rgba(94,66,38,0.38);
       padding: 2px 7px;
       pointer-events: none;
