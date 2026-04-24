@@ -964,6 +964,21 @@
     .era-next { background: linear-gradient(180deg, rgba(214,211,203,0.92), rgba(190,186,176,0.96)) !important; }
     .hd-xref { background: linear-gradient(180deg, rgba(214,211,203,0.9), rgba(191,187,176,0.95)) !important; }
     .hd-whathappened { background: linear-gradient(180deg, rgba(214,211,203,0.9), rgba(191,187,176,0.95)) !important; }
+  
+
+    @media (max-width: 760px) {
+      #hd-share-btn { display: none !important; }
+      .home-float { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important; right: 16px !important; }
+      #secret-nav-link { font-size: 0.62em !important; letter-spacing: 0.14em !important; }
+    }
+  
+
+    .hd-era-ix-spread { display:grid; grid-template-columns:1fr 1fr; }
+
+    @media (max-width: 760px) {
+      .hd-era-ix-spread { grid-template-columns: 1fr !important; }
+      .hd-era-ix-spread > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(139,100,40,0.25); }
+    }
   </style>
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
@@ -1300,7 +1315,7 @@
 <!-- RECOVERED DOCUMENT: Dorothy's notebook double-page, October 1942 -->
 <div class="recovered-doc document">
   <div class="recovered-label">Recovered Document · MSS. Hale-Marsh IX, item 12 · Technical Notebook · October 1942</div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; border:1px solid #A88F5B; background:#EBD8B7;">
+  <div class="hd-era-ix-spread" style="display:grid; grid-template-columns:1fr 1fr; border:1px solid #A88F5B; background:#EBD8B7;">
     <!-- Left page: personal observations -->
     <div style="padding:32px 28px 32px 32px; border-right:1px solid rgba(139,100,40,0.25); background:#EBD8B7;">
       <p style="font-family:'Courier New',monospace; font-size:0.7em; letter-spacing:0.2em; color:#8B1A1A; text-transform:uppercase; margin-bottom:16px;">Left Page — Personal Observations</p>

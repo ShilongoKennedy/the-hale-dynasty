@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Persons of the Archive — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
@@ -443,6 +443,12 @@
 
     @media (max-width: 600px) {
       .persons-grid { grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 2px; }
+      #inquiry-overlay { padding: 12px; align-items: flex-end; }
+      #inquiry-box { width: 100%; max-width: none; max-height: min(78vh, 680px); border-radius: 18px 18px 0 0; margin-bottom: 0; }
+      #iq-messages { max-height: 46vh; }
+      #iq-input-row { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+      .home-float { right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); }
+
       .top-nav { font-size: 0.6em; padding: 8px 14px; }
       .top-nav .center { display: none; }
       .filter-bar { padding: 16px 12px 0; gap: 4px; }
@@ -454,6 +460,18 @@
     }
     @media (max-width: 380px) {
       .persons-grid { grid-template-columns: 1fr; }
+    }
+  
+
+    @media (max-width: 420px) {
+      .top-nav { flex-wrap: wrap; justify-content: center; gap: 8px 14px; padding-top: calc(env(safe-area-inset-top, 0px) + 8px); }
+      .page-title { font-size: clamp(1.5em, 8vw, 2.2em); }
+      .page-subtitle { font-size: 0.86em; }
+      .persons-next-links { flex-direction: column; }
+      .persons-next-link { text-align: center; }
+      #iq-header { padding: 14px 16px; }
+      #iq-input-row { grid-template-columns: 1fr; }
+      #iq-send { width: 100%; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>

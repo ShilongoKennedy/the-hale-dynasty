@@ -395,7 +395,7 @@
     /* ── MOBILE (≤ 700px) ── */
     @media (max-width: 700px) {
       .map-nav-title { display: none; }
-      .map-nav { padding: 8px 14px; }
+      .map-nav { padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px; }
       .map-nav a { font-size: 0.6em; }
       .map-guide { grid-template-columns: 1fr; gap: 8px; padding: 8px 14px 12px; }
 
@@ -406,7 +406,7 @@
         width: 100%;
         transform: translateY(110%);
         transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
-        max-height: 72vh;
+        max-height: 78svh;
       }
       .detail-panel.open { transform: translateY(0); }
       .detail-inner {
@@ -414,7 +414,7 @@
         border-left: none;
         border-top: 1px solid rgba(200,168,60,0.22);
         border-radius: 16px 16px 0 0;
-        max-height: 72vh;
+        max-height: 78svh;
         padding: 24px 20px max(24px, env(safe-area-inset-bottom));
       }
       /* Drag handle */
@@ -430,6 +430,17 @@
       }
       /* Hover labels don't work on touch — hide them */
       .hd-marker-label { display: none !important; }
+    }
+  
+
+    @media (max-width: 420px) {
+      .map-nav { justify-content: space-between; gap: 0.75rem; }
+      .map-nav a { font-size: 0.56em; }
+      .era-strip-wrap { padding-left: 12px; padding-right: 12px; }
+      .era-btn { font-size: 0.5em; padding: 4px 8px; }
+      .era-desc-bar { padding-left: 12px; padding-right: 12px; }
+      .map-guide { padding-left: 12px; padding-right: 12px; }
+      .detail-inner { padding-left: 16px; padding-right: 16px; }
     }
   </style>
   <link rel="stylesheet" href="features.css">

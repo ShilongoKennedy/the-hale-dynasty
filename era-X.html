@@ -1208,6 +1208,13 @@
     .era-next { background: linear-gradient(180deg, rgba(214,211,203,0.92), rgba(190,186,176,0.96)) !important; }
     .hd-xref { background: linear-gradient(180deg, rgba(214,211,203,0.9), rgba(191,187,176,0.95)) !important; }
     .hd-whathappened { background: linear-gradient(180deg, rgba(214,211,203,0.9), rgba(191,187,176,0.95)) !important; }
+  
+
+    @media (max-width: 760px) {
+      #hd-share-btn { display: none !important; }
+      .home-float { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important; right: 16px !important; }
+      #secret-nav-link { font-size: 0.62em !important; letter-spacing: 0.14em !important; }
+    }
   </style>
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>

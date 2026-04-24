@@ -538,6 +538,13 @@
     .hd-whathappened { background: linear-gradient(180deg, rgba(214,194,164,0.88), rgba(193,171,136,0.94)) !important; }
     .era-next-name, .hd-xref-card-name, .era-main-title { color:#25180f !important; }
     .era-subtitle, .portrait-caption, .caption, .page-note { color:#5f452e !important; }
+  
+
+    @media (max-width: 760px) {
+      #hd-share-btn { display: none !important; }
+      .home-float { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important; right: 16px !important; }
+      #secret-nav-link { font-size: 0.62em !important; letter-spacing: 0.14em !important; }
+    }
   </style>
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
