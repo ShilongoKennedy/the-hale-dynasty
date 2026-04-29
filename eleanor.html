@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Eleanor Voss — The Reading Room</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f2e8d8;
+      --paper-soft: rgba(242, 232, 216, 0.74);
+      --gold: #caa35f;
+      --gold-soft: rgba(202, 163, 95, 0.28);
+      --ink: #090705;
+      --ink-soft: rgba(9, 7, 5, 0.74);
+    }
+
+    html, body {
+      min-height: 100%;
+      background: #050403;
+      color: var(--paper);
+    }
+
+    body.eleanor-room {
+      font-family: Georgia, serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 65% 28%, rgba(202, 163, 95, 0.12), transparent 20%),
+        radial-gradient(circle at 18% 76%, rgba(110, 130, 170, 0.08), transparent 18%),
+        linear-gradient(180deg, rgba(5,4,3,0.72), rgba(5,4,3,0.92)),
+        url('portraits/Newbackground.png') center center / cover no-repeat fixed;
+    }
+
+    body.eleanor-room::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 130px 130px;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .room-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 24px 28px 36px;
+    }
+
+    .room-topbar {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 0 18px;
+      border-bottom: 1px solid rgba(202,163,95,0.14);
+    }
+
+    .room-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+      min-width: 0;
+    }
+
+    .room-brand strong {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .room-brand span,
+    .room-current {
+      font-family: 'Courier New', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(242,232,216,0.42);
+    }
+
+    .room-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      flex: 1 1 30rem;
+    }
+
+    .room-nav a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(242,232,216,0.72);
+      transition: color 180ms ease;
+    }
+
+    .room-nav a:hover { color: var(--gold); }
+
+    .reading-room {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      padding: 34px 0 0;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(420px, 1.28fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .threshold-copy {
+      position: relative;
+      padding: 1.2rem 0 1rem;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .threshold-copy::before {
+      display: none;
+    }
+
+    .threshold-kicker,
+    .desk-kicker,
+    .desk-status,
+    .room-card-kicker {
+      position: relative;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .threshold-kicker {
+      color: var(--gold);
+      font-size: 0.72rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .threshold-title {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5.1vw, 4.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      max-width: 6.4ch;
+      margin-bottom: 1rem;
+    }
+
+    .threshold-deck {
+      position: relative;
+      color: rgba(242,232,216,0.84);
+      font-size: 1rem;
+      line-height: 1.72;
+      max-width: 27rem;
+    }
+
+    .threshold-actions {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.4rem;
+    }
+
+    .room-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1rem 1.45rem;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(202,163,95,0.24);
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+      cursor: pointer;
+    }
+
+    .room-button:hover,
+    .room-button:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .room-button-primary {
+      background: linear-gradient(180deg, rgba(202,163,95,0.98), rgba(185,141,67,0.98));
+      color: #120d08;
+      box-shadow: 0 16px 36px rgba(202,163,95,0.24);
+    }
+
+    .room-button-primary:hover,
+    .room-button-primary:focus-visible {
+      box-shadow: 0 22px 46px rgba(202,163,95,0.32);
+    }
+
+    .room-button-secondary {
+      background: rgba(10,8,6,0.52);
+      color: rgba(242,232,216,0.86);
+    }
+
+    .room-button-secondary:hover,
+    .room-button-secondary:focus-visible {
+      border-color: rgba(242,232,216,0.4);
+      color: var(--gold);
+    }
+
+    .desk-world {
+      position: relative;
+      min-height: 760px;
+      border-radius: 44px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(202,163,95,0.18), transparent 16%),
+        radial-gradient(circle at 50% 44%, rgba(88,102,132,0.12), transparent 30%),
+        linear-gradient(180deg, rgba(9,7,5,0.32), rgba(9,7,5,0.82));
+      border: 1px solid rgba(202,163,95,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 34px 82px rgba(0,0,0,0.34);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 1rem;
+    }
+
+    .desk-world::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0, rgba(0,0,0,0) 34%, rgba(0,0,0,0.4) 100%),
+        repeating-linear-gradient(90deg, transparent 0, transparent 86px, rgba(255,255,255,0.018) 87px),
+        repeating-linear-gradient(180deg, transparent 0, transparent 86px, rgba(255,255,255,0.014) 87px);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .desk-head,
+    .desk-footer,
+    .room-card {
+      position: relative;
+      z-index: 2;
+    }
+
+    .desk-head {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.3rem 0.25rem 0;
+      text-align: center;
+    }
+
+    .desk-kicker {
+      color: rgba(202,163,95,0.92);
+      font-size: 0.62rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .desk-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.46rem;
+      line-height: 0.95;
+      margin-bottom: 0;
+    }
+
+    .desk-status {
+      color: rgba(202,163,95,0.64);
+      font-size: 0.58rem;
+      white-space: nowrap;
+      margin-top: 0.18rem;
+      display: none;
+    }
+
+    .desk-core {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: 560px;
+      padding: 0.2rem 0 1.1rem;
+    }
+
+    .desk-vortex {
+      position: relative;
+      width: min(560px, 88%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(3,3,3,0.98) 18%, rgba(20,18,16,0.9) 34%, rgba(202,163,95,0.18) 46%, rgba(88,102,132,0.18) 54%, rgba(9,8,6,0.02) 74%),
+        conic-gradient(from 0deg, rgba(202,163,95,0), rgba(202,163,95,0.22), rgba(130,150,190,0.18), rgba(202,163,95,0), rgba(202,163,95,0.14), rgba(0,0,0,0));
+      box-shadow: inset 0 0 96px rgba(0,0,0,0.9), 0 0 140px rgba(202,163,95,0.12);
+      animation: eleanorVortexSpin 16s linear infinite;
+    }
+
+    .desk-vortex::before,
+    .desk-vortex::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .desk-vortex::before {
+      inset: 12%;
+      background: radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(0,0,0,0.95) 58%, rgba(0,0,0,0) 100%);
+      box-shadow: 0 0 34px rgba(0,0,0,0.96);
+    }
+
+    .desk-vortex::after {
+      inset: 3.5%;
+      border: 1px solid rgba(202,163,95,0.16);
+      animation: eleanorVortexSpinReverse 9s linear infinite;
+    }
+
+    .desk-rings,
+    .desk-rings::before,
+    .desk-rings::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(202,163,95,0.15);
+    }
+
+    .desk-rings {
+      inset: 6%;
+      animation: eleanorOrbitSpin 34s linear infinite;
+    }
+
+    .desk-rings::before {
+      inset: 12%;
+      border-color: rgba(242,232,216,0.08);
+      animation: eleanorOrbitSpinReverse 24s linear infinite;
+    }
+
+    .desk-rings::after {
+      inset: 24%;
+      border-color: rgba(202,163,95,0.22);
+      animation: eleanorOrbitSpin 20s linear infinite;
+    }
+
+    .desk-stars {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 32%, rgba(255,244,221,0.65) 0 1px, transparent 2px),
+        radial-gradient(circle at 74% 22%, rgba(202,163,95,0.65) 0 1.1px, transparent 2.2px),
+        radial-gradient(circle at 82% 66%, rgba(161,183,215,0.48) 0 1px, transparent 2px),
+        radial-gradient(circle at 36% 76%, rgba(202,163,95,0.58) 0 1px, transparent 2px),
+        radial-gradient(circle at 54% 46%, rgba(255,244,221,0.5) 0 0.9px, transparent 2px);
+      opacity: 0.76;
+      animation: eleanorStarsDrift 16s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .desk-portrait-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 236px;
+      height: 236px;
+      transform: translate(-50%, -52%);
+      border-radius: 50%;
+      padding: 10px;
+      background: radial-gradient(circle at center, rgba(202,163,95,0.18), rgba(202,163,95,0.03) 68%, transparent 100%);
+      box-shadow: 0 26px 48px rgba(0,0,0,0.34);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .desk-portrait-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(202,163,95,0.16);
+      animation: eleanorHaloBreathe 10s ease-in-out infinite;
+    }
+
+    .desk-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+      border-radius: 50%;
+      border: 2px solid rgba(202,163,95,0.46);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.34);
+      filter: sepia(0.14) saturate(0.96) contrast(1.04);
+    }
+
+    .desk-enter {
+      position: absolute;
+      left: 50%;
+      bottom: 7%;
+      transform: translateX(-50%);
+      width: min(320px, 76%);
+      padding: 0.95rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(202,163,95,0.28);
+      background: linear-gradient(180deg, rgba(10,8,6,0.94), rgba(10,8,6,0.82));
+      color: var(--paper);
+      text-decoration: none;
+      box-shadow: 0 18px 34px rgba(0,0,0,0.24);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .desk-enter:hover,
+    .desk-enter:focus-visible {
+      transform: translateX(-50%) translateY(-3px);
+      border-color: rgba(242,232,216,0.52);
+      box-shadow: 0 22px 40px rgba(0,0,0,0.32), 0 0 36px rgba(202,163,95,0.12);
+      outline: none;
+    }
+
+    .desk-enter span {
+      display: block;
+    }
+
+    .desk-enter .desk-enter-mark {
+      color: var(--gold);
+      font-family: 'Courier New', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .desk-enter .desk-enter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.42rem;
+      line-height: 0.92;
+      margin-bottom: 0;
+    }
+
+    body.eleanor-room #hd-inq-fab,
+    body.eleanor-room #hd-inq-fab-tip {
+      display: none !important;
+    }
+
+    body.eleanor-room #hd-inq-panel {
+      position: relative !important;
+      bottom: auto !important;
+      right: auto !important;
+      width: 100% !important;
+      height: min(76vh, 760px) !important;
+      border-radius: 30px !important;
+      border: 1px solid rgba(202,163,95,0.24) !important;
+      background: rgba(7,5,3,0.96) !important;
+      box-shadow: 0 22px 56px rgba(0,0,0,0.4) !important;
+      transition: none !important;
+      overflow: hidden;
+    }
+
+    body.eleanor-room #hd-inq-panel.open {
+      bottom: auto !important;
+    }
+
+    body.eleanor-room #hd-inq-head {
+      padding: 16px 18px 14px !important;
+      background: linear-gradient(180deg, rgba(202,163,95,0.05), rgba(0,0,0,0)) !important;
+    }
+
+    body.eleanor-room #hd-inq-head-title {
+      font-size: 1.02em !important;
+      letter-spacing: 0.12em !important;
+    }
+
+    body.eleanor-room #hd-inq-head-sub {
+      color: rgba(202,163,95,0.54) !important;
+    }
+
+    body.eleanor-room #hd-inq-convo {
+      padding: 16px 18px 10px !important;
+    }
+
+    body.eleanor-room .hd-msg-eleanor {
+      background: rgba(202,163,95,0.05) !important;
+      border-left-color: rgba(202,163,95,0.42) !important;
+    }
+
+    body.eleanor-room #hd-inq-input-area {
+      background: rgba(10,8,6,0.98) !important;
+    }
+
+    @keyframes eleanorVortexSpin {
+      from { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.02); }
+      to { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes eleanorVortexSpinReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    @keyframes eleanorOrbitSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes eleanorOrbitSpinReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    @keyframes eleanorStarsDrift {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-14px); opacity: 0.9; }
+    }
+
+    @keyframes eleanorHaloBreathe {
+      0%, 100% { transform: scale(1); opacity: 0.56; }
+      50% { transform: scale(1.04); opacity: 0.84; }
+    }
+
+    @media (max-width: 980px) {
+      .reading-room {
+        grid-template-columns: 1fr;
+      }
+
+      .desk-world {
+        min-height: 660px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .room-shell {
+        padding: 18px 16px 26px;
+      }
+
+      .room-topbar {
+        justify-content: center;
+        gap: 0.8rem;
+      }
+
+      .room-brand {
+        width: 100%;
+        align-items: center;
+      }
+
+      .room-nav {
+        justify-content: center;
+      }
+
+      .reading-room {
+        padding-top: 22px;
+        gap: 1.35rem;
+      }
+
+      .threshold-copy {
+        padding: 0.4rem 0 0.2rem;
+      }
+
+      .desk-world {
+        min-height: 560px;
+        padding: 1rem;
+      }
+
+      .desk-vortex {
+        width: min(400px, 96%);
+      }
+
+      .desk-portrait-wrap {
+        width: 182px;
+        height: 182px;
+      }
+
+      body.eleanor-room #hd-inq-panel {
+        height: min(70vh, 680px) !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .room-brand strong {
+        font-size: 0.88rem;
+      }
+
+      .room-brand span,
+      .room-current,
+      .room-nav a {
+        font-size: 0.58rem;
+      }
+
+      .threshold-title {
+        font-size: clamp(2.2rem, 13vw, 3.4rem);
+      }
+
+      .desk-title {
+        font-size: 1.7rem;
+      }
+
+      .desk-vortex {
+        width: min(340px, 96%);
+      }
+
+      .desk-portrait-wrap {
+        width: 156px;
+        height: 156px;
+      }
+
+      .desk-enter {
+        width: 88%;
+      }
+    }
+  </style>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="analytics.js"></script>
+</head>
+<body class="eleanor-room">
+  <div class="room-shell">
+    <header class="room-topbar">
+      <div class="room-brand">
+        <strong>The Hale Dynasty</strong>
+        <span>MSS. Hale-Marsh · Reading Room</span>
+      </div>
+      <nav class="room-nav" aria-label="Reading room navigation">
+        <a href="index.html">Home</a>
+        <a href="family-tree.html">The Bloodline</a>
+        <a href="timeline.html">Ten Volumes</a>
+        <a href="persons.html">Figures</a>
+        <a href="map.html">The Lands</a>
+        <a href="recovered-documents.html">Documents</a>
+      </nav>
+      <div class="room-current">Eleanor Voss</div>
+    </header>
+
+    <main class="reading-room">
+      <section class="threshold-copy">
+        <div class="threshold-kicker">The Inquiry Desk</div>
+        <h1 class="threshold-title">Speak where the archive becomes a mind.</h1>
+        <p class="threshold-deck">Eleanor is not another page in the archive. She is the room in which witness, contradiction, and descent are read against the paper itself.</p>
+        <div class="threshold-actions">
+          <a class="room-button room-button-primary" href="#desk" id="enter-desk-button">Open Eleanor's Desk</a>
+        </div>
+      </section>
+
+      <section class="desk-world" aria-label="Eleanor's reading room">
+        <div class="desk-head">
+          <div>
+            <div class="desk-kicker">Reading Room</div>
+            <h2 class="desk-title">Enter the threshold.</h2>
+          </div>
+        </div>
+
+        <div class="desk-core">
+          <div class="desk-vortex" aria-hidden="true"></div>
+          <div class="desk-stars" aria-hidden="true"></div>
+          <div class="desk-rings" aria-hidden="true"></div>
+          <div class="desk-portrait-wrap">
+            <img class="desk-portrait" src="portraits/eleanor.png" alt="Eleanor Voss holding the recovered letter">
+          </div>
+          <a class="desk-enter" href="#desk" id="enter-vortex-link">
+            <span class="desk-enter-mark">Reading Room</span>
+            <span class="desk-enter-title">Speak to Eleanor</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <section id="desk" style="width:min(1280px,100%);margin:1.4rem auto 0;position:relative;z-index:2;">
+      <div id="eleanor-desk-mount"></div>
+    </section>
+  </div>
+
+  <script src="inquiry.js"></script>
+  <script>
+    (function() {
+      function mountDeskAndOpen() {
+        var deskMount = document.getElementById('eleanor-desk-mount');
+        var deskApi = window.hdInquiryDesk;
+        if (!deskMount || !deskApi || !deskApi.elements || !deskApi.elements.panel) return false;
+        if (deskApi.elements.panel.parentNode !== deskMount) {
+          deskMount.appendChild(deskApi.elements.panel);
+        }
+        deskApi.open();
+        return true;
+      }
+
+      function focusDeskInput() {
+        var input = window.hdInquiryDesk && window.hdInquiryDesk.elements && window.hdInquiryDesk.elements.input;
+        if (input) input.focus();
+      }
+
+      function enterDesk(event) {
+        if (event) event.preventDefault();
+        if (mountDeskAndOpen()) {
+          document.getElementById('desk').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(focusDeskInput, 220);
+        }
+      }
+
+      document.getElementById('enter-desk-button').addEventListener('click', enterDesk);
+      document.getElementById('enter-vortex-link').addEventListener('click', enterDesk);
+
+      function waitForDesk(tries) {
+        if (mountDeskAndOpen()) {
+          setTimeout(focusDeskInput, 320);
+          return;
+        }
+        if (tries > 0) {
+          setTimeout(function() { waitForDesk(tries - 1); }, 120);
+        }
+      }
+
+      window.addEventListener('load', function() {
+        waitForDesk(20);
+      });
+    })();
+  </script>
+</body>
+</html>

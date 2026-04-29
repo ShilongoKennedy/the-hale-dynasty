@@ -4,16 +4,20 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recovered Documents — The Hale Dynasty</title>
+  <title>Documents — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: linear-gradient(180deg, #efe2cb 0%, #e2d2b8 100%); color: #3B2A1A; font-family: Georgia, serif; min-height: 100vh; line-height: 1.7; }
-    .era-nav { background: rgba(244,236,222,0.94); border-bottom: 1px solid rgba(117,86,45,0.18); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.15em; text-transform: uppercase; }
+    .era-nav { background: rgba(244,236,222,0.94); border-bottom: 1px solid rgba(117,86,45,0.18); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.15em; text-transform: uppercase; }
+    .rd-nav-brand { display: flex; flex-direction: column; gap: 0.22rem; min-width: 0; }
+    .rd-nav-brand strong { font-family: 'Cinzel', Georgia, serif; font-size: 1.05em; letter-spacing: 0.16em; color: #6f311f; font-weight: 600; text-transform: uppercase; }
+    .rd-nav-brand span,
+    .rd-nav-current { color: rgba(117,86,45,0.62); font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; }
+    .rd-nav-links { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem; min-width: 0; flex: 1 1 28rem; }
     .era-nav a { color: #75562d; text-decoration: none; }
     .era-nav a:hover { color: #6f311f; }
-    .era-nav .vol-marker { color: rgba(117,86,45,0.62); }
     .page-header { background: linear-gradient(180deg, rgba(248,241,228,0.96) 0%, rgba(236,224,204,0.88) 100%); border-bottom: 1px solid rgba(117,86,45,0.18); padding: 50px 40px 40px; text-align: center; }
     .page-label { font-family: 'Courier New', monospace; font-size: 0.78em; letter-spacing: 0.3em; color: #8B1A1A; text-transform: uppercase; margin-bottom: 14px; }
     .page-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.6em,4vw,2.6em); color: #6f311f; letter-spacing: 0.06em; margin-bottom: 10px; }
@@ -65,16 +69,38 @@
     .rd-next-links { display: flex; flex-wrap: wrap; gap: 10px; }
     .rd-next-links a { font-family: 'Courier New', monospace; font-size: 0.62em; letter-spacing: 0.16em; text-transform: uppercase; color: #6f311f; text-decoration: none; border: 1px solid rgba(111,49,31,0.2); padding: 8px 12px; background: rgba(255,249,241,0.74); }
     .rd-next-links a:hover { border-color: rgba(111,49,31,0.42); background: rgba(255,249,241,0.98); }
-    @media (max-width:600px) { .vol-tab { font-size: 0.65em; padding: 6px 10px; } .page-content { padding: 30px 16px 60px; } .viewer-parchment { padding: 24px 20px; } .rd-guide { grid-template-columns: 1fr; } }
+    .rd-clusters { margin: 0 0 34px; }
+    .rd-clusters-head { margin-bottom: 16px; }
+    .rd-clusters-kicker { font-family: 'Courier New', monospace; font-size: 0.58em; letter-spacing: 0.22em; color: rgba(117,86,45,0.58); text-transform: uppercase; margin-bottom: 8px; }
+    .rd-clusters-copy { font-size: 0.9em; line-height: 1.78; color: #4a3621; }
+    .rd-clusters-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .rd-cluster-card { background: rgba(250,246,238,0.74); border: 1px solid rgba(117,86,45,0.16); padding: 18px 20px; }
+    .rd-cluster-title { font-family: 'Cinzel', Georgia, serif; font-size: 0.96em; color: #3B2A1A; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .rd-cluster-copy { font-size: 0.86em; line-height: 1.74; color: #4a3621; margin-bottom: 12px; }
+    .rd-cluster-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .rd-cluster-links a { font-family: 'Courier New', monospace; font-size: 0.58em; letter-spacing: 0.16em; text-transform: uppercase; color: #6f311f; text-decoration: none; border: 1px solid rgba(111,49,31,0.2); padding: 7px 10px; background: rgba(255,249,241,0.74); }
+    .rd-cluster-links a:hover { border-color: rgba(111,49,31,0.42); background: rgba(255,249,241,0.98); }
+    @media (max-width:600px) { .era-nav { padding: 10px 14px; } .rd-nav-current { display: none; } .rd-nav-links { justify-content: flex-start; flex: 1 1 100%; } .vol-tab { font-size: 0.65em; padding: 6px 10px; } .page-content { padding: 30px 16px 60px; } .viewer-parchment { padding: 24px 20px; } .rd-guide, .rd-clusters-grid { grid-template-columns: 1fr; } }
+    @media (max-width:420px) { .era-nav { justify-content: center; gap: 0.75rem; } .rd-nav-brand { width: 100%; align-items: center; } .rd-nav-links { justify-content: center; } .era-nav a { font-size: 0.82em; } }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body data-vol="">
 
 <nav class="era-nav">
-  <a href="index.html">← Archive Home</a>
-  <span class="vol-marker">Recovered Documents</span>
-  <a href="family-tree.html">Family Tree →</a>
+  <div class="rd-nav-brand">
+    <strong>The Hale Dynasty</strong>
+    <span>MSS. Hale-Marsh · Evidence Hub</span>
+  </div>
+  <div class="rd-nav-links">
+    <a href="index.html">Home</a>
+    <a href="family-tree.html">The Bloodline</a>
+    <a href="timeline.html">Ten Volumes</a>
+    <a href="persons.html">Figures</a>
+    <a href="map.html">The Lands</a>
+    <a href="eleanor.html">Consult Eleanor</a>
+  </div>
+  <div class="rd-nav-current">Documents</div>
 </nav>
 
 <header class="page-header">
@@ -104,6 +130,48 @@
     <div class="rd-guide-card">
       <div class="rd-guide-label">How To Use It</div>
       <div class="rd-guide-copy">Choose a volume tab, read the gap-filling documents there, then return to the original volume to feel how the recovered pages change the shape of what you thought you knew.</div>
+    </div>
+  </div>
+
+  <div class="rd-clusters">
+    <div class="rd-clusters-head">
+      <div class="rd-clusters-kicker">Archive Paths</div>
+      <div class="rd-clusters-copy">The recovered documents are now the main evidence hub. Use the related paths below when you want the archive by fragment, object, or recurring sign rather than by volume.</div>
+    </div>
+    <div class="rd-clusters-grid">
+      <div class="rd-cluster-card">
+        <div class="rd-cluster-title">Modern Fragments</div>
+        <div class="rd-cluster-copy">Private notes, journal entries, newspapers, and messages from the archive’s final movement into recognition.</div>
+        <div class="rd-cluster-links">
+          <a href="notes.html">Research Notes</a>
+          <a href="eleanor-journal.html">Eleanor Journal</a>
+          <a href="gazette.html">Gazette</a>
+          <a href="the-email.html">Email</a>
+          <a href="unsent.html">Unsent Letter</a>
+        </div>
+      </div>
+      <div class="rd-cluster-card">
+        <div class="rd-cluster-title">Estate Records</div>
+        <div class="rd-cluster-copy">Objects, surveys, and site-specific records that hold the material memory of Halecroft beyond the ten volumes.</div>
+        <div class="rd-cluster-links">
+          <a href="deed-box.html">Deed-Box</a>
+          <a href="halecroft.html">Halecroft</a>
+          <a href="survey.html">Survey</a>
+          <a href="the-well.html">The Well</a>
+          <a href="oral-history.html">Oral History</a>
+        </div>
+      </div>
+      <div class="rd-cluster-card">
+        <div class="rd-cluster-title">Archive Motifs</div>
+        <div class="rd-cluster-copy">Recurring presences that do not sit neatly inside one volume alone: bees, wax, animals, faces, and grief.</div>
+        <div class="rd-cluster-links">
+          <a href="bees.html">Bees</a>
+          <a href="seals.html">Wax Seals</a>
+          <a href="portraits.html">Portraits</a>
+          <a href="the-pig.html">The Pig</a>
+          <a href="grief.html">Grief Index</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -305,11 +373,12 @@
 <div class="page-content" style="padding-top:0;">
   <div class="rd-next">
     <div class="rd-next-label">Where Next</div>
-    <div class="rd-next-copy">Return to the corresponding volume after reading any recovered item, or use the deed-box and document index when you want the whole archive as a field of evidence rather than one sequence.</div>
+    <div class="rd-next-copy">Return to the corresponding volume after reading any recovered item, or move sideways into the bloodline, chronology, and estate records when you want the archive as a whole field of evidence rather than one sequence.</div>
     <div class="rd-next-links">
       <a href="deed-box.html">The Deed-Box</a>
-      <a href="documents.html">Document Index</a>
-      <a href="timeline.html">Chronicle Timeline</a>
+      <a href="persons.html">Figures</a>
+      <a href="timeline.html">Ten Volumes</a>
+      <a href="map.html">The Lands</a>
     </div>
   </div>
 </div>
@@ -329,9 +398,10 @@
 </a>
 
 <footer class="page-footer">
-  <a href="index.html">Archive Home</a>
-  <a href="family-tree.html">Family Tree</a>
-  <a href="about.html">About</a>
+  <a href="index.html">Home</a>
+  <a href="family-tree.html">The Bloodline</a>
+  <a href="timeline.html">Ten Volumes</a>
+  <a href="persons.html">Figures</a>
   <span id="secret-nav-link"><a href="the-email.html">✦ A letter found</a></span>
   <br><br>The Hale Dynasty · Recovered Documents · Twenty Letters Found After the Chronicle Was Complete
 </footer>

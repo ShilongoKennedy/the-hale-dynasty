@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chronicle Timeline · The Hale Dynasty · 1066–2026</title>
+  <title>Ten Volumes — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,10 +38,43 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(8px);
+    }
+    .tl-nav-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+      min-width: 0;
+    }
+    .tl-nav-brand strong {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.05em;
+      letter-spacing: 0.16em;
+      color: #5a3a1f;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .tl-nav-brand span,
+    .tl-nav-current {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.24em;
+      color: rgba(74,51,32,0.42);
+      text-transform: uppercase;
+    }
+    .tl-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      min-width: 0;
+      flex: 1 1 28rem;
     }
     .tl-nav a {
       font-family: 'Courier New', monospace;
@@ -53,14 +86,6 @@
       transition: color 0.2s;
     }
     .tl-nav a:hover { color: var(--oxblood); }
-    .tl-nav-title {
-      font-family: 'Courier New', monospace;
-      font-size: 0.65em;
-      letter-spacing: 0.3em;
-      color: rgba(74,51,32,0.42);
-      text-transform: uppercase;
-    }
-
     .tl-header {
       text-align: center;
       padding: 54px 30px 34px;
@@ -364,7 +389,8 @@
 
     @media (max-width: 640px) {
       .tl-nav { padding: 10px 14px; }
-      .tl-nav-title { display: none; }
+      .tl-nav-current { display: none; }
+      .tl-nav-links { justify-content: flex-start; flex: 1 1 100%; }
       .tl-header { padding: 34px 18px 24px; }
       .tl-guide { grid-template-columns: 1fr; padding: 16px 16px 6px; gap: 10px; }
       .tl-body { padding: 34px 16px 56px; }
@@ -376,6 +402,23 @@
       .tl-era-head-inner, .tl-century span { background: rgba(233,219,191,0.96); }
       .tl-next-wrap { padding: 0 16px 18px; }
     }
+
+    @media (max-width: 420px) {
+      .tl-nav {
+        justify-content: center;
+        gap: 0.75rem;
+      }
+      .tl-nav-brand {
+        width: 100%;
+        align-items: center;
+      }
+      .tl-nav-links {
+        justify-content: center;
+      }
+      .tl-nav a {
+        font-size: 0.58em;
+      }
+    }
   </style>
 
   <script defer src="/_vercel/insights/script.js"></script>
@@ -383,14 +426,24 @@
 <body>
 
   <nav class="tl-nav">
-    <a href="index.html">← Archive Index</a>
-    <span class="tl-nav-title">The Hale Dynasty · Chronicle Timeline</span>
-    <a href="documents.html">All Documents →</a>
+    <div class="tl-nav-brand">
+      <strong>The Hale Dynasty</strong>
+      <span>MSS. Hale-Marsh · Sequential Record</span>
+    </div>
+    <div class="tl-nav-links">
+      <a href="index.html">Home</a>
+      <a href="family-tree.html">The Bloodline</a>
+      <a href="persons.html">Figures</a>
+      <a href="map.html">The Lands</a>
+      <a href="recovered-documents.html">Documents</a>
+      <a href="eleanor.html">Consult Eleanor</a>
+    </div>
+    <div class="tl-nav-current">Ten Volumes</div>
   </nav>
 
   <header class="tl-header">
     <div class="tl-label">MSS. Hale-Marsh Collection · Bodleian Library</div>
-    <h1 class="tl-title">Chronicle Timeline · 1066–2026</h1>
+    <h1 class="tl-title">Ten Volumes · 1066–2026</h1>
     <p class="tl-subtitle">Nine hundred and sixty years of documents, letters, registers, and records — arranged as they happened.</p>
   </header>
 
@@ -412,7 +465,7 @@
     </div>
     <div class="tl-guide-card">
       <span class="tl-guide-kicker">Best after</span>
-      <span class="tl-guide-copy">Vol. I or the family tree, once you know the line exists and want to watch the documents accumulate across nine centuries.</span>
+      <span class="tl-guide-copy">Vol. I or the bloodline, once you know the line exists and want to watch the documents accumulate across nine centuries.</span>
     </div>
     <div class="tl-guide-card">
       <span class="tl-guide-kicker">How to use it</span>
@@ -931,12 +984,12 @@
     <div class="tl-next">
       <span class="tl-next-kicker">Where next</span>
       <div class="tl-next-title">Once the chronology is clear, return to the voices inside it</div>
-      <p class="tl-next-copy">The timeline is best used as a spine. Once you have found the moment you care about, the strongest next move is to return to the relevant volume, the family tree, or the people index and read the record at human scale again.</p>
+      <p class="tl-next-copy">The timeline is best used as a spine. Once you have found the moment you care about, the strongest next move is to return to the relevant volume, the bloodline, or the people index and read the record at human scale again.</p>
       <div class="tl-next-links">
         <a class="tl-next-link" href="era-I.html">Begin With Vol. I</a>
-        <a class="tl-next-link" href="family-tree.html">Open Family Tree</a>
-        <a class="tl-next-link" href="persons.html">Persons of Record</a>
-        <a class="tl-next-link" href="map.html">See the Map</a>
+        <a class="tl-next-link" href="family-tree.html">Open The Bloodline</a>
+        <a class="tl-next-link" href="persons.html">Open Figures</a>
+        <a class="tl-next-link" href="map.html">Open The Lands</a>
       </div>
     </div>
   </section>
@@ -944,11 +997,11 @@
   <div class="tl-footer">
     <p>MSS. Hale-Marsh Collection · Bodleian Library, Oxford · 1066–2026</p>
     <p style="margin-top:10px;">
-      <a href="index.html">← Archive Index</a>
+      <a href="index.html">Home</a>
       &nbsp;·&nbsp;
-      <a href="documents.html">All Documents</a>
+      <a href="recovered-documents.html">Documents</a>
       &nbsp;·&nbsp;
-      <a href="family-tree.html">Family Tree</a>
+      <a href="family-tree.html">The Bloodline</a>
       &nbsp;·&nbsp;
       <a href="voss.html">The Voss Branch</a>
     </p>

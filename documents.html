@@ -2,677 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document Index — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="features.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Documents — Redirecting to Recovered Documents</title>
+  <meta http-equiv="refresh" content="0; url=recovered-documents.html">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    :root {
+      --bg: #070604;
+      --panel: rgba(13, 10, 8, 0.92);
+      --line: rgba(202, 163, 95, 0.18);
+      --gold: #caa35f;
+      --paper: #efe6d8;
+      --muted: rgba(239, 230, 216, 0.72);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      background:
-        radial-gradient(circle at 14% 12%, rgba(111,47,36,0.08), transparent 22%),
-        radial-gradient(circle at 86% 10%, rgba(79,102,125,0.07), transparent 20%),
-        linear-gradient(180deg, #e7d5b4 0%, #c9aa7b 100%);
-      color: #2c2016;
-      font-family: 'Courier New', monospace;
       min-height: 100vh;
-    }
-
-    /* ── NAV ──────────────────────────────────────────────────── */
-    .top-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(244,236,220,0.88);
-      border-bottom: 1px solid rgba(82,57,33,0.14);
-      padding: 10px 30px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase;
-      backdrop-filter: blur(10px);
-    }
-    .top-nav a { color: rgba(94,66,38,0.62); text-decoration: none; transition: color 0.2s; }
-    .top-nav a:hover { color: #6f2f24; }
-    .top-nav .center { color: rgba(94,66,38,0.34); font-size: 0.9em; }
-
-    /* ── HEADER ──────────────────────────────────────────────── */
-    .doc-header {
-      padding: 100px 40px 48px;
-      text-align: center;
-      border-bottom: 1px solid rgba(82,57,33,0.08);
-      position: relative;
-    }
-    .doc-header::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center top, rgba(111,47,36,0.05) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .doc-eyebrow {
-      font-size: 0.62em; letter-spacing: 0.28em; text-transform: uppercase;
-      color: rgba(111,47,36,0.54); margin-bottom: 16px;
-    }
-    .doc-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.8em, 4vw, 3em);
-      color: #432f1f;
-      letter-spacing: 0.08em; font-weight: 600;
-      margin-bottom: 12px;
-      text-shadow: none;
-    }
-    .doc-subtitle {
-      font-size: 0.7em; letter-spacing: 0.12em;
-      color: rgba(82,57,33,0.66);
-      margin-bottom: 8px;
-    }
-    .doc-count {
-      font-size: 0.6em; letter-spacing: 0.15em;
-      color: rgba(82,57,33,0.42);
-    }
-    #doc-count-label { color: rgba(200,168,60,0.45); }
-    .doc-guide {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 18px 30px 0;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .doc-guide-card {
-      background: rgba(252,247,239,0.72);
-      border: 1px solid rgba(82,57,33,0.14);
-      padding: 16px 18px;
-    }
-    .doc-guide-kicker {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 0.56em;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(111,47,36,0.62);
-    }
-    .doc-guide-copy {
-      display: block;
-      font-size: 0.76em;
-      line-height: 1.7;
-      color: rgba(55,38,22,0.78);
-    }
-
-    /* ── FILTERS ──────────────────────────────────────────────── */
-    .filters-bar {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 30px 0;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .filter-label {
-      font-size: 0.6em; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(82,57,33,0.42);
-    }
-    .filter-btn {
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(82,57,33,0.16);
-      color: rgba(82,57,33,0.58);
-      font-family: 'Courier New', monospace;
-      font-size: 0.6em; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 5px 12px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .filter-btn:hover { border-color: rgba(111,47,36,0.3); color: rgba(82,57,33,0.78); }
-    .filter-btn.active { background: rgba(111,47,36,0.05); border-color: rgba(111,47,36,0.34); color: #6f2f24; }
-
-    .search-bar-wrap {
-      flex: 1; min-width: 200px;
-      position: relative; display: flex; align-items: center;
-    }
-    .search-bar-wrap input {
-      width: 100%;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(82,57,33,0.16);
-      border-radius: 0;
-      color: rgba(55,38,22,0.78);
-      font-family: 'Courier New', monospace;
-      font-size: 0.65em; letter-spacing: 0.08em;
-      padding: 6px 12px 6px 30px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .search-bar-wrap input:focus { border-color: rgba(111,47,36,0.34); }
-    .search-bar-wrap input::placeholder { color: rgba(82,57,33,0.34); }
-    .search-icon {
-      position: absolute; left: 10px;
-      color: rgba(82,57,33,0.38); font-size: 0.8em; pointer-events: none;
-    }
-
-    /* ── DOCUMENT TABLE ───────────────────────────────────────── */
-    .doc-main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 30px 100px;
-    }
-    .doc-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 120px 90px;
-      gap: 0;
-      border-bottom: 1px solid rgba(82,57,33,0.08);
-      align-items: start;
-      padding: 14px 0;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.12s;
-    }
-    .doc-row:hover { background: rgba(111,47,36,0.035); }
-    .doc-row.hidden { display: none; }
-
-    .doc-col-vol {
-      font-size: 0.58em; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(111,47,36,0.44);
-      padding-right: 12px;
-      padding-top: 2px;
-    }
-    .doc-col-main {}
-    .doc-col-title {
+      place-items: center;
+      padding: 24px;
+      background:
+        linear-gradient(180deg, rgba(6,5,4,0.88), rgba(6,5,4,0.96)),
+        url('portraits/Newbackground.png') center/cover no-repeat;
+      color: var(--paper);
       font-family: Georgia, serif;
-      font-size: 0.82em;
-      color: rgba(55,38,22,0.82);
-      margin-bottom: 4px;
-      font-style: italic;
-    }
-    .doc-col-meta {
-      font-size: 0.58em; letter-spacing: 0.08em;
-      color: rgba(82,57,33,0.48);
-      line-height: 1.5;
-    }
-    .doc-col-type {
-      font-size: 0.55em; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(82,57,33,0.46);
-      padding-left: 12px;
-      padding-top: 3px;
-    }
-    .doc-col-date {
-      font-size: 0.58em; letter-spacing: 0.08em;
-      color: rgba(82,57,33,0.46);
-      padding-left: 12px;
-      padding-top: 3px;
     }
 
-    .type-letter    { color: rgba(200,140,60,0.35) !important; }
-    .type-inventory { color: rgba(100,160,100,0.35) !important; }
-    .type-legal     { color: rgba(80,120,180,0.35) !important; }
-    .type-pamphlet  { color: rgba(160,100,80,0.35) !important; }
-    .type-memoir    { color: rgba(180,140,60,0.35) !important; }
-    .type-diary     { color: rgba(140,120,160,0.35) !important; }
-    .type-memo      { color: rgba(80,140,160,0.35) !important; }
-    .type-dispatch  { color: rgba(120,80,80,0.35) !important; }
-    .type-testimony { color: rgba(200,180,100,0.35) !important; }
-    .type-map       { color: rgba(100,160,140,0.35) !important; }
-
-    /* ── ERA GROUP HEADERS ───────────────────────────────────────── */
-    .era-group { margin-bottom: 0; }
-    .era-group + .era-group { margin-top: 4px; }
-    .era-group-header {
-      display: flex; align-items: center; gap: 13px;
-      padding: 30px 0 12px;
-    }
-    .era-group-line {
-      height: 1px; flex: 1;
-      background: linear-gradient(to right, rgba(82,57,33,0.18), transparent);
-    }
-    .era-group-line.right {
-      background: linear-gradient(to left, rgba(82,57,33,0.18), transparent);
-    }
-    .era-group-seal {
-      width: 28px; height: 28px; flex-shrink: 0;
-      border: 1px solid rgba(82,57,33,0.16);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.58em; letter-spacing: 0.04em;
-      color: rgba(111,47,36,0.5);
-    }
-    .era-group-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.76em; letter-spacing: 0.2em;
-      color: rgba(82,57,33,0.62);
-      font-weight: 400; white-space: nowrap;
-      text-transform: uppercase;
-    }
-    .era-group-dates {
-      font-size: 0.54em; letter-spacing: 0.1em;
-      color: rgba(200,168,60,0.18);
-      font-family: 'Courier New', monospace;
-      white-space: nowrap;
-    }
-    .era-group-vol-link {
-      font-size: 0.5em; letter-spacing: 0.14em;
-      color: rgba(82,57,33,0.42); text-decoration: none;
-      font-family: 'Courier New', monospace;
-      text-transform: uppercase; white-space: nowrap;
-      transition: color 0.2s;
-      border-bottom: 1px solid rgba(82,57,33,0.12);
-      flex-shrink: 0; padding-bottom: 1px;
-    }
-    .era-group-vol-link:hover { color: #6f2f24; border-color: rgba(111,47,36,0.34); }
-
-    /* ── NO RESULTS ───────────────────────────────────────────── */
-    #no-results {
-      display: none;
+    .panel {
+      width: min(680px, 100%);
+      padding: 32px 28px;
+      border-radius: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.42);
       text-align: center;
-      padding: 60px 0;
-      font-size: 0.7em; letter-spacing: 0.15em;
-      color: rgba(82,57,33,0.42);
     }
 
-    /* ── HOME BUTTON ─────────────────────────────────────────── */
-    .home-float {
-      position: fixed; bottom: 28px; right: 28px; z-index: 400;
-      width: 44px; height: 44px;
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.18);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      transition: all 0.22s;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.22);
+    .kicker {
+      margin-bottom: 14px;
+      font-family: "Courier New", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
-    .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.1); }
-    .home-float svg { width: 20px; height: 20px; }
-    @media (max-width: 640px) {
-      .doc-guide { grid-template-columns: 1fr; padding: 16px 18px 0; }
-      .doc-row { grid-template-columns: 60px 1fr; }
-      .doc-col-type, .doc-col-date { display: none; }
+
+    h1 {
+      margin-bottom: 14px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      line-height: 0.94;
+      font-weight: 600;
+    }
+
+    p {
+      max-width: 34rem;
+      margin: 0 auto 1rem;
+      color: var(--muted);
+      line-height: 1.78;
+      font-size: 1rem;
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--paper);
+      text-decoration: none;
+      font-family: "Courier New", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(18, 14, 11, 0.82);
+    }
+
+    .button.primary {
+      background: linear-gradient(180deg, rgba(212,177,111,0.96), rgba(187,146,78,0.92));
+      color: #120d09;
+      border-color: rgba(239,230,216,0.26);
     }
   </style>
-  <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body data-vol="">
-
-<nav class="top-nav">
-  <a href="index.html">← Archive Home</a>
-  <span class="center">The Hale Dynasty · Document Index</span>
-  <a href="family-tree.html">Family Tree →</a>
-</nav>
-
-<header class="doc-header">
-  <div class="doc-eyebrow">MSS. Hale-Marsh Collection · Bodleian Library, Oxford</div>
-  <h1 class="doc-title">Document Index</h1>
-  <p class="doc-subtitle">Every primary source in the Hale-Marsh archive · 1066–2026</p>
-  <div class="doc-count">Showing <span id="doc-count-label">0</span> documents</div>
-</header>
-
-<section class="doc-guide" aria-label="How to use this page">
-  <div class="doc-guide-card">
-    <span class="doc-guide-kicker">Use this page for</span>
-    <span class="doc-guide-copy">Searching the archive by document rather than by era when you want a clean index of the evidence itself.</span>
-  </div>
-  <div class="doc-guide-card">
-    <span class="doc-guide-kicker">Best after</span>
-    <span class="doc-guide-copy">Vol. I, the timeline, or the deed-box, once the family line is clear enough for you to follow documents across centuries.</span>
-  </div>
-  <div class="doc-guide-card">
-    <span class="doc-guide-kicker">Where next</span>
-    <span class="doc-guide-copy">Open any item that catches you here, then return to its full volume for context around the document’s voice and pressure.</span>
-  </div>
-</section>
-
-<div class="filters-bar">
-  <span class="filter-label">Filter:</span>
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="letter">Letters</button>
-  <button class="filter-btn" data-filter="memoir">Memoirs</button>
-  <button class="filter-btn" data-filter="legal">Legal</button>
-  <button class="filter-btn" data-filter="inventory">Inventories</button>
-  <button class="filter-btn" data-filter="memo">Memos</button>
-  <button class="filter-btn" data-filter="diary">Diaries</button>
-  <button class="filter-btn" data-filter="dispatch">Dispatches</button>
-  <button class="filter-btn" data-filter="pamphlet">Pamphlets</button>
-  <button class="filter-btn" data-filter="testimony">Testimony</button>
-  <div class="search-bar-wrap">
-    <span class="search-icon">⌕</span>
-    <input type="text" id="docSearch" placeholder="Search by name, date, keyword…" autocomplete="off">
-  </div>
-</div>
-
-<main class="doc-main">
-  <div id="doc-list"></div>
-  <div id="no-results">No documents match that filter.</div>
-</main>
-
-<a href="index.html" class="home-float" aria-label="Return to archive home">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
-</a>
-
-<script defer src="analytics.js"></script>
-<script src="features.js"></script>
-<script>
-// ── DOCUMENT CATALOGUE ────────────────────────────────────────────────────
-const DOCS = [
-  // ── ERA I · NORMAN ──────────────────────────────────────────────────────
-  { vol:'I', era:'Norman', link:'era-I.html', type:'legal',
-    title:'Royal Writ — Grant of Halecroft to Ranulf de la Hale',
-    meta:'Ranulf de la Hale, grantee · Issued by order of William I',
-    date:'c.1067', keywords:'ranulf norman grant halecroft land writ william conqueror' },
-  { vol:'I', era:'Norman', link:'era-I.html', type:'testimony',
-    title:'Chronicle of the House of de la Hale',
-    meta:'Brother Eadmer of Worcester, scribe · Norman Latin with English marginalia',
-    date:'c.1087–c.1099', keywords:'ranulf aelswith chronicle norman latin eadmer worcester' },
-  { vol:'I', era:'Norman', link:'era-I.html', type:'letter',
-    title:'Letter of Aelswith to her daughter Maud',
-    meta:'Aelswith, widow of Wulfric of Halecroft · Written in Old English',
-    date:'c.1072', keywords:'aelswith english widow maud daughter letter halecroft' },
-
-  // ── ERA II · PLAGUE ──────────────────────────────────────────────────────
-  { vol:'II', era:'Plague', link:'era-II.html', type:'legal',
-    title:'Manorial Court Roll — Hale holding, Worcestershire',
-    meta:'Lord of the Manor, scribe · Free tenant record, 12 acres',
-    date:'c.1190–1280', keywords:'court roll robert hale manor worcestershire tenant acres' },
-  { vol:'II', era:'Plague', link:'era-II.html', type:'legal',
-    title:'Deed of Freehold Purchase — The Hale',
-    meta:'William Hale the Elder, purchaser · First Hale to own rather than hold',
-    date:'1214', keywords:'freehold deed william elder hale magna carta purchase 1214' },
-  { vol:'II', era:'Plague', link:'era-II.html', type:'legal',
-    title:'Inquest of 1351 — Inheritance of Thomas Hale',
-    meta:'Manorial inquest · Testimony of Matilda of Halecroft',
-    date:'1351', keywords:'inquest 1351 thomas hale matilda testimony inheritance plague survivor' },
-  { vol:'II', era:'Plague', link:'era-II.html', type:'testimony',
-    title:'Testimony of Matilda of Halecroft',
-    meta:'Matilda, free woman · Uninvited deponent, Inquest of 1351',
-    date:'1351', keywords:'matilda testimony beekeeper halecroft 1351 inquest pig thomas' },
-  { vol:'II', era:'Plague', link:'era-II.html', type:'letter',
-    title:'Letter of Matilda to the Future — found hidden in deed-box',
-    meta:'Matilda of Halecroft · Hidden beneath deed-box lining · Recovered by multispectral imaging, 2024',
-    date:'c.1390', keywords:'matilda letter future deed box 1390 keep asking pig eleanor voss recovered 2024' },
-  { vol:'II', era:'Plague', link:'era-II.html', type:'diary',
-    title:'Account of the Pestilence at Halecroft — Brother Anselm',
-    meta:'Brother Anselm, Benedictine · Account of plague deaths, November 1348–Christmas 1349',
-    date:'1348–1349', keywords:'plague pestilence halecroft anselm black death 1348 richard hale death' },
-
-  // ── ERA III · TUDOR ──────────────────────────────────────────────────────
-  { vol:'III', era:'Tudor', link:'era-III.html', type:'letter',
-    title:'Letter — William Hale to his Father John · Worcester',
-    meta:'William Hale, 1522–c.1580 · Regarding the priory lands',
-    date:'1534', keywords:'william hale letter father priory lands dissolution tudor 1534 worcester' },
-  { vol:'III', era:'Tudor', link:'era-III.html', type:'letter',
-    title:'Letter — John Hale to William · Halecroft',
-    meta:'John Hale, c.1498–1558 · Reply regarding the priory purchase',
-    date:'1534', keywords:'john hale letter priory land tudor 1534 father son' },
-  { vol:'III', era:'Tudor', link:'era-III.html', type:'inventory',
-    title:'Household Inventory of Halecroft — Estate of John Hale',
-    meta:'William Hale, appraiser; John Alderton, witness · Following John Hale\'s death',
-    date:'1545', keywords:'inventory halecroft 1545 estate goods chattels john hale william priory' },
-  { vol:'III', era:'Tudor', link:'era-III.html', type:'legal',
-    title:'Examination of William Hale before the Bishop\'s Visitors',
-    meta:'Bishop\'s Commission · Regarding acquisition of former priory lands',
-    date:'1555', keywords:'examination bishop visitors william hale priory lands 1555 tudor mary' },
-  { vol:'III', era:'Tudor', link:'era-III.html', type:'letter',
-    title:'Letter — William Hale to his Son Thomas',
-    meta:'William Hale · "They went away. The land remained."',
-    date:'c.1556', keywords:'william hale letter son thomas land remained 1556 examination' },
-
-  // ── ERA IV · CIVIL WAR ───────────────────────────────────────────────────
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'letter',
-    title:'Letter I — John Hale to Thomas Hale · Gloucester',
-    meta:'John Hale, Captain, Parliamentary Forces · To his royalist brother',
-    date:'October 1642', keywords:'john hale thomas civil war parliament letter 1642 gloucester brothers' },
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'letter',
-    title:'Letter II — Thomas Hale to John Hale · Oxford',
-    meta:'Thomas Hale, Ensign, Lord Wilmot\'s Horse · From the Royalist camp',
-    date:'January 1643', keywords:'thomas hale john civil war letter 1643 royalist oxford parliament' },
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'letter',
-    title:'Letters III–XI — John and Thomas Hale, continued correspondence',
-    meta:'John Hale and Thomas Hale · Eleven letters across the war years',
-    date:'1643–1649', keywords:'civil war brothers letters hale john thomas parliament royalist correspondence' },
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'dispatch',
-    title:'Field Dispatch — Captain John Hale · Naseby',
-    meta:'John Hale, Captain, Parliamentary Forces · To Colonel Oakes',
-    date:'15 June 1645', keywords:'naseby field dispatch john hale 1645 parliament victory battle' },
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'pamphlet',
-    title:'A Word to the Godly of Worcestershire',
-    meta:'Anonymous · Circulated in Worcestershire',
-    date:'c.1647', keywords:'puritan pamphlet godly worcestershire 1647 dispensation parliament' },
-  { vol:'IV', era:'Civil War', link:'era-IV.html', type:'legal',
-    title:'Deed of Settlement — Halecroft Estate · Robert Hale',
-    meta:'Robert Hale, grantee · Prepared prior to the outbreak of war',
-    date:'1640', keywords:'deed settlement halecroft robert hale 1640 civil war preparation' },
-
-  // ── ERA V · GEORGIAN ─────────────────────────────────────────────────────
-  { vol:'V', era:'Georgian', link:'era-V.html', type:'memoir',
-    title:'Memoirs of Sir Nathaniel Hale — Chapter I: Origins',
-    meta:'Sir Nathaniel Hale, Baronet · Dictated to Mr. James Croft, secretary',
-    date:'1738', keywords:'nathaniel hale memoir chapter origins baronet london georgian 1738' },
-  { vol:'V', era:'Georgian', link:'era-V.html', type:'memoir',
-    title:'Memoirs — Chapter V: On the Purchase of the Baronetcy',
-    meta:'Sir Nathaniel Hale, Baronet · "There is no dignity in pretending"',
-    date:'1739', keywords:'nathaniel baronetcy purchase memoir 1702 queen anne south sea' },
-  { vol:'V', era:'Georgian', link:'era-V.html', type:'memoir',
-    title:'Memoirs — Chapter IX: The South Sea Bubble',
-    meta:'Sir Nathaniel Hale, Baronet · On the loss of a considerable sum, 1720',
-    date:'1740', keywords:'south sea bubble 1720 nathaniel hale loss dorothea sufficient begin again' },
-  { vol:'V', era:'Georgian', link:'era-V.html', type:'memoir',
-    title:'Memoirs — Chapter XIV: On the Death of Dorothea',
-    meta:'Sir Nathaniel Hale, Baronet · "The last of my several great miscalculations"',
-    date:'1742', keywords:'dorothea nathaniel hale death memoir regret georgian' },
-  { vol:'V', era:'Georgian', link:'era-V.html', type:'memoir',
-    title:'Memoirs — Chapter XVII: A Final Account',
-    meta:'Sir Nathaniel Hale, Baronet · Dictated 1743–1744',
-    date:'1743–1744', keywords:'nathaniel hale final memoir death 1744 georgian account' },
-
-  // ── ERA VI · REGENCY ─────────────────────────────────────────────────────
-  { vol:'VI', era:'Regency', link:'era-VI.html', type:'letter',
-    title:'Letter — Augusta Hale to her brother Edmund',
-    meta:'Augusta Hale, 1771–1858 · Regarding the state of the estate',
-    date:'c.1805', keywords:'augusta hale letter brother edmund estate entail 1805 regency' },
-  { vol:'VI', era:'Regency', link:'era-VI.html', type:'letter',
-    title:'Letter — Augusta Hale to Henry Alderton, solicitor',
-    meta:'Augusta Hale · On the matter of timber rights and the proposal',
-    date:'c.1828', keywords:'augusta hale alderton solicitor timber rights letter proposal marriage 1828' },
-  { vol:'VI', era:'Regency', link:'era-VI.html', type:'letter',
-    title:'Correspondence — Augusta Hale, selected letters 1800–1830',
-    meta:'Augusta Hale · Thirty years of managing an estate without legal title',
-    date:'1800–1830', keywords:'augusta hale correspondence letters estate management regency entail woman' },
-  { vol:'VI', era:'Regency', link:'era-VI.html', type:'legal',
-    title:'Marriage Settlement — Augusta Hale and Henry Alderton',
-    meta:'Henry Alderton, solicitor · Augusta Hale · Settlement of estate interests',
-    date:'1828', keywords:'marriage settlement augusta alderton legal 1828 estate interests' },
-
-  // ── ERA VII · VICTORIAN ───────────────────────────────────────────────────
-  { vol:'VII', era:'Victorian', link:'era-VII.html', type:'letter',
-    title:'Letters — Edmund Hale II, selected correspondence',
-    meta:'Edmund Hale II, 1841–1882 · Including letters to Henry Bellamy and others',
-    date:'1865–1882', keywords:'edmund hale victorian letters bellamy correspondence 1865 1882' },
-  { vol:'VII', era:'Victorian', link:'era-VII.html', type:'diary',
-    title:'Private Diary — Edmund Hale II · Extracts 1870–1881',
-    meta:'Edmund Hale II · Found locked in the lower drawer of the Shropshire escritoire',
-    date:'1870–1881', keywords:'edmund hale diary victorian private 1870 1881 confession locked escritoire shropshire' },
-  { vol:'VII', era:'Victorian', link:'era-VII.html', type:'legal',
-    title:'Solicitor\'s Memorandum — Death and Estate of Edmund Hale II',
-    meta:'Alderton & Sons, solicitors · Worcester',
-    date:'1882', keywords:'solicitor memorandum death estate edmund hale 1882 alderton worcester' },
-  { vol:'VII', era:'Victorian', link:'era-VII.html', type:'testimony',
-    title:'The Confession — Two words on a folded paper, unsigned, undated',
-    meta:'Edmund Hale II (attributed) · "I know."',
-    date:'c.1882', keywords:'confession I know edmund hale victorian paper unsigned undated locked' },
-
-  // ── ERA VIII · EDWARDIAN & WWI ────────────────────────────────────────────
-  { vol:'VIII', era:'Edwardian', link:'era-VIII.html', type:'letter',
-    title:'Letter — Thomas Marsh-Hale to the Registrar General',
-    meta:'Thomas Marsh-Hale, journalist · On the matter of the hyphenated name',
-    date:'1912', keywords:'thomas marsh-hale name hyphen registrar 1912 edwardian illegitimate' },
-  { vol:'VIII', era:'Edwardian', link:'era-VIII.html', type:'dispatch',
-    title:'War Correspondence — Thomas Marsh-Hale · France 1917',
-    meta:'Thomas Marsh-Hale, correspondent · Published in the Worcester Herald',
-    date:'1917', keywords:'war correspondence thomas marsh-hale 1917 france worcester herald WWI' },
-  { vol:'VIII', era:'Edwardian', link:'era-VIII.html', type:'letter',
-    title:'Telegram — Thomas Marsh-Hale to James Marsh-Hale',
-    meta:'Thomas Marsh-Hale · Sent from the Western Front',
-    date:'1918', keywords:'telegram thomas marsh-hale western front 1918 armistice safe' },
-  { vol:'VIII', era:'Edwardian', link:'era-VIII.html', type:'diary',
-    title:'Finding Aid — Thomas Marsh-Hale, Hale-Marsh Collection',
-    meta:'Thomas Marsh-Hale, archivist · Compiled 1930–1945',
-    date:'1930–1945', keywords:'finding aid thomas marsh-hale archive collection family papers' },
-
-  // ── ERA IX · WWII ─────────────────────────────────────────────────────────
-  { vol:'IX', era:'WWII', link:'era-IX.html', type:'memo',
-    title:'Civil Service Memorandum — Ministry of Supply, Internal',
-    meta:'E. Marsh-Hale, Structural Assessment Division, Room 4B · Most Secret',
-    date:'14 September 1940', keywords:'ministry supply memorandum edmund marsh-hale 1940 structural blitz most secret' },
-  { vol:'IX', era:'WWII', link:'era-IX.html', type:'letter',
-    title:'Letter — Edmund Marsh-Hale to Dorothy Price',
-    meta:'Edmund Marsh-Hale, engineer · Before their marriage',
-    date:'c.1940', keywords:'edmund marsh-hale letter dorothy price 1940 WWII engineer' },
-  { vol:'IX', era:'WWII', link:'era-IX.html', type:'memo',
-    title:'New Towns Committee Report — Halecroft Development Zone',
-    meta:'E. Marsh-Hale, D. Marsh-Hale · New Towns Act 1946 planning',
-    date:'1948', keywords:'new towns committee halecroft 1948 edmund dorothy marsh-hale development' },
-  { vol:'IX', era:'WWII', link:'era-IX.html', type:'legal',
-    title:'Bridge Specification — Marsh-Hale · Annotated copy',
-    meta:'Edmund Marsh-Hale, engineer · Names added in margin not required by specification',
-    date:'1952', keywords:'bridge specification edmund marsh-hale 1952 names physics load' },
-
-  // ── ERA X · CONTEMPORARY ──────────────────────────────────────────────────
-  { vol:'X', era:'Contemporary', link:'era-X.html', type:'memo',
-    title:'Finding Aid — James Marsh-Hale · MSS. Hale-Marsh Collection',
-    meta:'James Marsh-Hale, Professor · Bodleian Library, Oxford',
-    date:'1984–2024', keywords:'james marsh-hale finding aid bodleian 1984 2024 professor medieval' },
-  { vol:'X', era:'Contemporary', link:'era-X.html', type:'letter',
-    title:'Email — Eleanor Voss to James Marsh-Hale',
-    meta:'Eleanor Voss, Medievalist · Following recovery of Matilda\'s letter',
-    date:'January 2024', keywords:'eleanor voss email james marsh-hale 2024 matilda letter recovery bodleian' },
-  { vol:'X', era:'Contemporary', link:'era-X.html', type:'testimony',
-    title:'Report — Multispectral Imaging, MS Hale-Marsh 1349/B',
-    meta:'Bodleian Library conservation team · Recovery of concealed text',
-    date:'January 2024', keywords:'multispectral imaging bodleian conservation matilda letter 2024 recovered hidden' },
-  { vol:'X', era:'Contemporary', link:'era-X.html', type:'diary',
-    title:'Personal Journal — Eleanor Voss · Extracts 2018–2026',
-    meta:'Eleanor Voss, Medievalist · From the shoebox to the reading room',
-    date:'2018–2026', keywords:'eleanor voss journal diary 2018 2026 shoebox voss hale research bodleian' },
-];
-
-// ── RENDER ────────────────────────────────────────────────────────────────
-const docList = document.getElementById('doc-list');
-const noResults = document.getElementById('no-results');
-const countLabel = document.getElementById('doc-count-label');
-
-const ERA_ORDER = ['Norman','Plague','Tudor','Civil War','Georgian','Regency','Victorian','Edwardian','WWII','Contemporary'];
-const ERA_META = {
-  'Norman':       { vol:'I',    dates:'1066–1100',  label:'Norman',               link:'era-I.html'    },
-  'Plague':       { vol:'II',   dates:'1190–1399',  label:'Plague & Black Death', link:'era-II.html'   },
-  'Tudor':        { vol:'III',  dates:'1500–1557',  label:'Tudor',                link:'era-III.html'  },
-  'Civil War':    { vol:'IV',   dates:'1640–1651',  label:'Civil War',            link:'era-IV.html'   },
-  'Georgian':     { vol:'V',    dates:'1702–1744',  label:'Georgian',             link:'era-V.html'    },
-  'Regency':      { vol:'VI',   dates:'1800–1830',  label:'Regency',              link:'era-VI.html'   },
-  'Victorian':    { vol:'VII',  dates:'1840–1882',  label:'Victorian',            link:'era-VII.html'  },
-  'Edwardian':    { vol:'VIII', dates:'1901–1930',  label:'Edwardian & WWI',      link:'era-VIII.html' },
-  'WWII':         { vol:'IX',   dates:'1939–1952',  label:'Second World War',     link:'era-IX.html'   },
-  'Contemporary': { vol:'X',    dates:'1984–2026',  label:'Contemporary',         link:'era-X.html'    },
-};
-
-function renderDocs(docs) {
-  docList.innerHTML = '';
-  countLabel.textContent = docs.length;
-  noResults.style.display = docs.length === 0 ? 'block' : 'none';
-
-  // Group by era, preserving ERA_ORDER
-  const byEra = {};
-  docs.forEach(function(d) {
-    if (!byEra[d.era]) byEra[d.era] = [];
-    byEra[d.era].push(d);
-  });
-
-  ERA_ORDER.forEach(function(era) {
-    if (!byEra[era] || byEra[era].length === 0) return;
-    const meta = ERA_META[era];
-    const group = document.createElement('div');
-    group.className = 'era-group';
-
-    // Era section header
-    const header = document.createElement('div');
-    header.className = 'era-group-header';
-    header.innerHTML =
-      '<div class="era-group-line"></div>' +
-      '<div class="era-group-seal">' + meta.vol + '</div>' +
-      '<div class="era-group-name">' + meta.label + '</div>' +
-      '<div class="era-group-dates">' + meta.dates + '</div>' +
-      '<div class="era-group-line right"></div>' +
-      '<a class="era-group-vol-link" href="' + meta.link + '">Vol. ' + meta.vol + '&thinsp;→</a>';
-    group.appendChild(header);
-
-    // Documents in this era
-    byEra[era].forEach(function(d) {
-      const a = document.createElement('a');
-      a.className = 'doc-row';
-      a.href = d.link;
-      a.dataset.type = d.type;
-      a.dataset.era  = d.era.toLowerCase();
-      a.innerHTML =
-        '<div class="doc-col-vol">' + d.vol + '</div>' +
-        '<div class="doc-col-main">' +
-          '<div class="doc-col-title">' + d.title + '</div>' +
-          '<div class="doc-col-meta">' + d.meta + '</div>' +
-        '</div>' +
-        '<div class="doc-col-type type-' + d.type + '">' + d.type + '</div>' +
-        '<div class="doc-col-date">' + d.date + '</div>';
-      group.appendChild(a);
-    });
-
-    docList.appendChild(group);
-  });
-}
-
-renderDocs(DOCS);
-
-// ── FILTERING ─────────────────────────────────────────────────────────────
-let activeType = 'all';
-let searchTerm = '';
-
-function applyFilters() {
-  const filtered = DOCS.filter(function(d) {
-    const typeMatch = activeType === 'all' || d.type === activeType;
-    const q = searchTerm.toLowerCase();
-    const textMatch = !q ||
-      d.title.toLowerCase().includes(q) ||
-      d.meta.toLowerCase().includes(q) ||
-      d.date.toLowerCase().includes(q) ||
-      d.keywords.toLowerCase().includes(q) ||
-      d.era.toLowerCase().includes(q) ||
-      ('vol ' + d.vol).toLowerCase().includes(q);
-    return typeMatch && textMatch;
-  });
-  renderDocs(filtered);
-}
-
-document.querySelectorAll('.filter-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    activeType = this.dataset.filter;
-    if (window.hdTrack) {
-      window.hdTrack('documents_filter_change', { filter: activeType });
-    }
-    applyFilters();
-  });
-});
-
-document.getElementById('docSearch').addEventListener('input', function() {
-  searchTerm = this.value.trim();
-  if (window.hdTrack && searchTerm.length >= 3) {
-    window.hdTrack('documents_search', { query_length: searchTerm.length });
-  }
-  applyFilters();
-});
-
-document.getElementById('doc-list').addEventListener('click', function(e) {
-  var link = e.target.closest('a.doc-row');
-  if (!link || !window.hdTrack) return;
-  var title = link.querySelector('.doc-col-title');
-  window.hdTrack('documents_open', {
-    label: title ? title.textContent.trim() : (link.getAttribute('href') || ''),
-    href: link.getAttribute('href') || ''
-  });
-});
-</script>
+<body>
+  <main class="panel">
+    <div class="kicker">Archive Routing Updated</div>
+    <h1>The documents now live in one place.</h1>
+    <p>This index has been folded into the recovered documents archive so the record no longer splits its evidence across two competing pages.</p>
+    <p>You are being forwarded now. If you prefer, choose your route below.</p>
+    <div class="actions">
+      <a class="button primary" href="recovered-documents.html">Open Recovered Documents</a>
+      <a class="button" href="timeline.html">Trace The Timeline</a>
+      <a class="button" href="The_Hale_Dynasty_Revised.pdf" target="_blank" rel="noopener noreferrer">Open The Revised Book</a>
+    </div>
+  </main>
 </body>
 </html>

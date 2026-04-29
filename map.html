@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Hale Lands · Map · The Hale Dynasty Archive</title>
+  <title>The Lands — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -80,10 +80,43 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       padding: 10px 24px;
       border-bottom: 1px solid rgba(94,66,38,0.14);
       background: rgba(9,8,6,0.82);
       backdrop-filter: blur(6px);
+    }
+    .map-nav-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+      min-width: 0;
+    }
+    .map-nav-brand strong {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82em;
+      letter-spacing: 0.16em;
+      color: var(--paper);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .map-nav-brand span,
+    .map-nav-current {
+      color: rgba(202,163,95,0.52);
+      font-family: 'Courier New', monospace;
+      font-size: 0.62em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .map-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.95rem;
+      min-width: 0;
+      flex: 1 1 28rem;
     }
     .map-nav a {
       font-family: 'Cinzel', serif;
@@ -94,15 +127,6 @@
       transition: color 0.2s;
     }
     .map-nav a:hover { color: var(--oxblood); }
-    .map-nav-title {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75em;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      color: #efe6d8;
-      text-transform: uppercase;
-    }
-
     /* ── ERA STRIP ── */
     .era-strip-wrap {
       padding: 8px 16px 0;
@@ -394,9 +418,10 @@
 
     /* ── MOBILE (≤ 700px) ── */
     @media (max-width: 700px) {
-      .map-nav-title { display: none; }
       .map-nav { padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px; }
       .map-nav a { font-size: 0.6em; }
+      .map-nav-current { display: none; }
+      .map-nav-links { justify-content: flex-start; flex: 1 1 100%; }
       .map-guide { grid-template-columns: 1fr; gap: 8px; padding: 8px 14px 12px; }
 
       /* Detail panel becomes bottom sheet */
@@ -434,7 +459,9 @@
   
 
     @media (max-width: 420px) {
-      .map-nav { justify-content: space-between; gap: 0.75rem; }
+      .map-nav { justify-content: center; gap: 0.75rem; }
+      .map-nav-brand { width: 100%; align-items: center; }
+      .map-nav-links { justify-content: center; }
       .map-nav a { font-size: 0.56em; }
       .era-strip-wrap { padding-left: 12px; padding-right: 12px; }
       .era-btn { font-size: 0.5em; padding: 4px 8px; }
@@ -455,9 +482,19 @@
 <!-- TOP OVERLAY -->
 <div class="map-topbar">
   <nav class="map-nav">
-    <a href="index.html">&#8592; Archive Home</a>
-    <span class="map-nav-title">The Hale Lands</span>
-    <a href="family-tree.html">Family Tree &#8594;</a>
+    <div class="map-nav-brand">
+      <strong>The Hale Dynasty</strong>
+      <span>MSS. Hale-Marsh · Land Record</span>
+    </div>
+    <div class="map-nav-links">
+      <a href="index.html">Home</a>
+      <a href="family-tree.html">The Bloodline</a>
+      <a href="timeline.html">Ten Volumes</a>
+      <a href="persons.html">Figures</a>
+      <a href="recovered-documents.html">Documents</a>
+      <a href="eleanor.html">Consult Eleanor</a>
+    </div>
+    <div class="map-nav-current">The Lands</div>
   </nav>
   <div class="era-strip-wrap">
     <div class="era-strip" id="eraStrip">
@@ -506,10 +543,10 @@
     </div>
     <div class="detail-next">
       <span class="detail-next-kicker">Where next</span>
-      <div class="detail-next-copy">Once a place has clicked, the next best step is usually to trace the people tied to it or return to the volume where that place acquires meaning.</div>
+      <div class="detail-next-copy">Once a place has clicked, the next best step is usually to trace the bloodline tied to it or return to the volume where that place acquires meaning.</div>
       <div class="detail-next-links">
-        <a class="detail-next-link" href="family-tree.html">Family Tree</a>
-        <a class="detail-next-link" href="timeline.html">Timeline</a>
+        <a class="detail-next-link" href="family-tree.html">The Bloodline</a>
+        <a class="detail-next-link" href="timeline.html">Ten Volumes</a>
         <a class="detail-next-link" href="era-I.html">Vol. I</a>
       </div>
     </div>

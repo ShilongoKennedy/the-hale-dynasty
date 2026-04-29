@@ -624,6 +624,20 @@
     });
     closeBtn.addEventListener('click', closePanel);
 
+    window.hdInquiryDesk = {
+      open: openPanel,
+      close: closePanel,
+      toggle: function () { if (isOpen) closePanel(); else openPanel(); },
+      submit: submitQuestion,
+      isOpen: function () { return isOpen; },
+      elements: {
+        fab: fab,
+        panel: panel,
+        input: input,
+        convo: convo
+      }
+    };
+
     /* ── Error handler ─────────────────── */
     function handleError(type) {
       setBusy(false);
@@ -704,12 +718,13 @@
 
     /* ── Close on outside click ────────── */
     document.addEventListener('click', function (e) {
+      if (document.body.classList.contains('eleanor-room')) return;
       if (isOpen && !panel.contains(e.target) && e.target !== fab) closePanel();
     });
 
     /* ── First-visit nudge — shows once, 20s after page load ── */
     var NUDGE_KEY = 'hd_eleanor_nudge_seen';
-    if (!localStorage.getItem(NUDGE_KEY)) {
+    if (!localStorage.getItem(NUDGE_KEY) && !document.body.classList.contains('eleanor-room')) {
       setTimeout(function () {
         if (isOpen) return; // already open, skip
         var nudge = document.createElement('div');

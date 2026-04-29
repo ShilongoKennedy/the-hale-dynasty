@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>The Hale Dynasty — Hall of Inheritance</title>
+  <title>The Bloodline — The Hale Dynasty</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -140,23 +140,50 @@
       pointer-events: none;
     }
 
+    .archive-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      min-width: 0;
+    }
+
     .logo {
       font-family: "Playfair Display", serif;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       letter-spacing: 0.34em;
       text-transform: uppercase;
       color: var(--gold);
       white-space: nowrap;
     }
 
-    .nav {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
+    .archive-subline {
+      font-family: "Courier New", monospace;
+      font-size: 0.54rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      white-space: nowrap;
     }
 
-    .nav a,
-    .nav button {
+    .top-bar-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.48rem;
+      min-width: 0;
+    }
+
+    .archive-links,
+    .nav-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .archive-links a,
+    .nav-controls button {
       background: none;
       border: 0;
       color: rgba(255,255,255,0.62);
@@ -169,8 +196,8 @@
       transition: color 180ms ease;
     }
 
-    .nav a:hover,
-    .nav button:hover {
+    .archive-links a:hover,
+    .nav-controls button:hover {
       color: var(--gold);
     }
 
@@ -933,22 +960,36 @@
         align-items: flex-start;
       }
 
+      .archive-brand {
+        gap: 0.2rem;
+      }
+
       .logo {
         font-size: 0.62rem;
         letter-spacing: 0.22em;
-        max-width: 9rem;
+        max-width: 12rem;
         line-height: 1.4;
       }
 
-      .nav {
-        gap: 0.55rem;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        max-width: 11rem;
+      .archive-subline {
+        font-size: 0.48rem;
+        letter-spacing: 0.18em;
       }
 
-      .nav a,
-      .nav button {
+      .top-bar-stack {
+        gap: 0.32rem;
+        align-items: flex-end;
+      }
+
+      .archive-links,
+      .nav-controls {
+        gap: 0.55rem;
+        justify-content: flex-end;
+        max-width: 14rem;
+      }
+
+      .archive-links a,
+      .nav-controls button {
         font-size: 0.56rem;
       }
 
@@ -1046,7 +1087,12 @@
         grid-template-columns: 1fr;
       }
 
-      .nav {
+      .top-bar-stack {
+        align-items: flex-start;
+      }
+
+      .archive-links,
+      .nav-controls {
         max-width: none;
         justify-content: flex-start;
       }
@@ -1082,19 +1128,30 @@
 
   <div class="ui">
     <div class="top-bar">
-      <div class="logo">HALE · CELESTIAL ARCHIVE</div>
-      <div class="nav">
-        <a href="index.html">Archive Home</a>
-        <a href="timeline.html">Timeline</a>
-        <button id="reset-view" type="button">Reset</button>
-        <button id="toggle-orbits" type="button">Orbits</button>
-        <button id="connect-mode" class="connect-toggle" type="button">Connect</button>
+      <div class="archive-brand">
+        <div class="logo">The Hale Dynasty</div>
+        <div class="archive-subline">The Bloodline · 1066–2026</div>
+      </div>
+      <div class="top-bar-stack">
+        <div class="archive-links">
+          <a href="index.html">Home</a>
+          <a href="timeline.html">Ten Volumes</a>
+          <a href="persons.html">Figures</a>
+          <a href="map.html">Lands</a>
+          <a href="recovered-documents.html">Documents</a>
+          <a href="eleanor.html">Consult Eleanor</a>
+        </div>
+        <div class="nav-controls">
+          <button id="reset-view" type="button">Reset</button>
+          <button id="toggle-orbits" type="button">Orbits</button>
+          <button id="connect-mode" class="connect-toggle" type="button">Connect</button>
+        </div>
       </div>
     </div>
 
     <div class="hero-overlay">
-      <div class="hero-kicker">Hall Of Inheritance</div>
-      <div class="hero-title">The Hale <span>Dynasty</span> read as an <em>orbit</em> of inheritance.</div>
+      <div class="hero-kicker">The Bloodline</div>
+      <div class="hero-title">The Hale <span>Dynasty</span> arranged as an <em>orbit</em> of inheritance.</div>
       <div class="hero-sub">Not a chart. Not a census. A thousand years of founders, keepers, departures, and return arranged as one moving celestial record.</div>
       <div class="hero-meta">1066 — 2026 · drag to orbit · click stars for stories</div>
     </div>
