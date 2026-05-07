@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Figures of the Archive — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,22 +83,26 @@
     .page-header {
       text-align: center;
       padding: 56px 24px 40px;
-      border-bottom: 1px solid rgba(94,66,38,0.1);
+      border-bottom: 1px solid rgba(202,163,95,0.1);
+      background:
+        linear-gradient(180deg, rgba(11,9,7,0.66), rgba(11,9,7,0.38)),
+        radial-gradient(circle at center top, rgba(202,163,95,0.08), transparent 54%);
     }
     .page-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.8em, 4vw, 3em);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5em, 4vw, 4em);
       color: #efe6d8;
-      letter-spacing: 0.1em;
-      text-shadow: none;
+      letter-spacing: 0.03em;
+      line-height: 0.94;
       margin-bottom: 12px;
     }
     .page-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       color: rgba(239,230,216,0.72);
-      font-size: 0.92em;
-      letter-spacing: 0.04em;
-      max-width: 520px;
+      font-size: 1.04em;
+      letter-spacing: 0.01em;
+      max-width: 640px;
       margin: 0 auto 20px;
       line-height: 1.8;
     }
@@ -108,7 +112,7 @@
       border: 1px solid rgba(202,163,95,0.16);
       padding: 10px 22px;
       font-family: 'Courier New', monospace;
-      font-size: 0.65em;
+      font-size: 0.62em;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(202,163,95,0.72);
@@ -225,8 +229,8 @@
     .persons-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 2px;
-      padding: 24px;
+      gap: 12px;
+      padding: 28px 24px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -237,22 +241,22 @@
       background:
         linear-gradient(180deg, rgba(13,11,8,0.96), rgba(9,8,6,0.9)),
         repeating-linear-gradient(180deg, transparent 0, transparent 30px, rgba(255,255,255,0.025) 30px, rgba(255,255,255,0.025) 31px);
-      border: 1px solid rgba(94,66,38,0.14);
+      border: 1px solid rgba(202,163,95,0.14);
       overflow: hidden;
       transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
       aspect-ratio: 3/4;
       box-shadow: var(--shadow);
     }
     .person-card:hover {
-      border-color: rgba(123,52,40,0.28);
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(26, 16, 8, 0.22);
+      border-color: rgba(202,163,95,0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.34);
       z-index: 2;
     }
     .person-card.hidden { display: none; }
 
     .person-portrait {
-      width: 100%; height: 70%;
+      width: 100%; height: 72%;
       object-fit: cover;
       object-position: center top;
       display: block;
@@ -269,9 +273,9 @@
     .person-portrait-placeholder svg { opacity: 0.08; }
 
     .person-info {
-      padding: 12px 14px 14px;
+      padding: 14px 16px 16px;
       background: linear-gradient(180deg, rgba(17,14,11,0.74) 0%, rgba(11,10,8,0.92) 100%);
-      height: 30%;
+      height: 28%;
       display: flex; flex-direction: column; justify-content: center;
     }
     .person-branch-dot {
@@ -281,18 +285,18 @@
       margin-bottom: 6px;
     }
     .person-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.78em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.08em;
       color: #efe6d8;
-      letter-spacing: 0.03em;
-      line-height: 1.3;
-      margin-bottom: 3px;
+      letter-spacing: 0.01em;
+      line-height: 1.12;
+      margin-bottom: 5px;
     }
     .person-dates {
       font-family: 'Courier New', monospace;
-      font-size: 0.55em;
+      font-size: 0.56em;
       color: rgba(202,163,95,0.6);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
     }
 
     .person-ask-btn {
@@ -323,9 +327,9 @@
     .person-era-link {
       position: absolute;
       top: 10px; right: 10px;
-      background: rgba(245,236,221,0.9);
-      border: 1px solid rgba(202,163,95,0.16);
-      color: rgba(94,66,38,0.62);
+      background: rgba(12,10,8,0.88);
+      border: 1px solid rgba(202,163,95,0.18);
+      color: rgba(202,163,95,0.78);
       font-family: 'Courier New', monospace;
       font-size: 0.52em;
       letter-spacing: 0.1em;
@@ -339,8 +343,8 @@
     /* INQUIRY OVERLAY ─────── */
     #inquiry-overlay {
       position: fixed; inset: 0;
-      background: rgba(4,3,2,0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(4,3,2,0.78);
+      backdrop-filter: blur(8px);
       z-index: 800;
       display: none;
       align-items: center;
@@ -349,33 +353,33 @@
     }
     #inquiry-overlay.open { display: flex; }
     #inquiry-box {
-      background: linear-gradient(180deg, rgba(245,236,221,0.98), rgba(229,215,190,0.98));
-      border: 1px solid rgba(202,163,95,0.16);
+      background: linear-gradient(180deg, rgba(12,10,8,0.98), rgba(8,7,6,0.96));
+      border: 1px solid rgba(202,163,95,0.18);
       width: 100%;
       max-width: 560px;
       max-height: 80vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.82);
     }
     #iq-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 20px;
-      border-bottom: 1px solid rgba(82,57,33,0.08);
+      border-bottom: 1px solid rgba(202,163,95,0.12);
     }
     #iq-person-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.9em; color: #4a3320;
-      letter-spacing: 0.06em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4em; color: #f1e8dc;
+      letter-spacing: 0.02em;
     }
     #iq-close {
       background: none; border: none;
-      color: rgba(82,57,33,0.36);
+      color: rgba(202,163,95,0.42);
       font-size: 1.1em; cursor: pointer;
       font-family: 'Courier New', monospace;
       transition: color 0.2s;
     }
-    #iq-close:hover { color: #6f2f24; }
+    #iq-close:hover { color: var(--oxblood); }
     #iq-messages {
       flex: 1; overflow-y: auto;
       padding: 20px;
@@ -391,17 +395,17 @@
     }
     .iq-msg.user {
       align-self: flex-end;
-      background: rgba(111,47,36,0.05);
-      border: 1px solid rgba(82,57,33,0.12);
+      background: rgba(202,163,95,0.08);
+      border: 1px solid rgba(202,163,95,0.12);
       padding: 10px 14px;
-      color: rgba(82,57,33,0.72);
+      color: rgba(239,230,216,0.82);
       font-family: 'Courier New', monospace;
       font-size: 0.78em;
       letter-spacing: 0.04em;
     }
     .iq-msg.eleanor {
       align-self: flex-start;
-      color: rgba(55,38,22,0.78);
+      color: rgba(239,230,216,0.78);
     }
     .iq-msg.eleanor::before {
       content: 'Eleanor —';
@@ -410,37 +414,37 @@
       font-size: 0.62em;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(111,47,36,0.38);
+      color: rgba(202,163,95,0.48);
       margin-bottom: 6px;
     }
     .iq-thinking {
-      color: rgba(82,57,33,0.34);
+      color: rgba(202,163,95,0.44);
       font-style: italic;
       font-size: 0.8em;
     }
     #iq-input-row {
       display: flex; gap: 0;
-      border-top: 1px solid rgba(82,57,33,0.08);
+      border-top: 1px solid rgba(202,163,95,0.12);
     }
     #iq-input {
       flex: 1;
-      background: rgba(12,10,8,0.24);
+      background: rgba(15,12,9,0.72);
       border: none;
       outline: none;
       color: rgba(239,230,216,0.78);
-      font-family: Georgia, serif;
+      font-family: 'Inter', Georgia, serif;
       font-size: 0.84em;
       padding: 14px 16px;
       resize: none;
       height: 52px;
       line-height: 1.5;
     }
-    #iq-input::placeholder { color: rgba(82,57,33,0.34); }
+    #iq-input::placeholder { color: rgba(202,163,95,0.34); }
     #iq-send {
-      background: rgba(12,10,8,0.24);
+      background: rgba(15,12,9,0.72);
       border: none;
-      border-left: 1px solid rgba(82,57,33,0.08);
-      color: rgba(82,57,33,0.46);
+      border-left: 1px solid rgba(202,163,95,0.12);
+      color: rgba(202,163,95,0.62);
       padding: 0 18px;
       cursor: pointer;
       font-family: 'Courier New', monospace;
@@ -449,45 +453,55 @@
       text-transform: uppercase;
       transition: color 0.2s, background 0.2s;
     }
-    #iq-send:hover { color: #6f2f24; background: rgba(111,47,36,0.05); }
+    #iq-send:hover { color: var(--oxblood); background: rgba(202,163,95,0.08); }
 
     .home-float {
       position: fixed; bottom: 28px; right: 28px; z-index: 400;
       width: 44px; height: 44px;
-      background: rgba(244,236,220,0.9);
-      border: 1px solid rgba(82,57,33,0.18);
+      background: rgba(12,10,8,0.92);
+      border: 1px solid rgba(202,163,95,0.22);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
       transition: all 0.22s;
     }
-    .home-float:hover { border-color: rgba(111,47,36,0.34); transform: scale(1.1); }
+    .home-float:hover { border-color: rgba(202,163,95,0.4); transform: scale(1.1); }
     .home-float svg { width: 20px; height: 20px; }
 
     .section-heading {
       font-family: 'Courier New', monospace;
       font-size: 0.6em; letter-spacing: 0.25em; text-transform: uppercase;
-      color: rgba(82,57,33,0.34);
+      color: rgba(202,163,95,0.38);
       text-align: center;
       padding: 28px 0 4px;
     }
     .section-divider {
       width: 60px; height: 1px;
-      background: rgba(82,57,33,0.08);
+      background: rgba(202,163,95,0.12);
       margin: 8px auto 0;
     }
 
     @media (max-width: 600px) {
-      .persons-grid { grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 2px; }
+      .persons-grid { grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 10px; }
       #inquiry-overlay { padding: 12px; align-items: flex-end; }
       #inquiry-box { width: 100%; max-width: none; max-height: min(78vh, 680px); border-radius: 18px 18px 0 0; margin-bottom: 0; }
       #iq-messages { max-height: 46vh; }
       #iq-input-row { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
       .home-float { right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); }
 
-      .top-nav { font-size: 0.6em; padding: 8px 14px; }
+      .top-nav { font-size: 0.6em; padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px; }
       .top-nav-current { display: none; }
-      .top-nav-links { justify-content: flex-start; flex: 1 1 100%; }
+      .top-nav-links {
+        justify-content: flex-start;
+        flex: 1 1 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.2rem;
+        scrollbar-width: none;
+      }
+      .top-nav-links::-webkit-scrollbar { display: none; }
+      .top-nav-links a,
+      .top-nav-links button { flex: 0 0 auto; }
       .filter-bar { padding: 16px 12px 0; gap: 4px; }
       .filter-btn { font-size: 0.55em; padding: 4px 9px; }
       .page-header { padding: 30px 20px 20px; }
@@ -501,10 +515,10 @@
   
 
     @media (max-width: 420px) {
-      .top-nav { justify-content: center; gap: 8px 14px; padding-top: calc(env(safe-area-inset-top, 0px) + 8px); }
-      .top-nav-brand { width: 100%; align-items: center; }
-      .top-nav-links { justify-content: center; }
-      .page-title { font-size: clamp(1.5em, 8vw, 2.2em); }
+      .top-nav { justify-content: flex-start; gap: 8px 14px; }
+      .top-nav-brand { width: 100%; align-items: flex-start; }
+      .top-nav-links { justify-content: flex-start; }
+      .page-title { font-size: 2.1em; }
       .page-subtitle { font-size: 0.86em; }
       .persons-next-links { flex-direction: column; }
       .persons-next-link { text-align: center; }
@@ -525,7 +539,7 @@
     <a href="index.html">Home</a>
     <a href="family-tree.html">The Bloodline</a>
     <a href="timeline.html">Ten Volumes</a>
-    <a href="map.html">The Lands</a>
+    <a href="map.html">The Atlas</a>
     <a href="recovered-documents.html">Documents</a>
     <button id="top-consult-eleanor" type="button">Consult Eleanor</button>
   </div>
@@ -534,8 +548,8 @@
 
 <header class="page-header">
   <h1 class="page-title">Figures of the Archive</h1>
-  <p class="page-subtitle">Select any figure from the dynasty to consult Eleanor — keeper of the record — about their life, significance, and place in nine centuries of the Hale line.</p>
-  <div class="eleanor-intro">✦ &nbsp; Consult Eleanor on any figure in the record &nbsp; ✦</div>
+  <p class="page-subtitle">Move through the line by figure rather than by century. Open any face in the archive and let Eleanor tell you why that life still holds.</p>
+  <div class="eleanor-intro">Figures, branches, and returning names</div>
 </header>
 
 <div class="filter-bar">
@@ -549,15 +563,15 @@
   <div class="persons-guide-inner">
     <div class="persons-guide-card">
       <span class="persons-guide-kicker">Use this page for</span>
-      <span class="persons-guide-copy">Finding a person fast, checking which branch they belong to, and opening Eleanor’s desk when you want the archive to explain why they matter.</span>
+      <span class="persons-guide-copy">Finding a figure quickly, seeing which branch they belong to, and opening Eleanor’s desk when you want the archive to say why that life matters.</span>
     </div>
     <div class="persons-guide-card">
       <span class="persons-guide-kicker">Best after</span>
-      <span class="persons-guide-copy">Vol. I, Vol. II, or the family tree, once the first names in the line have started to repeat and you want a clearer sense of who is who.</span>
+      <span class="persons-guide-copy">The bloodline or the first volumes, once names begin to recur and you want the line to separate into distinct lives again.</span>
     </div>
     <div class="persons-guide-card">
       <span class="persons-guide-kicker">Best first names</span>
-      <span class="persons-guide-copy">Start with Ranulf, Thomas Hale, Augusta Hale, or Eleanor Voss. They give you the clearest shape of the line at four very different moments.</span>
+      <span class="persons-guide-copy">Begin with Ranulf, Thomas Hale, Augusta Hale, or Eleanor Voss. Together they show conquest, survival, custody, and return.</span>
     </div>
   </div>
 </section>
@@ -567,8 +581,8 @@
 <section class="persons-next-wrap" aria-label="Where next">
   <div class="persons-next">
     <span class="persons-next-kicker">Where next</span>
-    <div class="persons-next-title">Use the people index, then return to the line itself</div>
-    <p class="persons-next-copy">Once you have found a person here, the strongest next move is usually to place them back into sequence: in the bloodline, across the ten volumes, or inside the first books that actually give them voice.</p>
+    <div class="persons-next-title">Find the face, then return it to the line</div>
+    <p class="persons-next-copy">Once a figure has resolved here, the best next move is usually to set that life back into sequence: in the bloodline, across the ten volumes, or inside the first era that truly gives it voice.</p>
     <div class="persons-next-links">
       <a class="persons-next-link" href="family-tree.html">Open The Bloodline</a>
       <a class="persons-next-link" href="timeline.html">Open Ten Volumes</a>

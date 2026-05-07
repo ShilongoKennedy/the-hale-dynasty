@@ -51,7 +51,7 @@
       position: relative;
       z-index: 1;
       min-height: 100vh;
-      padding: 24px 28px 36px;
+      padding: 18px 28px 40px;
     }
 
     .room-topbar {
@@ -61,8 +61,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      padding: 0 0 18px;
-      border-bottom: 1px solid rgba(202,163,95,0.14);
+      padding: 0 0 14px;
+      border-bottom: 1px solid rgba(202,163,95,0.08);
+      opacity: 0.84;
     }
 
     .room-brand {
@@ -101,11 +102,11 @@
 
     .room-nav a {
       font-family: 'Courier New', monospace;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       text-decoration: none;
-      color: rgba(242,232,216,0.72);
+      color: rgba(242,232,216,0.56);
       transition: color 180ms ease;
     }
 
@@ -114,10 +115,10 @@
     .reading-room {
       width: min(1280px, 100%);
       margin: 0 auto;
-      padding: 34px 0 0;
+      padding: 28px 0 0;
       display: grid;
-      grid-template-columns: minmax(280px, 0.72fr) minmax(420px, 1.28fr);
-      gap: 2rem;
+      grid-template-columns: minmax(240px, 0.58fr) minmax(520px, 1.42fr);
+      gap: 2.6rem;
       align-items: center;
     }
 
@@ -136,9 +137,7 @@
     }
 
     .threshold-kicker,
-    .desk-kicker,
-    .desk-status,
-    .room-card-kicker {
+    .desk-kicker {
       position: relative;
       font-family: 'Courier New', monospace;
       letter-spacing: 0.22em;
@@ -166,7 +165,7 @@
       color: rgba(242,232,216,0.84);
       font-size: 1rem;
       line-height: 1.72;
-      max-width: 27rem;
+      max-width: 21rem;
     }
 
     .threshold-actions {
@@ -174,7 +173,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.8rem;
-      margin-top: 1.4rem;
+      margin-top: 1.15rem;
     }
 
     .room-button {
@@ -211,31 +210,20 @@
       box-shadow: 0 22px 46px rgba(202,163,95,0.32);
     }
 
-    .room-button-secondary {
-      background: rgba(10,8,6,0.52);
-      color: rgba(242,232,216,0.86);
-    }
-
-    .room-button-secondary:hover,
-    .room-button-secondary:focus-visible {
-      border-color: rgba(242,232,216,0.4);
-      color: var(--gold);
-    }
-
     .desk-world {
       position: relative;
-      min-height: 760px;
-      border-radius: 44px;
+      min-height: 820px;
+      border-radius: 48px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 50% 44%, rgba(202,163,95,0.18), transparent 16%),
-        radial-gradient(circle at 50% 44%, rgba(88,102,132,0.12), transparent 30%),
-        linear-gradient(180deg, rgba(9,7,5,0.32), rgba(9,7,5,0.82));
-      border: 1px solid rgba(202,163,95,0.08);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 34px 82px rgba(0,0,0,0.34);
+        radial-gradient(circle at 50% 47%, rgba(202,163,95,0.15), transparent 14%),
+        radial-gradient(circle at 50% 47%, rgba(84,108,156,0.12), transparent 28%),
+        radial-gradient(circle at 50% 47%, rgba(0,0,0,0.96) 0, rgba(0,0,0,0.76) 44%, rgba(9,7,5,0.3) 78%, rgba(9,7,5,0.84) 100%);
+      border: 1px solid rgba(202,163,95,0.06);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.015), 0 38px 96px rgba(0,0,0,0.42);
       display: grid;
       grid-template-rows: auto 1fr;
-      padding: 1rem;
+      padding: 0.9rem;
     }
 
     .desk-world::before {
@@ -243,16 +231,14 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0, rgba(0,0,0,0) 34%, rgba(0,0,0,0.4) 100%),
-        repeating-linear-gradient(90deg, transparent 0, transparent 86px, rgba(255,255,255,0.018) 87px),
-        repeating-linear-gradient(180deg, transparent 0, transparent 86px, rgba(255,255,255,0.014) 87px);
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0, rgba(0,0,0,0.08) 34%, rgba(0,0,0,0.6) 100%),
+        repeating-linear-gradient(90deg, transparent 0, transparent 108px, rgba(255,255,255,0.012) 109px),
+        repeating-linear-gradient(180deg, transparent 0, transparent 108px, rgba(255,255,255,0.01) 109px);
       pointer-events: none;
-      opacity: 0.9;
+      opacity: 0.68;
     }
 
-    .desk-head,
-    .desk-footer,
-    .room-card {
+    .desk-head {
       position: relative;
       z-index: 2;
     }
@@ -262,7 +248,7 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      padding: 0.3rem 0.25rem 0;
+      padding: 0.15rem 0.25rem 0;
       text-align: center;
     }
 
@@ -274,17 +260,9 @@
 
     .desk-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.46rem;
+      font-size: 1.18rem;
       line-height: 0.95;
       margin-bottom: 0;
-    }
-
-    .desk-status {
-      color: rgba(202,163,95,0.64);
-      font-size: 0.58rem;
-      white-space: nowrap;
-      margin-top: 0.18rem;
-      display: none;
     }
 
     .desk-core {
@@ -292,20 +270,20 @@
       z-index: 1;
       display: grid;
       place-items: center;
-      min-height: 560px;
-      padding: 0.2rem 0 1.1rem;
+      min-height: 650px;
+      padding: 0 0 1rem;
     }
 
     .desk-vortex {
       position: relative;
-      width: min(560px, 88%);
+      width: min(620px, 92%);
       aspect-ratio: 1;
       border-radius: 50%;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(3,3,3,0.98) 18%, rgba(20,18,16,0.9) 34%, rgba(202,163,95,0.18) 46%, rgba(88,102,132,0.18) 54%, rgba(9,8,6,0.02) 74%),
-        conic-gradient(from 0deg, rgba(202,163,95,0), rgba(202,163,95,0.22), rgba(130,150,190,0.18), rgba(202,163,95,0), rgba(202,163,95,0.14), rgba(0,0,0,0));
-      box-shadow: inset 0 0 96px rgba(0,0,0,0.9), 0 0 140px rgba(202,163,95,0.12);
-      animation: eleanorVortexSpin 16s linear infinite;
+        radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(0,0,0,0.99) 15%, rgba(5,5,8,0.96) 26%, rgba(10,10,12,0.88) 34%, rgba(24,20,15,0.64) 42%, rgba(202,163,95,0.18) 48%, rgba(75,101,157,0.18) 56%, rgba(13,11,9,0.04) 76%),
+        conic-gradient(from 0deg, rgba(202,163,95,0), rgba(202,163,95,0.2), rgba(110,135,190,0.22), rgba(202,163,95,0), rgba(0,0,0,0.2), rgba(202,163,95,0));
+      box-shadow: inset 0 0 120px rgba(0,0,0,0.96), 0 0 160px rgba(202,163,95,0.08), 0 0 220px rgba(64,83,128,0.08);
+      animation: eleanorVortexSpin 18s linear infinite;
     }
 
     .desk-vortex::before,
@@ -316,15 +294,15 @@
     }
 
     .desk-vortex::before {
-      inset: 12%;
-      background: radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(0,0,0,0.95) 58%, rgba(0,0,0,0) 100%);
-      box-shadow: 0 0 34px rgba(0,0,0,0.96);
+      inset: 11%;
+      background: radial-gradient(circle at center, rgba(0,0,0,1) 0, rgba(0,0,0,0.98) 46%, rgba(0,0,0,0.8) 58%, rgba(0,0,0,0) 100%);
+      box-shadow: 0 0 48px rgba(0,0,0,0.98), inset 0 0 60px rgba(0,0,0,0.95);
     }
 
     .desk-vortex::after {
-      inset: 3.5%;
-      border: 1px solid rgba(202,163,95,0.16);
-      animation: eleanorVortexSpinReverse 9s linear infinite;
+      inset: 4.5%;
+      border: 1px solid rgba(202,163,95,0.12);
+      animation: eleanorVortexSpinReverse 11s linear infinite;
     }
 
     .desk-rings,
@@ -337,20 +315,20 @@
     }
 
     .desk-rings {
-      inset: 6%;
-      animation: eleanorOrbitSpin 34s linear infinite;
+      inset: 7%;
+      animation: eleanorOrbitSpin 38s linear infinite;
     }
 
     .desk-rings::before {
-      inset: 12%;
-      border-color: rgba(242,232,216,0.08);
-      animation: eleanorOrbitSpinReverse 24s linear infinite;
+      inset: 16%;
+      border-color: rgba(242,232,216,0.06);
+      animation: eleanorOrbitSpinReverse 28s linear infinite;
     }
 
     .desk-rings::after {
-      inset: 24%;
-      border-color: rgba(202,163,95,0.22);
-      animation: eleanorOrbitSpin 20s linear infinite;
+      inset: 28%;
+      border-color: rgba(202,163,95,0.18);
+      animation: eleanorOrbitSpin 24s linear infinite;
     }
 
     .desk-stars {
@@ -362,8 +340,22 @@
         radial-gradient(circle at 82% 66%, rgba(161,183,215,0.48) 0 1px, transparent 2px),
         radial-gradient(circle at 36% 76%, rgba(202,163,95,0.58) 0 1px, transparent 2px),
         radial-gradient(circle at 54% 46%, rgba(255,244,221,0.5) 0 0.9px, transparent 2px);
-      opacity: 0.76;
-      animation: eleanorStarsDrift 16s ease-in-out infinite;
+      opacity: 0.62;
+      animation: eleanorStarsDrift 19s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .desk-core::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(520px, 74%);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(248, 234, 205, 0.04), rgba(202,163,95,0.06) 26%, rgba(63,79,122,0.08) 42%, rgba(0,0,0,0) 66%);
+      filter: blur(18px);
       pointer-events: none;
     }
 
@@ -371,13 +363,13 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 236px;
-      height: 236px;
-      transform: translate(-50%, -52%);
+      width: 252px;
+      height: 252px;
+      transform: translate(-50%, -53%);
       border-radius: 50%;
       padding: 10px;
       background: radial-gradient(circle at center, rgba(202,163,95,0.18), rgba(202,163,95,0.03) 68%, transparent 100%);
-      box-shadow: 0 26px 48px rgba(0,0,0,0.34);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.42);
       transition: transform 220ms ease, box-shadow 220ms ease;
     }
 
@@ -397,31 +389,32 @@
       object-position: center 18%;
       border-radius: 50%;
       border: 2px solid rgba(202,163,95,0.46);
-      box-shadow: 0 18px 38px rgba(0,0,0,0.34);
-      filter: sepia(0.14) saturate(0.96) contrast(1.04);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.42);
+      filter: sepia(0.14) saturate(0.96) contrast(1.04) brightness(0.94);
     }
 
     .desk-enter {
       position: absolute;
       left: 50%;
-      bottom: 7%;
+      bottom: 8%;
       transform: translateX(-50%);
-      width: min(320px, 76%);
-      padding: 0.95rem 1.1rem;
+      width: min(300px, 72%);
+      padding: 0.9rem 1rem;
       border-radius: 999px;
       border: 1px solid rgba(202,163,95,0.28);
-      background: linear-gradient(180deg, rgba(10,8,6,0.94), rgba(10,8,6,0.82));
+      background: linear-gradient(180deg, rgba(7,5,4,0.96), rgba(7,5,4,0.84));
       color: var(--paper);
       text-decoration: none;
-      box-shadow: 0 18px 34px rgba(0,0,0,0.24);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 18px 34px rgba(0,0,0,0.3);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
     }
 
     .desk-enter:hover,
     .desk-enter:focus-visible {
       transform: translateX(-50%) translateY(-3px);
       border-color: rgba(242,232,216,0.52);
-      box-shadow: 0 22px 40px rgba(0,0,0,0.32), 0 0 36px rgba(202,163,95,0.12);
+      box-shadow: 0 22px 40px rgba(0,0,0,0.38), 0 0 42px rgba(202,163,95,0.08), 0 0 52px rgba(74,97,150,0.1);
+      background: linear-gradient(180deg, rgba(9,7,5,0.98), rgba(9,7,5,0.88));
       outline: none;
     }
 
@@ -455,11 +448,13 @@
       bottom: auto !important;
       right: auto !important;
       width: 100% !important;
-      height: min(76vh, 760px) !important;
-      border-radius: 30px !important;
-      border: 1px solid rgba(202,163,95,0.24) !important;
-      background: rgba(7,5,3,0.96) !important;
-      box-shadow: 0 22px 56px rgba(0,0,0,0.4) !important;
+      height: min(78vh, 820px) !important;
+      border-radius: 34px !important;
+      border: 1px solid rgba(202,163,95,0.12) !important;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(202,163,95,0.07), transparent 28%),
+        linear-gradient(180deg, rgba(5,4,3,0.98), rgba(5,4,3,0.94)) !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.015), 0 28px 72px rgba(0,0,0,0.48) !important;
       transition: none !important;
       overflow: hidden;
     }
@@ -469,30 +464,57 @@
     }
 
     body.eleanor-room #hd-inq-head {
-      padding: 16px 18px 14px !important;
-      background: linear-gradient(180deg, rgba(202,163,95,0.05), rgba(0,0,0,0)) !important;
+      padding: 18px 22px 16px !important;
+      background:
+        linear-gradient(180deg, rgba(202,163,95,0.04), rgba(0,0,0,0)),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px) !important;
+      background-size: auto, 120px 100% !important;
+      border-bottom: 1px solid rgba(202,163,95,0.08) !important;
     }
 
     body.eleanor-room #hd-inq-head-title {
       font-size: 1.02em !important;
-      letter-spacing: 0.12em !important;
+      letter-spacing: 0.16em !important;
     }
 
     body.eleanor-room #hd-inq-head-sub {
-      color: rgba(202,163,95,0.54) !important;
+      color: rgba(202,163,95,0.42) !important;
     }
 
     body.eleanor-room #hd-inq-convo {
-      padding: 16px 18px 10px !important;
+      padding: 18px 22px 10px !important;
+      background:
+        radial-gradient(circle at 50% 0, rgba(202,163,95,0.03), transparent 18%) !important;
     }
 
     body.eleanor-room .hd-msg-eleanor {
-      background: rgba(202,163,95,0.05) !important;
-      border-left-color: rgba(202,163,95,0.42) !important;
+      background: linear-gradient(180deg, rgba(202,163,95,0.045), rgba(202,163,95,0.02)) !important;
+      border-left-color: rgba(202,163,95,0.34) !important;
+      box-shadow: inset 0 0 0 1px rgba(202,163,95,0.04) !important;
+    }
+
+    body.eleanor-room .hd-msg-user {
+      background: rgba(255,255,255,0.025) !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03) !important;
     }
 
     body.eleanor-room #hd-inq-input-area {
-      background: rgba(10,8,6,0.98) !important;
+      background: linear-gradient(180deg, rgba(8,6,5,0.98), rgba(8,6,5,0.92)) !important;
+      border-top: 1px solid rgba(202,163,95,0.08) !important;
+      padding: 14px 18px 16px !important;
+    }
+
+    body.eleanor-room #hd-inq-input {
+      border-radius: 20px !important;
+      background: rgba(0,0,0,0.24) !important;
+      border-color: rgba(202,163,95,0.16) !important;
+    }
+
+    body.eleanor-room #hd-inq-submit {
+      border-radius: 999px !important;
+      background: linear-gradient(180deg, rgba(202,163,95,0.94), rgba(184,140,68,0.94)) !important;
+      color: #120d08 !important;
+      box-shadow: 0 12px 24px rgba(202,163,95,0.16) !important;
     }
 
     @keyframes eleanorVortexSpin {
@@ -542,8 +564,9 @@
       }
 
       .room-topbar {
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0.8rem;
+        opacity: 0.92;
       }
 
       .room-brand {
@@ -552,7 +575,20 @@
       }
 
       .room-nav {
-        justify-content: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        max-width: 100%;
+        padding-bottom: 0.25rem;
+        scrollbar-width: none;
+      }
+
+      .room-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .room-nav a {
+        flex: 0 0 auto;
       }
 
       .reading-room {
@@ -566,20 +602,21 @@
 
       .desk-world {
         min-height: 560px;
-        padding: 1rem;
+        padding: 0.8rem;
+        border-radius: 34px;
       }
 
       .desk-vortex {
-        width: min(400px, 96%);
+        width: min(420px, 98%);
       }
 
       .desk-portrait-wrap {
-        width: 182px;
-        height: 182px;
+        width: 190px;
+        height: 190px;
       }
 
       body.eleanor-room #hd-inq-panel {
-        height: min(70vh, 680px) !important;
+        height: min(76vh, 700px) !important;
       }
     }
 
@@ -594,21 +631,25 @@
         font-size: 0.58rem;
       }
 
+      .room-nav {
+        gap: 0.72rem;
+      }
+
       .threshold-title {
         font-size: clamp(2.2rem, 13vw, 3.4rem);
       }
 
       .desk-title {
-        font-size: 1.7rem;
+        font-size: 1.34rem;
       }
 
       .desk-vortex {
-        width: min(340px, 96%);
+        width: min(318px, 98%);
       }
 
       .desk-portrait-wrap {
-        width: 156px;
-        height: 156px;
+        width: 140px;
+        height: 140px;
       }
 
       .desk-enter {
@@ -631,7 +672,7 @@
         <a href="family-tree.html">The Bloodline</a>
         <a href="timeline.html">Ten Volumes</a>
         <a href="persons.html">Figures</a>
-        <a href="map.html">The Lands</a>
+        <a href="map.html">The Atlas</a>
         <a href="recovered-documents.html">Documents</a>
       </nav>
       <div class="room-current">Eleanor Voss</div>
@@ -643,7 +684,7 @@
         <h1 class="threshold-title">Speak where the archive becomes a mind.</h1>
         <p class="threshold-deck">Eleanor is not another page in the archive. She is the room in which witness, contradiction, and descent are read against the paper itself.</p>
         <div class="threshold-actions">
-          <a class="room-button room-button-primary" href="#desk" id="enter-desk-button">Open Eleanor's Desk</a>
+          <a class="room-button room-button-primary" href="#desk" id="enter-desk-button">Open The Desk</a>
         </div>
       </section>
 

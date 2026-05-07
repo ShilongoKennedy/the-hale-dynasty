@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>The Hale Dynasty • 1066–2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -983,10 +983,11 @@
     }
 
     .era-line-copy {
-      max-width: 40rem;
-      color: rgba(239,230,216,0.72);
-      line-height: 1.76;
-      font-size: 0.96rem;
+      max-width: 34rem;
+      color: rgba(239,230,216,0.82);
+      line-height: 1.48;
+      font-size: 1.18rem;
+      font-family: "Cormorant Garamond", serif;
     }
 
     .era-track {
@@ -1009,7 +1010,7 @@
     .era-track-inner {
       position: relative;
       min-width: 1420px;
-      padding: 2.4rem 0 0.9rem;
+      padding: 2.7rem 0 1rem;
       display: grid;
       grid-template-columns: repeat(10, minmax(180px, 1fr));
       gap: 1.35rem;
@@ -1066,10 +1067,11 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 2.85rem;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(202,163,95,0.16), rgba(202,163,95,0.56), rgba(202,163,95,0.16));
+      top: 2.9rem;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(202,163,95,0.08), rgba(202,163,95,0.46), rgba(202,163,95,0.08));
       pointer-events: none;
+      box-shadow: 0 0 20px rgba(202,163,95,0.06);
     }
 
     .era-track-line::before,
@@ -1087,7 +1089,7 @@
 
     .era-stop {
       position: relative;
-      padding-top: 0.2rem;
+      padding-top: 0.3rem;
     }
 
     .era-stop::before {
@@ -1101,6 +1103,19 @@
       border: 2px solid rgba(202,163,95,0.78);
       background: rgba(9,8,7,0.92);
       box-shadow: 0 0 0 8px rgba(202,163,95,0.05);
+      z-index: 2;
+    }
+
+    .era-stop::after {
+      content: "";
+      position: absolute;
+      left: calc(1.1rem + 8px);
+      top: 18px;
+      bottom: calc(100% - 4.1rem);
+      width: 1px;
+      background: linear-gradient(180deg, rgba(202,163,95,0.54), rgba(202,163,95,0.12));
+      pointer-events: none;
+      z-index: 1;
     }
 
     .era-stop.is-featured::before {
@@ -1110,16 +1125,17 @@
     }
 
     .era-card {
+      position: relative;
       display: grid;
-      gap: 0.5rem;
-      padding: 3.7rem 1.15rem 1.15rem;
+      gap: 0.46rem;
+      padding: 3.8rem 1.1rem 1.12rem;
       min-height: 290px;
-      border-radius: 24px;
-      border: 1px solid rgba(202,163,95,0.14);
+      border-radius: 26px 26px 18px 18px;
+      border: 1px solid rgba(202,163,95,0.1);
       background:
-        linear-gradient(180deg, rgba(16,14,11,0.72), rgba(11,10,8,0.3)),
-        radial-gradient(circle at 50% 0%, rgba(202,163,95,0.06), transparent 38%);
-      box-shadow: 0 18px 36px rgba(0,0,0,0.18);
+        linear-gradient(180deg, rgba(16,14,11,0.54), rgba(11,10,8,0.18)),
+        radial-gradient(circle at 50% 0%, rgba(202,163,95,0.05), transparent 38%);
+      box-shadow: 0 18px 34px rgba(0,0,0,0.14);
       text-decoration: none;
       color: inherit;
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
@@ -1143,14 +1159,26 @@
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease, border-color 180ms ease;
     }
 
+    .era-card::after {
+      content: "";
+      position: absolute;
+      left: 1.08rem;
+      right: 1.08rem;
+      top: 1.54rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(202,163,95,0.4), rgba(202,163,95,0.06));
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
     .era-card:hover,
     .era-card:focus-visible {
       transform: translateY(-4px);
-      border-color: rgba(202,163,95,0.3);
+      border-color: rgba(202,163,95,0.22);
       background:
-        linear-gradient(180deg, rgba(18,16,12,0.84), rgba(12,10,8,0.36)),
-        radial-gradient(circle at 50% 0%, rgba(202,163,95,0.1), transparent 38%);
-      box-shadow: 0 24px 46px rgba(0,0,0,0.24);
+        linear-gradient(180deg, rgba(18,16,12,0.72), rgba(12,10,8,0.26)),
+        radial-gradient(circle at 50% 0%, rgba(202,163,95,0.08), transparent 38%);
+      box-shadow: 0 22px 42px rgba(0,0,0,0.18);
       outline: none;
     }
 
@@ -1195,9 +1223,9 @@
     }
 
     .era-desc {
-      color: rgba(239,230,216,0.68);
-      font-size: 0.95rem;
-      line-height: 1.72;
+      color: rgba(239,230,216,0.74);
+      font-size: 0.92rem;
+      line-height: 1.58;
     }
 
     .era-link {
@@ -1734,8 +1762,8 @@
     }
 
     .finale-panel {
-      width: min(920px, 100%);
-      padding: 1.65rem 1.65rem 1.75rem;
+      width: min(980px, 100%);
+      padding: 1.85rem 1.8rem 1.95rem;
       border-radius: 30px;
       border: 1px solid rgba(202,163,95,0.16);
       background: linear-gradient(180deg, rgba(12,10,8,0.84), rgba(12,10,8,0.54));
@@ -1767,10 +1795,10 @@
       position: relative;
       margin-top: 0.45rem;
       font-family: "Cormorant Garamond", serif;
-      font-size: clamp(2rem, 4vw, 3.6rem);
+      font-size: clamp(2.1rem, 4vw, 3.9rem);
       line-height: 0.92;
       letter-spacing: -0.04em;
-      max-width: 15ch;
+      max-width: 12ch;
       margin-left: auto;
       margin-right: auto;
     }
@@ -1778,10 +1806,11 @@
     .finale-copy {
       position: relative;
       margin: 0.72rem auto 0;
-      max-width: 40rem;
-      color: rgba(239,230,216,0.74);
-      line-height: 1.74;
-      font-size: 0.94rem;
+      max-width: 32rem;
+      color: rgba(239,230,216,0.8);
+      line-height: 1.62;
+      font-size: 1.02rem;
+      font-family: "Cormorant Garamond", serif;
     }
 
     .finale-links {
@@ -1791,6 +1820,34 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.8rem;
+    }
+
+    .support-link {
+      position: relative;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      color: rgba(202,163,95,0.92);
+      text-decoration: none;
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-family: "Courier New", monospace;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .support-link:hover,
+    .support-link:focus-visible {
+      color: rgba(255,243,220,0.96);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .support-link span {
+      font-size: 0.9rem;
+      line-height: 1;
     }
 
     .reveal {
@@ -2029,8 +2086,7 @@
 
       .topbar {
         padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px 0;
-        display: grid;
-        gap: 0.7rem;
+        display: block;
       }
 
       .hero,
@@ -2041,15 +2097,24 @@
       }
 
       .hero-title {
-        font-size: clamp(2.65rem, 13.5vw, 4rem);
-        max-width: 7.4ch;
+        font-size: 3rem;
+        max-width: 7.2ch;
       }
 
       .topnav {
-        gap: 0.75rem 0.9rem;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1.05rem;
         justify-content: flex-start;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, max-content));
+        max-width: 100%;
+        margin-top: 0.75rem;
+        overflow-x: auto;
+        padding: 0 0 0.55rem;
+        scrollbar-width: none;
+      }
+
+      .topnav::-webkit-scrollbar {
+        display: none;
       }
 
       .topbar::after {
@@ -2060,6 +2125,7 @@
 
       .topnav a {
         padding-bottom: 0.28rem;
+        flex: 0 0 auto;
       }
 
       .topnav a {
@@ -2071,11 +2137,11 @@
       }
 
       .hero {
-        min-height: max(100svh, 920px);
-        padding: 128px 16px 132px;
+        min-height: auto;
+        padding: 132px 16px 78px;
         background-color: #0a0806;
-        background-position: center top;
-        background-size: auto 100%;
+        background-position: 54% top;
+        background-size: cover;
         background-repeat: no-repeat;
       }
 
@@ -2100,15 +2166,15 @@
       }
 
       .hero-side {
-        margin-top: 0.85rem;
+        margin-top: 1rem;
       }
 
       .hero-panel {
-        min-height: 436px;
+        min-height: 396px;
       }
 
       .hero-panel-orbit {
-        min-height: 252px;
+        min-height: 232px;
       }
 
       .orbit-node-track,
@@ -2262,14 +2328,15 @@
       }
 
       .era-line-copy {
-        font-size: 0.9rem;
+        font-size: 1.02rem;
+        line-height: 1.42;
       }
 
       .era-track-inner {
         min-width: 980px;
         grid-template-columns: repeat(10, minmax(150px, 1fr));
         gap: 1rem;
-        padding-top: 2rem;
+        padding-top: 2.2rem;
       }
 
       .era-track-groups {
@@ -2291,7 +2358,7 @@
 
       .era-card {
         min-height: 250px;
-        padding: 3.2rem 0.9rem 0.98rem;
+        padding: 3.35rem 0.9rem 0.98rem;
       }
 
       .era-year {
@@ -2370,8 +2437,7 @@
       }
 
       .topnav {
-        grid-template-columns: 1fr;
-        gap: 0.45rem;
+        gap: 0.9rem;
       }
 
       .topnav a {
@@ -2379,7 +2445,7 @@
       }
 
       .brand {
-        font-size: 1.72rem;
+        font-size: 1.42rem;
       }
 
       .brand span {
@@ -2387,16 +2453,17 @@
       }
 
       .hero {
-        min-height: max(100svh, 860px);
-        padding-bottom: 118px;
+        padding-top: 126px;
+        padding-bottom: 58px;
       }
 
       .hero-title {
         max-width: 6.8ch;
+        font-size: 2.52rem;
       }
 
       .hero-panel {
-        min-height: 408px;
+        min-height: 370px;
       }
 
       .route-list {
@@ -2413,10 +2480,10 @@
         <a href="family-tree.html">The Bloodline</a>
         <a href="timeline.html">Ten Volumes</a>
         <a href="persons.html">Figures</a>
-        <a href="map.html">The Lands</a>
+        <a href="map.html">The Atlas</a>
         <a href="recovered-documents.html">Documents</a>
         <a href="eleanor.html">Consult Eleanor</a>
-        <a href="The_Hale_Dynasty_Revised.pdf" target="_blank" rel="noopener noreferrer">Open The Archive</a>
+        <a href="timeline.html">Open The Archive</a>
       </nav>
     </header>
 
@@ -2427,8 +2494,8 @@
           <h1 class="hero-title">From Hastings, a house of land, witness, and return takes hold.</h1>
           <p class="hero-deck">A Norman grant becomes an English inheritance. Through marriage, plague, concealment, paper, and recovery, the Hale line persists until the archive can finally read itself again.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="The_Hale_Dynasty_Revised.pdf" target="_blank" rel="noopener noreferrer">Read The Revised Book</a>
-            <a class="button button-secondary" href="family-tree.html">Explore The Family Tree</a>
+            <a class="button button-primary" href="era-I.html">Begin With Era I</a>
+            <a class="button button-secondary" href="family-tree.html">Enter The Bloodline</a>
             <a class="button button-ghost" href="eleanor.html">Consult Eleanor</a>
           </div>
         </div>
@@ -2656,7 +2723,7 @@
             <div class="chapter-quote">The line begins where land is taken, inhabited, and remembered.</div>
             <div class="chapter-actions">
               <a class="button button-primary" href="era-I.html">Open Era I</a>
-              <a class="button button-secondary" href="timeline.html">Trace The Timeline</a>
+              <a class="button button-secondary" href="timeline.html">Trace The Ten Volumes</a>
             </div>
           </div>
           <div class="chapter-visual">
@@ -2685,7 +2752,7 @@
             <p class="chapter-body">What survives here is not chronology alone but custody. Voices endure because someone keeps them against loss: a woman with a letter, a steward with an account, a reader who refuses to let the page go dark.</p>
             <div class="chapter-quote">A record survives only where somebody bears it through disappearance.</div>
             <div class="chapter-actions">
-              <a class="button button-primary" href="family-tree.html">Enter The Family Tree</a>
+              <a class="button button-primary" href="family-tree.html">Enter The Bloodline</a>
               <a class="button button-secondary" href="persons.html">Meet The Figures</a>
             </div>
           </div>
@@ -2714,8 +2781,8 @@
             <p class="chapter-body">The final movement is not revelation in the abstract but return in the blood. When Eleanor reads what Matilda preserved, the hidden branch does not merely learn something new; it comes back into the name it had been carrying all along.</p>
             <div class="chapter-quote">The archive ends not by closing, but by recognizing itself.</div>
             <div class="chapter-actions">
-              <a class="button button-primary" href="read-all.html">Read Continuously</a>
-              <a class="button button-secondary" href="The_Hale_Dynasty_Revised.pdf" target="_blank" rel="noopener noreferrer">Open The Revised Volume</a>
+              <a class="button button-primary" href="eleanor.html">Consult Eleanor</a>
+              <a class="button button-secondary" href="voss.html">Trace The Return</a>
             </div>
           </div>
           <div class="chapter-visual">
@@ -2738,20 +2805,20 @@
 
       <section class="finale-actions reveal">
         <div class="finale-panel">
-          <div class="finale-mark">Choose The Entry</div>
-          <h2 class="finale-title">Open the archive by book, bloodline, or beginning.</h2>
-          <p class="finale-copy">The page can stop here, at atmosphere and movement, without collapsing into a standard reader block. If the visitor wants the full work, the book opens directly. If they want structure first, the bloodline and volumes remain close at hand.</p>
+          <div class="finale-mark">Continue The Record</div>
+          <h2 class="finale-title">Enter by bloodline, beginning, or witness.</h2>
+          <p class="finale-copy">The archive should lead deeper into itself, not away from itself. Begin with the first century, cross into the bloodline, or step into Eleanor's room and ask the record what it will bear.</p>
           <div class="finale-links">
-            <a class="button button-primary" href="The_Hale_Dynasty_Revised.pdf" target="_blank" rel="noopener noreferrer">Open The Revised Book</a>
-            <a class="button button-secondary" href="family-tree.html">Enter The Family Tree</a>
-            <a class="button button-secondary" href="era-I.html">Begin With Era I</a>
+            <a class="button button-primary" href="era-I.html">Begin With Era I</a>
+            <a class="button button-secondary" href="family-tree.html">Enter The Bloodline</a>
+            <a class="button button-secondary" href="eleanor.html">Consult Eleanor</a>
           </div>
+          <a class="support-link" href="https://buymeacoffee.com/haledynasty" target="_blank" rel="noopener noreferrer" data-track="support_archive_click" data-track-label="buy_me_a_coffee"><span>☕</span>Buy Me A Coffee</a>
         </div>
       </section>
     </main>
   </div>
 
-  <script src="inquiry.js"></script>
   <script>
     (() => {
       const revealObserver = new IntersectionObserver((entries) => {
@@ -2764,31 +2831,6 @@
 
       const orbit = document.querySelector('[data-interactive-orbit]');
       const descriptor = orbit?.querySelector('.orbit-descriptor');
-      const openInquiryDesk = () => {
-        const fab = document.getElementById('hd-inq-fab');
-        const panel = document.getElementById('hd-inq-panel');
-        if (!fab || !panel) return false;
-        if (!document.getElementById('hd-home-inquiry-overrides')) {
-          const overrides = document.createElement('style');
-          overrides.id = 'hd-home-inquiry-overrides';
-          overrides.textContent = [
-            '#hd-inq-fab{background:radial-gradient(circle at 34% 30%, rgba(255,244,221,0.18), rgba(202,163,95,0.14) 16%, rgba(12,10,8,0.95) 42%, rgba(0,0,0,1) 78%)!important;border-color:rgba(202,163,95,0.54)!important;box-shadow:0 14px 32px rgba(0,0,0,0.54), inset 0 0 28px rgba(0,0,0,0.84)!important;}',
-            '#hd-inq-fab-tip{background:rgba(12,9,6,0.96)!important;color:rgba(202,163,95,0.94)!important;border-color:rgba(202,163,95,0.34)!important;}',
-            '#hd-inq-panel{background:rgba(7,5,3,0.98)!important;border-color:rgba(202,163,95,0.28)!important;border-radius:28px 28px 0 0!important;box-shadow:0 -18px 54px rgba(0,0,0,0.62)!important;}',
-            '#hd-inq-head-title{font-size:1.02em!important;letter-spacing:0.12em!important;}',
-            '#hd-inq-head-sub{color:rgba(202,163,95,0.54)!important;}',
-            '.hd-msg-eleanor{background:rgba(202,163,95,0.05)!important;border-left-color:rgba(202,163,95,0.42)!important;}',
-            '#hd-inq-input-area{background:rgba(10,8,6,0.98)!important;}',
-            '@media (max-width:760px){#hd-inq-panel{width:calc(100vw - 18px)!important;right:9px!important;height:min(72svh,620px)!important;}#hd-inq-panel.open{bottom:84px!important;}#hd-inq-fab{bottom:22px!important;right:14px!important;}}'
-          ].join('');
-          document.head.appendChild(overrides);
-        }
-        if (!fab.classList.contains('open')) fab.click();
-        setTimeout(() => {
-          panel.querySelector('#hd-inq-input')?.focus();
-        }, 260);
-        return true;
-      };
       const descriptorCopy = orbit?.querySelector('.orbit-descriptor-copy');
       const trace = orbit?.querySelector('.orbit-trace');
       const tracePath = trace?.querySelector('path');
@@ -2847,15 +2889,6 @@
         node.addEventListener('focus', () => setOrbitDescriptor(key));
         node.addEventListener('mouseleave', () => setOrbitDescriptor());
         node.addEventListener('blur', () => setOrbitDescriptor());
-      });
-
-      document.querySelectorAll('.archivist-stage-frame').forEach((frame) => {
-        const pullOn = () => frame.classList.add('is-pulling');
-        const pullOff = () => frame.classList.remove('is-pulling');
-        frame.addEventListener('mouseenter', pullOn);
-        frame.addEventListener('mouseleave', pullOff);
-        frame.addEventListener('focusin', pullOn);
-        frame.addEventListener('focusout', pullOff);
       });
 
       const chapterVideos = [...document.querySelectorAll('.chapter-visual video')];

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Bloodline — The Hale Dynasty</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -958,6 +958,7 @@
       .top-bar {
         padding: calc(env(safe-area-inset-top, 0px) + 0.85rem) 1rem 1rem;
         align-items: flex-start;
+        overflow-x: clip;
       }
 
       .archive-brand {
@@ -1083,27 +1084,41 @@
 
     @media (max-width: 420px) {
       .top-bar {
-        display: grid;
-        grid-template-columns: 1fr;
+        display: block;
       }
 
       .top-bar-stack {
         align-items: flex-start;
+        margin-top: 0.55rem;
       }
 
       .archive-links,
       .nav-controls {
         max-width: none;
+        flex-wrap: nowrap;
         justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        scrollbar-width: none;
+      }
+
+      .archive-links::-webkit-scrollbar,
+      .nav-controls::-webkit-scrollbar {
+        display: none;
+      }
+
+      .archive-links a,
+      .nav-controls button {
+        flex: 0 0 auto;
       }
 
       .hero-overlay {
-        top: 6.2rem;
-        max-width: 9rem;
+        top: 7rem;
+        max-width: 10.8rem;
       }
 
       .hero-title {
-        font-size: clamp(1.16rem, 7vw, 1.5rem);
+        font-size: 1.28rem;
       }
 
       .side-panel {
@@ -1137,7 +1152,7 @@
           <a href="index.html">Home</a>
           <a href="timeline.html">Ten Volumes</a>
           <a href="persons.html">Figures</a>
-          <a href="map.html">Lands</a>
+          <a href="map.html">The Atlas</a>
           <a href="recovered-documents.html">Documents</a>
           <a href="eleanor.html">Consult Eleanor</a>
         </div>

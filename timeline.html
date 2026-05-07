@@ -3,37 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Ten Volumes — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --paper: #deca9f;
-      --paper-deep: #bb9768;
-      --ink: #24180f;
-      --ink-soft: rgba(62, 43, 26, 0.84);
-      --oxblood: #6f2f24;
-      --brass: #9e7b31;
-      --frame: rgba(82, 57, 33, 0.14);
-      --shadow: 0 16px 38px rgba(22, 14, 8, 0.14);
+      --paper: #f0e5d4;
+      --paper-deep: #d2b485;
+      --ink: #f1e8dc;
+      --ink-soft: rgba(235, 226, 211, 0.8);
+      --oxblood: #b35e4e;
+      --brass: #caa35f;
+      --frame: rgba(202, 163, 95, 0.16);
+      --shadow: 0 22px 52px rgba(0, 0, 0, 0.34);
     }
 
     body {
       background:
-        radial-gradient(circle at 14% 12%, rgba(111,47,36,0.08), transparent 22%),
-        radial-gradient(circle at 86% 8%, rgba(79,102,125,0.07), transparent 20%),
-        linear-gradient(180deg, #e1cc9f 0%, #bc9a6d 100%);
+        linear-gradient(180deg, rgba(5,4,3,0.88), rgba(5,4,3,0.92)),
+        url('portraits/Newbackground.png') center center / cover fixed no-repeat;
       color: var(--ink);
-      font-family: 'IM Fell English', Georgia, serif;
+      font-family: 'Inter', Georgia, serif;
       line-height: 1.8;
       min-height: 100vh;
     }
 
     .tl-nav {
-      background: rgba(243,232,210,0.9);
-      border-bottom: 1px solid var(--frame);
+      background: rgba(8, 7, 6, 0.74);
+      border-bottom: 1px solid rgba(202,163,95,0.14);
       padding: 12px 28px;
       display: flex;
       justify-content: space-between;
@@ -43,7 +42,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(14px);
     }
     .tl-nav-brand {
       display: flex;
@@ -55,7 +54,7 @@
       font-family: 'Cinzel', Georgia, serif;
       font-size: 1.05em;
       letter-spacing: 0.16em;
-      color: #5a3a1f;
+      color: var(--brass);
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -64,7 +63,7 @@
       font-family: 'Courier New', monospace;
       font-size: 0.65em;
       letter-spacing: 0.24em;
-      color: rgba(74,51,32,0.42);
+      color: rgba(202,163,95,0.42);
       text-transform: uppercase;
     }
     .tl-nav-links {
@@ -81,35 +80,41 @@
       font-size: 0.7em;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(74,51,32,0.72);
+      color: rgba(239,230,216,0.72);
       text-decoration: none;
       transition: color 0.2s;
     }
     .tl-nav a:hover { color: var(--oxblood); }
+
     .tl-header {
       text-align: center;
       padding: 54px 30px 34px;
-      border-bottom: 1px solid rgba(82,57,33,0.12);
+      border-bottom: 1px solid rgba(202,163,95,0.12);
+      background:
+        linear-gradient(180deg, rgba(11,9,7,0.66), rgba(11,9,7,0.38)),
+        radial-gradient(circle at center top, rgba(202,163,95,0.09), transparent 54%);
     }
     .tl-label {
       font-family: 'Courier New', monospace;
       font-size: 0.65em;
       letter-spacing: 0.4em;
-      color: rgba(111,47,36,0.62);
+      color: rgba(202,163,95,0.68);
       text-transform: uppercase;
       margin-bottom: 16px;
     }
     .tl-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(1.8em, 4vw, 3em);
-      color: #432f1f;
-      letter-spacing: 0.06em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5em, 4vw, 4.4em);
+      color: #f1e8dc;
+      letter-spacing: 0.02em;
       margin-bottom: 10px;
+      line-height: 0.92;
     }
     .tl-subtitle {
-      color: rgba(62,43,26,0.8);
-      font-size: 0.95em;
-      max-width: 620px;
+      color: rgba(239,230,216,0.74);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.08em;
+      max-width: 680px;
       margin: 0 auto;
       line-height: 1.78;
       font-style: italic;
@@ -121,12 +126,12 @@
       gap: 8px;
       justify-content: center;
       padding: 24px 20px 16px;
-      border-bottom: 1px solid rgba(82,57,33,0.12);
+      border-bottom: 1px solid rgba(202,163,95,0.1);
     }
     .tl-filter-btn {
-      background: rgba(255,255,255,0.22);
-      border: 1px solid rgba(82,57,33,0.2);
-      color: rgba(74,51,32,0.68);
+      background: rgba(12,10,8,0.42);
+      border: 1px solid rgba(202,163,95,0.16);
+      color: rgba(239,230,216,0.58);
       font-family: 'Courier New', monospace;
       font-size: 0.62em;
       letter-spacing: 0.18em;
@@ -137,9 +142,9 @@
     }
     .tl-filter-btn:hover,
     .tl-filter-btn.active {
-      background: rgba(111,47,36,0.05);
-      border-color: rgba(111,47,36,0.34);
-      color: var(--oxblood);
+      background: rgba(111,47,36,0.12);
+      border-color: rgba(202,163,95,0.34);
+      color: var(--brass);
     }
 
     .tl-guide {
@@ -154,10 +159,10 @@
     .tl-next,
     .tl-event-card {
       background:
-        linear-gradient(180deg, rgba(233,218,189,0.92), rgba(205,178,137,0.94)),
-        repeating-linear-gradient(180deg, transparent 0, transparent 31px, rgba(82,57,33,0.03) 31px, rgba(82,57,33,0.03) 32px);
-      border: 1px solid rgba(82,57,33,0.18);
-      box-shadow: 0 18px 38px rgba(22, 14, 8, 0.16);
+        linear-gradient(180deg, rgba(13,11,8,0.9), rgba(10,8,6,0.72)),
+        repeating-linear-gradient(180deg, transparent 0, transparent 31px, rgba(255,255,255,0.02) 31px, rgba(255,255,255,0.02) 32px);
+      border: 1px solid rgba(202,163,95,0.14);
+      box-shadow: var(--shadow);
     }
     .tl-guide-card {
       padding: 16px 18px 18px;
@@ -170,14 +175,14 @@
       font-size: 0.56em;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(111,47,36,0.82);
+      color: rgba(202,163,95,0.72);
       margin-bottom: 8px;
     }
     .tl-guide-copy {
       display: block;
-      font-size: 0.8em;
+      font-size: 0.84em;
       line-height: 1.74;
-      color: rgba(49,34,21,0.84);
+      color: rgba(239,230,216,0.76);
     }
 
     .tl-body {
@@ -194,10 +199,10 @@
       bottom: 0;
       width: 1px;
       background: linear-gradient(to bottom,
-        rgba(82,57,33,0) 0%,
-        rgba(82,57,33,0.2) 6%,
-        rgba(82,57,33,0.2) 94%,
-        rgba(82,57,33,0) 100%);
+        rgba(202,163,95,0) 0%,
+        rgba(202,163,95,0.18) 6%,
+        rgba(202,163,95,0.18) 94%,
+        rgba(202,163,95,0) 100%);
       transform: translateX(-50%);
     }
 
@@ -208,7 +213,7 @@
     }
     .tl-era-head-inner {
       display: inline-block;
-      background: rgba(238,225,199,0.96);
+      background: rgba(8,7,6,0.86);
       padding: 0 20px;
       position: relative;
       z-index: 2;
@@ -217,15 +222,15 @@
       font-family: 'Courier New', monospace;
       font-size: 0.6em;
       letter-spacing: 0.35em;
-      color: rgba(111,47,36,0.64);
+      color: rgba(202,163,95,0.64);
       text-transform: uppercase;
       margin-bottom: 4px;
     }
     .tl-era-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 1.02em;
-      color: #3f2b1c;
-      letter-spacing: 0.08em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.22em;
+      color: #efe6d8;
+      letter-spacing: 0.05em;
     }
 
     .tl-event {
@@ -249,41 +254,41 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(111,47,36,0.5);
+      background: rgba(202,163,95,0.46);
       transform: translateX(-50%);
       transition: background 0.2s;
       z-index: 2;
     }
-    .tl-event:hover::before { background: rgba(111,47,36,0.82); }
+    .tl-event:hover::before { background: rgba(202,163,95,0.92); }
     .tl-event-card {
       width: calc(50% - 28px);
       padding: 14px 18px;
       transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     }
     .tl-event:hover .tl-event-card {
-      border-color: rgba(111,47,36,0.28);
+      border-color: rgba(202,163,95,0.28);
       transform: translateY(-2px);
-      box-shadow: 0 18px 36px rgba(22,14,8,0.16);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.34);
     }
     .tl-event-year {
       font-family: 'Courier New', monospace;
       font-size: 0.68em;
       letter-spacing: 0.2em;
-      color: rgba(111,47,36,0.76);
+      color: rgba(202,163,95,0.76);
       margin-bottom: 4px;
     }
     .tl-event-name {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 0.9em;
-      color: #3d2a1b;
-      letter-spacing: 0.04em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2em;
+      color: #efe6d8;
+      letter-spacing: 0.02em;
       margin-bottom: 6px;
-      line-height: 1.38;
+      line-height: 1.16;
     }
     .tl-event-desc {
-      font-size: 0.8em;
+      font-size: 0.84em;
       line-height: 1.72;
-      color: rgba(49,34,21,0.82);
+      color: rgba(239,230,216,0.72);
     }
     .tl-event-type {
       display: inline-block;
@@ -291,8 +296,9 @@
       font-size: 0.58em;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(82,57,33,0.58);
-      border: 1px solid rgba(82,57,33,0.16);
+      color: rgba(202,163,95,0.58);
+      border: 1px solid rgba(202,163,95,0.18);
+      background: rgba(255,255,255,0.04);
       padding: 1px 6px;
       margin-top: 8px;
     }
@@ -303,7 +309,7 @@
       font-size: 0.6em;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(74,51,32,0.7);
+      color: rgba(202,163,95,0.76);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -318,12 +324,12 @@
     }
     .tl-century span {
       display: inline-block;
-      background: rgba(238,225,199,0.96);
+      background: rgba(8,7,6,0.84);
       padding: 0 16px;
       font-family: 'Courier New', monospace;
       font-size: 0.58em;
       letter-spacing: 0.4em;
-      color: rgba(82,57,33,0.42);
+      color: rgba(202,163,95,0.44);
       text-transform: uppercase;
       position: relative;
       z-index: 2;
@@ -338,17 +344,17 @@
       padding: 20px 22px 22px;
     }
     .tl-next-title {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: 1em;
-      letter-spacing: 0.08em;
-      color: #3d2a1b;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2em;
+      letter-spacing: 0.04em;
+      color: #efe6d8;
       margin-bottom: 8px;
       text-transform: uppercase;
     }
     .tl-next-copy {
-      font-size: 0.8em;
+      font-size: 0.84em;
       line-height: 1.76;
-      color: rgba(49,34,21,0.8);
+      color: rgba(239,230,216,0.72);
       max-width: 720px;
       margin-bottom: 12px;
     }
@@ -363,35 +369,45 @@
       font-size: 0.58em;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(74,51,32,0.72);
-      border: 1px solid rgba(82,57,33,0.2);
+      color: rgba(239,230,216,0.72);
+      border: 1px solid rgba(202,163,95,0.18);
       padding: 8px 10px;
       transition: color 0.2s, border-color 0.2s, background 0.2s;
-      background: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.04);
     }
     .tl-next-link:hover {
       color: var(--oxblood);
-      border-color: rgba(111,47,36,0.34);
-      background: rgba(111,47,36,0.05);
+      border-color: rgba(202,163,95,0.34);
+      background: rgba(202,163,95,0.08);
     }
 
     .tl-footer {
       text-align: center;
       padding: 40px 20px 60px;
-      border-top: 1px solid rgba(82,57,33,0.08);
+      border-top: 1px solid rgba(202,163,95,0.08);
       font-family: 'Courier New', monospace;
       font-size: 0.62em;
       letter-spacing: 0.2em;
-      color: rgba(82,57,33,0.34);
+      color: rgba(202,163,95,0.34);
     }
-    .tl-footer a { color: rgba(82,57,33,0.58); text-decoration: none; }
+    .tl-footer a { color: rgba(202,163,95,0.58); text-decoration: none; }
     .tl-footer a:hover { color: var(--oxblood); }
 
     @media (max-width: 640px) {
-      .tl-nav { padding: 10px 14px; }
+      .tl-nav { padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px; }
       .tl-nav-current { display: none; }
-      .tl-nav-links { justify-content: flex-start; flex: 1 1 100%; }
+      .tl-nav-links {
+        justify-content: flex-start;
+        flex: 1 1 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.2rem;
+        scrollbar-width: none;
+      }
+      .tl-nav-links::-webkit-scrollbar { display: none; }
+      .tl-nav-links a { flex: 0 0 auto; }
       .tl-header { padding: 34px 18px 24px; }
+      .tl-title { font-size: 2.7em; }
       .tl-guide { grid-template-columns: 1fr; padding: 16px 16px 6px; gap: 10px; }
       .tl-body { padding: 34px 16px 56px; }
       .tl-body::before { left: 16px; }
@@ -399,27 +415,28 @@
       .tl-event::before { left: 16px; }
       .tl-event-card, .tl-event-spacer { width: 100%; }
       .tl-event-spacer { display: none; }
-      .tl-era-head-inner, .tl-century span { background: rgba(233,219,191,0.96); }
+      .tl-era-head-inner, .tl-century span { background: rgba(8,7,6,0.9); }
       .tl-next-wrap { padding: 0 16px 18px; }
     }
 
     @media (max-width: 420px) {
       .tl-nav {
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0.75rem;
       }
       .tl-nav-brand {
         width: 100%;
-        align-items: center;
+        align-items: flex-start;
       }
       .tl-nav-links {
-        justify-content: center;
+        justify-content: flex-start;
       }
       .tl-nav a {
         font-size: 0.58em;
       }
     }
   </style>
+
 
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -434,7 +451,7 @@
       <a href="index.html">Home</a>
       <a href="family-tree.html">The Bloodline</a>
       <a href="persons.html">Figures</a>
-      <a href="map.html">The Lands</a>
+      <a href="map.html">The Atlas</a>
       <a href="recovered-documents.html">Documents</a>
       <a href="eleanor.html">Consult Eleanor</a>
     </div>
@@ -989,7 +1006,7 @@
         <a class="tl-next-link" href="era-I.html">Begin With Vol. I</a>
         <a class="tl-next-link" href="family-tree.html">Open The Bloodline</a>
         <a class="tl-next-link" href="persons.html">Open Figures</a>
-        <a class="tl-next-link" href="map.html">Open The Lands</a>
+        <a class="tl-next-link" href="map.html">Open The Atlas</a>
       </div>
     </div>
   </section>

@@ -4,905 +4,823 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Lands — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>The Atlas — The Hale Dynasty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
   <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --paper: #ddc8a5;
-      --paper-deep: #c8ad80;
-      --ink: #241a12;
-      --ink-soft: #5d4a36;
-      --oxblood: #6f2f24;
-      --brass: #9e7b31;
-      --blue: #4f667d;
-      --frame: rgba(82, 57, 33, 0.24);
+      --paper: #f1e8dc;
+      --gold: #caa35f;
+      --gold-soft: rgba(202,163,95,0.46);
+      --ink-soft: rgba(239,230,216,0.76);
+      --panel: rgba(13,11,8,0.8);
+      --line: rgba(202,163,95,0.16);
+      --blood: #7e3029;
+      --green: #7b8f75;
     }
-    html, body { height:100%; background:#080705; }
-    body { font-family:'IM Fell English',Georgia,serif; color:var(--paper); overflow:hidden; }
-
-    /* ── FULL-SCREEN MAP ── */
-    #map {
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(8,7,6,0.92), rgba(12,10,8,0.97)),
+        url('portraits/Newbackground.png') center/cover fixed no-repeat;
+      color: var(--paper);
+      font-family: 'Inter', Georgia, serif;
+    }
+    body::before {
+      content: '';
       position: fixed;
       inset: 0;
+      background:
+        linear-gradient(180deg, rgba(9,8,7,0.7), rgba(14,12,10,0.86)),
+        radial-gradient(circle at 20% 10%, rgba(126,48,41,0.14), transparent 26%),
+        radial-gradient(circle at 82% 14%, rgba(123,143,117,0.08), transparent 22%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .shell {
+      position: relative;
       z-index: 1;
     }
-
-    /* Age + warm the tiles to look like an archive map */
-    .leaflet-tile-pane {
-      filter: sepia(38%) saturate(0.6) brightness(0.78) hue-rotate(-2deg);
-    }
-
-    /* Remove Leaflet's default attribution styling conflicts */
-    .leaflet-control-attribution {
-      background: rgba(10,9,8,0.86) !important;
-      color: rgba(202,163,95,0.68) !important;
-      font-family: 'Courier New', monospace !important;
-      font-size: 0.52em !important;
-      letter-spacing: 0.05em !important;
-      border: none !important;
-    }
-    .leaflet-control-attribution a { color: rgba(94,66,38,0.62) !important; }
-    .leaflet-control-zoom {
-      border: 1px solid rgba(94,66,38,0.22) !important;
-      background: transparent !important;
-    }
-    .leaflet-control-zoom a {
-      background: rgba(11,10,8,0.94) !important;
-      color: rgba(239,230,216,0.8) !important;
-      border-bottom: 1px solid rgba(94,66,38,0.12) !important;
-      font-family: 'Cinzel', serif !important;
-      font-size: 14px !important;
-      width: 32px !important; height: 32px !important;
-      line-height: 32px !important;
-      transition: color 0.2s, background 0.2s !important;
-    }
-    .leaflet-control-zoom a:hover {
-      background: rgba(123,52,40,0.06) !important;
-      color: var(--oxblood) !important;
-    }
-    .leaflet-control-zoom-out { border-bottom: none !important; }
-
-    /* ── TOP OVERLAY BAR ── */
-    .map-topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 10;
-      background: linear-gradient(to bottom, rgba(8,7,6,0.9) 62%, transparent 100%);
-      padding: 0;
-      pointer-events: none;
-    }
-    .map-topbar > * { pointer-events: all; }
-
-    .map-nav {
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
-      padding: 10px 24px;
-      border-bottom: 1px solid rgba(94,66,38,0.14);
-      background: rgba(9,8,6,0.82);
-      backdrop-filter: blur(6px);
+      padding: 12px 24px;
+      background: rgba(11,10,8,0.86);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
     }
-    .map-nav-brand {
+    .brand {
       display: flex;
       flex-direction: column;
-      gap: 0.22rem;
+      gap: 0.2rem;
       min-width: 0;
     }
-    .map-nav-brand strong {
+    .brand strong {
       font-family: 'Cinzel', serif;
-      font-size: 0.82em;
+      font-size: 0.84rem;
       letter-spacing: 0.16em;
-      color: var(--paper);
       text-transform: uppercase;
+      color: var(--paper);
       font-weight: 600;
     }
-    .map-nav-brand span,
-    .map-nav-current {
-      color: rgba(202,163,95,0.52);
+    .brand span,
+    .current-room {
       font-family: 'Courier New', monospace;
-      font-size: 0.62em;
+      font-size: 0.62rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--gold-soft);
     }
-    .map-nav-links {
+    .topnav {
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 0.95rem;
-      min-width: 0;
       flex: 1 1 28rem;
     }
-    .map-nav a {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65em;
+    .topnav a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
       letter-spacing: 0.16em;
       color: rgba(239,230,216,0.74);
       text-decoration: none;
-      transition: color 0.2s;
-    }
-    .map-nav a:hover { color: var(--oxblood); }
-    /* ── ERA STRIP ── */
-    .era-strip-wrap {
-      padding: 8px 16px 0;
-      background: rgba(12,10,8,0.7);
-      backdrop-filter: blur(4px);
-    }
-    .era-strip {
-      display: flex;
-      gap: 5px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
-    }
-    .era-strip::-webkit-scrollbar { display: none; }
-    .era-btn {
-      flex-shrink: 0;
-      padding: 4px 10px;
-      border: 1px solid rgba(94,66,38,0.2);
-      background: rgba(18,15,11,0.7);
-      color: rgba(239,230,216,0.72);
-      font-family: 'Cinzel', serif;
-      font-size: 0.55em;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all 0.22s;
       text-transform: uppercase;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
     }
-    .era-btn:hover { border-color:rgba(123,52,40,0.42); color:var(--oxblood); }
-    .era-btn.active { background:rgba(123,52,40,0.08); border-color:rgba(123,52,40,0.42); color:var(--oxblood); }
-    .era-desc-bar {
-      padding: 5px 16px 8px;
-      font-size: 0.63em;
-      font-style: italic;
-      color: rgba(82,57,33,0.72);
-      min-height: 26px;
-      background: rgba(12,10,8,0.64);
-    }
-    .map-guide {
+    .topnav a:hover { color: #f0d7a1; }
+
+    .hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 70px 24px 34px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      padding: 10px 16px 14px;
-      background: rgba(12,10,8,0.68);
-      border-top: 1px solid rgba(82,57,33,0.08);
-      border-bottom: 1px solid rgba(82,57,33,0.08);
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 34px;
+      align-items: end;
     }
-    .map-guide-card {
-      background: rgba(15,12,9,0.72);
-      border: 1px solid rgba(202,163,95,0.16);
-      padding: 12px 14px;
-      min-height: 92px;
+    .hero-copy {
+      padding-right: 12px;
     }
-    .map-guide-kicker,
-    .detail-next-kicker {
-      display: block;
+    .eyebrow {
       font-family: 'Courier New', monospace;
-      font-size: 0.52em;
-      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: rgba(111,47,36,0.78);
-      margin-bottom: 6px;
+      color: var(--gold);
+      margin-bottom: 14px;
     }
-    .map-guide-copy {
-      display: block;
-      font-size: 0.72em;
-      line-height: 1.68;
-      color: rgba(239,230,216,0.78);
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.3rem, 7vw, 6.8rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+      color: #f5ede2;
+      margin-bottom: 18px;
     }
-
-    /* ── CUSTOM LEAFLET MARKERS ── */
-    .hd-marker {
-      cursor: pointer;
+    .hero-deck {
+      max-width: 38rem;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+    }
+    .hero-atlas {
       position: relative;
+      min-height: 460px;
+      background:
+        linear-gradient(180deg, rgba(14,12,10,0.86), rgba(10,8,6,0.74)),
+        radial-gradient(circle at center, rgba(202,163,95,0.08), transparent 40%);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 64px rgba(0,0,0,0.22);
+      overflow: hidden;
     }
-    .hd-marker-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.15s;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
-    }
-    .hd-marker:hover .hd-marker-inner { transform: scale(1.15) translateY(-2px); }
-    .hd-marker-inner svg { display: block; }
-    .hd-marker-label {
+    .hero-atlas::before {
+      content: '';
       position: absolute;
-      bottom: calc(100% + 4px);
+      inset: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .atlas-ring,
+    .atlas-ring::before,
+    .atlas-ring::after {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(202,163,95,0.12);
+      content: '';
+      pointer-events: none;
+    }
+    .atlas-ring {
+      width: 440px;
+      height: 440px;
       left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      color: #efe6d8;
-      background: rgba(11,10,8,0.96);
-      border: 1px solid rgba(94,66,38,0.38);
-      padding: 2px 7px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      z-index: 20;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
-    .hd-marker:hover .hd-marker-label { opacity: 1; }
-
-    /* Halecroft pulsing ring */
-    .hd-pulse {
+    .atlas-ring::before {
+      inset: 28px;
+    }
+    .atlas-ring::after {
+      inset: 58px;
+    }
+    .atlas-crosshair,
+    .atlas-crosshair::before {
       position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(200,168,60,0.4);
-      animation: hdPulse 2.4s ease-out infinite;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(202,163,95,0.12);
+      content: '';
       pointer-events: none;
     }
-    @keyframes hdPulse {
-      0%   { width:16px; height:16px; margin:-8px 0 0 -8px; opacity:0.7; }
-      100% { width:50px; height:50px; margin:-25px 0 0 -25px; opacity:0; }
+    .atlas-crosshair {
+      width: 280px;
+      height: 1px;
     }
-
-    /* Easter egg markers — faint glinting dots on the water */
-    .hd-ee-marker {
-      cursor: pointer;
-      width: 20px; height: 20px;
-      display: flex; align-items: center; justify-content: center;
+    .atlas-crosshair::before {
+      width: 1px;
+      height: 280px;
     }
-    .hd-ee-dot {
-      width: 5px; height: 5px;
+    .atlas-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 156px;
+      height: 156px;
       border-radius: 50%;
-      background: rgba(123,52,40,0.22);
-      box-shadow: 0 0 7px 2px rgba(200,168,60,0.14);
-      animation: eeGlint 3.5s ease-in-out infinite;
-      transition: background 0.3s, box-shadow 0.3s;
+      background: radial-gradient(circle at 48% 42%, rgba(212,177,111,0.18), rgba(8,7,6,0.94) 70%);
+      border: 1px solid rgba(202,163,95,0.22);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 60px rgba(202,163,95,0.08);
     }
-    .hd-ee-marker:hover .hd-ee-dot {
-      background: rgba(123,52,40,0.58);
-      box-shadow: 0 0 14px 5px rgba(200,168,60,0.45);
+    .atlas-core img {
+      width: 86px;
+      height: 112px;
+      object-fit: cover;
+      filter: sepia(0.28) saturate(0.78) contrast(1.02);
     }
-    @keyframes eeGlint {
-      0%, 100% { opacity: 0.35; transform: scale(1); }
-      50%       { opacity: 0.85; transform: scale(1.3); }
+    .atlas-node {
+      position: absolute;
+      width: 112px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transform: translate(-50%, -50%);
+    }
+    .atlas-node-frame {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      border: 2px solid rgba(202,163,95,0.55);
+      overflow: hidden;
+      box-shadow: 0 0 0 10px rgba(0,0,0,0.18);
+      background: rgba(11,10,8,0.94);
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    .atlas-node img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .atlas-node:hover .atlas-node-frame {
+      transform: scale(1.05);
+      border-color: #f0d7a1;
+      box-shadow: 0 0 0 12px rgba(202,163,95,0.08);
+    }
+    .atlas-node-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      line-height: 0.96;
+      color: #f2e9dd;
+    }
+    .atlas-node-note {
+      display: block;
+      margin-top: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+    .atlas-node-halecroft { left: 50%; top: 16%; }
+    .atlas-node-pershore { left: 82%; top: 50%; }
+    .atlas-node-london { left: 50%; top: 84%; }
+    .atlas-node-oxford { left: 18%; top: 50%; }
+
+    .routes {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 8px 24px 24px;
+    }
+    .route-band {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .route-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      min-height: 136px;
+      box-shadow: 0 20px 42px rgba(0,0,0,0.18);
+    }
+    .route-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 8px;
+    }
+    .route-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.85rem;
+      line-height: 0.95;
+      color: #f2e9dd;
+      margin-bottom: 10px;
+    }
+    .route-copy {
+      font-size: 0.84rem;
+      line-height: 1.75;
+      color: var(--ink-soft);
     }
 
-    /* ── DETAIL PANEL (right side, desktop) ── */
-    .detail-panel {
-      position: fixed;
-      top: 0; right: 0; bottom: 0;
-      width: 320px;
-      z-index: 20;
-      transform: translateX(100%);
-      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
-      pointer-events: none;
+    .land-chambers {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 12px 24px 100px;
+      display: grid;
+      gap: 28px;
     }
-    .detail-panel.open {
-      transform: translateX(0);
-      pointer-events: all;
+    .section-head {
+      max-width: 740px;
+      margin-bottom: 4px;
     }
-    .detail-inner {
+    .section-kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.7rem, 5vw, 4.4rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+      color: #f5ede2;
+      margin-bottom: 14px;
+    }
+    .section-copy {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+    }
+
+    .land-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .land-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 18px 18px 20px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.18);
+      min-height: 100%;
+      isolation: isolate;
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+    }
+    .land-card::before {
+      content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(236,223,198,0.96), rgba(209,184,145,0.96)),
-        radial-gradient(circle at top right, rgba(111,47,36,0.08), transparent 22%);
-      border-left: 1px solid rgba(82,57,33,0.16);
-      overflow-y: auto;
-      padding: 56px 22px 30px;
-      backdrop-filter: blur(8px);
+        linear-gradient(115deg, rgba(202,163,95,0.08), transparent 28%),
+        radial-gradient(circle at 82% 14%, rgba(202,163,95,0.08), transparent 24%);
+      opacity: 0;
+      transition: opacity 0.24s ease;
+      z-index: -1;
     }
-    .detail-inner::before {
-      content: '';
-      position: absolute;
-      inset: 4px;
-      border: 1px solid rgba(255,255,255,0.18);
-      pointer-events: none;
+    .land-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(202,163,95,0.34);
+      background: rgba(16,13,10,0.88);
     }
-    .close-panel {
-      position: absolute; top: 14px; right: 16px;
-      background: none; border: none;
-      color: rgba(82,57,33,0.44); font-size: 1.3em; cursor: pointer;
-      font-family: 'Courier New', monospace; transition: color 0.2s; z-index: 10;
-      -webkit-tap-highlight-color: transparent;
+    .land-card:hover::before {
+      opacity: 1;
     }
-    .close-panel:hover { color: #6f2f24; }
-    .detail-era-badge {
+    .land-card-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+    .land-seal {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid rgba(202,163,95,0.36);
+      background: rgba(8,7,6,0.86);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 0 0 8px rgba(0,0,0,0.14);
+    }
+    .land-seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.12) saturate(0.92) contrast(1.04);
+    }
+    .land-badge {
       display: inline-block;
-      font-family: 'Cinzel', serif; font-size: 0.5em; letter-spacing: 0.15em;
-      color: rgba(111,47,36,0.58); border: 1px solid rgba(82,57,33,0.16);
-      padding: 2px 8px; margin-bottom: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      border: 1px solid rgba(202,163,95,0.14);
+      background: rgba(255,255,255,0.03);
+      padding: 3px 8px;
+      margin-bottom: 0;
     }
-    .detail-name {
-      font-family: 'Cinzel', serif; font-size: 1.0em; font-weight: 600;
-      color: #43301f; padding-right: 20px; margin-bottom: 8px; line-height: 1.3;
-    }
-    .detail-divider {
-      width: 40px; height: 1px;
-      background: linear-gradient(to right, rgba(111,47,36,0.42), transparent);
-      margin: 0 0 12px;
-    }
-    .detail-desc {
-      font-size: 0.76em; line-height: 1.85; color: rgba(55,38,22,0.78); font-style: normal;
-      white-space: pre-line;
-    }
-    .detail-link {
-      display: inline-block; margin-top: 14px;
-      font-family: 'Cinzel', serif; font-size: 0.58em; letter-spacing: 0.14em;
-      color: rgba(82,57,33,0.6); text-decoration: none;
-      border-bottom: 1px solid rgba(82,57,33,0.16); padding-bottom: 1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .detail-link:hover { color: #6f2f24; border-color: rgba(111,47,36,0.34); }
-    .detail-persons { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(82,57,33,0.08); }
-    .detail-persons-label {
-      font-family: 'Courier New', monospace; font-size: 0.5em; letter-spacing: 0.2em;
-      text-transform: uppercase; color: rgba(111,47,36,0.42); margin-bottom: 7px;
-    }
-    .detail-person-link {
-      display: inline-block;
-      font-family: 'Cinzel', serif; font-size: 0.56em; letter-spacing: 0.09em;
-      color: rgba(82,57,33,0.62); text-decoration: none;
-      border: 1px solid rgba(82,57,33,0.16); padding: 3px 9px; margin: 0 4px 4px 0;
-      transition: all 0.2s; background: rgba(255,255,255,0.18);
-    }
-    .detail-person-link:hover {
-      color: #6f2f24; border-color: rgba(111,47,36,0.34);
-      background: rgba(111,47,36,0.05);
-    }
-    .detail-next {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(82,57,33,0.08);
-    }
-    .detail-next-copy {
-      font-size: 0.72em;
-      line-height: 1.78;
-      color: rgba(55,38,22,0.74);
+    .land-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      color: #f2e9dd;
       margin-bottom: 10px;
     }
-    .detail-next-links {
+    .land-meta {
+      font-family: 'Courier New', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 12px;
+    }
+    .land-desc {
+      font-size: 0.9rem;
+      line-height: 1.84;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+    .land-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 10px;
     }
-    .detail-next-link {
-      text-decoration: none;
+    .land-links a {
       font-family: 'Courier New', monospace;
-      font-size: 0.52em;
-      letter-spacing: 0.12em;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(82,57,33,0.62);
-      border: 1px solid rgba(82,57,33,0.16);
-      background: rgba(255,255,255,0.18);
-      padding: 6px 8px;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      color: rgba(202,163,95,0.72);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(202,163,95,0.18);
+      padding-bottom: 2px;
     }
-    .detail-next-link:hover {
-      color: #6f2f24;
-      border-color: rgba(111,47,36,0.34);
-      background: rgba(111,47,36,0.05);
-    }
+    .land-links a:hover { color: #f2dba5; border-bottom-color: rgba(202,163,95,0.34); }
 
-    /* ── EASTER EGG CARD ── */
-    .ee-card {
-      display: none; position: fixed; z-index: 500;
-      background: radial-gradient(ellipse, #1E1408 0%, #120E08 100%);
-      border: 1px solid rgba(200,168,60,0.28);
-      padding: 20px 22px;
-      max-width: 300px; min-width: 220px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.8);
-      animation: eeIn 0.25s ease;
+    .closing-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.22);
+      padding: 28px 28px 30px;
+      margin-top: 10px;
     }
-    @keyframes eeIn { from { opacity:0; transform:translateY(6px); } }
-    .ee-close {
-      position: absolute; top: 8px; right: 10px;
-      background: none; border: none; color: rgba(200,168,60,0.4);
-      font-size: 1.1em; cursor: pointer; padding: 4px 6px;
-      -webkit-tap-highlight-color: transparent;
+    .closing-mark {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 12px;
     }
-    .ee-close:hover { color: #C8A83C; }
-    .ee-seal { display: block; font-size: 1.4em; margin-bottom: 6px; }
-    .ee-title {
-      font-family: 'Cinzel', serif; font-size: 0.72em; letter-spacing: 0.1em;
-      color: rgba(200,168,60,0.85); margin-bottom: 10px; line-height: 1.35; padding-right: 16px;
+    .closing-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.8rem;
+      line-height: 0.96;
+      color: #f5ede2;
+      margin-bottom: 12px;
     }
-    .ee-body {
-      font-size: 0.72em; line-height: 1.8; color: rgba(200,185,148,0.7);
-      font-style: italic; white-space: pre-line;
+    .closing-copy {
+      font-size: 0.96rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+      max-width: 44rem;
+      margin-bottom: 18px;
     }
+    .closing-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    }
+    .button-primary {
+      background: #d8b46d;
+      color: #0d0b08;
+      box-shadow: 0 18px 34px rgba(212,177,111,0.2);
+    }
+    .button-secondary {
+      background: rgba(255,255,255,0.03);
+      color: #f5ede2;
+      border: 1px solid rgba(202,163,95,0.22);
+    }
+    .button:hover { transform: translateY(-2px); }
+    .home-float {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(202,163,95,0.28);
+      background: rgba(13,11,8,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 18px 36px rgba(0,0,0,0.28);
+      z-index: 60;
+    }
+    .home-float:hover { border-color: #f0d7a1; }
 
-
-    /* ── MOBILE (≤ 700px) ── */
+    @media (max-width: 1080px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-atlas { min-height: 400px; }
+      .route-band,
+      .land-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 700px) {
-      .map-nav { padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px; }
-      .map-nav a { font-size: 0.6em; }
-      .map-nav-current { display: none; }
-      .map-nav-links { justify-content: flex-start; flex: 1 1 100%; }
-      .map-guide { grid-template-columns: 1fr; gap: 8px; padding: 8px 14px 12px; }
-
-      /* Detail panel becomes bottom sheet */
-      .detail-panel {
-        top: auto;
-        right: 0; left: 0; bottom: 0;
-        width: 100%;
-        transform: translateY(110%);
-        transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
-        max-height: 78svh;
+      .topbar { padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px; }
+      .current-room { display: none; }
+      .topnav {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: none;
       }
-      .detail-panel.open { transform: translateY(0); }
-      .detail-inner {
-        position: relative;
-        border-left: none;
-        border-top: 1px solid rgba(200,168,60,0.22);
-        border-radius: 16px 16px 0 0;
-        max-height: 78svh;
-        padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+      .topnav::-webkit-scrollbar { display: none; }
+      .topnav a { flex: 0 0 auto; }
+      .hero { padding: 52px 16px 24px; }
+      .hero-title { font-size: 3rem; line-height: 0.96; }
+      .hero-deck { font-size: 0.94rem; line-height: 1.72; }
+      .hero-atlas { min-height: 340px; }
+      .atlas-ring { width: 320px; height: 320px; }
+      .atlas-core { width: 126px; height: 126px; }
+      .atlas-core img { width: 70px; height: 92px; }
+      .atlas-node { width: 86px; }
+      .atlas-node-frame { width: 72px; height: 72px; }
+      .atlas-node-name { font-size: 1.1rem; }
+      .routes,
+      .land-chambers { padding-left: 16px; padding-right: 16px; }
+      .route-band,
+      .land-grid { grid-template-columns: 1fr; }
+      .land-card-head { grid-template-columns: minmax(0, 1fr) 48px; }
+      .land-seal { width: 48px; height: 48px; }
+      .closing-panel { padding: 24px 20px 26px; }
+      .home-float {
+        right: 16px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
       }
-      /* Drag handle */
-      .detail-inner::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 10px; left: 50%;
-        transform: translateX(-50%);
-        width: 36px; height: 4px;
-        background: rgba(200,168,60,0.2);
-        border-radius: 2px;
-      }
-      /* Hover labels don't work on touch — hide them */
-      .hd-marker-label { display: none !important; }
     }
-  
 
-    @media (max-width: 420px) {
-      .map-nav { justify-content: center; gap: 0.75rem; }
-      .map-nav-brand { width: 100%; align-items: center; }
-      .map-nav-links { justify-content: center; }
-      .map-nav a { font-size: 0.56em; }
-      .era-strip-wrap { padding-left: 12px; padding-right: 12px; }
-      .era-btn { font-size: 0.5em; padding: 4px 8px; }
-      .era-desc-bar { padding-left: 12px; padding-right: 12px; }
-      .map-guide { padding-left: 12px; padding-right: 12px; }
-      .detail-inner { padding-left: 16px; padding-right: 16px; }
+    @media (max-width: 430px) {
+      .brand strong { font-size: 0.72rem; }
+      .brand span { font-size: 0.52rem; letter-spacing: 0.12em; }
+      .topnav { gap: 0.75rem; }
+      .topnav a { font-size: 0.58rem; letter-spacing: 0.12em; }
+      .hero { padding-top: 34px; }
+      .hero-title { font-size: 2.42rem; }
+      .hero-atlas { min-height: 300px; }
+      .atlas-ring { width: 284px; height: 284px; }
+      .atlas-crosshair { width: 210px; }
+      .atlas-crosshair::before { height: 210px; }
+      .atlas-core { width: 106px; height: 106px; }
+      .atlas-core img { width: 58px; height: 78px; }
+      .atlas-node-frame { width: 60px; height: 60px; }
+      .atlas-node-name { font-size: 0.98rem; }
+      .atlas-node-note { font-size: 0.48rem; letter-spacing: 0.12em; }
+      .atlas-node-halecroft { top: 18%; }
+      .atlas-node-pershore { left: 80%; }
+      .atlas-node-london { top: 82%; }
+      .atlas-node-oxford { left: 20%; }
+      .route-card,
+      .land-card { padding: 15px 15px 17px; }
+      .land-name { font-size: 1.74rem; }
+      .closing-title { font-size: 2.18rem; }
     }
   </style>
-  <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="analytics.js"></script>
 </head>
 <body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <strong>The Hale Dynasty</strong>
+        <span>MSS. Hale-Marsh · Land Record</span>
+      </div>
+      <nav class="topnav" aria-label="Primary archive navigation">
+        <a href="index.html">Home</a>
+        <a href="family-tree.html">The Bloodline</a>
+        <a href="timeline.html">Ten Volumes</a>
+        <a href="persons.html">Figures</a>
+        <a href="recovered-documents.html">Documents</a>
+        <a href="eleanor.html">Consult Eleanor</a>
+      </nav>
+      <div class="current-room">The Atlas</div>
+    </header>
 
-<!-- INTERACTIVE MAP -->
-<div id="map"></div>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">The Atlas</div>
+          <h1 class="hero-title">The ground remembers before the bloodline understands.</h1>
+          <p class="hero-deck">This is the archive's map without the machinery of a map: estates, towns, courts, battlefields, and cities arranged by consequence. Begin with Halecroft, then follow the places where the line is claimed, hidden, damaged, and read back into itself.</p>
+        </div>
+        <div class="hero-atlas" aria-label="Atlas anchors for the Hale line">
+          <div class="atlas-ring"></div>
+          <div class="atlas-crosshair"></div>
+          <div class="atlas-core"><img src="crests/main_family_crest.png" alt=""></div>
+          <a class="atlas-node atlas-node-halecroft" href="#halecroft" aria-label="Jump to Halecroft">
+            <div class="atlas-node-frame"><img src="portraits/ranulf.png" alt=""></div>
+            <div class="atlas-node-name">Halecroft</div>
+            <span class="atlas-node-note">The Seat</span>
+          </a>
+          <a class="atlas-node atlas-node-pershore" href="#pershore" aria-label="Jump to Pershore">
+            <div class="atlas-node-frame"><img src="portraits/matilda.png" alt=""></div>
+            <div class="atlas-node-name">Pershore</div>
+            <span class="atlas-node-note">Refuge · Branch</span>
+          </a>
+          <a class="atlas-node atlas-node-london" href="#london" aria-label="Jump to London">
+            <div class="atlas-node-frame"><img src="portraits/eleanor.png" alt=""></div>
+            <div class="atlas-node-name">London</div>
+            <span class="atlas-node-note">Power · Damage</span>
+          </a>
+          <a class="atlas-node atlas-node-oxford" href="#oxford" aria-label="Jump to Oxford">
+            <div class="atlas-node-frame"><img src="portraits/james.png" alt=""></div>
+            <div class="atlas-node-name">Oxford</div>
+            <span class="atlas-node-note">Custody · Reading</span>
+          </a>
+        </div>
+      </section>
 
-<!-- TOP OVERLAY -->
-<div class="map-topbar">
-  <nav class="map-nav">
-    <div class="map-nav-brand">
-      <strong>The Hale Dynasty</strong>
-      <span>MSS. Hale-Marsh · Land Record</span>
-    </div>
-    <div class="map-nav-links">
-      <a href="index.html">Home</a>
-      <a href="family-tree.html">The Bloodline</a>
-      <a href="timeline.html">Ten Volumes</a>
-      <a href="persons.html">Figures</a>
-      <a href="recovered-documents.html">Documents</a>
-      <a href="eleanor.html">Consult Eleanor</a>
-    </div>
-    <div class="map-nav-current">The Lands</div>
-  </nav>
-  <div class="era-strip-wrap">
-    <div class="era-strip" id="eraStrip">
-      <button class="era-btn active" data-era="all">All Eras</button>
-      <button class="era-btn" data-era="i">I · Norman</button>
-      <button class="era-btn" data-era="ii">II · Plague</button>
-      <button class="era-btn" data-era="iii">III · Tudor</button>
-      <button class="era-btn" data-era="iv">IV · Civil War</button>
-      <button class="era-btn" data-era="v">V · Georgian</button>
-      <button class="era-btn" data-era="vi">VI · Regency</button>
-      <button class="era-btn" data-era="vii">VII · Victorian</button>
-      <button class="era-btn" data-era="viii">VIII · Great War</button>
-      <button class="era-btn" data-era="ix">IX · Second War</button>
-      <button class="era-btn" data-era="x">X · Present</button>
-    </div>
-    <div class="era-desc-bar" id="eraDesc">Select an era to illuminate its places upon the map</div>
-    <div class="map-guide" aria-label="Map guide">
-      <div class="map-guide-card">
-        <span class="map-guide-kicker">Use this page for</span>
-        <span class="map-guide-copy">Seeing where the family’s holdings, journeys, losses, and returns happen in physical space, from Halecroft to London and back again.</span>
-      </div>
-      <div class="map-guide-card">
-        <span class="map-guide-kicker">Best after</span>
-        <span class="map-guide-copy">Vol. I or Vol. II, once the first place names have started to matter and you want to understand the estate as geography, not only memory.</span>
-      </div>
-      <div class="map-guide-card">
-        <span class="map-guide-kicker">Where next</span>
-        <span class="map-guide-copy">Use the era strip to narrow the map, open a place, then continue to the family tree or the corresponding volume once the landscape has settled in your mind.</span>
-      </div>
-    </div>
+      <section class="routes">
+        <div class="route-band">
+          <article class="route-card">
+            <div class="route-kicker">Holdings</div>
+            <div class="route-title">Estate Ground</div>
+            <div class="route-copy">Halecroft and Worcester keep the family legible as tenure, burial, and legal memory.</div>
+          </article>
+          <article class="route-card">
+            <div class="route-kicker">Crossings</div>
+            <div class="route-title">Routes Of Entry</div>
+            <div class="route-copy">Normandy, Winchester, and Pershore turn movement into settlement, shelter, and descent.</div>
+          </article>
+          <article class="route-card">
+            <div class="route-kicker">Expansion</div>
+            <div class="route-title">Cities Of Pressure</div>
+            <div class="route-copy">Bath, London, Brixton, and Harlow redraw the house through class, ambition, war, and repair.</div>
+          </article>
+          <article class="route-card">
+            <div class="route-kicker">Reading</div>
+            <div class="route-title">The Return Route</div>
+            <div class="route-copy">Oxford and Pershore complete the curve: custody in one place, recognition in the other.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="land-chambers">
+        <div class="section-head">
+          <div class="section-kicker">Atlas Of The Line</div>
+          <h2 class="section-title">Twelve places. One inheritance under pressure.</h2>
+          <p class="section-copy">Each entry below is a door into the archive rather than a coordinate on a screen. The question is not only where something happened, but what the place made the family become.</p>
+        </div>
+
+        <div class="land-grid">
+          <article class="land-card" id="halecroft">
+            <div class="land-card-head">
+              <div class="land-badge">All Eras · The Seat</div>
+              <div class="land-seal"><img src="crests/main_family_crest.png" alt=""></div>
+            </div>
+            <div class="land-name">Halecroft</div>
+            <div class="land-meta">Worcestershire · 1067–2026</div>
+            <div class="land-desc">The family seat, held continuously since the Norman settlement. Every volume returns here because land is where the name first becomes memory.</div>
+            <div class="land-links"><a href="halecroft.html">Open The Estate</a><a href="era-I.html">Era I</a><a href="family-tree.html">The Bloodline</a></div>
+          </article>
+
+          <article class="land-card" id="pershore">
+            <div class="land-card-head">
+              <div class="land-badge">Era II & X · Refuge / Branch</div>
+              <div class="land-seal"><img src="portraits/matilda.png" alt=""></div>
+            </div>
+            <div class="land-name">Pershore</div>
+            <div class="land-meta">Worcestershire · 1348 / 1373 / 2026</div>
+            <div class="land-desc">Shelter before the plague, marriage after it, and recognition centuries later. Pershore is where the line vanishes under another name and waits.</div>
+            <div class="land-links"><a href="matilda.html">Matilda's Letter</a><a href="voss.html">The Voss Archive</a><a href="era-X.html">Era X</a></div>
+          </article>
+
+          <article class="land-card" id="worcester">
+            <div class="land-card-head">
+              <div class="land-badge">Era I–VII · Cathedral City</div>
+              <div class="land-seal"><img src="portraits/leofric.png" alt=""></div>
+            </div>
+            <div class="land-name">Worcester</div>
+            <div class="land-meta">Law · Burial · Counsel</div>
+            <div class="land-desc">The nearest seat of law, burial, and clerical authority. Worcester turns private trouble into public document.</div>
+            <div class="land-links"><a href="era-I.html">Era I</a><a href="recovered-documents.html">Documents</a></div>
+          </article>
+
+          <article class="land-card" id="oxford">
+            <div class="land-card-head">
+              <div class="land-badge">Era IV & X · Custody</div>
+              <div class="land-seal"><img src="portraits/eleanor.png" alt=""></div>
+            </div>
+            <div class="land-name">Oxford</div>
+            <div class="land-meta">Royalist Service · Archive Reading</div>
+            <div class="land-desc">A city of service, custody, and reading. Oxford is where the record stops being inherited passively and begins to answer back.</div>
+            <div class="land-links"><a href="eleanor.html">Consult Eleanor</a><a href="timeline.html">Ten Volumes</a></div>
+          </article>
+
+          <article class="land-card" id="normandy">
+            <div class="land-card-head">
+              <div class="land-badge">Era I · Origin</div>
+              <div class="land-seal"><img src="portraits/ranulf.png" alt=""></div>
+            </div>
+            <div class="land-name">Normandy</div>
+            <div class="land-meta">Before England</div>
+            <div class="land-desc">Ranulf's origin before the crossing. The dynasty begins only because this ground is left behind.</div>
+            <div class="land-links"><a href="era-I.html">Open Conquest</a></div>
+          </article>
+
+          <article class="land-card" id="winchester">
+            <div class="land-card-head">
+              <div class="land-badge">Era I · Consolidation</div>
+              <div class="land-seal"><img src="crests/main_family_crest.png" alt=""></div>
+            </div>
+            <div class="land-name">Winchester</div>
+            <div class="land-meta">Capital Of Norman England</div>
+            <div class="land-desc">Where conquest hardens into administration. The line enters history as paperwork, tenure, and settlement.</div>
+            <div class="land-links"><a href="era-I.html">Era I</a><a href="recovered-documents.html">Documents</a></div>
+          </article>
+
+          <article class="land-card" id="gloucester">
+            <div class="land-card-head">
+              <div class="land-badge">Era IV · Division</div>
+              <div class="land-seal"><img src="portraits/richard.png" alt=""></div>
+            </div>
+            <div class="land-name">Gloucester</div>
+            <div class="land-meta">Civil War Station</div>
+            <div class="land-desc">One branch serves Parliament while another serves the Crown. Gloucester proves continuity does not mean agreement.</div>
+            <div class="land-links"><a href="era-IV.html">Era IV</a></div>
+          </article>
+
+          <article class="land-card" id="edgehill">
+            <div class="land-card-head">
+              <div class="land-badge">Era IV · Battle Site</div>
+              <div class="land-seal"><img src="portraits/william.png" alt=""></div>
+            </div>
+            <div class="land-name">Edgehill</div>
+            <div class="land-meta">October 1642</div>
+            <div class="land-desc">The Civil War enters the house here. National rupture becomes family evidence.</div>
+            <div class="land-links"><a href="era-IV.html">Open The War</a></div>
+          </article>
+
+          <article class="land-card" id="bath">
+            <div class="land-card-head">
+              <div class="land-badge">Era VI · Regency Pressure</div>
+              <div class="land-seal"><img src="portraits/augusta.png" alt=""></div>
+            </div>
+            <div class="land-name">Bath</div>
+            <div class="land-meta">Elegance · Danger</div>
+            <div class="land-desc">Reputation, money, and marriage become atmospheric pressures on the line rather than legal ones.</div>
+            <div class="land-links"><a href="era-VI.html">Era VI</a></div>
+          </article>
+
+          <article class="land-card" id="london">
+            <div class="land-card-head">
+              <div class="land-badge">Era V–X · Expansion</div>
+              <div class="land-seal"><img src="portraits/nathaniel.png" alt=""></div>
+            </div>
+            <div class="land-name">London</div>
+            <div class="land-meta">Fortune · Bureaucracy · Damage</div>
+            <div class="land-desc">The capital enlarges the house without making it safer: fortune, bureaucracy, war, and reconstruction all pass through it.</div>
+            <div class="land-links"><a href="era-V.html">Era V</a><a href="era-IX.html">Era IX</a></div>
+          </article>
+
+          <article class="land-card" id="brixton">
+            <div class="land-card-head">
+              <div class="land-badge">Era VII–IX · Fragment</div>
+              <div class="land-seal"><img src="portraits/edmundmarsh.png" alt=""></div>
+            </div>
+            <div class="land-name">Brixton</div>
+            <div class="land-meta">Illegitimacy · Bomb Damage</div>
+            <div class="land-desc">The Marsh-Hale thread gathers here, then suffers wartime destruction. Loss becomes part of the record's shape.</div>
+            <div class="land-links"><a href="era-VII.html">Era VII</a><a href="era-IX.html">Era IX</a></div>
+          </article>
+
+          <article class="land-card" id="harlow">
+            <div class="land-card-head">
+              <div class="land-badge">Era IX · Reconstruction</div>
+              <div class="land-seal"><img src="portraits/david.png" alt=""></div>
+            </div>
+            <div class="land-name">Harlow</div>
+            <div class="land-meta">Post-War Planning</div>
+            <div class="land-desc">A new town and a repair attempt. Private inheritance becomes public habitability.</div>
+            <div class="land-links"><a href="era-IX.html">Open Reconstruction</a></div>
+          </article>
+        </div>
+
+        <div class="closing-panel">
+          <div class="closing-mark">Where next</div>
+          <h2 class="closing-title">Read the ground back into the line.</h2>
+          <p class="closing-copy">The atlas is a threshold, not a destination. Kinship belongs to The Bloodline. Sequence belongs to Ten Volumes. Testimony belongs with Eleanor. The places remain here as pressure marks on the inheritance.</p>
+          <div class="closing-links">
+            <a class="button button-primary" href="family-tree.html">Enter The Bloodline</a>
+            <a class="button button-secondary" href="timeline.html">Trace The Ten Volumes</a>
+            <a class="button button-secondary" href="eleanor.html">Consult Eleanor</a>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-</div>
 
-<!-- DETAIL PANEL -->
-<div class="detail-panel" id="detailPanel">
-  <div class="detail-inner">
-    <button class="close-panel" id="closeBtn">&times;</button>
-    <div class="detail-era-badge" id="detailBadge"></div>
-    <div class="detail-name" id="detailName">&mdash;</div>
-    <div class="detail-divider"></div>
-    <p class="detail-desc" id="detailDesc"></p>
-    <a class="detail-link" href="#" id="detailLink"></a>
-    <div class="detail-persons" id="detailPersons" style="display:none">
-      <div class="detail-persons-label">Connected persons</div>
-      <div id="detailPersonLinks"></div>
-    </div>
-    <div class="detail-next">
-      <span class="detail-next-kicker">Where next</span>
-      <div class="detail-next-copy">Once a place has clicked, the next best step is usually to trace the bloodline tied to it or return to the volume where that place acquires meaning.</div>
-      <div class="detail-next-links">
-        <a class="detail-next-link" href="family-tree.html">The Bloodline</a>
-        <a class="detail-next-link" href="timeline.html">Ten Volumes</a>
-        <a class="detail-next-link" href="era-I.html">Vol. I</a>
-      </div>
-    </div>
-  </div>
-</div>
+  <a href="index.html" class="home-float" title="Return home" aria-label="Return home">
+    <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  </a>
 
-<!-- EASTER EGG CARD -->
-<div class="ee-card" id="eeCard">
-  <button class="ee-close" id="eeClose">&times;</button>
-  <span class="ee-seal" id="eeSeal"></span>
-  <div class="ee-title" id="eeTitle"></div>
-  <div class="ee-body" id="eeBody"></div>
-</div>
-
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-(function(){
-'use strict';
-
-/* ══════════════════════════════════════════════
-   DATA
-══════════════════════════════════════════════ */
-
-var PINS = {
-  halecroft:  { name:'Halecroft, Worcestershire', latlng:[52.08,-2.38], eras:['all'], badge:'All Eras', type:'seat',
-    desc:'The family seat. Held continuously since 1067. The heart of the Hale Dynasty — where generations have been born, married, and laid to rest. Every volume of the saga returns here.', link:'halecroft.html', linkText:'The Estate · 1067–2026',
-    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'},{name:'Leofric de la Hale',id:'leofric'},{name:'Richard Hale',id:'richard'},{name:'Thomas Hale',id:'thomas'},{name:'Matilda of Halecroft',id:'matilda'},{name:'Augusta Hale',id:'augusta'}] },
-  worcester:  { name:'Worcester', latlng:[52.19,-2.22], eras:['i','ii','iii','iv','v','vi','vii'], badge:'Era I–VII', type:'main',
-    desc:'Where William Hale sought legal counsel in 1534. Where Edmund Hale was buried in 1882 after his mysterious death at Whitmore Park. Cathedral city of triumph and tragedy.', link:'era-I.html',
-    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Edmund Hale II',id:'edmund_vict'},{name:'John Hale',id:'john_tudor'}] },
-  winchester: { name:'Winchester', latlng:[51.06,-1.31], eras:['i'], badge:'Era I · Norman', type:'main',
-    desc:'Ranulf de la Hale first set foot on English soil here in the autumn of 1066. Winchester was then the capital of England — and it was here the Normans consolidated their conquest. Here the dynasty begins.', link:'era-I.html',
-    persons:[{name:'Ranulf de la Hale',id:'ranulf'},{name:'Aelswith',id:'aelswith'}] },
-  pershore:   { name:'Pershore', latlng:[52.11,-2.07], eras:['ii','x'], badge:'Era II & X', type:'plague',
-    desc:'Thomas Hale sheltered here before the plague in 1348. Margery Hale married Thomas Voss here in 1373 — beginning the Voss line that would shape centuries of Hale fortune.', link:'era-II.html',
-    persons:[{name:'Thomas Hale',id:'thomas'},{name:'Margery Hale',id:'margery'},{name:'James Marsh-Hale',id:'james'}] },
-  gloucester: { name:'Gloucester', latlng:[51.86,-2.24], eras:['iv'], badge:'Era IV · Civil War', type:'war',
-    desc:'Captain John Hale (Parliament) was stationed here in 1642. His first letter to his Royalist brother Thomas in Oxford marks the family\'s terrible division. Neither would forgive the other in their lifetimes.', link:'era-IV.html',
-    persons:[{name:'John Hale',id:'john_tudor'}] },
-  edgehill:   { name:'Edgehill · Battle Site', latlng:[52.09,-1.49], eras:['iv'], badge:'Era IV · Civil War', type:'war',
-    desc:'The first great pitched battle of the Civil War, October 23rd 1642. Captain John Hale fought here under Essex. His brother Thomas watched from the Royalist lines across the field. Neither spoke of it afterwards. Neither forgot.', link:'era-IV.html',
-    persons:[{name:'John Hale',id:'john_tudor'}] },
-  oxford:     { name:'Oxford', latlng:[51.75,-1.26], eras:['iv','x'], badge:'Era IV & X', type:'main',
-    desc:'Ensign Thomas Hale (Royalist) served here with Lord Wilmot\'s Horse in 1643. Four centuries later, James Marsh-Hale would research the family archives at the Bodleian Library, reading letters his ancestors wrote to each other across battle lines.', link:'era-IV.html',
-    persons:[{name:'James Marsh-Hale',id:'james'},{name:'Eleanor Voss',id:'eleanor'}] },
-  shropshire: { name:'Shropshire · Whitmore Park', latlng:[52.70,-2.75], eras:['vii'], badge:'Era VII · Victorian', type:'main',
-    desc:'Edmund Hale died in a locked study here on the 14th of August, 1882. The authorities called it natural causes. His widow Eleanor knew better. The locked room would haunt the family for generations. No one has lived in that wing since.', link:'era-VII.html',
-    persons:[{name:'Edmund Hale II',id:'edmund_vict'}] },
-  bath:       { name:'Bath', latlng:[51.38,-2.36], eras:['vi'], badge:'Era VI · Regency', type:'main',
-    desc:'Lady Charlotte Vane-Hale took the waters here in the summer of 1813. The Pump Room was where she first encountered the man who would destroy her family\'s fortune. She described him in a letter as \'charming, and therefore dangerous.\'', link:'era-VI.html',
-    persons:[{name:'Augusta Hale',id:'augusta'}] },
-  london:     { name:'London', latlng:[51.51,-0.13], eras:['v','vii','viii','ix','x'], badge:'Era V–X', type:'main',
-    desc:'Sir Nathaniel Hale arrived in 1698 and made his fortune in the City. Edmund Marsh-Hale surveyed its bomb damage in 1941. London witnessed the Hales at the height of their power, and watched them fall. It kept no secrets.', link:'era-V.html',
-    persons:[{name:'Sir Nathaniel Hale',id:'nathaniel'},{name:'Edmund Marsh-Hale',id:'edmund_mh'},{name:'Eleanor Voss',id:'eleanor'}] },
-  brixton:    { name:'London · Brixton', latlng:[51.46,-0.11], eras:['vii','viii','ix'], badge:'Era VII–IX', type:'main',
-    desc:'Home of Clara Marsh and her son Thomas, the illegitimate son of Edmund Hale, born 1873. His grandmother\'s house on Coldharbour Lane was destroyed in a German bombing raid, December 1941. The family\'s papers were lost with it.', link:'era-VII.html',
-    persons:[{name:'Edmund Hale II',id:'edmund_vict'},{name:'Thomas Marsh-Hale',id:'thomas_mh'}] },
-  harlow:     { name:'Harlow, Essex', latlng:[51.77,0.09], eras:['ix'], badge:'Era IX · Post-War', type:'main',
-    desc:'Edmund Marsh-Hale designed this new town from 1947 onward. \'Making places habitable is about the corners,\' he would say. His post-war vision shaped a generation — and represented, for him, a private form of reparation for what his family had done.', link:'era-IX.html',
-    persons:[{name:'Edmund Marsh-Hale',id:'edmund_mh'}] },
-  normandy:   { name:'Normandy, France', latlng:[49.18,-0.36], eras:['i'], badge:'Era I · Norman Origin', type:'main',
-    desc:'Home of Ranulf de la Hale before 1066. He crossed the Channel with William\'s fleet on the 14th of October. He was twenty-three. He carried a sword, a letter from the Bishop of Bayeux, and nothing else. He never returned.', link:'era-I.html',
-    persons:[{name:'Ranulf de la Hale',id:'ranulf'}] },
-  blackstone: { name:'? Blackstone Moor', latlng:[53.82,-1.55], eras:['all'], badge:'—', type:'ghost',
-    desc:'Referenced once in the Hale family papers of 1743 as \'the place where it happened.\' Location unspecified. The following page has been removed from the ledger. No other mention exists in any record.\n\n— Archivist\'s note: query unresolved.' }
-};
-
-var ERA_LABELS = { all:'All Eras', i:'I · Norman', ii:'II · Plague', iii:'III · Tudor', iv:'IV · Civil War', v:'V · Georgian', vi:'VI · Regency', vii:'VII · Victorian', viii:'VIII · Great War', ix:'IX · Second War', x:'X · Present' };
-
-var ERA_DESCS = {
-  all:  'Select an era to illuminate its places upon the map',
-  i:    '1066–1150 · Ranulf de la Hale crosses from Normandy. Halecroft is established.',
-  ii:   '1348–1400 · The Black Death. Pershore becomes a refuge. The Voss line begins.',
-  iii:  '1485–1603 · William Hale rises under the Tudors. Halecroft becomes a seat of power.',
-  iv:   '1642–1651 · Brother against brother — John in Gloucester, Thomas in Oxford.',
-  v:    '1714–1811 · Sir Nathaniel builds a London fortune. The Hales become merchant princes.',
-  vi:   '1811–1820 · Elegance and danger. The Hales move in circles of power and scandal.',
-  vii:  '1837–1901 · Edmund dies at Whitmore Park. His illegitimate son begins a new chapter.',
-  viii: '1914–1918 · The Hales serve in the trenches. Halecroft becomes a hospital.',
-  ix:   '1939–1950 · Brixton is bombed. Edmund designs Harlow. The family disperses, then gathers.',
-  x:    '1950–2026 · James Marsh-Hale becomes chronicler of the dynasty. The saga nears its end.'
-};
-
-var EE_DATA = {
-  compass:    { seal:'🔏', title:'The Hale Motto', body:'Malis Temporibus, Sedemus Firmi — In Evil Times, We Stand Fast.\n\nCarved into the lintel at Halecroft in 1121 by Brother Eadmer of Worcester. It remains there still. There are marks in the stone below it where, in 1642, someone took a chisel to it and thought better of it halfway through.' },
-  'ship-west':{ seal:'⛵', title:'Cargo Manifest — Stella Maris, October 1066', body:'Three destriers of Norman breed.\nOne chest sealed with the de la Hale sigil — contents unknown.\nOne sword of Norman steel, blessed at Fécamp Abbey.\nOne man who would not return.\n\nDestination: England.' },
-  cartouche:  { seal:'📜', title:'Regni Angliae & Principatus Walliae Descriptio', body:'Per Hondium Hondio, MDLXCVII.\n\nThis cartographic record was commissioned by Sir Nathaniel Hale in 1698, shortly after his arrival in London. He wished, he said, \'to see the whole of it at once — the land that made us.\'\n\nThe original hangs in the study at Halecroft. The room is kept locked.' },
-  'ship-east':{ seal:'⚠', title:'A Vessel Lost — Winter 1348', body:'A Hale ship was lost off the Norfolk coast in the first winter of the plague. Thomas Hale\'s younger brother was aboard, returning from the continent with medicines purchased at great cost.\n\nNo survivors. No cargo recovered. One line in the parish record of Blakeney, dated February 1349.\n\n— Hale-Marsh Papers, Vol. II, marginal note' },
-  scotland:   { seal:'🪶', title:'The Hale-Mackay Accord, February 1320', body:'An alliance struck in secret during the Scottish Wars of Independence. A Hale daughter given in marriage north of the border. The terms were never written down — by agreement of both parties.\n\nIt is not recorded in any English chronicle.\nIt is not recorded in any Scottish one either.\n\nSomething was exchanged. No one living knows what.' },
-  channel:    { seal:'⚓', title:'The Crossing — 14th October, 1066', body:'Ranulf de la Hale crossed here with William the Conqueror\'s fleet. He was twenty-three years old. He carried nothing except a sword and a letter of introduction from the Bishop of Bayeux.\n\nHe would never return to Normandy.\n\nFrom this crossing, nine centuries follow.' }
-};
-
-/* Easter egg locations */
-var EE_PINS = {
-  compass:    { latlng:[51.49, 0.00],   data:'compass'    },
-  'ship-west':{ latlng:[50.00,-4.50],   data:'ship-west'  },
-  cartouche:  { latlng:[56.50,-7.50],   data:'cartouche'  },
-  'ship-east':{ latlng:[53.00, 2.80],   data:'ship-east'  },
-  scotland:   { latlng:[57.20,-3.80],   data:'scotland'   },
-  channel:    { latlng:[50.10,-1.50],   data:'channel'    }
-};
-
-/* ══════════════════════════════════════════════
-   INITIALISE MAP
-══════════════════════════════════════════════ */
-
-var map = L.map('map', {
-  center: [53.0, -2.5],
-  zoom: 6,
-  minZoom: 5,
-  maxZoom: 13,
-  zoomControl: true,
-  attributionControl: true
-});
-
-// CartoDB Dark Matter (no labels) — aged with CSS filter
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://carto.com">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 20
-}).addTo(map);
-
-// Move zoom control to bottom-right (away from nav bar)
-map.zoomControl.setPosition('bottomright');
-
-/* ══════════════════════════════════════════════
-   MARKER HELPERS
-══════════════════════════════════════════════ */
-
-function pinColor(type) {
-  var colors = {
-    seat:  '#E8C84C',
-    main:  '#C8A83C',
-    plague:'#8B1A1A',
-    war:   '#3A5480',
-    ghost: 'rgba(200,168,60,0.28)'
-  };
-  return colors[type] || '#C8A83C';
-}
-
-function makeMarkerIcon(key, pin) {
-  var isHalecroft = key === 'halecroft';
-  var isGhost     = pin.type === 'ghost';
-  var isWar       = pin.type === 'war';
-  var isPlagueType = pin.type === 'plague';
-  var col = pinColor(pin.type);
-
-  var pulseHtml = isHalecroft
-    ? '<div class="hd-pulse"></div><div class="hd-pulse" style="animation-delay:0.8s"></div>'
-    : '';
-
-  var svgSize = isHalecroft ? 38 : 24;
-  var pinSvg;
-
-  if (isHalecroft) {
-    pinSvg = '<svg width="38" height="38" viewBox="-19 -19 38 38">' +
-      '<circle r="16" fill="none" stroke="rgba(200,168,60,0.3)" stroke-width="0.8"/>' +
-      '<polygon points="0,-12 2.8,-3.8 11,-3.8 4.5,1.5 7,9.5 0,5.2 -7,9.5 -4.5,1.5 -11,-3.8 -2.8,-3.8"' +
-      ' fill="' + col + '" stroke="rgba(140,100,20,0.8)" stroke-width="0.7"/>' +
-      '</svg>';
-  } else if (isGhost) {
-    pinSvg = '<svg width="18" height="25" viewBox="-9 -12 18 26">' +
-      '<path d="M0,12 C-1,8 -8,4 -8,-2 A8,8,0,1,1,8,-2 C8,4 1,8 0,12 Z"' +
-      ' fill="rgba(200,168,60,0.15)" stroke="rgba(200,168,60,0.3)" stroke-width="0.8" stroke-dasharray="3,2"/>' +
-      '<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" fill="rgba(200,168,60,0.4)" font-size="7" font-family="serif">?</text>' +
-      '</svg>';
-  } else {
-    pinSvg = '<svg width="20" height="28" viewBox="-10 -12 20 28">' +
-      '<path d="M0,14 C-1,9 -9,5 -9,-2 A9,9,0,1,1,9,-2 C9,5 1,9 0,14 Z" fill="' + col + '" stroke="rgba(255,220,100,0.4)" stroke-width="0.7"/>' +
-      '<circle cx="0" cy="-2" r="3.5" fill="rgba(255,240,160,0.5)"/>' +
-      '</svg>';
-  }
-
-  var html = '<div class="hd-marker' + (isGhost ? ' hd-ghost' : '') + '" style="width:' + svgSize + 'px;height:' + (isHalecroft ? 38 : 28) + 'px;position:relative;">' +
-    pulseHtml +
-    '<div class="hd-marker-inner">' + pinSvg + '</div>' +
-    '<span class="hd-marker-label">' + pin.name + '</span>' +
-    '</div>';
-
-  return L.divIcon({
-    html: html,
-    className: '',
-    iconSize:   isHalecroft ? [38, 38] : [20, 28],
-    iconAnchor: isHalecroft ? [19, 19] : [10, 28],
-    popupAnchor:[0, -28]
-  });
-}
-
-/* ══════════════════════════════════════════════
-   CREATE MARKERS
-══════════════════════════════════════════════ */
-
-var markers = {};
-
-Object.keys(PINS).forEach(function(key) {
-  var pin = PINS[key];
-  var m = L.marker(pin.latlng, {
-    icon: makeMarkerIcon(key, pin),
-    title: pin.name
-  }).addTo(map);
-
-  m.on('click', function(e) {
-    L.DomEvent.stopPropagation(e);
-    openPanel(key);
-  });
-
-  markers[key] = { marker: m, pin: pin };
-});
-
-/* Easter egg markers */
-Object.keys(EE_PINS).forEach(function(key) {
-  var ep = EE_PINS[key];
-  var icon = L.divIcon({
-    html: '<div class="hd-ee-marker"><div class="hd-ee-dot"></div></div>',
-    className: '',
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
-  });
-  var em = L.marker(ep.latlng, { icon: icon }).addTo(map);
-  em.on('click', function(e) {
-    L.DomEvent.stopPropagation(e);
-    showEE(ep.data, e.originalEvent);
-  });
-});
-
-/* ══════════════════════════════════════════════
-   PANEL
-══════════════════════════════════════════════ */
-
-var panel = document.getElementById('detailPanel');
-
-function openPanel(key) {
-  var loc = PINS[key]; if (!loc) return;
-
-  // Update URL hash for shareable deep-link
-  if (history.replaceState) history.replaceState(null, '', '#' + key);
-
-  // Fly the map to this location — minimum zoom 9, keep higher if already zoomed in
-  var targetZoom = Math.max(map.getZoom(), 9);
-  map.flyTo(loc.latlng, targetZoom, { animate: true, duration: 1.1, easeLinearity: 0.25 });
-
-  document.getElementById('detailBadge').textContent = loc.badge || '';
-  document.getElementById('detailName').textContent  = loc.name;
-
-  document.getElementById('detailDesc').textContent = loc.desc;
-
-  var lk = document.getElementById('detailLink');
-  if (loc.link) { lk.href=loc.link; lk.textContent=(loc.linkText||'Open era record')+' →'; lk.style.display=''; }
-  else lk.style.display='none';
-
-  var ps = document.getElementById('detailPersons');
-  var pc = document.getElementById('detailPersonLinks'); pc.innerHTML = '';
-  if (loc.persons && loc.persons.length) {
-    loc.persons.forEach(function(p) {
-      var a = document.createElement('a');
-      a.className='detail-person-link'; a.href='persons.html#'+p.id; a.textContent=p.name;
-      pc.appendChild(a);
-    });
-    ps.style.display='';
-  } else {
-    ps.style.display='none';
-  }
-
-  panel.classList.add('open');
-}
-
-function closePanel() {
-  panel.classList.remove('open');
-  if (history.replaceState) history.replaceState(null, '', window.location.pathname);
-}
-
-document.getElementById('closeBtn').addEventListener('click', closePanel);
-map.on('click', closePanel);
-
-// Open pin from URL hash on page load
-(function() {
-  var hash = window.location.hash.replace('#', '');
-  if (hash && PINS[hash]) {
-    setTimeout(function() { openPanel(hash); }, 800);
-  }
-})();
-
-/* ══════════════════════════════════════════════
-   ERA FILTERS
-══════════════════════════════════════════════ */
-
-var currentEra = 'all';
-
-function filterMarkers() {
-  Object.keys(markers).forEach(function(key) {
-    var m = markers[key];
-    var eras = m.pin.eras;
-    var show = currentEra === 'all' || eras.indexOf(currentEra) !== -1 || eras.indexOf('all') !== -1;
-    var el = m.marker.getElement();
-    if (el) el.style.opacity = show ? '1' : '0.08';
-    if (el) el.style.pointerEvents = show ? '' : 'none';
-  });
-}
-
-document.getElementById('eraStrip').addEventListener('click', function(e) {
-  var btn = e.target.closest('.era-btn'); if (!btn) return;
-  document.querySelectorAll('.era-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  currentEra = btn.dataset.era;
-  document.getElementById('eraDesc').textContent = ERA_DESCS[currentEra] || '';
-  filterMarkers();
-  closePanel();
-
-  // Fly to fit the pins for this era
-  if (currentEra === 'all') {
-    map.flyTo([53.0, -2.5], 6, { animate: true, duration: 1.2 });
-  } else {
-    var pts = [];
-    Object.keys(PINS).forEach(function(k) {
-      var p = PINS[k];
-      if (p.eras.indexOf(currentEra) !== -1) pts.push(L.latLng(p.latlng));
-    });
-    // Always anchor to Halecroft
-    pts.push(L.latLng(PINS.halecroft.latlng));
-    if (pts.length > 1) {
-      map.flyToBounds(L.latLngBounds(pts), { padding: [90, 90], maxZoom: 10, animate: true, duration: 1.3 });
-    }
-  }
-});
-
-/* ══════════════════════════════════════════════
-   EASTER EGGS
-══════════════════════════════════════════════ */
-
-var eeCard = document.getElementById('eeCard');
-
-function showEE(key, evt) {
-  var data = EE_DATA[key]; if (!data) return;
-  document.getElementById('eeSeal').textContent = data.seal||'';
-  document.getElementById('eeTitle').textContent = data.title;
-  document.getElementById('eeBody').textContent  = data.body;
-
-  eeCard.style.display = 'block';
-  var x = evt ? evt.clientX : window.innerWidth/2;
-  var y = evt ? evt.clientY : window.innerHeight/2;
-  var cw = 300, ch = 200;
-  var left = Math.min(x+14, window.innerWidth-cw-14);
-  var top  = Math.min(y-20, window.innerHeight-ch-14);
-  if (top < 8) top = 8;
-  eeCard.style.left = left+'px'; eeCard.style.top = top+'px';
-}
-
-document.getElementById('eeClose').addEventListener('click', function(){ eeCard.style.display='none'; });
-map.on('click', function(){ eeCard.style.display='none'; });
-
-})();
-</script>
-<script src="features.js"></script>
-<script src="inquiry.js"></script>
+  <script src="features.js"></script>
+  <script src="inquiry.js"></script>
 </body>
 </html>

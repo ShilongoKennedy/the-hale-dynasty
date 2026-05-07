@@ -5,43 +5,294 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matilda's Letter — The Hale Dynasty</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #F4ECD8; color: #2A1E0E; font-family: Georgia, 'Times New Roman', serif; min-height: 100vh; }
-    /* Vellum texture body */
-    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 600px 400px at 20% 30%, rgba(160,110,40,0.06) 0%, transparent 70%), radial-gradient(ellipse 400px 300px at 80% 70%, rgba(120,80,30,0.05) 0%, transparent 70%), radial-gradient(ellipse 300px 500px at 50% 90%, rgba(140,100,40,0.04) 0%, transparent 80%); pointer-events: none; z-index: 0; }
-    .wrap { max-width: 580px; margin: 0 auto; padding: 100px 30px 120px; position: relative; z-index: 1; }
-    .header-note { font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.22em; text-transform: uppercase; color: #8B6914; text-align: center; margin-bottom: 10px; }
-    .doc-title { font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.3em, 3vw, 1.8em); color: #2A1E0E; text-align: center; letter-spacing: 0.08em; margin-bottom: 6px; }
-    .doc-sub { font-style: italic; font-size: 0.9em; color: #6A4A1E; text-align: center; margin-bottom: 40px; }
-    .imaging-note { border: 1px solid rgba(139,100,40,0.3); background: rgba(245,235,200,0.6); padding: 14px 18px; font-style: italic; font-size: 0.85em; color: #5C3A1E; line-height: 1.75; margin-bottom: 40px; text-align: center; }
-    hr.rule { border: none; border-top: 1px solid rgba(139,100,40,0.25); margin: 30px 0; }
-    /* The letter */
-    .letter { font-size: 1.02em; line-height: 2.1; color: #2A1E0E; }
+    body {
+      background:
+        linear-gradient(180deg, rgba(8,7,6,0.94), rgba(12,10,8,0.97)),
+        url('portraits/Newbackground.png') center/cover fixed no-repeat;
+      color: #f1e8dc;
+      font-family: 'Inter', Georgia, serif;
+      min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(9,8,7,0.76), rgba(14,12,10,0.9)),
+        radial-gradient(circle at top right, rgba(202,163,95,0.08), transparent 24%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      background: rgba(11,10,8,0.86);
+      border-bottom: 1px solid rgba(202,163,95,0.14);
+      backdrop-filter: blur(14px);
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .topbar a, .topbar span { color: rgba(202,163,95,0.68); text-decoration: none; }
+    .topbar a:hover { color: #f0d7a1; }
+    .topbar .center { color: rgba(239,230,216,0.52); }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 78px 26px 120px;
+      position: relative;
+      z-index: 1;
+    }
+    .header-note {
+      font-family: 'Courier New', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(202,163,95,0.64);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .doc-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+      color: #f5ede2;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .doc-sub {
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(239,230,216,0.72);
+      text-align: center;
+      margin-bottom: 38px;
+    }
+    .imaging-note,
+    .cipher-shell,
+    .provenance {
+      background: rgba(14,12,10,0.76);
+      border: 1px solid rgba(202,163,95,0.16);
+      box-shadow: 0 26px 56px rgba(0,0,0,0.22);
+      backdrop-filter: blur(12px);
+    }
+    .imaging-note {
+      padding: 18px 22px;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: rgba(239,230,216,0.74);
+      line-height: 1.82;
+      margin-bottom: 34px;
+      text-align: center;
+    }
+    hr.rule { border: none; border-top: 1px solid rgba(202,163,95,0.18); margin: 34px 0; }
+    .letter {
+      font-size: 1.03rem;
+      line-height: 2.04;
+      color: rgba(245,237,226,0.9);
+      background: rgba(10,9,8,0.62);
+      border: 1px solid rgba(202,163,95,0.14);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.22);
+      backdrop-filter: blur(10px);
+      padding: 32px 34px;
+    }
     .letter p { margin-bottom: 1.2em; }
-    .letter p.recovered { color: #3A2A0E; }
-    .rec-mark { color: #8B1A1A; font-size: 0.75em; vertical-align: super; margin-right: 2px; font-family: 'Courier New', monospace; }
-    .letter .opener::first-letter { font-family: 'Cinzel', Georgia, serif; font-size: 3em; float: left; line-height: 0.8; margin-right: 6px; margin-top: 6px; color: #3A2A0E; }
-    .gap { display: block; text-align: center; font-style: italic; font-size: 0.82em; color: rgba(90,60,20,0.4); letter-spacing: 0.12em; margin: 18px 0; font-family: 'Courier New', monospace; }
-    .provenance { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(139,100,40,0.2); font-family: 'Courier New', monospace; font-size: 0.7em; letter-spacing: 0.14em; color: rgba(90,60,20,0.4); text-transform: uppercase; text-align: center; line-height: 1.9; }
-    .home-float { position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px; background: rgba(42,30,14,0.9); border: 1px solid rgba(200,168,60,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 400; transition: all 0.22s; }
+    .letter p.recovered { color: rgba(245,237,226,0.94); }
+    .rec-mark { color: #b86d64; font-size: 0.75em; vertical-align: super; margin-right: 2px; font-family: 'Courier New', monospace; }
+    .letter .opener::first-letter {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.76;
+      margin-right: 8px;
+      margin-top: 5px;
+      color: #d8b46d;
+    }
+    .cipher-shell { margin-top: 36px; padding: 30px 28px; }
+    .cipher-label,
+    .provenance-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(202,163,95,0.46);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .cipher-intro {
+      font-style: italic;
+      color: rgba(239,230,216,0.74);
+      line-height: 1.84;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    #cipher-text {
+      font-family: 'Courier New', monospace;
+      font-size: 1.08rem;
+      letter-spacing: 0.28em;
+      color: rgba(239,230,216,0.84);
+      word-spacing: 0.42em;
+      line-height: 1.9;
+      text-align: center;
+    }
+    .cipher-help {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      color: rgba(202,163,95,0.36);
+      margin-top: 10px;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+    .cipher-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .cipher-controls label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: rgba(202,163,95,0.55);
+    }
+    .cipher-controls input {
+      width: 64px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(202,163,95,0.25);
+      color: #f5ede2;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+    }
+    .cipher-controls button {
+      padding: 8px 20px;
+      background: rgba(202,163,95,0.08);
+      border: 1px solid rgba(202,163,95,0.28);
+      color: rgba(239,230,216,0.82);
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .cipher-controls button:hover { background: rgba(202,163,95,0.14); }
+    #cipher-result {
+      min-height: 52px;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      color: rgba(239,230,216,0.72);
+      transition: all 0.4s;
+    }
+    #cipher-success {
+      display: none;
+      margin-top: 22px;
+      border: 1px solid rgba(202,163,95,0.16);
+      background: rgba(255,255,255,0.03);
+      padding: 22px 24px;
+      text-align: center;
+    }
+    #cipher-success .success-mark {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(202,163,95,0.46);
+      margin-bottom: 10px;
+    }
+    #cipher-success .success-quote {
+      font-size: 1.12rem;
+      color: #f5ede2;
+      font-style: italic;
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+    #cipher-success p {
+      font-size: 0.84rem;
+      color: rgba(239,230,216,0.68);
+      line-height: 1.76;
+      font-style: italic;
+    }
+    .cipher-clue {
+      text-align: center;
+      margin-top: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: rgba(202,163,95,0.32);
+    }
+    .provenance {
+      margin-top: 36px;
+      padding: 24px 22px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      color: rgba(202,163,95,0.46);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2;
+    }
+    .provenance a { color: rgba(202,163,95,0.56); text-decoration: none; }
+    .provenance a:hover { color: #f0d7a1; }
+    .home-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      background: rgba(13,11,8,0.9);
+      border: 1px solid rgba(200,168,60,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 400;
+      transition: all 0.22s;
+    }
     .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
-    @media (max-width: 600px) { .wrap { padding: 60px 20px 80px; } }
+    @media (max-width: 640px) {
+      .topbar { padding: 10px 14px; font-size: 0.62rem; }
+      .topbar .center { display: none; }
+      .wrap { padding: 56px 16px 80px; }
+      .letter { padding: 24px 22px; }
+      .cipher-shell { padding: 22px 18px; }
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="analytics.js"></script>
 </head>
 <body data-vol="">
 
-<div class="wrap">
+<nav class="topbar">
+  <a href="index.html">← Home</a>
+  <span class="center">MSS. Hale-Marsh 3 · Bodleian Library</span>
+  <a href="the-email.html">The Night It Was Found →</a>
+</nav>
 
+<div class="wrap">
   <div class="header-note">MSS. Hale-Marsh 3, item 7 · Bodleian Library, Oxford</div>
-  <h1 class="doc-title">Matilda of Halecroft</h1>
-  <p class="doc-sub">Her letter · Written c.1390 · Read in its entirety, January 2024</p>
+  <h1 class="doc-title">Matilda's Letter</h1>
+  <p class="doc-sub">Written c.1390 · Central section recovered by multispectral imaging in January 2024</p>
 
   <div class="imaging-note">
-    The opening and closing sections of this document were legible to the naked eye from the time of its first cataloguing in 1858. The central section — lines 9 through 23, approximately — was damaged by water and ink fading to the point of illegibility. Multispectral imaging commissioned by Eleanor Voss in January 2024 recovered twenty-three previously unreadable lines. The recovered portions are marked with an asterisk. The text of the recovered sections is transcribed as faithfully as the imaging permitted; five words remain unclear and are noted.
+    The opening and closing sections of this document were readable from the time of its first cataloguing in 1858. The central section was not. Eleanor Voss commissioned multispectral imaging in January 2024 and recovered twenty-three previously unreadable lines. The recovered passages are marked below.
   </div>
 
   <hr class="rule">
@@ -61,129 +312,94 @@
 
     <p class="recovered"><span class="rec-mark">*</span>Margery is a good woman and a careful one and she will manage what she has been given as the women of this house have always managed what they were given, which is to say: better than the men expected, and with less complaint than the men deserved, and with a thoroughness that the men noticed only when it was absent, which it rarely was.</p>
 
-    <p class="recovered"><span class="rec-mark">*</span>I write this not for the sons of this house, who will have the documents and the deeds and the court rolls and all the paper that paper requires. I write it for the ones who will come without knowing they are coming. Margery's line. The ones in Pershore. They will not have the paper. They will have the bees, if they are <span style="color:rgba(90,60,20,0.4);font-style:italic;">[word unclear]</span>, and they will have the land in their hands even if the land is not theirs, and they will have the question, which is: is this sufficient? And the answer, which I cannot give them, only tell them to keep asking.</span></p>
+    <p class="recovered"><span class="rec-mark">*</span>I write this not for the sons of this house, who will have the documents and the deeds and the court rolls and all the paper that paper requires. I write it for the ones who will come without knowing they are coming. Margery's line. The ones in Pershore. They will not have the paper. They will have the bees, if they are <span style="color:rgba(202,163,95,0.5);font-style:italic;">[word unclear]</span>, and they will have the land in their hands even if the land is not theirs, and they will have the question, which is: is this sufficient? And the answer, which I cannot give them, only tell them to keep asking.</p>
 
     <p class="recovered"><span class="rec-mark">*</span>The deed-box is in the Hale. The keys are in the deed-box. The indentures are in the deed-box. If someone comes from Pershore with the name Voss and says they have a claim, they have a claim. This is the claim. I am setting it down here so that the truth is somewhere and so that when it is needed it can be found. The truth requires somewhere to be. I am giving it somewhere.</p>
 
-    <p class="recovered"><span class="rec-mark">*</span>I have been thinking about this for thirty years, since Margery was born and I held her in the yard and thought: she has Aelswith's eyes. I have been thinking about what to do with it. The answer is this letter. It is not much. But it is what I have and it is true and that is, I believe, <span style="color:rgba(90,60,20,0.4);font-style:italic;">[word unclear]</span>.</p>
+    <p class="recovered"><span class="rec-mark">*</span>I have been thinking about this for thirty years, since Margery was born and I held her in the yard and thought: she has Aelswith's eyes. I have been thinking about what to do with it. The answer is this letter. It is not much. But it is what I have and it is true and that is, I believe, <span style="color:rgba(202,163,95,0.5);font-style:italic;">[word unclear]</span>.</p>
 
     <p>Keep asking. Keep the land. See to the pig.</p>
-
     <p>Tell them the name does not end here.</p>
-
     <p><em>Matilda. Her mark. Halecroft. Written c.1390.</em></p>
   </div>
 
-  <hr class="rule">
+  <div class="cipher-shell" id="hd-cipher-section">
+    <div class="cipher-label">Archival Note · Verso Recto B</div>
+    <p class="cipher-intro">Beneath the recovered text, Eleanor found a second inscription in another hand: smaller, careful, encoded, and clearly left for a patient reader.</p>
+    <div id="cipher-text">VPPA LDVTYR VPPA ESP WLYO</div>
+    <p class="cipher-help">[ A substitution cipher · The key is a number · Shift each letter back by the key ]</p>
 
-  <!-- ════════════════════════════════════════════════════ -->
-  <!-- THE MATILDA CIPHER                                   -->
-  <!-- ════════════════════════════════════════════════════ -->
-  <div id="hd-cipher-section" style="margin-top:50px;">
-    <div style="font-family:'Courier New',monospace;font-size:0.65em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(139,100,40,0.5);text-align:center;margin-bottom:12px;">
-      Archival Note · MSS. Hale-Marsh 3, item 7 · Verso recto b
-    </div>
-    <div style="border:1px solid rgba(139,100,40,0.25);background:rgba(245,235,200,0.4);padding:26px 30px;margin-bottom:24px;text-align:center;">
-      <p style="font-style:italic;font-size:0.9em;color:rgba(90,60,20,0.65);line-height:1.75;margin-bottom:16px;">
-        Beneath the recovered text, on the lower verso, Eleanor Voss found a second inscription in a different hand — smaller, careful, and encoded. It is not Matilda's hand. The editors believe it was added by an unknown reader sometime in the fifteenth century, perhaps as a test of the finder's patience. The inscription reads:
-      </p>
-      <div id="cipher-text" style="font-family:'Courier New',monospace;font-size:1.1em;letter-spacing:0.28em;color:rgba(90,60,20,0.85);word-spacing:0.5em;line-height:2;">
-        VPPA LDVTYR VPPA ESP WLYO
-      </div>
-      <p style="font-family:'Courier New',monospace;font-size:0.62em;color:rgba(90,60,20,0.35);margin-top:10px;letter-spacing:0.15em;">
-        [ A substitution cipher · The key is a number · Shift each letter back by the key ]
-      </p>
+    <div class="cipher-controls">
+      <label for="cipher-key">Shift Key:</label>
+      <input type="number" id="cipher-key" min="1" max="25" value="" placeholder="?">
+      <button id="cipher-decode-btn" onclick="attemptCipherDecode()">Decode</button>
     </div>
 
-    <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
-      <label for="cipher-key" style="font-family:'Courier New',monospace;font-size:0.72em;letter-spacing:0.18em;color:rgba(90,60,20,0.55);">SHIFT KEY:</label>
-      <input type="number" id="cipher-key" min="1" max="25" value=""
-             placeholder="?"
-             style="width:64px;padding:6px 10px;background:rgba(245,235,200,0.8);border:1px solid rgba(139,100,40,0.35);color:#2A1E0E;font-family:'Courier New',monospace;font-size:1.1em;text-align:center;outline:none;">
-      <button id="cipher-decode-btn" onclick="attemptCipherDecode()"
-              style="padding:7px 20px;background:rgba(139,100,40,0.15);border:1px solid rgba(139,100,40,0.4);color:rgba(90,60,20,0.8);font-family:'Courier New',monospace;font-size:0.72em;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;">
-        Decode
-      </button>
+    <div id="cipher-result"></div>
+
+    <div id="cipher-success">
+      <div class="success-mark">Decoded · Shift 11 · Thomas's Age</div>
+      <div class="success-quote">“Keep asking. Keep the land.”</div>
+      <p>The key is eleven: Thomas Hale's age when he came home from Pershore to an empty house. The annotator knew that story and left the line hidden inside the number that mattered most.</p>
     </div>
 
-    <div id="cipher-result" style="min-height:60px;text-align:center;font-family:'Courier New',monospace;font-size:0.9em;letter-spacing:0.18em;color:rgba(90,60,20,0.7);transition:all 0.4s;"></div>
-
-    <div id="cipher-success" style="display:none;margin-top:24px;border:1px solid rgba(139,100,40,0.3);background:rgba(245,235,200,0.6);padding:22px 28px;text-align:center;">
-      <div style="font-family:'Courier New',monospace;font-size:0.62em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(139,100,40,0.45);margin-bottom:10px;">Decoded · Shift 11 · Thomas's Age</div>
-      <div style="font-size:1.15em;color:#2A1E0E;font-style:italic;margin-bottom:14px;line-height:1.7;">
-        "Keep asking. Keep the land."
-      </div>
-      <p style="font-size:0.82em;color:rgba(90,60,20,0.55);line-height:1.75;font-style:italic;">
-        The key is eleven — Thomas Hale's age when he came home from Pershore to an empty house. The unknown annotator knew the story. They encoded the only instruction Thomas ever needed, with the only number that mattered. The shift that brings it back is the age at which he learned it.
-      </p>
-      <div style="margin-top:14px;font-family:'Courier New',monospace;font-size:0.6em;letter-spacing:0.2em;color:rgba(139,100,40,0.3);">
-        ← Matilda's letter, written c.1390 · Cipher added c.15th century · Recovered 2024
-      </div>
-    </div>
-
-    <div style="text-align:center;margin-top:16px;font-family:'Courier New',monospace;font-size:0.6em;letter-spacing:0.15em;color:rgba(139,100,40,0.3);">
-      The key is hidden somewhere in the archive. Those who have found all ten pigs know where to look.
-    </div>
+    <div class="cipher-clue">The key is hidden elsewhere in the archive. Those who found all ten pigs know where to look.</div>
   </div>
 
-  <script>
-  function decodeCaesar(text, shift) {
-    return text.split('').map(function(ch) {
-      if (ch >= 'A' && ch <= 'Z') {
-        return String.fromCharCode(((ch.charCodeAt(0) - 65 - shift + 26) % 26) + 65);
-      }
-      return ch;
-    }).join('');
-  }
-
-  window.attemptCipherDecode = function() {
-    var input = document.getElementById('cipher-key');
-    var result = document.getElementById('cipher-result');
-    var success = document.getElementById('cipher-success');
-    var key = parseInt(input.value, 10);
-    if (isNaN(key) || key < 1 || key > 25) {
-      result.textContent = 'Enter a number between 1 and 25.';
-      result.style.color = 'rgba(180,80,80,0.6)';
-      return;
-    }
-    var decoded = decodeCaesar('VPPA LDVTYR VPPA ESP WLYO', key);
-    result.textContent = decoded;
-    result.style.color = 'rgba(90,60,20,0.75)';
-    if (key === 11) {
-      result.style.color = 'rgba(60,120,40,0.8)';
-      setTimeout(function() {
-        success.style.display = 'block';
-        try { localStorage.setItem('hd_cipher_solved', '1'); } catch(e){}
-      }, 600);
-    } else {
-      success.style.display = 'none';
-    }
-  };
-
-  document.getElementById('cipher-key').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') attemptCipherDecode();
-  });
-  </script>
-
-  <hr class="rule">
-
   <div class="provenance">
+    <div class="provenance-label">Provenance</div>
     MSS. Hale-Marsh 3, item 7<br>
     Bodleian Library, University of Oxford<br>
     Central section recovered by multispectral imaging · January 2024<br>
-    Transcribed by Eleanor Voss · Oxford, 2024<br>
-    <br>
-    <a href="the-email.html" style="color:rgba(139,100,40,0.4);text-decoration:none;">← The night Eleanor found it</a>
+    Transcribed by Eleanor Voss · Oxford, 2024<br><br>
+    <a href="the-email.html">← The night Eleanor found it</a>
     &nbsp; · &nbsp;
-    <a href="index.html" style="color:rgba(139,100,40,0.4);text-decoration:none;">Archive Home →</a>
+    <a href="index.html">Home →</a>
   </div>
+</div>
 
-</div><!-- wrap -->
-
-<a href="index.html" class="home-float" title="Archive Home" aria-label="Return to archive home">
+<a href="index.html" class="home-float" title="Return home" aria-label="Return home">
   <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 3L2 12h3v9h6v-6h2v6h6v-9h3L12 3z" fill="none" stroke="#C8A83C" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </a>
 
+<script>
+function decodeCaesar(text, shift) {
+  return text.split('').map(function(ch) {
+    if (ch >= 'A' && ch <= 'Z') {
+      return String.fromCharCode(((ch.charCodeAt(0) - 65 - shift + 26) % 26) + 65);
+    }
+    return ch;
+  }).join('');
+}
+
+window.attemptCipherDecode = function() {
+  var input = document.getElementById('cipher-key');
+  var result = document.getElementById('cipher-result');
+  var success = document.getElementById('cipher-success');
+  var key = parseInt(input.value, 10);
+  if (isNaN(key) || key < 1 || key > 25) {
+    result.textContent = 'Enter a number between 1 and 25.';
+    result.style.color = 'rgba(184,109,100,0.8)';
+    return;
+  }
+  var decoded = decodeCaesar('VPPA LDVTYR VPPA ESP WLYO', key);
+  result.textContent = decoded;
+  result.style.color = 'rgba(239,230,216,0.82)';
+  if (key === 11) {
+    result.style.color = '#d8c68f';
+    setTimeout(function() {
+      success.style.display = 'block';
+      try { localStorage.setItem('hd_cipher_solved', '1'); } catch(e){}
+    }, 400);
+  } else {
+    success.style.display = 'none';
+  }
+};
+
+document.getElementById('cipher-key').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attemptCipherDecode();
+});
+</script>
 <script src="features.js"></script>
 </body>
 </html>
