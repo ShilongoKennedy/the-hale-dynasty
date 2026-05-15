@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Matilda's Letter — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
@@ -66,7 +66,7 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       line-height: 0.96;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.01em;
       font-weight: 600;
       color: #f5ede2;
       text-align: center;
@@ -268,11 +268,38 @@
     }
     .home-float:hover { border-color: #C8A83C; transform: scale(1.12); }
     @media (max-width: 640px) {
-      .topbar { padding: 10px 14px; font-size: 0.62rem; }
+      .topbar {
+        padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
+        font-size: 0.62rem;
+        justify-content: flex-start;
+        gap: 18px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .topbar::-webkit-scrollbar { display: none; }
+      .topbar a { flex: 0 0 auto; white-space: nowrap; }
       .topbar .center { display: none; }
-      .wrap { padding: 56px 16px 80px; }
+      .wrap { padding: 46px 16px 86px; }
+      .doc-title {
+        font-size: 2.48rem;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+      .doc-sub { font-size: 0.94rem; line-height: 1.55; }
       .letter { padding: 24px 22px; }
       .cipher-shell { padding: 22px 18px; }
+      .home-float {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+        right: 16px;
+      }
+    }
+    @media (max-width: 420px) {
+      .wrap { padding-inline: 14px; }
+      .doc-title { font-size: 2.16rem; }
+      .letter { padding: 20px 18px; font-size: 0.98rem; line-height: 1.9; }
+      .imaging-note { padding: 16px 18px; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>

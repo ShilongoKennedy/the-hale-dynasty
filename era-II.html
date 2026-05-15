@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta property="og:title" content="Vol. II — The House of Hale">
   <meta property="og:description" content="The Plague Years, 1121–1400. The Black Death devastates Halecroft. Thomas Hale, age eleven, comes home to an empty house.">
   <meta property="og:image" content="https://the-hale-dynasty.vercel.app/crests/EraII.png">
@@ -821,6 +821,30 @@
       .home-float { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important; right: 16px !important; }
       #secret-nav-link { font-size: 0.62em !important; letter-spacing: 0.14em !important; }
     }
+  
+    @media (max-width: 760px) {
+      .era-nav {
+        padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px !important;
+        justify-content: flex-start !important;
+        gap: 16px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .era-nav::-webkit-scrollbar { display: none; }
+      .era-nav a { flex: 0 0 auto !important; white-space: nowrap !important; }
+      .era-nav .vol-marker { flex: 0 0 auto !important; width: auto !important; order: 0 !important; margin: 0 !important; white-space: nowrap !important; }
+      .home-float { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important; right: 16px !important; }
+    }
+
+    @media (max-width: 430px) {
+      .era-nav { font-size: 0.68rem !important; letter-spacing: 0.16em !important; }
+      .era-nav .vol-marker { display: none !important; }
+      .home-float { width: 48px !important; height: 48px !important; }
+      body { overflow-x: hidden; }
+    }
   </style>
   <link rel="stylesheet" href="features.css">
   <script defer src="/_vercel/insights/script.js"></script>
@@ -1516,6 +1540,7 @@ if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = function(){
 
   <script defer src="analytics.js"></script>
 
+<script src="transitions.js"></script>
 <script src="features.js"></script>
 
   <div class="hd-cipher-wrap" style="top:80px;left:28px" title=""><span class="hd-cipher">E</span></div>

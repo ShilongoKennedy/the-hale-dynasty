@@ -258,17 +258,18 @@ if(era){
   cv.id = 'hd-atmos';
   cv.style.cssText = [
     'position:fixed;inset:0;',
+    'width:100vw;height:100vh;max-width:100vw;',
     'pointer-events:none;',
     'z-index:0;',
     'opacity:0.72;',
     'transition:opacity 0.6s;'
   ].join('');
   document.body.insertBefore(cv, document.body.firstChild);
-  cv.width = window.innerWidth;
+  cv.width = document.documentElement.clientWidth || window.innerWidth;
   cv.height = window.innerHeight;
   var cx = cv.getContext('2d');
   window.addEventListener('resize', function(){
-    cv.width = window.innerWidth;
+    cv.width = document.documentElement.clientWidth || window.innerWidth;
     cv.height = window.innerHeight;
   });
 
@@ -1074,7 +1075,11 @@ if(cspans.length){
       + '.hd-ap-sig{margin-top:32px;padding-top:16px;'
       + 'border-top:1px solid rgba(200,168,40,0.15);'
       + 'font-family:"Courier New",monospace;font-size:0.62em;'
-      + 'letter-spacing:0.14em;text-transform:uppercase;color:#4A3820;text-align:right;}';
+      + 'letter-spacing:0.14em;text-transform:uppercase;color:#4A3820;text-align:right;}'
+      + '@media(max-width:760px){'
+      + '.hd-archivist-toggle{display:none!important;}'
+      + '.hd-archivist-panel{display:none!important;right:auto!important;left:100vw!important;width:100vw!important;}'
+      + '}';
     document.head.appendChild(s);
 
     // Build panel
@@ -1187,6 +1192,32 @@ if(cspans.length){
     });
     fadeTicking = true;
   }, { passive: true });
+})();
+
+/* ── Sitewide Eleanor portal ─────────────────────────────────────────
+   Adds a quiet inquiry shortcut to archive pages that already load the
+   shared feature bundle. The reading room itself does not need a portal.
+   ───────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  function addEleanorPortal() {
+    var path = (window.location.pathname || '').split('/').pop() || 'index.html';
+    if (path === 'eleanor.html' || document.querySelector('.hd-eleanor-portal')) return;
+
+    var portal = document.createElement('a');
+    portal.className = 'hd-eleanor-portal';
+    portal.href = 'eleanor.html';
+    portal.setAttribute('aria-label', 'Ask Eleanor Voss');
+    portal.innerHTML = '<span class="hd-eleanor-portal__mark">E</span><span class="hd-eleanor-portal__label">Ask Eleanor</span>';
+    document.body.appendChild(portal);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addEleanorPortal);
+  } else {
+    addEleanorPortal();
+  }
 })();
 
 /* ══════════════════════════════════════════════════════════════════════

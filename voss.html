@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Voss Archive — The Hale Dynasty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="features.css">
@@ -75,7 +75,7 @@
       color: #f5ede2;
       text-align: center;
       line-height: 0.96;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.01em;
       margin-bottom: 10px;
     }
     .page-sub {
@@ -307,15 +307,47 @@
     }
     .home-float:hover { border-color: #f2dba5; transform: scale(1.12); }
     @media (max-width: 700px) {
-      .top-nav { padding: 10px 14px; font-size: 0.62rem; }
+      .top-nav {
+        padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
+        font-size: 0.62rem;
+        justify-content: flex-start;
+        gap: 18px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .top-nav::-webkit-scrollbar { display: none; }
+      .top-nav a { flex: 0 0 auto; white-space: nowrap; }
       .top-nav .center { display: none; }
       .wrap { padding: 56px 16px 80px; }
+      .page-title {
+        font-size: 2.48rem;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+      .page-sub { font-size: 0.94rem; line-height: 1.55; }
       .voss-guide { grid-template-columns: 1fr; }
       .timeline::before { left: 18px; }
       .tl-entry { grid-template-columns: 38px 1fr; gap: 0 14px; }
       .tl-marker { width: 38px; }
       .tl-name { font-size: 1.7rem; }
       .discovery-panel { padding: 22px 20px; }
+      .home-float {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+        right: 16px;
+      }
+    }
+    @media (max-width: 420px) {
+      .wrap { padding-inline: 14px; }
+      .page-title { font-size: 2.12rem; }
+      .editorial,
+      .matilda-panel,
+      .discovery-panel,
+      .voss-guide-card,
+      .provenance {
+        padding-inline: 18px;
+      }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
